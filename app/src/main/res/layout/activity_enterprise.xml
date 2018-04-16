@@ -8,5 +8,176 @@
     android:orientation="vertical"
     tools:context="com.plt.yzplatform.activity.EnterpriseActivity">
 
+    <include layout="@layout/header_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common0dp"
+        android:layout_weight="1"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/ll_normal_horizontal">
+
+                <TextView
+                    style="@style/black33_text_16sp"
+                    android:layout_width="@dimen/common120dp"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:text="公司名称" />
+
+                <EditText
+                    android:id="@+id/compName"
+                    style="@style/black33_edit_16sp"
+                    android:hint="请输入公司名称"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/black33_text_16sp"
+                    android:layout_width="@dimen/common120dp"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:text="公司位置" />
+
+                <TextView
+                    android:id="@+id/getLocation"
+                    style="@style/black33_text_16sp"
+                    android:layout_width="match_parent"
+                    android:drawableRight="@drawable/qy_place"
+                    android:hint="点击获取公司位置"
+                    android:paddingRight="@dimen/common15dp" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_normal_horizontal">
+
+                <TextView
+                    style="@style/black33_text_16sp"
+                    android:layout_width="@dimen/common120dp"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:text="办公地址" />
+
+                <EditText
+                    android:id="@+id/compAddress"
+                    style="@style/black33_edit_16sp"
+                    android:lines="2"
+                    android:maxLines="2" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_normal_horizontal">
+
+                <TextView
+                    style="@style/black33_text_16sp"
+                    android:layout_width="@dimen/common120dp"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:text="营业执照" />
+
+                <TextView
+                    android:id="@+id/business"
+                    style="@style/black33_edit_16sp"
+                    android:drawablePadding="@dimen/common10dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="end|center_vertical"
+                    android:hint="点击上传"
+                    android:paddingRight="@dimen/common15dp" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_normal_horizontal">
+
+                <TextView
+                    style="@style/black33_text_16sp"
+                    android:layout_width="@dimen/common120dp"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:text="联系人姓名" />
+
+                <EditText
+                    android:id="@+id/linkName"
+                    style="@style/black33_edit_16sp"
+                    android:hint="请输入联系人姓名"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_normal_horizontal">
+
+                <TextView
+                    style="@style/black33_text_16sp"
+                    android:layout_width="@dimen/common120dp"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:text="联系人电话" />
+
+                <EditText
+                    android:id="@+id/linkPhone"
+                    style="@style/black33_edit_16sp"
+                    android:hint="请输入联系人电话"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_normal_horizontal">
+
+                <TextView
+                    style="@style/black33_text_16sp"
+                    android:layout_width="@dimen/common120dp"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:text="门头照片" />
+
+                <TextView
+                    android:id="@+id/headPic"
+                    style="@style/black33_edit_16sp"
+                    android:drawablePadding="@dimen/common10dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="end|center_vertical"
+                    android:hint="点击上传"
+                    android:paddingRight="@dimen/common15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/common8dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/black33_text_16sp"
+                    android:padding="@dimen/common15dp"
+                    android:text="服务类型" />
+
+                <com.plt.yzplatform.view.AutoNextLineLinearlayout
+                android:id="@+id/parent_layout"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/common15dp"
+                android:layout_height="wrap_content">
+
+                </com.plt.yzplatform.view.AutoNextLineLinearlayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/uploading"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common49dp"
+        android:background="@drawable/selector_main_button"
+        android:text="提交"
+        android:textColor="@color/bg_color"
+        android:textSize="@dimen/text_size_18sp" />
 
 </LinearLayout>

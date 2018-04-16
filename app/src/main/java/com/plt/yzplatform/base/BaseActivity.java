@@ -54,7 +54,6 @@ import java.io.File;
 
 public class BaseActivity extends AppCompatActivity{
     private static final String TAG = "baseActivit" ;
-    protected String user_token;
     //标题
     private TextView title;
     private ImageView leftImage;
@@ -67,7 +66,6 @@ public class BaseActivity extends AppCompatActivity{
         //横屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActivityUtil.addActivity(this);
-        user_token = Prefs.with(getApplicationContext()).read("user_token");
     }
 
     protected void onPause() {
@@ -166,6 +164,7 @@ public class BaseActivity extends AppCompatActivity{
     private String getDeviceCode() {
         return Build.FINGERPRINT;
     }
+
 
 //
 //    //6.0权限配置
@@ -545,8 +544,8 @@ public class BaseActivity extends AppCompatActivity{
 
 
         } else if (resultCode == RESULT_CANCELED) {
-            //取消
-            popupWindow.dismiss();
+//            //取消
+//            popupWindow.dismiss();
         }
     }
 

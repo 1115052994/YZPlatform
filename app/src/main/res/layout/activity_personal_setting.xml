@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context="com.plt.yzplatform.activity.PersonalSettingActivity">
+
+    <include layout="@layout/header_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common1dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.plt.yzplatform.view.CircleImageView
+            android:id="@+id/icon"
+            android:layout_width="@dimen/common90dp"
+            android:layout_height="@dimen/common90dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/common11dp"
+            android:background="@drawable/circle_2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/common16dp"
+            android:layout_marginTop="@dimen/common15dp"
+            android:text="设置头像"
+            android:textColor="@color/gray_9e"
+            android:textSize="@dimen/text_size_17sp" />
+
+        <include layout="@layout/line_yout" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common50dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common15dp"
+                android:text="性别" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/boy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/selector_sex"
+                    android:checked="true"
+                    android:paddingLeft="@dimen/common10dp"
+                    android:text="男"
+                    android:textColor="@color/gray_88"
+                    android:textSize="@dimen/text_size_15sp" />
+
+                <RadioButton
+                    android:id="@+id/girl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common30dp"
+                    android:button="@drawable/selector_sex"
+                    android:paddingLeft="@dimen/common10dp"
+                    android:text="女"
+                    android:textColor="@color/gray_88"
+                    android:textSize="@dimen/text_size_15sp" />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_yout" />
+
+        <LinearLayout
+            style="@style/ll_normal_horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:layout_marginLeft="@dimen/common15dp"
+                android:text="称呼" />
+
+            <EditText
+                android:id="@+id/nick"
+                style="@style/black33_edit_16sp"
+                android:gravity="center"
+                android:hint="最多可以输入六个字"
+                android:maxLength="6" />
+
+        </LinearLayout>
+
+        <include layout="@layout/line_yout" />
+
+        <LinearLayout
+            style="@style/ll_normal_horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:layout_marginLeft="@dimen/common15dp"
+                android:text="清除缓存" />
+
+            <TextView
+                android:id="@+id/clean"
+                style="@style/black33_text_16sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:hint="有36.88M缓存可以清除"
+                android:textColor="@color/gray_ba" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/quit"
+            style="@style/theme_button"
+            android:text="退出登录" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -8,5 +8,216 @@
     android:orientation="vertical"
     tools:context="com.plt.yzplatform.activity.RegisterActivity">
 
+    <include layout="@layout/header_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common150dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/common67dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/common14dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/common21dp"
+            android:text="@string/usercenter_yizhong"
+            android:textColor="@color/black_55"
+            android:textSize="@dimen/text_size_15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/register_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common50dp"
+            android:layout_marginLeft="@dimen/common38dp"
+            android:layout_marginRight="@dimen/common38dp"
+            android:layout_marginTop="@dimen/common10dp"
+            android:background="@null"
+            android:hint="@string/usercenter_shouji"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColorHint="@color/gray_d8"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/common38dp"
+            android:layout_marginRight="@dimen/common38dp"
+            android:background="@color/bg_color" />
+
+        <LinearLayout
+            android:id="@+id/personal_main_sr1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/register_code"
+                android:layout_width="@dimen/common0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common38dp"
+                android:layout_weight="2"
+                android:background="@null"
+                android:hint="@string/usercenter_yanzheng"
+                android:inputType="number"
+                android:textColorHint="@color/gray_d8"
+                android:textSize="@dimen/text_size_15sp" />
+
+            <View
+                android:layout_width="@dimen/common1dp"
+                android:layout_height="@dimen/common15dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/bg_color" />
+
+            <Button
+                android:id="@+id/register_getCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/common38dp"
+                android:layout_weight="1.2"
+                android:background="@null"
+                android:outlineProvider="none"
+                android:text="@string/usercenter_hqyzm"
+                android:textColor="@color/black_55"
+                android:textSize="@dimen/text_size_15sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/common38dp"
+            android:layout_marginRight="@dimen/common38dp"
+            android:background="@color/bg_color" />
+
+        <EditText
+            android:id="@+id/invite_code"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common50dp"
+            android:layout_marginLeft="@dimen/common38dp"
+            android:layout_marginRight="@dimen/common38dp"
+            android:layout_marginTop="@dimen/common10dp"
+            android:background="@null"
+            android:hint="请输入邀请码"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColorHint="@color/gray_d8"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/common38dp"
+            android:layout_marginRight="@dimen/common38dp"
+            android:background="@color/bg_color" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/user_Type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common60dp"
+        android:layout_marginTop="@dimen/common20dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/personal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common38dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_user_type"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:padding="@dimen/common5dp"
+            android:text="@string/usercenter_user"
+            android:textColor="@color/selector_text_user_type"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <RadioButton
+            android:id="@+id/enterprise"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common35dp"
+            android:layout_marginRight="@dimen/common38dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_user_type"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/usercenter_enterprise"
+            android:textColor="@color/selector_text_user_type"
+            android:textSize="@dimen/text_size_18sp" />
+
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/common20dp">
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="38dp"
+            android:layout_marginRight="38dp"
+            android:background="@drawable/selector_login_button"
+            android:gravity="center"
+            android:paddingBottom="@dimen/common12dp"
+            android:paddingTop="@dimen/common12dp"
+            android:text="@string/usercenter_register"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/usercenter_register_text"
+                android:textColor="@color/MiddleGrey"
+                android:textSize="@dimen/text_size_11sp" />
+
+            <TextView
+                android:id="@+id/service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/usercenter_agreement"
+                android:textColor="@color/theme_coloer"
+                android:textSize="@dimen/text_size_11sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -21,6 +21,12 @@ public class Config {
     //注册
     public static final String REG = BASE_URL + S + "reg";
 
+    //校验推荐码是否正确
+    public static final String VERIFY_CODE = BASE_URL + S + "verifyCode";
+
+    //获取用户注册协议
+    public static final String GET_REGISTER_SERVICE = URL + S + "getUserRegProtocol";
+
     //登陆
     public static final String LOGIN = BASE_URL + S + "login";
 

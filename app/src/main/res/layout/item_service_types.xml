@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_service_type"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/common15dp"
+    android:layout_marginRight="@dimen/common15dp"
+    android:layout_marginBottom="@dimen/common15dp"
+    android:button="@null"
+    android:background="@drawable/selector_service_type"
+    android:textColor="@color/selector_text_service_type"
+    android:paddingBottom="@dimen/common9dp"
+    android:paddingLeft="@dimen/common16dp"
+    android:paddingRight="@dimen/common16dp"
+    android:paddingTop="@dimen/common9dp">
+
+</CheckBox>

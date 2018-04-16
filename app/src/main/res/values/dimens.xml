@@ -30,6 +30,7 @@
     <dimen name="common26dp">26dp</dimen>
     <dimen name="common28dp">28dp</dimen>
     <dimen name="common30dp">30dp</dimen>
+    <dimen name="common31dp">31dp</dimen>
     <dimen name="common33dp">33dp</dimen>
     <dimen name="common34dp">34dp</dimen>
     <dimen name="common35dp">35dp</dimen>
@@ -76,6 +77,7 @@
     <dimen name="common220dp">220dp</dimen>
     <dimen name="common240dp">240dp</dimen>
     <dimen name="common250dp">250dp</dimen>
+    <dimen name="common275dp">275dp</dimen>
     <dimen name="common300dp">300dp</dimen>
     <dimen name="common320dp">320dp</dimen>
     <dimen name="common333dp">333dp</dimen>

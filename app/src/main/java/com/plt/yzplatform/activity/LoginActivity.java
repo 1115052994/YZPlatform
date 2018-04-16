@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity {
 
         } else {
             //自动登录
-//            JumpUtil.newInstance().jumpRight(currActivity,MainActivity.class);
+            JumpUtil.newInstance().jumpRight(this,EnterpriseActivity.class);
         }
     }
 
@@ -72,57 +72,61 @@ public class LoginActivity extends BaseActivity {
     private void login() {
         String phone = loginPhone.getText().toString().trim();
         if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
-            if (NetUtil.isNetAvailable(this)) {
-                OkHttpUtils.post()
-                        .url(Config.LOGIN)
-                        .addParams("phone", phone)
-                        .addHeader("user_token","")
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                                ToastUtil.noNAR(LoginActivity.this);
-                            }
-
-                            @Override
-                            public void onResponse(String response, int id) {
-                                Log.e(TAG, "onResponse: " + response );
-                                /**
-                                 * {
-                                 "message": "账号不存在",
-                                 "status": "0"
-                                 }
-                                 */
-
-                                /**
-                                 *{
-                                 "data": {
-                                 "user_token": "96730A47BBCD8F345203CFAB9A2CA83AFBBA8AAA6CF39FB4C43C77884BCF7698F0F8976573622E870DE2352FD1908EADDDFB735DA5E3A77DE3C6E2520B61D7F6"
-                                 },
-                                 "message": "",
-                                 "status": "1"
-                                 }
-                                 */
-                                try {
-
-                                    JSONObject object = new JSONObject(response);
-                                    if ("1".equals(object.getString("status"))){
-                                        String data = object.getString("data");
-                                        JSONObject obj = new JSONObject(data);
-                                        String user_token = obj.getString("user_token");
-                                        Prefs.with(getApplicationContext()).write("user_token",user_token);
-                                        JumpUtil.newInstance().jumpRight(LoginActivity.this,EnterpriseActivity.class);
-                                    }else {
-                                        ToastUtil.show(LoginActivity.this,object.getString("message"));
-                                    }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+            if (phone.equals(Prefs.with(getApplicationContext()).read("验证码手机号"))) {
+                if (NetUtil.isNetAvailable(this)) {
+                    OkHttpUtils.post()
+                            .url(Config.LOGIN)
+                            .addParams("phone", phone)
+                            .addHeader("user_token", "")
+                            .build()
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onError(Call call, Exception e, int id) {
+                                    ToastUtil.noNAR(LoginActivity.this);
                                 }
-                            }
-                        });
-            } else {
-                ToastUtil.noNAR(LoginActivity.this);
+
+                                @Override
+                                public void onResponse(String response, int id) {
+                                    Log.e(TAG, "onResponse: " + response);
+                                    /**
+                                     * {
+                                     "message": "账号不存在",
+                                     "status": "0"
+                                     }
+                                     */
+
+                                    /**
+                                     *{
+                                     "data": {
+                                     "user_token": "96730A47BBCD8F345203CFAB9A2CA83AFBBA8AAA6CF39FB4C43C77884BCF7698F0F8976573622E870DE2352FD1908EADDDFB735DA5E3A77DE3C6E2520B61D7F6"
+                                     },
+                                     "message": "",
+                                     "status": "1"
+                                     }
+                                     */
+                                    try {
+
+                                        JSONObject object = new JSONObject(response);
+                                        if ("1".equals(object.getString("status"))) {
+                                            String data = object.getString("data");
+                                            JSONObject obj = new JSONObject(data);
+                                            String user_token = obj.getString("user_token");
+                                            Prefs.with(getApplicationContext()).write("user_token", user_token);
+                                            JumpUtil.newInstance().jumpRight(LoginActivity.this, EnterpriseActivity.class);
+                                        } else {
+                                            ToastUtil.show(LoginActivity.this, object.getString("message"));
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                } else {
+                    ToastUtil.noNAR(LoginActivity.this);
+                }
+            }else {
+                ToastUtil.show(LoginActivity.this,"登陆手机号码与获取验证码手机号码不一致");
             }
         } else {
             ToastUtil.show(LoginActivity.this, "手机号错误");
@@ -132,6 +136,7 @@ public class LoginActivity extends BaseActivity {
     /* 获取验证码 */
     private void getCode() {
         String phone = loginPhone.getText().toString().trim();
+        Prefs.with(getApplicationContext()).write("验证码手机号",phone);
         if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
             countDownTimer = new MyCountDownTimer(loginGetCode, 60000, 1000);
             countDownTimer.start();

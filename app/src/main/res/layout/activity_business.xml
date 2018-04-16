@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context="com.plt.yzplatform.activity.BusinessActivity">
+
+    <include layout="@layout/header_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common1dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/pic"
+            android:layout_width="@dimen/common320dp"
+            android:layout_height="@dimen/common240dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/common5dp"
+            android:background="@drawable/corporate_wallet_gr" />
+
+        <Button
+            android:id="@+id/uploading"
+            android:text="上传营业执照"
+            style="@style/theme_button" />
+    </LinearLayout>
+</LinearLayout>
