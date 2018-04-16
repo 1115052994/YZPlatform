@@ -41,4 +41,10 @@ public class Config {
 
     //提交企业认证信息
     public static final String SUBMIT_COMPANY = URL + S + "submitCompAuthInfo";
+
+    //查询首字母表示的所有城市
+    public static final String QUERYHEADCITY = URL + S +"queryHeadCity";
+
+    //查询热门城市
+    public static final String QUERYHOTCITY = URL + S +"queryHotCity";
 }
