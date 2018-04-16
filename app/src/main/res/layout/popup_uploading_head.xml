@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_icon_popup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#60000000"
+    android:focusableInTouchMode="true">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_icon_photograph"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common50dp"
+        android:layout_above="@id/tv_icon_cancel"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="拍摄"
+        android:textColor="@color/theme_coloer"
+        android:textSize="@dimen/text_size_15sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color"/>
+
+    <TextView
+        android:id="@+id/tv_icon_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common50dp"
+        android:layout_above="@id/tv_icon_photograph"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="从相册中选择"
+        android:textColor="@color/theme_coloer"
+        android:textSize="@dimen/text_size_15sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color"/>
+
+    <TextView
+        android:id="@+id/tv_icon_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/theme_coloer"
+        android:textSize="@dimen/text_size_15sp"/>
+</LinearLayout>
+</RelativeLayout>
