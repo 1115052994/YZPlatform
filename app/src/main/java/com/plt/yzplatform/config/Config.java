@@ -9,7 +9,7 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.111/";
+    public static final String BASE_URL = "http://192.168.1.222/";
 
     public static final String URL = "http://192.168.1.119/";
 
