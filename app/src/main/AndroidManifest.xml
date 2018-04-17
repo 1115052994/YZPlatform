@@ -44,8 +44,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.EnterpriseActivity"/>
         <activity android:name=".activity.CityActivity"/>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="1b169b1fe87f0a8720956f2fbecac513" />
+
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.EnterpriseActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.ServiceActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.MapActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.BusinessActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.HeadPictureActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.PersonalSettingActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.MainActivity"></activity>
     </application>
 </manifest>
