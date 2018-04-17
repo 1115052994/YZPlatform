@@ -47,4 +47,7 @@ public class Config {
 
     //查询热门城市
     public static final String QUERYHOTCITY = URL + S +"queryHotCity";
+
+    //模糊查询城市
+    public static final String QUERYCITY = URL + S +"queryCity";
 }
