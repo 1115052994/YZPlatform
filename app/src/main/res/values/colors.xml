@@ -22,6 +22,7 @@
 
     <!-- 输入框输入字体 -->
     <color name="black_33">#333333</color>
+    <color name="black_60">#606060</color>
 
     <!-- 输入框hint字体颜色 -->
     <color name="gray_c3">#c3c3c3</color>

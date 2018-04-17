@@ -48,6 +48,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 
+import okhttp3.Call;
+
 /**
  * Created by glp on 2018/4/16.
  */
@@ -86,6 +88,46 @@ public class BaseActivity extends AppCompatActivity{
                     finish();
                 }
             });
+        }
+    }
+
+    /**
+     * 根据token获取用户信息
+     */
+    public void getUserToken(final Context context){
+        String user_token = Prefs.with(getApplicationContext()).read("user_token");
+        if (!user_token.isEmpty()){
+            if (NetUtil.isNetAvailable(context)){
+                OkHttpUtils.post()
+                        .url(Config.GET_USERTOKEN)
+                        .addHeader("user_token",user_token)
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                                ToastUtil.noNAR(context);
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                Log.e(TAG, "onResponse用户信息: " + response );
+                                /**
+                                 * {"data":
+                                 * {"result":
+                                 * {"login_name":"17685416552",
+                                 * "user_type":"comp",
+                                 * "user_id":"15",
+                                 * "phone_number":"17685416552",
+                                 * "user_token":"96730A47BBCD8F345203CFAB9A2CA83A768A3A7A1150AC667DA0330D0B94B04602AACF19E9AB5C98A977CA377CD73B6F8CBAECEE459C76A0EF20E0615C5498E8",
+                                 * "invi_code":"",
+                                 * "user_state":"active"}},
+                                 * "message":"","status":"1"}
+                                 * */
+                            }
+                        });
+            }else {
+                ToastUtil.noNetAvailable(context);
+            }
         }
     }
 

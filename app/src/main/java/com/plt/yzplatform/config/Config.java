@@ -36,6 +36,9 @@ public class Config {
     //根据文件id获取图片
     public static final String GETFILE = URL + S + "getFile";
 
+    //获取企业认证信息
+    public static final String GETCOMP_INFO = URL + S + "getCompInfo";
+
     //获取企业服务类型
     public static final String GETSERVERTYPE = URL + S + "serverType";
 
@@ -47,4 +50,10 @@ public class Config {
 
     //查询热门城市
     public static final String QUERYHOTCITY = URL + S +"queryHotCity";
+
+    //获取用户信息
+    public static final String GET_USERTOKEN = BASE_URL + S + "getUserInfor";
+
+    //通过城市名获取城市id
+    public static final String GET_CITY_ID = URL + S + "get_cityIdByCityName";
 }

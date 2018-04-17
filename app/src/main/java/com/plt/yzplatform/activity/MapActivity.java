@@ -458,6 +458,8 @@ public class MapActivity extends BaseActivity implements LocationSource,
                 bundle.putString("纬度", String.valueOf(poiItem.getLatLonPoint().getLatitude()));
                 bundle.putString("经度", String.valueOf(poiItem.getLatLonPoint().getLongitude()));
 //                JumpUtil.newInstance().finishRightTrans(MapActivity.this,bundle,001);
+                bundle.putString("省",poiItem.getProvinceName());
+                bundle.putString("市",poiItem.getCityName());
                 JumpUtil.newInstance().finishRightTrans(MapActivity.this,bundle,001);
             }
         }
