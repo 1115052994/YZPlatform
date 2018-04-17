@@ -104,8 +104,8 @@ public class RegisterActivity extends BaseActivity {
         if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
             if (signCode.equals(code)) {
                 if (phone.equals(Prefs.with(getApplicationContext()).read("验证码手机号"))) {
-                    if (invi_code == null) {
-
+                    Log.i(TAG, "register推荐码: " + invi_code);
+                    if (invi_code.isEmpty()) {
                         //提交注册
                         if (NetUtil.isNetAvailable(this)) {
                             OkHttpUtils.post()
@@ -123,7 +123,7 @@ public class RegisterActivity extends BaseActivity {
 
                                         @Override
                                         public void onResponse(String response, int id) {
-                                            Log.d(TAG, "onResponse: " + response);
+                                            Log.e(TAG, "onResponse: " + response);
                                             /**
                                              * {"data":{"flag":"true"},"message":"","status":"1"}
                                              */

@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity {
 
         } else {
             //自动登录
-            JumpUtil.newInstance().jumpRight(this,CityActivity.class);
+//            JumpUtil.newInstance().jumpRight(this,CityActivity.class);
         }
     }
 
