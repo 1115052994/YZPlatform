@@ -20,7 +20,7 @@ public class LetterSideBar extends View {
             "W", "X", "Y", "Z"};
 
     // 当前触摸的位置字母
-    private String mCurrentTouchLetter;
+    private String mCurrentTouchLetter = "A";
 
     public LetterSideBar(Context context) {
         this(context, null);
@@ -131,5 +131,11 @@ public class LetterSideBar extends View {
     // 接口回掉其他View会不会使用？
     public interface LetterTouchListener {
         void touch(CharSequence letter, boolean isTouch);
+    }
+
+    public void setFirstVisibleLetter(String s){
+        mCurrentTouchLetter = s;
+        //重新绘制
+        invalidate();
     }
 }

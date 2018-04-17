@@ -71,6 +71,12 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // 绑定怎么办？回传出去
         convert(holder, mData.get(position), position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(position);
+            }
+        });
     }
 
     /**
@@ -100,11 +106,19 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<View
                             return 3;
                         case R.layout.item_citys:
                             return 1;
-                            default:
-                                return 1;
+                        default:
+                            return 3;
                     }
                 }
             });
         }
+    }
+
+    private OnItemClickListener listener;
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+    public interface OnItemClickListener{
+        void onClick( int position);
     }
 }

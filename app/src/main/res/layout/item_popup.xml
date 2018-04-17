@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common40dp">
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/text_33"
+        android:textSize="@dimen/text_size_16sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/common50dp"
+        />
+        <View
+            style="@style/gray_line"
+            android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

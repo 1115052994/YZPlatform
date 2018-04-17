@@ -1,8 +1,11 @@
 package com.plt.yzplatform.view;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.plt.yzplatform.R;
 
 import java.util.ArrayList;
 
@@ -138,4 +141,5 @@ public class WrapRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             notifyDataSetChanged();
         }
     }
+
 }

@@ -43,6 +43,8 @@ public class WrapRecyclerView extends RecyclerView{
         }
     }
 
+
+
     /**
      * 添加底部
      * @param view
