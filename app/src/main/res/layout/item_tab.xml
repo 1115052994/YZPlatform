@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <!--<ImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/qy_service1"/>-->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common5dp"
+            android:textSize="@dimen/text_size_16sp"
+            android:text="title"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common3dp"
+        android:layout_alignParentBottom="true"
+        android:paddingRight="@dimen/common20dp"
+        android:paddingLeft="@dimen/common20dp"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:id="@+id/bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/text_ff96"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+</RelativeLayout>

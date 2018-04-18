@@ -68,4 +68,11 @@ public class Config {
 
     //根据图片id获取base64
     public static final String GET_BASE64 = URL + S + "getFile";
+
+    //模糊搜索商户
+    public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
+
+    //热搜
+    public static final String GETSEARCHHOTWORD = URL + S +"getSearchHotWord";
+
 }

@@ -46,4 +46,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
+    compile 'com.youth.banner:banner:1.4.9'
+    compile 'com.squareup.picasso:picasso:2.5.1'
+    compile 'com.jcodecraeer:xrecyclerview:1.5.9'//支持头布局和吸顶效果
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 }

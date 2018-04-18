@@ -40,13 +40,12 @@
     <color name="back_d6">#d6d6d6</color>
     <color name="text_ff96">#ff9696</color>
     <color name="text_22">#222222</color>
+    <color name="text_a2">#a2a2a2</color>
     <color name="text_33">#333333</color>
     <color name="text_66">#666666</color>
 
     <!-- 分割线 -->
     <color name="gray_line">#c5c5c5</color>
-
-
     <color name="trans">#80000000</color>
 
     <color name="MiddleGrey">#A3A3A3</color>

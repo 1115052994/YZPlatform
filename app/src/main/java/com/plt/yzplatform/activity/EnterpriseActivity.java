@@ -652,7 +652,7 @@ public class EnterpriseActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setTitle("企业认证");
+        setTitle("商家详情");
         setLeftImageClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

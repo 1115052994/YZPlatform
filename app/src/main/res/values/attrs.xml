@@ -23,4 +23,9 @@
     <declare-styleable name="CTTourHeaderScrollView">
         <attr name="top_offset" format="dimension" />
     </declare-styleable>
+
+
+    <declare-styleable name="TrackIndicatorView">
+        <attr name="tabVisibleNums" format="float" />
+    </declare-styleable>
 </resources>

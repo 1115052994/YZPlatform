@@ -36,9 +36,27 @@ public class GrideViewAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_city,null);
-        TextView tv = view.findViewById(R.id.city);
+        ViewHolder viewHolder;
+        if (convertView == null){
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_city,null);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        TextView tv = viewHolder.getTv();
         tv.setText(list.get(position));
-        return view;
+        return convertView;
+    }
+
+    static class ViewHolder{
+        TextView tv;
+        public ViewHolder(View view){
+            tv = view.findViewById(R.id.city);
+        }
+
+        public TextView getTv() {
+            return tv;
+        }
     }
 }

@@ -74,7 +74,8 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(position);
+                if(listener!=null)
+                    listener.onClick(position);
             }
         });
     }

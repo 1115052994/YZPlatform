@@ -66,15 +66,7 @@
         android:layout_below="@id/search"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="com.rock.design.SecondActivity">
-    <!--
-    核心就两个部分
-    ① 动作产生区， app:layout_behavior=""
-    ② 动作相应区   app:layout_scrollFlags=""
-            scroll 需要根据滑动进行变化，就需要添加scroll属性，可同时支持多个属性, 多个属性用 '|' 连接
-            enterAlways 只要有滑动操作就会进行反应
-            exitUntilCollapsed 只有当滑动区域滑动到顶部了，才会将相应区域拉出来，只有当相应区域一直向上滚动至消失，滑动区域才会被覆盖
-    -->
-    <android.support.design.widget.AppBarLayout
+        <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RelativeLayout
