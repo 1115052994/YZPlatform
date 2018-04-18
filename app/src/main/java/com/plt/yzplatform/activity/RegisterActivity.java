@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
+import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.MyCountDownTimer;
 import com.plt.yzplatform.utils.NetUtil;
@@ -55,6 +56,7 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        ActivityUtil.addActivity(this);
         initListener();
     }
 
@@ -135,7 +137,8 @@ public class RegisterActivity extends BaseActivity {
                                                     String flag = object.getString("flag");
 
                                                     if ("true".equals(flag)) {
-                                                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, EnterpriseActivity.class);
+                                                        login();
+//                                                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, EnterpriseActivity.class);
                                                     } else {
                                                         ToastUtil.show(RegisterActivity.this, object.getString("message"));
                                                     }
@@ -247,6 +250,67 @@ public class RegisterActivity extends BaseActivity {
                         });
             } else {
                 ToastUtil.noNetAvailable(RegisterActivity.this);
+            }
+        } else {
+            ToastUtil.show(RegisterActivity.this, "手机号错误");
+        }
+    }
+
+    /* 登录 */
+    private void login() {
+        String phone = registerPhone.getText().toString().trim();
+        if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
+            if (NetUtil.isNetAvailable(this)) {
+                OkHttpUtils.post()
+                        .url(Config.LOGIN)
+                        .addParams("phone", phone)
+                        .addHeader("user_token","")
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                                ToastUtil.noNAR(RegisterActivity.this);
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                Log.e(TAG, "onResponse: " + response );
+                                /**
+                                 * {
+                                 "message": "账号不存在",
+                                 "status": "0"
+                                 }
+                                 */
+
+                                /**
+                                 *{
+                                 "data": {
+                                 "user_token": "96730A47BBCD8F345203CFAB9A2CA83AFBBA8AAA6CF39FB4C43C77884BCF7698F0F8976573622E870DE2352FD1908EADDDFB735DA5E3A77DE3C6E2520B61D7F6"
+                                 },
+                                 "message": "",
+                                 "status": "1"
+                                 }
+                                 */
+                                try {
+
+                                    JSONObject object = new JSONObject(response);
+                                    if ("1".equals(object.getString("status"))){
+                                        String data = object.getString("data");
+                                        JSONObject obj = new JSONObject(data);
+                                        String user_token = obj.getString("user_token");
+                                        Prefs.with(getApplicationContext()).write("user_token",user_token);
+                                        JumpUtil.newInstance().jumpRight(RegisterActivity.this,EnterpriseActivity.class);
+                                    }else {
+                                        ToastUtil.show(RegisterActivity.this,object.getString("message"));
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+            } else {
+                ToastUtil.noNAR(RegisterActivity.this);
             }
         } else {
             ToastUtil.show(RegisterActivity.this, "手机号错误");

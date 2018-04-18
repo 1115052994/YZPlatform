@@ -6,17 +6,19 @@
     android:id="@+id/rl_ordinary_layout"
     android:gravity="center">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="@dimen/common275dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/common160dp"
         android:orientation="vertical"
         android:background="@color/white">
 
         <LinearLayout
+            android:id="@+id/a_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common80dp"
             android:gravity="center_horizontal"
             android:layout_marginTop="@dimen/common19dp"
+            android:layout_marginBottom="@dimen/common10dp"
             android:orientation="vertical">
 
             <TextView
@@ -32,22 +34,28 @@
                 android:id="@+id/tv_ordinary_content2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/common20dp"
-                android:layout_marginRight="@dimen/common20dp"
-                android:layout_marginTop="@dimen/common31dp"
-                android:text="  账号在别处登陆，您被迫下线 若非本人操作，请尽快修改密码"
-                android:textColor="@color/gray_c3"
+                android:layout_marginLeft="@dimen/common30dp"
+                android:layout_marginRight="@dimen/common30dp"
+                android:layout_marginTop="@dimen/common20dp"
+                android:text="账号在别处登陆，您被迫下线 若非本人操作，请尽快修改密码"
+                android:gravity="center_horizontal"
+                android:textColor="@color/gray_c8"
+                android:textSize="@dimen/text_size_15sp"
                 android:visibility="visible"/>
         </LinearLayout>
         <View
+            android:layout_below="@id/a_title"
             android:layout_width="@dimen/common162dp"
             android:layout_height="@dimen/common1dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/line1"
             android:background="@color/bg_color"/>
 
         <LinearLayout
+            android:layout_below="@id/line1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common40dp"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
             <TextView
@@ -78,16 +86,5 @@
                 android:textColor="@color/theme_coloer"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="@dimen/common1dp"
-            android:layout_height="@dimen/common40dp"
-            android:layout_centerHorizontal="true"
-            android:background="@color/bg_color"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common1dp"
-            android:background="@color/bg_color"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

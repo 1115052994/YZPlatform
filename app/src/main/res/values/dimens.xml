@@ -59,6 +59,7 @@
     <dimen name="common85dp">85dp</dimen>
     <dimen name="common88dp">88dp</dimen>
     <dimen name="common90dp">90dp</dimen>
+    <dimen name="common96dp">96dp</dimen>
     <dimen name="common100dp">100dp</dimen>
     <dimen name="common101dp">101dp</dimen>
     <dimen name="common105dp">105dp</dimen>

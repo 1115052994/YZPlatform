@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
+import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.MyCountDownTimer;
 import com.plt.yzplatform.utils.NetUtil;
@@ -43,6 +44,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        ActivityUtil.addActivity(this);
         ifLogin();
     }
 
@@ -52,7 +54,7 @@ public class LoginActivity extends BaseActivity {
 
         } else {
             //自动登录
-            JumpUtil.newInstance().jumpRight(this,CityActivity.class);
+            JumpUtil.newInstance().jumpRight(this,PersonalSettingActivity.class);
         }
     }
 
@@ -111,7 +113,7 @@ public class LoginActivity extends BaseActivity {
                                         JSONObject obj = new JSONObject(data);
                                         String user_token = obj.getString("user_token");
                                         Prefs.with(getApplicationContext()).write("user_token",user_token);
-                                        JumpUtil.newInstance().jumpRight(LoginActivity.this,CityActivity.class);
+                                        JumpUtil.newInstance().jumpRight(LoginActivity.this,PersonalSettingActivity.class);
                                     }else {
                                         ToastUtil.show(LoginActivity.this,object.getString("message"));
                                     }

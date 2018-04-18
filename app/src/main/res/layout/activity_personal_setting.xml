@@ -49,6 +49,7 @@
                 android:text="性别" />
 
             <RadioGroup
+                android:id="@+id/group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -81,11 +82,12 @@
 
         <include layout="@layout/line_yout" />
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/ll_normal_horizontal"
             android:gravity="center_vertical">
 
             <TextView
+                android:layout_centerVertical="true"
                 style="@style/black33_text_16sp"
                 android:layout_marginLeft="@dimen/common15dp"
                 android:text="称呼" />
@@ -93,38 +95,43 @@
             <EditText
                 android:id="@+id/nick"
                 style="@style/black33_edit_16sp"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
                 android:hint="最多可以输入六个字"
+                android:gravity="center"
                 android:maxLength="6" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <include layout="@layout/line_yout" />
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/ll_normal_horizontal"
             android:gravity="center_vertical">
 
             <TextView
                 style="@style/black33_text_16sp"
                 android:layout_marginLeft="@dimen/common15dp"
+                android:layout_centerVertical="true"
                 android:text="清除缓存" />
 
             <TextView
                 android:id="@+id/clean"
                 style="@style/black33_text_16sp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
                 android:hint="有36.88M缓存可以清除"
                 android:textColor="@color/gray_ba" />
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <Button
-            android:id="@+id/quit"
+            android:id="@+id/save"
             style="@style/theme_button"
-            android:text="退出登录" />
+            android:layout_marginTop="@dimen/common96dp"
+            android:text="保存" />
 
     </LinearLayout>
 </LinearLayout>

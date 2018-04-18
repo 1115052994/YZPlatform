@@ -11,7 +11,7 @@ public class Config {
     //接口连接地址
     public static final String BASE_URL = "http://192.168.1.222/";
 
-    public static final String URL = "http://192.168.1.119/";
+    public static final String URL = "http://192.168.1.222/";
 
     public static final String S = "mymvc?mvc_id=";
 
@@ -59,4 +59,13 @@ public class Config {
 
     //通过城市名获取城市id
     public static final String GET_CITY_ID = URL + S + "get_cityIdByCityName";
+
+    //获取个人设置信息
+    public static final String GET_PERS_INFO = URL + S + "getPersInfo";
+
+    //修改个人设置
+    public static final String UPDATE_PERS_INFO = URL + S + "updatePersInfo";
+
+    //根据图片id获取base64
+    public static final String GET_BASE64 = URL + S + "getFile";
 }

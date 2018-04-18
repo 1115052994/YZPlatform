@@ -36,6 +36,6 @@
             android:padding="@dimen/common12dp"
             android:textColor="@color/black_22"
             android:textSize="@dimen/text_size_16sp"
-            android:visibility="visible" />
+            android:visibility="invisible" />
     </RelativeLayout>
 </LinearLayout>

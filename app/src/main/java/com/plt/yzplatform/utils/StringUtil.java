@@ -9,6 +9,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +18,10 @@ import java.util.regex.Pattern;
  * 关于字符串的帮助类
  */
 public class StringUtil {
+
+    private static final String SEP1 = "#";
+    private static final String SEP2 = "|";
+    private static final String SEP3 = "=";
 
     /**
      * 截取某字符之后的字符串
@@ -72,8 +78,43 @@ public class StringUtil {
         return false;
     }
 
+    /**
+     * List转换String
+     *
+     * @param list
+     *            :需要转换的List
+     * @return String转换后的字符串
+     */
+    public static String listToString(List<String> list){
+        if(list==null){
+            return null;
+        }
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
 
-  /**
+        for(String string :list) {
+            if(first) {
+                first=false;
+            }else{
+                result.append(",");
+            }
+            result.append(string);
+        }
+        return result.toString();
+    }
+
+
+    public static List<String> stringToList(String strs){
+        String str[] = strs.split(",");
+        return Arrays.asList(str);
+    }
+
+
+
+
+
+
+    /**
    * 验证手机格式是否正确
    */
     public static boolean isPhoneNum(String phone){

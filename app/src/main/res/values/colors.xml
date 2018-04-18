@@ -31,6 +31,9 @@
     <color name="gray_ba">#bababa</color>
     <color name="gray_9e">#9e9e9e</color>
     <color name="gray_88">#888888</color>
+    <color name="gray_c8">#c8c8c8</color>
+    <color name="gray_a2">#a2a2a2</color>
+    <color name="gray_f4">#f4f4f4</color>
     <!-- 搜索框颜色 -->
     <color name="gray_b9">#b9b9b9</color>
     <color name="back_f4">#f4f4f4</color>

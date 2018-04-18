@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.plt.yzplatform.utils;
 
 import android.content.Context;
@@ -19,7 +16,7 @@ public class ToastUtil {
 	
 
     private static void logError(String info, int errorCode) {
-        print(LINE);//start
+        print(LINE);//star
         print("                                   错误信息                                     ");
         print(LINE);//title
         print(info);
@@ -41,10 +38,10 @@ public class ToastUtil {
 
     //log
     public static final String TAG = "AMAP_ERROR";
-    static final String LINE_CHAR="=";
-    static final String BOARD_CHAR="|";
-    static final int LENGTH = 80;
-    static String LINE;
+    private static final String LINE_CHAR="=";
+    private static final String BOARD_CHAR="|";
+    private static final int LENGTH = 80;
+    private static String LINE;
     static{
         StringBuilder sb = new StringBuilder();
         for(int i = 0;i<LENGTH;i++){
