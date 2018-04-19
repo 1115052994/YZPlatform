@@ -78,4 +78,10 @@ public class Config {
     //首页车服获取banner和icon
     public static final String GET_SERVICE_IMG = URL + S + "getCompIcon";
 
+    //商家详情
+    public static final String GETCOMPDETAIL = URL + S +"getCompDetail";
+
+    //服务详情
+    public static final String GETPRODUCTITEMBYSERVERTYPE = URL + S +"getProductItemByServerType";
+
 }
