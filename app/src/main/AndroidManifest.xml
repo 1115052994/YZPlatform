@@ -37,11 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activity.CityActivity" />
 
@@ -72,7 +68,15 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.CompDetail"/>
+        <activity android:name=".activity.CompDetail" />
+        <activity android:name=".activity.Starperformers" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.Addstar"></activity>
     </application>
 
 </manifest>
