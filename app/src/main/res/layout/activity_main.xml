@@ -66,76 +66,76 @@
     <RadioGroup
         android:id="@+id/tab_bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common49dp"
+        android:layout_height="@dimen/common50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/common23dp"
-        android:paddingRight="@dimen/common23dp">
+        android:gravity="center_vertical">
 
         <RadioButton
+            android:id="@+id/main"
             android:layout_width="@dimen/common0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/common4dp"
-            android:layout_marginTop="@dimen/common4dp"
             android:layout_weight="1"
             android:button="@null"
-            android:drawablePadding="@dimen/common5dp"
-            android:drawableTop="@drawable/selector_sex"
+            android:drawablePadding="@dimen/common2dp"
+            android:drawableTop="@drawable/selector_main"
             android:gravity="center_horizontal"
             android:text="主页"
+            android:textSize="@dimen/text_size_13sp"
             android:textColor="@color/selector_main_bottom" />
 
         <RadioButton
+            android:id="@+id/buy"
             android:layout_width="@dimen/common0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/common4dp"
-            android:layout_marginTop="@dimen/common4dp"
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="@dimen/common5dp"
-            android:drawableTop="@drawable/selector_sex"
+            android:drawableTop="@drawable/selector_buy"
             android:gravity="center_horizontal"
-            android:text="主页"
+            android:text="车买卖"
+            android:textSize="@dimen/text_size_13sp"
             android:textColor="@color/selector_main_bottom" />
 
         <RadioButton
+            android:id="@+id/service"
             android:layout_width="@dimen/common0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/common4dp"
-            android:layout_marginTop="@dimen/common4dp"
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="@dimen/common5dp"
-            android:drawableTop="@drawable/selector_sex"
+            android:drawableTop="@drawable/selector_service"
             android:gravity="center_horizontal"
-            android:text="主页"
+            android:text="车服务"
+            android:textSize="@dimen/text_size_13sp"
+            android:checked="true"
             android:textColor="@color/selector_main_bottom" />
 
         <RadioButton
+            android:id="@+id/money"
             android:layout_width="@dimen/common0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/common4dp"
-            android:layout_marginTop="@dimen/common4dp"
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="@dimen/common5dp"
-            android:drawableTop="@drawable/selector_sex"
+            android:drawableTop="@drawable/selector_money"
             android:gravity="center_horizontal"
-            android:text="主页"
+            android:text="车金融"
+            android:textSize="@dimen/text_size_13sp"
             android:textColor="@color/selector_main_bottom" />
 
         <RadioButton
+            android:id="@+id/life"
             android:layout_width="@dimen/common0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/common4dp"
-            android:layout_marginTop="@dimen/common4dp"
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="@dimen/common5dp"
-            android:drawableTop="@drawable/selector_sex"
+            android:drawableTop="@drawable/selector_life"
             android:gravity="center_horizontal"
-            android:text="主页"
+            android:text="众生活"
+            android:textSize="@dimen/text_size_13sp"
             android:textColor="@color/selector_main_bottom" />
 
     </RadioGroup>

@@ -13,13 +13,47 @@
         android:layout_height="match_parent"
         android:background="@drawable/staff_corner"
         >
-        <TextView
-            android:id="@+id/name"
+        <com.plt.yzplatform.view.CircleImageView
+            android:id="@+id/circleImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/common15dp"
+            android:src="@drawable/qy_heat"/>
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/circleImage"
+            android:layout_marginLeft="@dimen/common5dp"
+            android:layout_alignTop="@id/circleImage"
+            android:textColor="@color/text_33"
+            android:textSize="@dimen/text_size_16sp"
             android:text="test"
             />
+        <TextView
+            android:id="@+id/type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/name_tv"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/common30dp"
+            android:text="明星员工"
+            android:textSize="@dimen/text_size_13sp"
+            android:textColor="@color/text_ff96"/>
+        <TextView
+            android:id="@+id/staffDes_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/circleImage"
+            android:layout_marginLeft="@dimen/common5dp"
+            android:layout_marginTop="@dimen/common5dp"
+            android:layout_marginRight="@dimen/common10dp"
+            android:layout_marginBottom="@dimen/common5dp"
+            android:layout_below="@id/name_tv"
+            android:lines="3"
+            android:ellipsize="end"
+            android:text="12456"/>
     </RelativeLayout>
 
 </RelativeLayout>

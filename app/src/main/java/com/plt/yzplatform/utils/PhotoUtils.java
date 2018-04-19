@@ -102,6 +102,17 @@ public class PhotoUtils {
         }
     }
 
+
+    /**
+     * 本地资源转bitmap
+     *
+     */
+    public static Bitmap getBitmapFromRecrous(Context context,int id){
+        Bitmap  bitmap = BitmapFactory.decodeResource(context.getResources(), id);
+        return bitmap;
+    }
+
+
     /**
      * @param context 上下文对象
      * @param uri     当前相册照片的Uri

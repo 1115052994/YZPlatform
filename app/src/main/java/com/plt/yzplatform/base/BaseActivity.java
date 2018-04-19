@@ -616,7 +616,7 @@ public class BaseActivity extends AppCompatActivity{
     /**
      * 通过头像id获取头像
      **/
-    public void getPic(final Context context, String file_id, final CircleImageView icon) {
+    public void getPic(final Context context, String file_id, final ImageView icon) {
         mContext = context;
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
@@ -642,8 +642,13 @@ public class BaseActivity extends AppCompatActivity{
                                     String data = jsonObject.getString("data");
                                     JSONObject object = new JSONObject(data);
                                     String file_content = object.getString("file_content");
+                                    if (file_content.contains("base64,"))
+                                        file_content = file_content.split("base64,")[1];
                                     Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
-                                    icon.setImageBitmap(bitmap);
+                                    if (bitmap!=null)
+                                        icon.setImageBitmap(bitmap);
+                                    else
+                                        icon.setImageResource(R.drawable.qy_heat);
                                 } else {
                                     ToastUtil.noNAR(mContext);
                                 }

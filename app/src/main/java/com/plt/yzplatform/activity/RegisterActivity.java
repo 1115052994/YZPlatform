@@ -138,7 +138,7 @@ public class RegisterActivity extends BaseActivity {
 
                                                     if ("true".equals(flag)) {
                                                         login();
-//                                                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, EnterpriseActivity.class);
+                                                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
                                                     } else {
                                                         ToastUtil.show(RegisterActivity.this, object.getString("message"));
                                                     }
