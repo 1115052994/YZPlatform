@@ -1,7 +1,6 @@
 package com.plt.yzplatform.config;
 
 /**
- *
  * 通用配置文件，用于配置整个系统使用的资源
  */
 
@@ -14,6 +13,9 @@ public class Config {
     public static final String URL = "http://192.168.1.222/";
 
     public static final String S = "mymvc?mvc_id=";
+
+//    public static final String M = "http://192.168.2.233/";
+    public static final String M = "http://192.168.1.222/";
 
     //获取验证码
     public static final String GETCODE = BASE_URL + S + "sendCode";
@@ -46,13 +48,13 @@ public class Config {
     public static final String SUBMIT_COMPANY = URL + S + "submitCompAuthInfo";
 
     //查询首字母表示的所有城市
-    public static final String QUERYHEADCITY = URL + S +"queryHeadCity";
+    public static final String QUERYHEADCITY = URL + S + "queryHeadCity";
 
     //查询热门城市
-    public static final String QUERYHOTCITY = URL + S +"queryHotCity";
+    public static final String QUERYHOTCITY = URL + S + "queryHotCity";
 
     //模糊查询城市
-    public static final String QUERYCITY = URL + S +"queryCity";
+    public static final String QUERYCITY = URL + S + "queryCity";
 
     //获取用户信息
     public static final String GET_USERTOKEN = BASE_URL + S + "getUserInfor";
@@ -70,18 +72,34 @@ public class Config {
     public static final String GET_BASE64 = URL + S + "getFile";
 
     //模糊搜索商户
-    public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
+    public static final String GETSEARCHCOMP = URL + S + "getSearchComp";
 
     //热搜
-    public static final String GETSEARCHHOTWORD = URL + S +"getSearchHotWord";
+    public static final String GETSEARCHHOTWORD = URL + S + "getSearchHotWord";
 
     //首页车服获取banner和icon
     public static final String GET_SERVICE_IMG = URL + S + "getCompIcon";
 
     //商家详情
-    public static final String GETCOMPDETAIL = URL + S +"getCompDetail";
+    public static final String GETCOMPDETAIL = URL + S + "getCompDetail";
 
     //服务详情
-    public static final String GETPRODUCTITEMBYSERVERTYPE = URL + S +"getProductItemByServerType";
+    public static final String GETPRODUCTITEMBYSERVERTYPE = URL + S + "getProductItemByServerType";
+
+    //企业保存明星员工
+    public static final String SAVESTAR = M +S+ "saveStaff";
+
+    //企业更新明星员工
+    public static final String UPDATASTAR = M + S + "updateStaff";
+
+    //消费者点击查看商家的明星员工
+    public static final String SELECTCOMPSTAR = M + S + "selectCompStaff";
+
+    //商家查看自己通过的明星员工
+    public static final String SELECTSTAR = M + S + "selectStaff";
+
+    //商家删除明星员工
+    public static final String DELETESTAR = M + S + "deleteStaff";
+
 
 }

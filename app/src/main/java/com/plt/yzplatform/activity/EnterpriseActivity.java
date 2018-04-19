@@ -95,9 +95,10 @@ public class EnterpriseActivity extends BaseActivity {
     /* 获取数据 */
     private void getData() {
         if (NetUtil.isNetAvailable(this)) {
-            OkHttpUtils.post()
+            OkHttpUtils.get()
                     .url(Config.GETCOMP_INFO)
                     .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
+                    .addParams("","")
                     .build()
                     .execute(new StringCallback() {
                         @Override

@@ -40,7 +40,6 @@ import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.PhotoUtils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
-import com.plt.yzplatform.view.CircleImageView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -102,6 +101,8 @@ public class BaseActivity extends AppCompatActivity{
                 OkHttpUtils.post()
                         .url(Config.GET_USERTOKEN)
                         .addHeader("user_token",user_token)
+                        //
+                        .addParams("","")
                         .build()
                         .execute(new StringCallback() {
                             @Override

@@ -7,7 +7,7 @@
     <com.plt.yzplatform.view.CircleImageView
         android:layout_marginLeft="@dimen/common15dp"
         android:id="@+id/star_item_head_image"
-        android:layout_width="@dimen/common107dp"
+        android:layout_width="@dimen/common99dp"
         android:layout_height="@dimen/common99dp"
         android:layout_marginTop="@dimen/common15dp"
         android:background="@drawable/circle_2"
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_13sp"
-            android:text="111111"
+            android:text="姓名: 111111"
             android:textColor="@color/text_33"
             />
         <TextView
@@ -34,7 +34,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:maxEms="18"
-            android:text="11111111aasd111"
+            android:text="介绍: 222222"
             android:singleLine="false"
             android:textSize="@dimen/text_size_13sp"
             android:layout_marginTop="@dimen/common17dp"
