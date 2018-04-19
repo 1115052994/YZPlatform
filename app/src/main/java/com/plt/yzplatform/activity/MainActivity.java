@@ -31,6 +31,7 @@ import com.plt.yzplatform.fragment.main.CarServiceFragment;
 import com.plt.yzplatform.fragment.main.LifeFragment;
 import com.plt.yzplatform.fragment.main.MainFragment;
 import com.plt.yzplatform.utils.ActivityUtil;
+import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.HintDialogFragment;
 
@@ -96,6 +97,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             case R.id.mLocation:
                 break;
             case R.id.mSearch:
+                JumpUtil.newInstance().jumpRight(this,CompDetail.class);
                 break;
         }
     }

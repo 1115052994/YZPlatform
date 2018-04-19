@@ -75,4 +75,7 @@ public class Config {
     //热搜
     public static final String GETSEARCHHOTWORD = URL + S +"getSearchHotWord";
 
+    //首页车服获取banner和icon
+    public static final String GET_SERVICE_IMG = URL + S + "getCompIcon";
+
 }

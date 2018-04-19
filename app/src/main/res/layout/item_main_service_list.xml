@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mDetails"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common116dp"
+    android:layout_marginBottom="@dimen/common1dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/common5dp"
+    android:paddingLeft="@dimen/common15dp"
+    android:paddingRight="@dimen/common5dp"
+    android:paddingTop="@dimen/common5dp">
+
+    <com.plt.yzplatform.view.ZQImageViewRoundOval
+        android:id="@+id/mIcon"
+        android:layout_width="@dimen/common178dp"
+        android:layout_height="@dimen/common105dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/text" />
+
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="@dimen/common0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/common7dp">
+
+        <TextView
+            android:id="@+id/mName"
+            style="@style/black33_text_16sp"
+            android:text="建军大众汽车修理厂"
+            android:textSize="@dimen/text_size_13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:text="评分："
+                android:textColor="@color/theme_coloer"
+                android:textSize="@dimen/text_size_11sp" />
+
+            <RatingBar
+                android:id="@+id/mark"
+                style="@style/roomRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="4" />
+            <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/star"-->
+            <!--android:layout_marginLeft="@dimen/common5dp"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/star"-->
+            <!--android:layout_marginLeft="@dimen/common5dp"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/star"-->
+            <!--android:layout_marginLeft="@dimen/common5dp"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/star"-->
+            <!--android:layout_marginLeft="@dimen/common5dp"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/gray_star"-->
+            <!--android:layout_marginLeft="@dimen/common5dp"/>-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:text="距我："
+                android:textColor="@color/text_66"
+                android:textSize="@dimen/text_size_11sp" />
+            <TextView
+                android:id="@+id/mDistance"
+                style="@style/black33_text_16sp"
+                android:text="400km"
+                android:textColor="@color/text_66"
+                android:layout_marginLeft="@dimen/common5dp"
+                android:textSize="@dimen/text_size_11sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mAddress"
+            style="@style/black33_text_16sp"
+            android:text="北京北京市海淀区西直门北大街蓝枫国际中心B座1110"
+            android:layout_marginTop="@dimen/common8dp"
+            android:lines="2"
+            android:maxLines="2"
+            android:textColor="@color/text_66"
+            android:textSize="@dimen/text_size_11sp" />
+
+    </LinearLayout>
+</LinearLayout>
