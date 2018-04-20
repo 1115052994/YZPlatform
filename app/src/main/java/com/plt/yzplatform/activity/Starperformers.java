@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.plt.yzplatform.R;
@@ -46,19 +47,31 @@ public class Starperformers extends BaseActivity {
         layout = findViewById(R.id.layout);
         starAdapter = new StarAdapter(this,result);
         starList.setAdapter(starAdapter);
+        getData();
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Starperformers.this, Addstar.class), 1);
+                if(result.size()>=3){
+                    Toast.makeText(Starperformers.this, "一个商家只能添加3个", Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivityForResult(new Intent(Starperformers.this, Addstar.class), 1);
+                }
             }
         });
         starAdapter.getcall(new CallStar() {
             @Override
-            public void Call(View view,String id) {
+            public void Call(View view,String id,int i,String file_id) {
                 getData();
+                if(i>-1&&id!=null&&file_id!=null){
+                    Intent intent = new Intent(Starperformers.this, Addstar.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("file_id",file_id);
+                    intent.putExtra("name",result.get(i).getStaff_name());
+                    intent.putExtra("info",result.get(i).getStaff_info());
+                    startActivityForResult(intent, 3);
+                }
             }
         });
-        getData();
     }
 
     @Override
@@ -78,6 +91,9 @@ public class Starperformers extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 1) {
+            getData();
+            starAdapter.notifyDataSetChanged();
+        }else if(requestCode == 3 && resultCode == 4){
             getData();
             starAdapter.notifyDataSetChanged();
         }

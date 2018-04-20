@@ -8,7 +8,6 @@ import com.plt.yzplatform.gson.converter.StringConverter;
  * Created by glp on 2018/3/15.
  * 防止后台返回值字段为空
  */
-
 public class GsonFactory {
     public static Gson create() {
         GsonBuilder gb = new GsonBuilder();

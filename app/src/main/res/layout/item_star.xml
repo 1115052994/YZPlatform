@@ -98,6 +98,14 @@
                     />
 
             </RelativeLayout>
+            <TextView
+                android:id="@+id/item_estimate"
+                android:textSize="@dimen/text_size_13sp"
+                android:text="已通过"
+                android:textColor="@color/theme_coloer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
     </LinearLayout>

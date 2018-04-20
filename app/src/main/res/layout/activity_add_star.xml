@@ -14,7 +14,7 @@
         android:id="@+id/addition_image"
         android:layout_below="@id/view2"
         android:layout_marginTop="@dimen/common10dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/circle_2"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_centerHorizontal="true"/>
@@ -47,7 +47,7 @@
         <EditText
             android:id="@+id/addition_ed_name"
             android:layout_marginLeft="@dimen/common18dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入姓名"
             android:background="@null"

@@ -19,6 +19,7 @@ import com.plt.yzplatform.utils.PhotoUtils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.CircleImageView;
+import com.plt.yzplatform.view.OrdinaryDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -66,6 +67,7 @@ public class StarAdapter extends BaseAdapter {
             viewHolder.item_introduce=view.findViewById(R.id.star_item_introduce);
             viewHolder.item_lilayout1=view.findViewById(R.id.item_lilayout1);
             viewHolder.item_lilayout2=view.findViewById(R.id.item_lilayout2);
+            viewHolder.item_estimate=view.findViewById(R.id.item_estimate);
             view.setTag(viewHolder);
         }else {
             viewHolder= (ViewHolder) view.getTag();
@@ -117,34 +119,59 @@ public class StarAdapter extends BaseAdapter {
                 ToastUtil.noNetAvailable(context);
             }
         }
+        switch (result.get(i).getStaff_state()){
+            case "1":
+                viewHolder.item_estimate.setText("审核不通过");
+                break;
+            case "2":
+                viewHolder.item_estimate.setText("审核通过");
+                break;
+            case "3":
+                viewHolder.item_estimate.setText("待审核");
+                break;
+        }
+
         //删除点击事件
         viewHolder.item_lilayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 Toast.makeText(context, i+"删除", Toast.LENGTH_SHORT).show();
                 staff_id = result.get(i).getStaff_id();
-                if(callRenewal!=null){
-                    if (NetUtil.isNetAvailable(context)) {
-                        OkHttpUtils.get()
-                                .url(Config.DELETESTAR)
-                                .addHeader("user_token", Prefs.with(context).read("user_token"))
-                                .addParams("staff_id",staff_id)
-                                .build()
-                                .execute(new StringCallback() {
-                                    @Override
-                                    public void onError(Call call, Exception e, int id) {
-                                        ToastUtil.noNAR(context);
-                                    }
+                final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("删除明星员工").setMessage2("删除后不可恢复，确定清除？").showDialog();
+                ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
+                    @Override
+                    public void onNoClick() {
 
-                                    @Override
-                                    public void onResponse(String response, int id) {
-                                        Log.i("aaaa", "删除: " + response);
-                                        callRenewal.Call(view,staff_id);
-
-                                    }
-                                });
+                        ordinaryDialog.dismiss();
                     }
-                }
+                });
+                ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+                    @Override
+                    public void onYesClick() {
+                        if(callRenewal!=null){
+                            if (NetUtil.isNetAvailable(context)) {
+                                OkHttpUtils.get()
+                                        .url(Config.DELETESTAR)
+                                        .addHeader("user_token", Prefs.with(context).read("user_token"))
+                                        .addParams("staff_id",staff_id)
+                                        .build()
+                                        .execute(new StringCallback() {
+                                            @Override
+                                            public void onError(Call call, Exception e, int id) {
+                                                ToastUtil.noNAR(context);
+                                            }
+                                            @Override
+                                            public void onResponse(String response, int id) {
+                                                Log.i("aaaa", "删除: " + response);
+                                                callRenewal.Call(view,staff_id,-1,null);
+                                            }
+                                        });
+                            }
+                        }
+                        ordinaryDialog.dismiss();
+                    }
+                });
+
             }
         });
         //编辑点击事件
@@ -152,46 +179,15 @@ public class StarAdapter extends BaseAdapter {
             @Override
             public void onClick(final View view) {
                 Toast.makeText(context, i+"编辑", Toast.LENGTH_SHORT).show();
-                if (NetUtil.isNetAvailable(context)) {
-                    OkHttpUtils.post()
-                            .url(Config.UPDATASTAR)
-                            .addHeader("user_token", Prefs.with(context).read("user_token"))
-                            .addParams("staff_name","200000")
-                            .addParams("staff_photo_file_id","767e819e12154c43a4857bc20d89b343")
-                            .addParams("staff_reco","2")
-                            .addParams("staff_info","200000")
-                            .addParams("staff_id","40")
-                            .build()
-                            .execute(new StringCallback() {
-                                @Override
-                                public void onError(Call call, Exception e, int id) {
-                                    ToastUtil.noNAR(context);
-                                }
-
-                                @Override
-                                public void onResponse(String response, int id) {
-
-                                    try {
-                                        Log.d("aaaa", "更新"+response);
-                                        JSONObject obj = new JSONObject(response);
-                                        String status = obj.get("status").toString();
-                                        if(status.equals("1")){
-                                            callRenewal.Call(view,staff_id);
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            });
-                }
+                staff_id = result.get(i).getStaff_id();
+                callRenewal.Call(view,staff_id,i,result.get(i).getStaff_photo_file_id());
             }
         });
         return view;
     }
     class ViewHolder{
         CircleImageView item_head_image;
-        TextView item_name,item_introduce;
+        TextView item_name,item_introduce,item_estimate;
         RelativeLayout item_lilayout1,item_lilayout2;
     }
     public void getcall(CallStar callRenewal){
