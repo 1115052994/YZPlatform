@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.plt.yzplatform.R;
@@ -20,6 +19,7 @@ import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
+import com.plt.yzplatform.view.OrdinaryDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -52,7 +52,20 @@ public class Starperformers extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if(result.size()>=3){
-                    Toast.makeText(Starperformers.this, "一个商家只能添加3个", Toast.LENGTH_SHORT).show();
+                    final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(Starperformers.this).setCancel("知道了").setMessage1("修改信息").setMessage2("信息将会提交到服务器，确定提交？").showDialog();
+                    ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
+                        @Override
+                        public void onNoClick() {
+                            ordinaryDialog.dismiss();
+                        }
+                    });
+                    ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+                        @Override
+                        public void onYesClick() {
+
+                            ordinaryDialog.dismiss();
+                        }
+                    });
                 }else {
                     startActivityForResult(new Intent(Starperformers.this, Addstar.class), 1);
                 }
