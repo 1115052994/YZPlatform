@@ -241,7 +241,7 @@
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/text_size_17sp"
                 android:textColor="@color/bg_color"
-                android:text="支付"/>
+                android:text="下单"/>
         </RelativeLayout>
 
         <TextView
@@ -272,4 +272,7 @@
             android:layout_centerVertical="true"
             android:text="总价￥50"/>
     </RelativeLayout>
+    <View
+    style="@style/gray_line"
+    />
 </LinearLayout>

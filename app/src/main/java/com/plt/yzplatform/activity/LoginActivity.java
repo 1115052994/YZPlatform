@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
 
         } else {
             //自动登录
-            JumpUtil.newInstance().jumpRight(this,Starperformers.class);
+            JumpUtil.newInstance().jumpRight(this,SearchActivity.class);
         }
     }
 
@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity {
                                         JSONObject obj = new JSONObject(data);
                                         String user_token = obj.getString("user_token");
                                         Prefs.with(getApplicationContext()).write("user_token",user_token);
-                                        JumpUtil.newInstance().jumpRight(LoginActivity.this,Starperformers.class);
+                                        JumpUtil.newInstance().jumpRight(LoginActivity.this,SearchActivity.class);
                                     }else {
                                         ToastUtil.show(LoginActivity.this,object.getString("message"));
                                     }

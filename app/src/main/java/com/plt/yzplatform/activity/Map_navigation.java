@@ -43,6 +43,7 @@ public class Map_navigation extends AppCompatActivity implements AMapNaviViewLis
         mAMapNaviView.onCreate(savedInstanceState);
         //获取AMapNavi实例
         mAMapNavi = AMapNavi.getInstance(getApplicationContext());
+        mAMapNavi.setUseInnerVoice(true);
         //添加监听回调，用于处理算路成功
         mAMapNavi.addAMapNaviListener(this);
     }
@@ -98,7 +99,7 @@ public class Map_navigation extends AppCompatActivity implements AMapNaviViewLis
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        start.add(new NaviLatLng(39.92, 116.43));
+        //start.add(new NaviLatLng(39.92, 116.43));
         end.add(new NaviLatLng(38.92, 116.53));
 
         //这是from：起点坐标；

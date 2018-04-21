@@ -110,4 +110,8 @@
             android:text="1234567865432456"
             />
     </LinearLayout>
+    <View
+        style="@style/gray_line"
+        android:layout_marginTop="@dimen/common10dp"
+        />
 </LinearLayout>

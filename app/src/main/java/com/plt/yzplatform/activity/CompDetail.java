@@ -155,7 +155,7 @@ public class CompDetail extends BaseActivity {
 
     private String comp_id = "24";//商家Id
     private String comp_phone = "";
-
+    private Double comp_lon,comp_lat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -512,6 +512,8 @@ public class CompDetail extends BaseActivity {
                                     locTv.setText(infoBean.getAuth_comp_addr());
                                     numTv.setText(infoBean.getComp_order_count() + "人");
                                     comp_phone = infoBean.getPhone_number();
+                                    comp_lon = infoBean.getAuth_comp_lon();
+                                    comp_lat = infoBean.getAuth_comp_lat();
                                     switch (infoBean.getComp_eval_level()) {
                                         case 5:
                                             star5.setChecked(true);
@@ -702,6 +704,9 @@ public class CompDetail extends BaseActivity {
 //        offset = -position[1] + headHeight + statusHeight;
         switch (view.getId()) {
             case R.id.image_dh:
+                ToastUtil.show(this,"正在进入导航请稍等...");
+                Intent intent = new Intent();
+                JumpUtil.newInstance().jumpLeft(this,Map_navigation.class);
                 break;
             case R.id.phone:
                 call(comp_phone);
