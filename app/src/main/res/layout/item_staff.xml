@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/name_tv"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/common30dp"
+            android:layout_marginRight="@dimen/common15dp"
             android:text="明星员工"
             android:textSize="@dimen/text_size_13sp"
             android:textColor="@color/text_ff96"/>

@@ -1,6 +1,7 @@
 package com.plt.yzplatform.config;
 
 /**
+ *
  * 通用配置文件，用于配置整个系统使用的资源
  */
 
@@ -12,10 +13,9 @@ public class Config {
 
     public static final String URL = "http://192.168.2.223/";
 
-    public static final String S = "mymvc?mvc_id=";
+    public static final String M = "http://192.168.2.223/";
 
-//    public static final String M = "http://192.168.2.233/";
-    public static final String M = "http://192.168.1.222/";
+    public static final String S = "mymvc?mvc_id=";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -37,6 +37,9 @@ public class Config {
 
     //上传图片base64
     public static final String UPLOADFILE = URL + S + "uploadFile";
+
+    //根据文件id获取图片
+    public static final String GETFILE = URL + S + "getFile";
 
     //获取企业认证信息
     public static final String GETCOMP_INFO = URL + S + "getCompInfo";
@@ -71,11 +74,14 @@ public class Config {
     //根据图片id获取base64
     public static final String GET_BASE64 = URL + S + "getFile";
 
-    //模糊搜索商户
-    public static final String GETSEARCHCOMP = URL + S + "getSearchComp";
+    //联想搜索商户
+    public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
+
+    //联想搜索Car
+    public static final String GETSEARCHCAR = URL + S +"getSearchCar";
 
     //热搜
-    public static final String GETSEARCHHOTWORD = URL + S + "getSearchHotWord";
+    public static final String GETSEARCHHOTWORD = URL + S +"getSearchHotWord";
 
     //首页车服获取banner和icon
     public static final String GET_SERVICE_IMG = URL + S + "getCompIcon";
@@ -86,6 +92,14 @@ public class Config {
     //服务详情
     public static final String GETPRODUCTITEMBYSERVERTYPE = URL + S + "getProductItemByServerType";
 
+    //查看企业评价
+    public static final String QUERYCOMPEVALUATE = URL + S +"queryCompeValuate";
+
+    //车商评价获取信息
+    public static final String COMMENTORCOMPNAME = URL + S +"commentOrCompName";
+
+    //车商评价
+    public static final String ACCRETIONEVALUATE = URL + S +"accretionEvaluate";
     //车服列表-获取列表（智能排序）
     public static final String GET_CAR_SERVICE = URL + S + "getPassCompList";
 

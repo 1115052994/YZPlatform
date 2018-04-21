@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -155,7 +156,7 @@ public class TrackIndicatorView extends HorizontalScrollView implements ViewPage
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
 
-        if (changed && mItemWidth == 0 && mAdapter != null) {
+        if (/*changed && mItemWidth == 0 &&*/ mAdapter != null) {
             // 4. 指定Item的宽度
             mItemWidth = getItemWidth();
             // 循环指定Item的宽度
@@ -177,6 +178,7 @@ public class TrackIndicatorView extends HorizontalScrollView implements ViewPage
     public float getItemWidth() {
         // 有没有指定
         int parentWidth = getWidth();
+        Log.i("mTabVisibleNums","mTabVisibleNums="+mTabVisibleNums);
         if (mTabVisibleNums != 0) {
             return parentWidth / mTabVisibleNums;
         }
@@ -246,5 +248,9 @@ public class TrackIndicatorView extends HorizontalScrollView implements ViewPage
         if (state == 0) {
             mIsExecuteScroll = false;
         }
+    }
+
+    public void setmTabVisibleNums(float num){
+        mTabVisibleNums = num;
     }
 }

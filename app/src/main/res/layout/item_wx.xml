@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/common15dp"
-    android:orientation="vertical">
+    android:layout_marginTop="@dimen/common20dp"
+    android:orientation="vertical"
+    >
+    <!--android:descendantFocusability="blocksDescendants"-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +39,8 @@
             android:textColor="@color/bg_ff"
             android:text="￥36"/>
     </RelativeLayout>
-    <RelativeLayout
+
+    <!--<RelativeLayout
         android:id="@+id/item1"
         android:layout_marginTop="@dimen/common15dp"
         android:layout_width="match_parent"
@@ -200,7 +203,14 @@
             android:text="35"
             android:textSize="@dimen/text_size_13sp"
             android:textColor="@color/text_ff96"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
+
+    <!-- 嵌套RecyclerView -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_wx_child"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"

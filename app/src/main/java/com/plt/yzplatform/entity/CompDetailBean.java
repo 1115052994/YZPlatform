@@ -134,6 +134,15 @@ public class CompDetailBean {
                 private String comp_id;
                 private int comp_order_count;
                 private String auth_comp_img_head_file_id;
+                private String phone_number;
+
+                public String getPhone_number() {
+                    return phone_number;
+                }
+
+                public void setPhone_number(String phone_number) {
+                    this.phone_number = phone_number;
+                }
 
                 public String getAuth_comp_addr() {
                     return auth_comp_addr;

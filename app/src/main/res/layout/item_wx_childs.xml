@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/item1"
+        android:layout_marginTop="@dimen/common15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/image_car1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/common30dp"
+            android:src="@drawable/qy_car"/>
+        <TextView
+            android:id="@+id/wxName1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/image_car1"
+            android:text="刹车维修保养"
+            android:textSize="@dimen/text_size_16sp"
+            android:layout_marginLeft="@dimen/common5dp"
+            android:textColor="@color/text_44"/>
+
+       <TextView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/image_wallet"
+            android:layout_toRightOf="@id/wxName1_tv"
+            android:layout_marginLeft="@dimen/common10dp"
+            android:layout_marginRight="@dimen/common10dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_ff96"
+            android:lines="1"
+            android:text=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"/>
+
+        <ImageView
+            android:id="@+id/image_wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/price1_tv"
+            android:layout_marginRight="@dimen/common5dp"
+            android:src="@drawable/qy_wallwt"/>
+        <TextView
+            android:id="@+id/price1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/common15dp"
+            android:text="35"
+            android:textSize="@dimen/text_size_13sp"
+            android:textColor="@color/text_ff96"/>
+    </RelativeLayout>
+</LinearLayout>
