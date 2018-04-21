@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
 
         } else {
             //自动登录
-            JumpUtil.newInstance().jumpRight(this,SearchActivity.class);
+            JumpUtil.newInstance().jumpRight(this,Starperformers.class);
         }
     }
 
@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity {
                                         JSONObject obj = new JSONObject(data);
                                         String user_token = obj.getString("user_token");
                                         Prefs.with(getApplicationContext()).write("user_token",user_token);
-                                        JumpUtil.newInstance().jumpRight(LoginActivity.this,SearchActivity.class);
+                                        JumpUtil.newInstance().jumpRight(LoginActivity.this,Starperformers.class);
                                     }else {
                                         ToastUtil.show(LoginActivity.this,object.getString("message"));
                                     }
@@ -169,7 +169,6 @@ public class LoginActivity extends BaseActivity {
                                  }
                                  */
                                 try {
-
                                     JSONObject jsonObject = new JSONObject(response);
                                     if ("1".equals(jsonObject.getString("status"))) {
                                         String data = jsonObject.getString("data");
@@ -207,7 +206,7 @@ public class LoginActivity extends BaseActivity {
         setRightTextClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpUtil.newInstance().jumpRight(LoginActivity.this, CompDetail.class);
+                JumpUtil.newInstance().jumpRight(LoginActivity.this, RegisterActivity.class);
             }
         });
     }

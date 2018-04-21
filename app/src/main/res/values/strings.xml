@@ -20,4 +20,7 @@
     <string name="usercenter_signcode_error">验证码发送失败</string>
     <string name="usercenter_phone_error">手机号码不正确</string>
     <string name="usercenter_signcode_empty">验证码为空</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -13,9 +13,11 @@ public class Config {
 
     public static final String URL = "http://192.168.2.223/";
 
-    public static final String M = "http://192.168.2.223/";
 
     public static final String S = "mymvc?mvc_id=";
+
+//    public static final String M = "http://192.168.2.233/";
+    public static final String M = "http://192.168.2.223/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";

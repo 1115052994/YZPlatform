@@ -43,6 +43,7 @@ public class Addstar extends BaseActivity {
     @BindView(R.id.addition_layout)
     LinearLayout additionLayout;
     private String file_id;
+    private String file_id2;
     private String id;
     private String text = "示例 精通汽车工作原理以及各种故障排查和解决，有较强的... （最多输入150个字）";
 
@@ -122,8 +123,8 @@ public class Addstar extends BaseActivity {
             //给字体设置大小
             int end = text.length();
             SpannableString textSpan = new SpannableString(text);
-            textSpan.setSpan(new AbsoluteSizeSpan(25), 0, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-            textSpan.setSpan(new AbsoluteSizeSpan(23), 2, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            textSpan.setSpan(new AbsoluteSizeSpan(34), 0, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            textSpan.setSpan(new AbsoluteSizeSpan(32), 2, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             additionEdIntroduce.setHint(textSpan);
         }
 
@@ -149,18 +150,18 @@ public class Addstar extends BaseActivity {
     @OnClick(R.id.addition_image)
     public void onViewClicked() {
         upDataPicture(this,additionImage,null,"员工头像");
-        file_id = Prefs.with(getApplicationContext()).read("员工头像");
-
+        file_id2 = Prefs.with(getApplicationContext()).read("员工头像");
+        Log.d("aaaaa", "图片1:"+file_id2);
     }
     //将数据上传到服务器
     private void PostData() {
         if (NetUtil.isNetAvailable(this)) {
-            if(file_id!=null){
+            if(file_id2!=null){
                 OkHttpUtils.post()
                         .url(Config.SAVESTAR)
                         .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
                         .addParams("staff_name",additionEdName.getText().toString())
-                        .addParams("staff_photo_file_id",file_id)
+                        .addParams("staff_photo_file_id",file_id2)
                         .addParams("staff_reco","2")
                         .addParams("staff_info",additionEdIntroduce.getText().toString())
                         .build()
@@ -172,7 +173,7 @@ public class Addstar extends BaseActivity {
                             @Override
                             public void onResponse(String response, int id) {
                                 try {
-                                    Log.d("aaaaaa", "onResponse: "+response);
+                                    Log.d("aaaaa", "图片2: "+file_id2);
                                     JSONObject obj = new JSONObject(response);
                                     String status = obj.get("status").toString();
                                     if(status.equals("1")){

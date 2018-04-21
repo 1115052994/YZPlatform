@@ -52,7 +52,7 @@ public class Starperformers extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if(result.size()>=3){
-                    final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(Starperformers.this).setCancel("知道了").setMessage1("修改信息").setMessage2("信息将会提交到服务器，确定提交？").showDialog();
+                    final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(Starperformers.this).setCancel("取消").setConfirm("知道了").setMessage1("不能添加超过3个员工").showDialog();
                     ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                         @Override
                         public void onNoClick() {
@@ -62,7 +62,6 @@ public class Starperformers extends BaseActivity {
                     ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
                         @Override
                         public void onYesClick() {
-
                             ordinaryDialog.dismiss();
                         }
                     });
@@ -113,6 +112,7 @@ public class Starperformers extends BaseActivity {
     }
     //得到数据并且更新数据
     private void getData() {
+        result.clear();
         if (NetUtil.isNetAvailable(this)) {
             OkHttpUtils.get()
                     .url(Config.SELECTSTAR)
@@ -125,8 +125,7 @@ public class Starperformers extends BaseActivity {
                         }
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.i(TAG, "onResponse获取数据: " + response);
-                            result.clear();
+                            Log.i("aaaaa", "图片获取数据: " + response);
                             Gson gson = GsonFactory.create();
                             Querystar querystar = gson.fromJson(response, Querystar.class);
                             if(querystar.getData().getResult()==null){

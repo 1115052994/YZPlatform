@@ -141,7 +141,6 @@ public class StarAdapter extends BaseAdapter {
                 ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                     @Override
                     public void onNoClick() {
-
                         ordinaryDialog.dismiss();
                     }
                 });
