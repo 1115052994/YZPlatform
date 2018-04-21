@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.plt.yzplatform.R;
-import com.plt.yzplatform.entity.Model;
+import com.plt.yzplatform.config.Config;
+import com.plt.yzplatform.entity.CarServiceImage;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -19,8 +21,9 @@ import java.util.List;
  */
 
 public class MainGridViewAdapter extends BaseAdapter {
-    private List<Model> mDatas;
+    private List<CarServiceImage.DataBean.ResultBean.ItemListBean> mDatas;
     private LayoutInflater inflater;
+    private Context context;
     /**
      * 页数下标,从0开始(当前是第几页)
      */
@@ -30,11 +33,12 @@ public class MainGridViewAdapter extends BaseAdapter {
      */
     private int pageSize;
 
-    public MainGridViewAdapter(Context context, List<Model> mDatas, int curIndex, int pageSize) {
+    public MainGridViewAdapter(Context context, List<CarServiceImage.DataBean.ResultBean.ItemListBean> mDatas, int curIndex, int pageSize) {
         inflater = LayoutInflater.from(context);
         this.mDatas = mDatas;
         this.curIndex = curIndex;
         this.pageSize = pageSize;
+        this.context = context;
     }
 
     /**
@@ -72,8 +76,10 @@ public class MainGridViewAdapter extends BaseAdapter {
          * 在给View绑定显示的数据时，计算正确的position = position + curIndex * pageSize
          */
         int pos = position + curIndex * pageSize;
-        viewHolder.tv.setText(mDatas.get(pos).name);
-        viewHolder.iv.setImageBitmap(mDatas.get(pos).iconRes);
+        viewHolder.tv.setText(mDatas.get(pos).getServerDesc());
+        Picasso.with(context).load(Config.BASE_URL + Config.Y + mDatas.get(pos).getServerImgPath()).into(viewHolder.iv);
+        /* 下载好的图片需要缓存到本地 */
+//        viewHolder.iv.setImageBitmap(mDatas.get(pos).getServerImgPath());
         return convertView;
     }
 

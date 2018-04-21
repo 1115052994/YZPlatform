@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context="com.plt.yzplatform.activity.ProductServiceActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="@dimen/common44dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="@dimen/common15dp"
+            android:src="@drawable/left_back_unchecked" />
+
+        <TextView
+            android:id="@+id/mSearch"
+            android:layout_width="@dimen/common240dp"
+            android:layout_marginLeft="@dimen/common31dp"
+            android:layout_height="@dimen/common31dp"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/common15dp"
+            android:background="@drawable/bg_main_search"
+            android:drawableLeft="@drawable/search_pic"
+            android:gravity="center"
+            android:paddingLeft="@dimen/common6dp"
+            android:text="搜索服务项"
+            android:textColor="@color/gray_a2" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/mDetails"
+    android:layout_height="@dimen/common45dp"
+    android:layout_marginBottom="@dimen/common1dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/common36dp">
+
+    <TextView
+        android:id="@+id/mName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableLeft="@drawable/product"
+        android:drawablePadding="@dimen/common15dp"
+        android:hint="输入产品名称"
+        android:text="刹车系统保养"
+        android:textColor="@color/black_33"
+        android:textColorHint="@color/gray_99"
+        android:textSize="@dimen/text_size_15sp" />
+
+    <TextView
+        android:id="@+id/mPrice"
+        android:layout_width="@dimen/common0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common53dp"
+        android:text="¥36.00"
+        android:textColor="@color/theme_coloer"
+        android:textColorHint="@color/gray_99"
+        android:textSize="@dimen/text_size_15sp" />
+
+    <ImageView
+        android:id="@+id/mDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/product_delete"
+        android:padding="@dimen/common15dp"/>
+
+</LinearLayout>

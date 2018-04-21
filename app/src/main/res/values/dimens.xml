@@ -89,6 +89,7 @@
     <dimen name="common220dp">220dp</dimen>
     <dimen name="common240dp">240dp</dimen>
     <dimen name="common250dp">250dp</dimen>
+    <dimen name="common264dp">264dp</dimen>
     <dimen name="common275dp">275dp</dimen>
     <dimen name="common300dp">300dp</dimen>
     <dimen name="common320dp">320dp</dimen>
