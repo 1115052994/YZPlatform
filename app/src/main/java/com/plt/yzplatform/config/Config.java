@@ -9,9 +9,9 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.222/";
+    public static final String BASE_URL = "http://192.168.2.223/";
 
-    public static final String URL = "http://192.168.1.222/";
+    public static final String URL = "http://192.168.2.223/";
 
     public static final String S = "mymvc?mvc_id=";
 
@@ -69,8 +69,11 @@ public class Config {
     //根据图片id获取base64
     public static final String GET_BASE64 = URL + S + "getFile";
 
-    //模糊搜索商户
+    //联想搜索商户
     public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
+
+    //联想搜索Car
+    public static final String GETSEARCHCAR = URL + S +"getSearchCar";
 
     //热搜
     public static final String GETSEARCHHOTWORD = URL + S +"getSearchHotWord";
@@ -84,4 +87,12 @@ public class Config {
     //服务详情
     public static final String GETPRODUCTITEMBYSERVERTYPE = URL + S +"getProductItemByServerType";
 
+    //查看企业评价
+    public static final String QUERYCOMPEVALUATE = URL + S +"queryCompeValuate";
+
+    //车商评价获取信息
+    public static final String COMMENTORCOMPNAME = URL + S +"commentOrCompName";
+
+    //车商评价
+    public static final String ACCRETIONEVALUATE = URL + S +"accretionEvaluate";
 }

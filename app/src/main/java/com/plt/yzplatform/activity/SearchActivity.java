@@ -59,6 +59,9 @@ public class SearchActivity extends AppCompatActivity {
     private List<String> hotListId = new ArrayList<>();
     private List<String> hisList = new ArrayList<>();
     private List<String> hisListId = new ArrayList<>();
+
+    //类别（汽车、商户）car/comp
+    private String type = "car";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +85,11 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("edittextview", "onTextChanged=" + editSearch.getText().toString());
-                getSearch(editSearch.getText().toString());
+                if("car".equals(type)){
+
+                }else if("comp".equals(type)) {
+                    getSearchComp(editSearch.getText().toString());
+                }
             }
 
             @Override
@@ -123,7 +130,7 @@ public class SearchActivity extends AppCompatActivity {
             OkHttpUtils.post()
                     .url(Config.GETSEARCHHOTWORD)
                     .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("hotword_type", "car")//car/comp
+                    .addParams("hotword_type", type)//car/comp
                     .build()
                     .execute(new StringCallback() {
 
@@ -182,12 +189,12 @@ public class SearchActivity extends AppCompatActivity {
         hisGvAapter.notifyDataSetChanged();
     }
 
-    private void getSearch(String s) {
+    private void getSearchComp(String s) {
         if (NetUtil.isNetAvailable(SearchActivity.this)) {
             OkHttpUtils.post()
                     .url(Config.GETSEARCHCOMP)
                     .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("comp_name", s)//car/comp
+                    .addParams("comp_name", s)
                     .build()
                     .execute(new StringCallback() {
 

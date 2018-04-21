@@ -26,8 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            tools:context="com.rock.design.SecondActivity">
+            tools:context="com.rock.design.SecondActivity"
+            android:id="@+id/corrdinLayout">
             <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -65,6 +67,82 @@
                             android:textColor="@color/text_33"
                             android:layout_marginLeft="@dimen/common5dp"
                             android:text="北京目标在线"/>
+                       <!-- <CheckBox
+                            android:layout_marginLeft="@dimen/common5dp"
+                            android:id="@+id/star1"
+                            android:layout_toRightOf="@id/comp_name"
+                            android:layout_width="@dimen/common15dp"
+                            android:layout_height="@dimen/common15dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/stars_bg"
+                            android:button="@null"
+                            android:checked="false"/>
+                        <CheckBox
+                            android:id="@+id/star2"
+                            android:layout_width="@dimen/common15dp"
+                            android:layout_height="@dimen/common15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/star1"
+                            android:background="@drawable/stars_bg"
+                            android:layout_marginLeft="@dimen/common3dp"
+                            android:button="@null"
+                            android:checked="false"/>
+                        <CheckBox
+                            android:id="@+id/star3"
+                            android:layout_width="@dimen/common15dp"
+                            android:layout_height="@dimen/common15dp"
+                            android:layout_toRightOf="@id/star2"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/stars_bg"
+                            android:layout_marginLeft="@dimen/common3dp"
+                            android:button="@null"
+                            android:checked="false"/>
+                        <CheckBox
+                            android:id="@+id/star4"
+                            android:layout_width="@dimen/common15dp"
+                            android:layout_height="@dimen/common15dp"
+                            android:layout_toRightOf="@id/star3"
+                            android:layout_marginLeft="@dimen/common3dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/stars_bg"
+                            android:button="@null"
+                            android:checked="false"/>
+                        <CheckBox
+                            android:id="@+id/star5"
+                            android:layout_width="@dimen/common15dp"
+                            android:layout_height="@dimen/common15dp"
+                            android:layout_toRightOf="@id/star4"
+                            android:layout_marginLeft="@dimen/common3dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/stars_bg"
+                            android:button="@null"
+                            android:checked="false"/>-->
+                        <TextView
+                            android:id="@+id/num_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/buy"
+                            android:text="5人"
+                            android:textSize="@dimen/text_size_13sp"
+                            android:textColor="@color/text_ff96"
+                            />
+                        <TextView
+                            android:id="@+id/buy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="购买"
+                            android:textSize="@dimen/text_size_13sp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/common14dp"
+                            />
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal">
                         <CheckBox
                             android:layout_marginLeft="@dimen/common5dp"
                             android:id="@+id/star1"
@@ -115,27 +193,7 @@
                             android:background="@drawable/stars_bg"
                             android:button="@null"
                             android:checked="false"/>
-                        <TextView
-                            android:id="@+id/num_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@id/buy"
-                            android:text="5人"
-                            android:textSize="@dimen/text_size_13sp"
-                            android:textColor="@color/text_ff96"
-                            />
-                        <TextView
-                            android:id="@+id/buy"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="购买"
-                            android:textSize="@dimen/text_size_13sp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/common14dp"
-                            />
-                    </RelativeLayout>
+                    </LinearLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common30dp"
@@ -169,7 +227,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common110dp"
                         android:background="@color/back_f4"
-                        android:paddingLeft="@dimen/common10dp"
+                        android:paddingLeft="@dimen/common5dp"
                         app:tabVisibleNums="1.5"
                         />
                 </LinearLayout>
@@ -187,7 +245,9 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
         </android.support.design.widget.CoordinatorLayout>
 
+        <!-- app:layout_scrollFlags="scroll|exitUntilCollapsed" -->
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:id="@+id/recyclerView_foot_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
