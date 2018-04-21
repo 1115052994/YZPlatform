@@ -11,18 +11,30 @@
     android:paddingRight="@dimen/common5dp"
     android:paddingTop="@dimen/common5dp">
 
-    <com.plt.yzplatform.view.ZQImageViewRoundOval
-        android:id="@+id/mIcon"
+    <RelativeLayout
         android:layout_width="@dimen/common178dp"
-        android:layout_height="@dimen/common105dp"
-        android:scaleType="fitXY"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/text" />
+        android:layout_height="@dimen/common105dp">
+
+        <com.plt.yzplatform.view.ZQImageViewRoundOval
+            android:id="@+id/mIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/text" />
+
+        <ImageView
+            android:id="@+id/isR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cf_rz" />
+    </RelativeLayout>
+
 
     <LinearLayout
-        android:layout_gravity="center_vertical"
         android:layout_width="@dimen/common0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingLeft="@dimen/common7dp">
@@ -50,6 +62,7 @@
                 style="@style/roomRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:isIndicator="true"
                 android:numStars="5"
                 android:rating="4" />
             <!--<ImageView-->
@@ -90,12 +103,13 @@
                 android:text="距我："
                 android:textColor="@color/text_66"
                 android:textSize="@dimen/text_size_11sp" />
+
             <TextView
                 android:id="@+id/mDistance"
                 style="@style/black33_text_16sp"
+                android:layout_marginLeft="@dimen/common5dp"
                 android:text="400km"
                 android:textColor="@color/text_66"
-                android:layout_marginLeft="@dimen/common5dp"
                 android:textSize="@dimen/text_size_11sp" />
 
         </LinearLayout>
@@ -103,10 +117,10 @@
         <TextView
             android:id="@+id/mAddress"
             style="@style/black33_text_16sp"
-            android:text="北京北京市海淀区西直门北大街蓝枫国际中心B座1110"
             android:layout_marginTop="@dimen/common8dp"
             android:lines="2"
             android:maxLines="2"
+            android:text="北京北京市海淀区西直门北大街蓝枫国际中心B座1110"
             android:textColor="@color/text_66"
             android:textSize="@dimen/text_size_11sp" />
 

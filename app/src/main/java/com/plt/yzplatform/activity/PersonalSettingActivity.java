@@ -113,7 +113,7 @@ public class PersonalSettingActivity extends BaseActivity {
                                 PersonalSetting.DataBean.ResultBean resultBean = setting.getData().getResult();
                                 pers_id = resultBean.getPers_id();
                                 head_file_id = resultBean.getPers_head_file_id();
-                                if (null == head_file_id){
+                                if (head_file_id == ""){
 
                                 }else {
                                     getPic(PersonalSettingActivity.this,head_file_id,icon);

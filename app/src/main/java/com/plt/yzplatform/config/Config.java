@@ -8,14 +8,17 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.222/";
+    public static final String BASE_URL = "http://192.168.2.223/";
 
-    public static final String URL = "http://192.168.1.222/";
+    public static final String URL = "http://192.168.2.223/";
 
     public static final String S = "mymvc?mvc_id=";
 
 //    public static final String M = "http://192.168.2.233/";
     public static final String M = "http://192.168.1.222/";
+
+    //用于拼接图片地址url
+    public static final String Y = "myres?id=";
 
     //获取验证码
     public static final String GETCODE = BASE_URL + S + "sendCode";
@@ -34,9 +37,6 @@ public class Config {
 
     //上传图片base64
     public static final String UPLOADFILE = URL + S + "uploadFile";
-
-    //根据文件id获取图片
-    public static final String GETFILE = URL + S + "getFile";
 
     //获取企业认证信息
     public static final String GETCOMP_INFO = URL + S + "getCompInfo";
@@ -85,6 +85,9 @@ public class Config {
 
     //服务详情
     public static final String GETPRODUCTITEMBYSERVERTYPE = URL + S + "getProductItemByServerType";
+
+    //车服列表-获取列表（智能排序）
+    public static final String GET_CAR_SERVICE = URL + S + "getPassCompList";
 
     //企业保存明星员工
     public static final String SAVESTAR = M +S+ "saveStaff";
