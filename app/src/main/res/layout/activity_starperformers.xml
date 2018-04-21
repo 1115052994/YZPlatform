@@ -1,0 +1,43 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <include layout="@layout/header_layout" />
+    <View
+        android:id="@+id/view1"
+        android:layout_below="@id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="#dadada"/>
+    <ListView
+        android:id="@+id/star_list"
+        android:layout_below="@id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="@dimen/common300dp"
+        android:layout_height="@dimen/common40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/common80dp"
+        android:background="@drawable/star_circle"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star_add"/>
+        <TextView
+            android:textColor="#ffffff"
+            android:text="添加员工"
+            android:layout_marginLeft="@dimen/common10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

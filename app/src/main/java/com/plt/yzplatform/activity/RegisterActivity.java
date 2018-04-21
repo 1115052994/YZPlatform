@@ -320,7 +320,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setRightText("登陆");
+        setRightText("登录");
         setLeftImageClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

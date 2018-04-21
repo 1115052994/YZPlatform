@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.plt.yzplatform.view.CircleImageView
+        android:layout_marginLeft="@dimen/common15dp"
+        android:id="@+id/star_item_head_image"
+        android:layout_width="@dimen/common99dp"
+        android:layout_height="@dimen/common99dp"
+        android:layout_marginTop="@dimen/common15dp"
+        android:background="@drawable/circle_2"
+        android:layout_marginBottom="@dimen/common15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/common16dp"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/common26dp"
+        android:layout_marginLeft="@dimen/common15dp"
+        android:layout_marginRight="@dimen/common20dp">
+        <TextView
+            android:id="@+id/star_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_13sp"
+            android:text="姓名: 111111"
+            android:textColor="@color/text_33"
+            />
+        <TextView
+            android:id="@+id/star_item_introduce"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:maxEms="18"
+            android:text="介绍: 222222"
+            android:singleLine="false"
+            android:textSize="@dimen/text_size_13sp"
+            android:layout_marginTop="@dimen/common17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_33"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/common16dp"
+            >
+            <RelativeLayout
+                android:id="@+id/item_lilayout1"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="删除"
+                    android:layout_alignBottom="@id/item_iv2"
+                    android:layout_toRightOf="@id/item_iv2"
+                    android:textSize="@dimen/text_size_13sp"
+                    android:textColor="@color/black_66"
+
+                    />
+                <ImageView
+                    android:id="@+id/item_iv2"
+                    android:src="@drawable/star_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/common10dp"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginRight="@dimen/common17dp"
+                android:layout_toLeftOf="@id/item_lilayout1"
+                android:id="@+id/item_lilayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/item_lilayout1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="编辑"
+                    android:layout_alignBottom="@id/item_iv3"
+                    android:layout_toRightOf="@id/item_iv3"
+                    android:textSize="@dimen/text_size_13sp"
+                    android:textColor="@color/black_66"
+                    />
+                <ImageView
+                    android:layout_marginRight="@dimen/common10dp"
+                    android:id="@+id/item_iv3"
+                    android:src="@drawable/star_editor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/item_estimate"
+                android:textSize="@dimen/text_size_13sp"
+                android:text="已通过"
+                android:textColor="@color/theme_coloer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

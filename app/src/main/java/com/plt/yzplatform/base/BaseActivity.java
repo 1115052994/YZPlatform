@@ -40,7 +40,6 @@ import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.PhotoUtils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
-import com.plt.yzplatform.view.CircleImageView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -102,6 +101,8 @@ public class BaseActivity extends AppCompatActivity{
                 OkHttpUtils.post()
                         .url(Config.GET_USERTOKEN)
                         .addHeader("user_token",user_token)
+                        //
+                        .addParams("","")
                         .build()
                         .execute(new StringCallback() {
                             @Override
@@ -532,6 +533,7 @@ public class BaseActivity extends AppCompatActivity{
                                             if ("1".equals(jsonObject.getString("status"))){
                                                 String data = jsonObject.getString("data");
                                                 JSONObject object = new JSONObject(data);
+                                                Prefs.with(mContext).remove(sType);
                                                 String file_id = object.getString("file_id");
                                                 Prefs.with(mContext).write(sType,file_id);
                                                 if (bitmap1 != null) {
@@ -546,41 +548,6 @@ public class BaseActivity extends AppCompatActivity{
                     }else {
                         ToastUtil.noNetAvailable(mContext);
                     }
-//                    if (NetUtil.isNetAvailable(mContext)) {
-//                        OkHttpUtils.post()
-//                                .url(NetConfig.UPDATA_PIC)
-//                                .addParams("base64", PhotoUtils.bitmapToBase64(bitmap1))
-//                                .addParams("user_id", user_id)
-//                                .build()
-//                                .execute(new StringCallback() {
-//                                    @Override
-//                                    public void onError(Call call, Exception e, int id) {
-//                                        ToastUtil.noNAR(mContext);
-//                                    }
-//
-//                                    @Override
-//                                    public void onResponse(String response, int id) {
-//                                        Log.d(TAG, "onResponse:上传图片返回的id " + response);
-//                                        try {
-//                                            JSONObject jsonObject = new JSONObject(response);
-//                                            if (jsonObject.getString("status").equals("1")) {
-//                                                //上传成功
-//
-//                                                String file_id = jsonObject.getString("data");
-//                                                Prefs.with(mContext).write(sType, file_id);
-//                                                if (bitmap1 != null) {
-//                                                    showImages(bitmap1);
-//                                                }
-//                                            }
-//
-//                                        } catch (JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    }
-//                                });
-//                    } else {
-//                        ToastUtil.noNetAvailable(mContext);
-//                    }
                     break;
             }
 

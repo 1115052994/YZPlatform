@@ -75,6 +75,14 @@
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.CompDetail" />
         <activity android:name=".activity.AppraiseActivity"></activity>
+        <activity android:name=".activity.CompDetail" />
+        <activity android:name=".activity.AddProductActivity" />
+        <activity android:name=".activity.ProductServiceActivity"></activity>
+        <activity android:name=".activity.CompDetail" />
+        <activity android:name=".activity.Starperformers" >
+
+        </activity>
+        <activity android:name=".activity.Addstar"></activity>
     </application>
 
 </manifest>

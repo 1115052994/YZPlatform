@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context="com.plt.yzplatform.activity.AddProductActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/header_layout" />
+
+        <LinearLayout
+            style="@style/ll_normal_horizontal"
+            android:layout_height="@dimen/common50dp"
+            android:layout_marginTop="@dimen/common1dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/common15dp"
+            android:paddingRight="@dimen/common15dp">
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:drawableLeft="@drawable/product_heart"
+                android:drawablePadding="@dimen/common15dp"
+                android:text="服务类型" />
+
+            <TextView
+                android:id="@+id/mType"
+                style="@style/black33_text_16sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableRight="@drawable/right_go" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ll_normal_horizontal"
+            android:layout_marginTop="@dimen/common1dp">
+
+            <EditText
+                android:id="@+id/mName"
+                style="@style/black33_text_16sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="服务名称"
+                android:paddingLeft="@dimen/common46dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ll_normal_horizontal"
+            android:layout_height="@dimen/common50dp"
+            android:layout_marginTop="@dimen/common8dp">
+
+            <EditText
+                android:id="@+id/mYouhui"
+                style="@style/black33_edit_16sp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/product_discounts"
+                android:drawablePadding="@dimen/common15dp"
+                android:hint="输入优惠价格"
+                android:paddingLeft="@dimen/common15dp" />
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:text="（请输入优惠价格）" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ll_normal_horizontal"
+            android:layout_weight="1">
+
+            <ListView
+                android:id="@+id/product_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_color" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/mAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ll_price"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/common31dp"
+        android:layout_marginRight="@dimen/common16dp"
+        android:background="@null"
+        android:src="@drawable/product_add" />
+
+    <LinearLayout
+        android:id="@+id/ll_price"
+        style="@style/ll_normal_horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:paddingRight="@dimen/common15dp"
+        android:layout_above="@id/uploading">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总价："/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/theme_coloer"
+            android:text="¥500.00"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/uploading"
+        style="@style/button_bottom"
+        android:layout_alignParentBottom="true"
+        android:text="提交" />
+
+</RelativeLayout>

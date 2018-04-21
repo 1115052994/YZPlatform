@@ -235,6 +235,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //                    Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
                     ToastUtil.show(MainActivity.this, "已定位到当前城市");
                     mLocation.setText(amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1));
+
                     isFirstLoc = false;
                 }
 

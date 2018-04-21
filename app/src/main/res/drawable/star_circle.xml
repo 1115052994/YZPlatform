@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 这个是设置控件的圆角-->
+    <corners android:radius="20dp"/>
+    <solid android:width="1px" android:color="#FF9696" />
+</shape>
