@@ -18,6 +18,7 @@ import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.GrideViewAdapter;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.HotCar;
+import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
@@ -35,6 +36,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 
 public class SearchActivity extends AppCompatActivity {
@@ -62,6 +64,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //类别（汽车、商户）car/comp
     private String type = "car";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,10 +88,10 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("edittextview", "onTextChanged=" + editSearch.getText().toString());
-                if("car".equals(type)){
-
-                }else if("comp".equals(type)) {
-                    getSearchComp(editSearch.getText().toString());
+                if ("car".equals(type)) {
+                    getSeachCar(editSearch.getText().toString().trim());
+                } else if ("comp".equals(type)) {
+                    getSearchComp(editSearch.getText().toString().trim());
                 }
             }
 
@@ -125,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
         getHot();
     }
 
-    public void getHis() {
+    public void getHot() {
         if (NetUtil.isNetAvailable(SearchActivity.this)) {
             OkHttpUtils.post()
                     .url(Config.GETSEARCHHOTWORD)
@@ -169,7 +172,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    public void getHot() {
+    public void getHis() {
         Set<String> value = new HashSet<>();
         value.add("大众");
         value.add("宝马");
@@ -222,7 +225,45 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void secleted(String str){
+    private void getSeachCar(String s) {
+        if (NetUtil.isNetAvailable(SearchActivity.this)) {
+            OkHttpUtils.post()
+                    .url(Config.GETSEARCHCOMP)
+                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
+                    .addParams("car_name", s)
+                    .build()
+                    .execute(new StringCallback() {
+
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            Log.d("onResponse", "onResponse" + response);
+                            try {
+                                JSONObject object = new JSONObject(response);
+                                String data = object.getString("data");
+                                if (data != null) {
+                                    Gson gson = new Gson();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+        } else {
+            ToastUtil.noNetAvailable(SearchActivity.this);
+        }
+    }
+
+    private void secleted(String str) {
         secleted = str;
+    }
+
+    @OnClick(R.id.cancle)
+    public void onViewClicked() {
+        JumpUtil.newInstance().finishRightTrans(this);
     }
 }

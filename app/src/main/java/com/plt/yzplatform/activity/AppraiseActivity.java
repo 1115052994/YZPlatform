@@ -275,7 +275,7 @@ public class AppraiseActivity extends BaseActivity {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getString("status").equals("1")) {
                                     ToastUtil.show(AppraiseActivity.this,"评价成功");
-//                                    AppraiseActivity.this.finish();
+                                    JumpUtil.newInstance().finishRightTrans(AppraiseActivity.this);
                                 } else {
                                     ToastUtil.noNAR(AppraiseActivity.this);
                                 }
