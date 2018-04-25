@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.plt.yzplatform.BuildConfig;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.CommonRecyclerAdapter;
 import com.plt.yzplatform.adapter.ViewHolder;
@@ -37,13 +38,16 @@ import com.plt.yzplatform.entity.CompAppraise;
 import com.plt.yzplatform.entity.CompDetailBean;
 import com.plt.yzplatform.entity.WeixiuBean;
 import com.plt.yzplatform.utils.JumpUtil;
+import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
+import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.CircleImageView;
 import com.plt.yzplatform.view.indicator.IndicatorAdapter;
 import com.plt.yzplatform.view.indicator.TrackIndicatorView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -58,6 +62,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 public class CompDetail extends BaseActivity {
 
@@ -154,7 +159,7 @@ public class CompDetail extends BaseActivity {
     private List<CompAppraise.DataBean.ResultBean> compAppraiseList = new ArrayList<>();
     private CommonRecyclerAdapter appraiseAdapter;
 
-    private String comp_id = "25";//商家Id
+    private String comp_id = "24";//商家Id
     private String comp_phone = "";
     private Double comp_lon, comp_lat;
 
@@ -163,7 +168,6 @@ public class CompDetail extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comp_detail);
         ButterKnife.bind(this);
-        initView();
         Intent intent = getIntent();
         if (intent != null) {
             Bundle bundle = intent.getExtras();
@@ -181,12 +185,11 @@ public class CompDetail extends BaseActivity {
                         Toast.makeText(CompDetail.this, "添加失败", Toast.LENGTH_SHORT).show();
                     }
                 });
-                Log.i("com_id", "comp_id=" + comp_id);
             }
         }
+        initView();
         initData();
         getData();
-
         //设置不加载更多
 //        smartRefreshLayout.setEnableLoadmore(false);
     }
@@ -492,7 +495,6 @@ public class CompDetail extends BaseActivity {
     }
 
     private void getData() {
-        Log.d("comp_id", "getData: " + comp_id);
         Map<String,String> map = new HashMap<>();
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.GETCOMPDETAIL, map, new OKhttptils.HttpCallBack() {
@@ -707,7 +709,6 @@ public class CompDetail extends BaseActivity {
                 break;
             case R.id.phone:
                 call(comp_phone);
-                ToastUtil.show(this, "打电话");
                 break;
             case R.id.evaluate:
                 Bundle loc = new Bundle();
@@ -726,46 +727,29 @@ public class CompDetail extends BaseActivity {
         }
     }
 
-    private void call(String phone) {
-        // 检查是否获得了权限（Android6.0运行时权限）
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            // 没有获得授权，申请授权
-            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) this,
-                    Manifest.permission.CALL_PHONE)) {
-                // 返回值：
-//                          如果app之前请求过该权限,被用户拒绝, 这个方法就会返回true.
-//                          如果用户之前拒绝权限的时候勾选了对话框中”Don’t ask again”的选项,那么这个方法会返回false.
-//                          如果设备策略禁止应用拥有这条权限, 这个方法也返回false.
-                // 弹窗需要解释为何需要该权限，再次请求授权
-                Toast.makeText(this, "请授权！", Toast.LENGTH_LONG).show();
-                // 帮跳转到该应用的设置界面，让用户手动授权
-                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", this.getPackageName(), null);
-                intent.setData(uri);
-                this.startActivity(intent);
-            } else {
-                // 不需要解释为何需要该权限，直接请求授权
-                ActivityCompat.requestPermissions((Activity) this,
-                        new String[]{Manifest.permission.CALL_PHONE},
-                        MY_PERMISSIONS_REQUEST_CALL_PHONE);
-            }
-        } else {
-            // 已经获得授权，可以打电话
-            if (TextUtils.isEmpty(phone)) {
-                // 提醒用户
-                // 注意：在这个匿名内部类中如果用this则表示是View.OnClickListener类的对象，
-                // 所以必须用MainActivity.this来指定上下文环境。
-                Toast.makeText(this, "号码不能为空！", Toast.LENGTH_SHORT).show();
-            } else {
-                // 拨号：激活系统的拨号组件
-                Intent intent = new Intent(); // 意图对象：动作 + 数据
-                intent.setAction(Intent.ACTION_CALL); // 设置动作
-                Uri data = Uri.parse("tel:" + phone); // 设置数据
-                intent.setData(data);
-                this.startActivity(intent); // 激活Activity组件
-            }
-        }
+
+    private RxPermissions rxPermission;
+    private void call(final String phone) {
+        // 申请定位权限
+        rxPermission = new RxPermissions(this);
+        rxPermission.request(Manifest.permission.CALL_PHONE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) throws Exception {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            // 已经获取权限
+                            Intent intent = new Intent(); // 意图对象：动作 + 数据
+                            intent.setAction(Intent.ACTION_CALL); // 设置动作
+                            Uri data = Uri.parse("tel:" + phone); // 设置数据
+                            intent.setData(data);
+                            CompDetail.this.startActivity(intent); // 激活Activity组件
+                        } else {
+                            // 未获取权限
+                            Toast.makeText(CompDetail.this, "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
     }
 
     private void collect() {
@@ -821,6 +805,8 @@ public class CompDetail extends BaseActivity {
                         if ("1".equals(result)) {
                             //收藏成功
                             ToastUtil.show(CompDetail.this, "收藏成功");
+                            tvColl.setTextColor(Color.parseColor("#ff9696"));
+                            imageColl.setImageResource(R.drawable.qy_yelowstar1);
                         }
                     }
                 } catch (JSONException e) {

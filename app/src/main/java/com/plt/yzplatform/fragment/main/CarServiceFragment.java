@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.CityActivity;
 import com.plt.yzplatform.activity.SearchActivity;
+import com.plt.yzplatform.activity.CityActivity;
 import com.plt.yzplatform.adapter.CarServiceListAdapter;
 import com.plt.yzplatform.adapter.MainGridViewAdapter;
 import com.plt.yzplatform.adapter.MainViewPagerAdapter;
@@ -57,6 +58,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -74,6 +76,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by glp on 2018/4/18.
@@ -146,6 +149,8 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     private List<CarServiceImage.DataBean.ResultBean.BannerListBean> bannerList = new ArrayList<>();
 
     private List<CarServiceList.DataBean.ResultBean> beanList = new ArrayList<>();
+
+    private RxPermissions rxPermission;
 
     private Handler handler = new Handler() {
         @Override
@@ -259,7 +264,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         }
         unbinder = ButterKnife.bind(this, view);
         /* 请求定位权限 */
-        checkLocationPermission();
+        initLoc();
         /* 初始化数据源 */
 //        initData();
 //        initView();
@@ -319,6 +324,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                         ToastUtil.noNAR(getContext());
                     }
                 });
+
             }
         });
     }
@@ -351,6 +357,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 ToastUtil.noNAR(getContext());
             }
         });
+
     }
 
     /* 初始化界面 */
@@ -427,59 +434,10 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         });
     }
 
-    /* 检查是否有定位权限 */
-    private void checkLocationPermission() {
-        // 检查权限的方法: ContextCompat.checkSelfPermission()两个参数分别是Context和权限名.
-        // 返回PERMISSION_GRANTED是有权限，PERMISSION_DENIED没有权限
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //没有权限，向系统申请该权限。
-            Log.i("MY", "没有权限");
-            requestPermission(LOCATION_PERMISSION_CODE);
-        } else {
-            initLoc();
-            //已经获得权限，则执行定位请求。
-//            Toast.makeText(getContext(), "已获取定位权限", Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
-    /* 请求权限 */
-    private void requestPermission(int permissioncode) {
-        String permission = getPermissionString(permissioncode);
-//        if (!IsEmptyOrNullString(permission)) {
-//            // Should we show an explanation?
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-//                    permission)) {
-//                // Show an expanation to the user *asynchronously* -- don't block
-//                // this thread waiting for the user's response! After the user
-//                // sees the explanation, try again to request the permission.
-//                if (permissioncode == LOCATION_PERMISSION_CODE) {
-//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.location_description_title,
-//                            R.string.location_description_why_we_need_the_permission,
-//                            permissioncode);
-//                    newFragment.show(getActivity().getFragmentManager(), HintDialogFragment.class.getSimpleName());
-//                } else if (permissioncode == STORAGE_PERMISSION_CODE) {
-//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.storage_description_title,
-//                            R.string.storage_description_why_we_need_the_permission,
-//                            permissioncode);
-//                    newFragment.show(getActivity().getFragmentManager(), HintDialogFragment.class.getSimpleName());
-//                }
-//
-//
-//            } else {
-        Log.i("MY", "返回false 不需要解释为啥要权限，可能是第一次请求，也可能是勾选了不再询问");
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{permission}, permissioncode);
-//            }
-//        }
-    }
-
     /* 地图定位 */
     private void initLoc() {
         //初始化定位
-        mLocationClient = new AMapLocationClient(getContext());
+        mLocationClient = new AMapLocationClient(getActivity());
         //设置定位回调监听
         mLocationClient.setLocationListener(this);
         //初始化定位参数
@@ -499,22 +457,22 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         mLocationOption.setOnceLocation(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
-    }
-
-    /* 获取权限名 */
-    private String getPermissionString(int requestCode) {
-        String permission = "";
-        switch (requestCode) {
-            case LOCATION_PERMISSION_CODE:
-                permission = Manifest.permission.ACCESS_FINE_LOCATION;
-                break;
-            case STORAGE_PERMISSION_CODE:
-                permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-                break;
-        }
-        return permission;
+        // 申请定位权限
+        rxPermission = new RxPermissions(getActivity());
+        rxPermission.request(Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) throws Exception {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            // 已经获取权限
+                            //启动定位
+                            mLocationClient.startLocation();
+                        } else {
+                            // 未获取权限
+                            Toast.makeText(getActivity(), "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     /* 定位回调 */
@@ -546,13 +504,9 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     StringBuffer buffer = new StringBuffer();
                     buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince() + "" + amapLocation.getCity() + "" + amapLocation.getProvince() + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet() + "" + amapLocation.getStreetNum());
                     isFirstLoc = false;
-//                    city = amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1);
-//                    lon = String.valueOf(amapLocation.getLongitude());
-//                    lat = String.valueOf(amapLocation.getLatitude());
-                    city = "济南";
-                    mLocation.setText(city);
-                    lon = "116.988";
-                    lat = "36.6883";
+                    city = amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1);
+                    lon = String.valueOf(amapLocation.getLongitude());
+                    lat = String.valueOf(amapLocation.getLatitude());
                     //
                     getCityId(city);
                 }
@@ -565,7 +519,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 Toast.makeText(getContext(), "定位失败", Toast.LENGTH_LONG).show();
                 /* 定位失败 获取默认城市 - 北京 */
                 city = "北京";
-                mLocation.setText(city);
                 lon = "116.38";
                 lat = "39.9";
                 getCityId(city);
@@ -639,9 +592,11 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             createPopupWindow();
             if (!popupWindow.isShowing()) {
                 View rootview = LayoutInflater.from(getContext()).inflate(R.layout.fragment_car_service, null);
+                View v = LayoutInflater.from(getContext()).inflate(R.layout.activity_main, null);
                 //一半减去两个高度   DensityUtil.dp2px(-height/2)
-                popupWindow.showAtLocation(rootview, Gravity.RIGHT | Gravity.TOP, 0, rootview.findViewById(R.id.rl_titleBar).getHeight() + rank.getHeight() + DensityUtil.dp2px(getStatusBarHeight(getContext())));
-                popupWindow.showAsDropDown(rootview.findViewById(R.id.rl_titleBar), R.dimen.common264dp, 0);
+                popupWindow.showAtLocation(rootview, Gravity.RIGHT | Gravity.TOP, 0, v.findViewById(R.id.rl_titleBar).getHeight() + rank.getHeight() + DensityUtil.dp2px(getStatusBarHeight(getContext())));
+                View view = LinearLayout.inflate(getContext(), R.layout.activity_main, null);
+                popupWindow.showAsDropDown(view.findViewById(R.id.rl_titleBar), R.dimen.common264dp, 0);
                 WindowManager.LayoutParams wlp = getActivity().getWindow().getAttributes();
                 wlp.alpha = 0.7f;
                 getActivity().getWindow().setAttributes(wlp);
@@ -738,47 +693,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             }
         });
 
-//        if (NetUtil.isNetAvailable(getContext())) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_CAR_SERVICE)
-//                    .addHeader("user_token", Prefs.with(getContext()).read("user_token"))
-//                    .addParams("pageIndex", String.valueOf(pageIndex))
-//                    .addParams("pageSize", "")
-//                    .addParams("comp_name", "")
-//                    .addParams("lat", lat)
-//                    .addParams("lon", lon)
-//                    .addParams("prod_service_type_item", dict_id)
-//                    .addParams("order_by", order_by)
-//                    .addParams("sort", sort)
-//                    .addParams("auth_comp_city", city_id)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(getContext());
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.d(TAG, "onResponse获取数据: " + response);
-//                            Gson gson = GsonFactory.create();
-//                            CarServiceList serviceList = gson.fromJson(response, CarServiceList.class);
-//                            if ("1".equals(serviceList.getStatus())) {
-//                                List<CarServiceList.DataBean.ResultBean> beanList = serviceList.getData().getResult();
-//                                    pageTotal = serviceList.getData().getPageCount();
-//                                    Message message = new Message();
-//                                    message.what = 003;
-//                                    message.obj = beanList;
-//                                    handler.sendMessage(message);
-//
-//                            } else {
-//                                ToastUtil.show(getContext(), serviceList.getMessage());
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(getContext());
-//        }
+
     }
 
     /* 上拉加载更多数据 */
@@ -819,54 +734,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             }
         });
 
-
-//        if (NetUtil.isNetAvailable(getContext())) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_CAR_SERVICE)
-//                    .addHeader("user_token", Prefs.with(getContext()).read("user_token"))
-//                    .addParams("pageIndex", String.valueOf(pageIndex))
-//                    .addParams("pageSize", "")
-//                    .addParams("comp_name", "")
-//                    .addParams("lat", lat)
-//                    .addParams("lon", lon)
-//                    .addParams("prod_service_type_item", dict_id)
-//                    .addParams("order_by", order_by)
-//                    .addParams("sort", sort)
-//                    .addParams("auth_comp_city", city_id)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(getContext());
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.e(TAG, "onResponse上拉加载更多: " + response);
-//                            Gson gson = GsonFactory.create();
-//                            CarServiceList list = gson.fromJson(response, CarServiceList.class);
-//                            if ("1".equals(list.getStatus())) {
-//                                /* 最大页数 */
-//                                pageTotal = list.getData().getPageCount();
-//                                if (pageIndex > pageTotal) {
-//
-//                                } else {
-//
-//                                }
-//                                List<CarServiceList.DataBean.ResultBean> beanList = list.getData().getResult();
-//
-//                                for (int i = 0; i < beanList.size(); i++) {
-//                                    adapter.insert(beanList.get(i), adapter.getItemCount());
-//                                    adapter.notifyDataSetChanged();
-//                                }
-//                            } else {
-//                                ToastUtil.show(getContext(), list.getMessage());
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(getContext());
-//        }
     }
 
     /* 获取省市id */
@@ -898,73 +765,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
             }
         });
-//        if (NetUtil.isNetAvailable(getContext())) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_CITY_ID)
-//                    .addHeader("user_token", Prefs.with(getContext()).read("user_token"))
-//                    .addParams("cityName", s)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(getContext());
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.w(TAG, "onResponse获取省市id: " + response);
-//                            /**
-//                             * {"data":{"result":{"province_id":"shandong","city_id":"jinan"}},"message":"","status":"1"}
-//                             */
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(response);
-//                                if ("1".equals(jsonObject.getString("status"))) {
-//                                    String data = jsonObject.getString("data");
-//                                    JSONObject object = new JSONObject(data);
-//                                    String result = object.getString("result");
-//                                    JSONObject o = new JSONObject(result);
-//                                    city_id = o.getString("city_id");
-//                                    Message message = new Message();
-//                                    message.what = 004;
-//                                    message.obj = city_id;
-//                                    handler.sendMessage(message);
-//                                } else {
-//                                    ToastUtil.show(getContext(), jsonObject.getString("message"));
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
-//
-//        } else {
-//            ToastUtil.noNetAvailable(getContext());
-//        }
     }
 
-    @OnClick({R.id.mLocation, R.id.mSearch})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.mLocation:
-                Bundle bundle = new Bundle();
-                bundle.putString("type", "车服务");
-                JumpUtil.newInstance().jumpRight(getContext(), CityActivity.class, 01, bundle);
-                break;
-            case R.id.mSearch:
-                JumpUtil.newInstance().jumpRight(getContext(), SearchActivity.class);
-                break;
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Bundle bundle = getArguments();
-        String city = bundle.getString("selected_city");
-        if (null != city) {
-            mLocation.setText(city);
-        }
-        Log.i(TAG, "onResume: " + bundle.getString("selected_city"));
-    }
 
 }

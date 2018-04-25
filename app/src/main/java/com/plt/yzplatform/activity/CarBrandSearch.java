@@ -35,7 +35,6 @@ import com.plt.yzplatform.utils.CommonUtils;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.view.ExpandableGridView;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -50,7 +49,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static java.security.AccessController.getContext;
 
 public class CarBrandSearch extends BaseActivity {
 
@@ -335,8 +333,13 @@ public class CarBrandSearch extends BaseActivity {
         // 用于PopupWindow的View
         View contentView = LayoutInflater.from(this).inflate(R.layout.popupwindow, null, false);
         RecyclerView recyclerView = contentView.findViewById(R.id.recyclerView_popup);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        CommonRecyclerAdapter adapter = new CommonRecyclerAdapter(this, carList, R.layout.item_car_chexi) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));//R.layout.item_car_chexi
+        CommonRecyclerAdapter adapter = new CommonRecyclerAdapter(this, carList, new MultiTypeSupport() {
+            @Override
+            public int getLayoutId(Object item, int position) {
+                return R.layout.item_car_chexi;
+            }
+        }) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
                 Map<String,String> map = (Map<String, String>) item;

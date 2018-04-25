@@ -2,7 +2,9 @@ package com.plt.yzplatform.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
 import android.util.Log;
@@ -16,6 +18,12 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -85,6 +93,21 @@ public class OKhttptils {
      * 通过头像id获取头像
      **/
     public static void getPic(final Context context, String file_id, final ImageView icon) {
+        int write = context.checkCallingOrSelfPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+        int read = context.checkCallingOrSelfPermission("android.permission.READ_EXTERNAL_STORAGE");
+        if(read == PackageManager.PERMISSION_GRANTED&&write==PackageManager.PERMISSION_GRANTED){
+            if(FileUtils.getInstance(context).isFileExits(file_id)){
+                File file = FileUtils.getInstance(context).getFile("file_id");
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(file);
+                    Bitmap bitmap  = BitmapFactory.decodeStream(fileInputStream);
+                    icon.setImageBitmap(bitmap);
+                    return;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
                     .url(Config.GET_BASE64)
@@ -111,10 +134,13 @@ public class OKhttptils {
                                     if (file_content.contains("base64,"))
                                         file_content = file_content.split("base64,")[1];
                                     Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
-                                    if (bitmap!=null)
+                                    if (bitmap!=null) {
                                         icon.setImageBitmap(bitmap);
+                                        FileUtils.getInstance(context).saveFile("file_id",bitmap);
+                                    }
                                     else
                                         icon.setImageResource(R.drawable.qy_heat);
+
                                 } else {
                                     ToastUtil.noNAR(context);
                                 }
