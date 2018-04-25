@@ -100,6 +100,7 @@ public class Config {
 
     //车商评价
     public static final String ACCRETIONEVALUATE = URL + S +"accretionEvaluate";
+
     //车服列表-获取列表（智能排序）
     public static final String GET_CAR_SERVICE = URL + S + "getPassCompList";
 

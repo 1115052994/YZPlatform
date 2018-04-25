@@ -1,12 +1,10 @@
 package com.plt.yzplatform.activity;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +33,7 @@ import com.plt.yzplatform.adapter.CommonRecyclerAdapter;
 import com.plt.yzplatform.adapter.GrideViewAdapter;
 import com.plt.yzplatform.adapter.MultiTypeSupport;
 import com.plt.yzplatform.adapter.ViewHolder;
+import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.HotCity;
 import com.plt.yzplatform.entity.LetterCitysBean;
@@ -45,6 +44,7 @@ import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.ExpandableGridView;
 import com.plt.yzplatform.view.LetterSideBar;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,8 +61,9 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
-public class CityActivity extends AppCompatActivity implements AMapLocationListener {
+public class CityActivity extends BaseActivity implements AMapLocationListener {
 
     @BindView(R.id.historyPlace)
     ExpandableGridView historyPlace;
@@ -94,15 +95,14 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
     //选中的城市
     private String selectedCity = "";
 
-    private static final int LOCATION_PERMISSION_CODE = 100;
-    private static final int STORAGE_PERMISSION_CODE = 101;
-
     //定位需要的声明
     private AMapLocationClient mLocationClient = null;//定位发起端
     private AMapLocationClientOption mLocationOption = null;//定位参数
     //标识，用于判断是否只显示一次定位信息和用户重新定位
     private boolean isFirstLoc = true;
+    private String TAG = "CityActivity";
 
+    private RxPermissions rxPermission;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +114,7 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
         initView();
         initData();
         getData();
+        initLoc();
     }
 
     private void initView() {
@@ -239,7 +240,6 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
         getCitys();
         getHotCitys();
         getHisCitys();
-        checkLocationPermission();
     }
 
     public void getHisCitys() {
@@ -489,7 +489,6 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
     // recyclerview滑动到指定位置
     private boolean move = false;
     private int mIndex = 0;
-
     private void moveToPosition(int n) {
         mIndex = n;
         //先从RecyclerView的LayoutManager中获取第一项和最后一项的Position
@@ -532,7 +531,6 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
                 break;
         }
     }
-
     /* 地图定位 */
     private void initLoc() {
         //初始化定位
@@ -556,8 +554,22 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
         mLocationOption.setOnceLocation(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
+        // 申请定位权限
+        rxPermission = new RxPermissions(this);
+        rxPermission.request(Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) throws Exception {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            // 已经获取权限
+                            //启动定位
+                            mLocationClient.startLocation();
+                        } else {
+                            // 未获取权限
+                            Toast.makeText(CityActivity.this, "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     /* 定位回调函数 */
@@ -607,41 +619,4 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
         }
     }
 
-    /* 检查是否有定位权限 */
-    private void checkLocationPermission() {
-        // 检查权限的方法: ContextCompat.checkSelfPermission()两个参数分别是Context和权限名.
-        // 返回PERMISSION_GRANTED是有权限，PERMISSION_DENIED没有权限
-        if (ContextCompat.checkSelfPermission(CityActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //没有权限，向系统申请该权限。
-            Log.i("MY", "没有权限");
-            requestPermission(LOCATION_PERMISSION_CODE);
-        } else {
-            initLoc();
-            //已经获得权限，则执行定位请求。
-//            Toast.makeText(CityActivity.this, "已获取定位权限", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /* 请求权限 */
-    private void requestPermission(int permissioncode) {
-        String permission = getPermissionString(permissioncode);
-        ActivityCompat.requestPermissions(CityActivity.this,
-                new String[]{permission}, permissioncode);
-    }
-
-    /* 获取权限名 */
-    private String getPermissionString(int requestCode) {
-        String permission = "";
-        switch (requestCode) {
-            case LOCATION_PERMISSION_CODE:
-                permission = Manifest.permission.ACCESS_FINE_LOCATION;
-                break;
-            case STORAGE_PERMISSION_CODE:
-                permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-                break;
-        }
-        return permission;
-    }
 }

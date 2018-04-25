@@ -43,7 +43,7 @@
                         app:image_scale_type="fit_xy"
                         app:indicator_margin="@dimen/common5dp"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/common144dp"
+                        android:layout_height="@dimen/common160dp"
                         />
                     <RelativeLayout
                         android:layout_height="@dimen/common30dp"
@@ -62,10 +62,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@id/image_rz"
+                            android:layout_marginLeft="@dimen/common40dp"
                             android:textSize="@dimen/text_size_16sp"
                             android:textColor="@color/text_33"
-                            android:layout_marginLeft="@dimen/common5dp"
                             android:text="北京目标在线"/>
                        <!-- <CheckBox
                             android:layout_marginLeft="@dimen/common5dp"
@@ -142,9 +141,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_gravity="center_horizontal">
+                        android:layout_marginLeft="@dimen/common40dp"
+                        android:layout_gravity="start">
                         <CheckBox
-                            android:layout_marginLeft="@dimen/common5dp"
                             android:id="@+id/star1"
                             android:layout_toRightOf="@id/comp_name"
                             android:layout_width="@dimen/common15dp"
@@ -196,24 +195,25 @@
                     </LinearLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/common30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_marginBottom="@dimen/common5dp">
                         <ImageView
                             android:id="@+id/image_loc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/qy_place"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/common15dp"/>
+                            android:src="@drawable/qy_splace"
+                            android:layout_marginLeft="@dimen/common15dp"
+                            android:layout_marginTop="@dimen/common5dp"/>
                         <TextView
                             android:id="@+id/loc_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/image_loc"
-                            android:layout_marginLeft="@dimen/common8dp"
+                            android:layout_marginLeft="@dimen/common40dp"
+                            android:layout_marginRight="@dimen/common50dp"
+                            android:lines="2"
                             android:layout_centerVertical="true"
-                            android:lines="1"
-                            android:text="北京市海淀区西三旗"/>
+                            android:text="北京市海淀区西三旗北京市海淀区西三旗北京市海淀区西三旗"/>
                         <ImageView
                             android:id="@+id/image_dh"
                             android:layout_width="wrap_content"
@@ -258,7 +258,7 @@
         android:layout_alignParentBottom="true">
 
         <RelativeLayout
-            android:layout_width="@dimen/common100dp"
+            android:layout_width="@dimen/common114dp"
             android:layout_height="match_parent"
             android:background="@color/text_ff2a"
             android:id="@+id/phone"
@@ -286,7 +286,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="@dimen/common100dp"
+            android:layout_width="@dimen/common114dp"
             android:layout_height="match_parent"
             android:background="@color/text_ff96"
             android:id="@+id/evaluate"

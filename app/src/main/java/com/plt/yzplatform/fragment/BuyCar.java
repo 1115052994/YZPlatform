@@ -98,7 +98,6 @@ public class BuyCar extends Fragment {
     @BindView(R.id.car_ly)
     RelativeLayout carLy;
 
-
     // 轮播图
     private List<String> bannersImage = new ArrayList<>();
 
@@ -121,13 +120,17 @@ public class BuyCar extends Fragment {
     private String sxLcStart = "",sxLcEnd ="";
     private String sxPlStart = "",sxPlEnd = "";
     // 价格
-    private String startPrice = "0",endPrice="";
+    private String startPrice = "",endPrice="";
+    private View selectPrice = null;
     // 品牌车系
     /**
      * carMap1.put("tv_carbrand", "A");
      carMap1.put("image_carbrand", "");
      carMap1.put("id_carbrand", "");
      */
+    // 排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
+    private List<String> rankList = new ArrayList<>();
+    private List<String> rankId =new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -172,12 +175,20 @@ public class BuyCar extends Fragment {
     }
 
     private void iniData() {
+        //智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage
         rankList.add("智能排序");
+        rankId.add("intelligence");
         rankList.add("价格最高");
+        rankId.add("price_up");
         rankList.add("价格最低");
+        rankId.add("price_down");
         rankList.add("车龄最短");
-        rankList.add("里程最少");
+        rankId.add("car_age");
         rankList.add("最新发布");
+        rankId.add("sale_time");
+        rankList.add("里程最少");
+        rankId.add("car_mileage");
+        // 价格
         jgList.add("不限价格");
         jgList.add("5万以下");
         jgList.add("5万-10万");
@@ -230,7 +241,13 @@ public class BuyCar extends Fragment {
                     @Override
                     public void backData(Map<String, String> map) {
                         Log.i("databack",map.toString());
-                        cartagLayout.removeAllViews();
+                        tvSx.setTextColor(Color.parseColor("#333333"));
+                        imageSx.setImageResource(R.drawable.b_a);
+                        // 显示搜索筛选信息
+                        carLy.setVisibility(View.VISIBLE);
+                        if(cartagLayout.isInLayout()) {
+                                cartagLayout.removeAllViews();
+                        }
                         //显示搜索选项   重新搜索  返回数据（
                         //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数(zwsparamName,paramId）
                         // 车龄cl 里程lc 排量pl(start,end)
@@ -311,44 +328,62 @@ public class BuyCar extends Fragment {
                                 tv_cl.setText(cl[0]+"年以上");
                                 cartagLayout.addView(tv_cl);
                             }else {
-                                tv_cl.setText(cl[0]+"年-"+cl[1]+"年");
+                                tv_cl.setText(cl[0]+"-"+cl[1]+"年");
                                 cartagLayout.addView(tv_cl);
                             }
                         }
                         // 里程0-15
+                        View view_lc = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                        TextView tv_lc = view_lc.findViewById(R.id.tv_tag);
+                        if (tv_lc.getParent() != null) {
+                            ViewGroup group = (ViewGroup) tv_lc.getParent();
+                            group.removeAllViews();
+                        }
                         String lc[] = map.get("lc").split(",");
-                        Log.i("shaixuan",lc[0]+"---"+lc[1]);
-                        if ("0.0".equals(lc[0])){
+                        if ("0".equals(lc[0])){
                             if (!"15".equals(lc[1])){
                                 //<15
+                                tv_lc.setText(lc[1]+"里程以内");
+                                cartagLayout.addView(tv_lc);
                             }else {
                                 // 不限
                             }
                         }else{
                             if ("15".equals(lc[1])){
                                 //>0
+                                tv_lc.setText(lc[0]+"里程以上");
+                                cartagLayout.addView(tv_lc);
                             }else {
-
+                                tv_lc.setText(lc[0]+"-"+lc[1]+"里程");
+                                cartagLayout.addView(tv_lc);
                             }
                         }
                         // 排量0-5.0
+                        View view_pl = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                        TextView tv_pl = view_pl.findViewById(R.id.tv_tag);
+                        if (tv_pl.getParent() != null) {
+                            ViewGroup group = (ViewGroup) tv_pl.getParent();
+                            group.removeAllViews();
+                        }
                         String pl[] = map.get("pl").split(",");
-                        Log.i("shaixuan",pl[0]+"---"+pl[1]);
-                        if ("0".equals(pl[0])){
+                        if ("0.0".equals(pl[0])){
                             if (!"5.0".equals(pl[1])){
                                 //<5.0
+                                tv_pl.setText(pl[1]+"排量以内");
+                                cartagLayout.addView(tv_lc);
                             }else {
                                 // 不限
                             }
                         }else{
                             if ("5.0".equals(pl[1])){
                                 //>0
+                                tv_pl.setText(pl[0]+"排量以上");
+                                cartagLayout.addView(tv_pl);
                             }else {
-
+                                tv_pl.setText(pl[0]+"-"+pl[1]+"排量");
+                                cartagLayout.addView(tv_pl);
                             }
                         }
-                        // 显示搜索筛选信息
-                        carLy.setVisibility(View.VISIBLE);
                     }
                 });
                 break;
@@ -362,7 +397,6 @@ public class BuyCar extends Fragment {
 
 
     private PopupWindow popupWindow;
-    private List<String> rankList = new ArrayList<>();
     /* 创建popupwindow */
     private void rzPopupWindow() {
 //        if (popupWindow == null) {
@@ -387,6 +421,8 @@ public class BuyCar extends Fragment {
                 getActivity().getWindow().setAttributes(wlp);
                 tvZn.setTextColor(Color.parseColor("#333333"));
                 imageZn.setImageResource(R.drawable.b_a);
+                // 获得排序类型
+                // 排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
             }
         });
         popupWindow.setOutsideTouchable(true);
@@ -426,15 +462,23 @@ public class BuyCar extends Fragment {
             public void onProgressChanged(SeekBarPressure seekBar, double progressLow, double progressHigh) {
                 //tvPrice.setText("低：" + (progressLow == 6 ? "上限" : progressLow) + "高：" + (progressHigh == 60 ? "上限" : progressHigh));
                 if (progressLow == 0) {
-                    if (progressHigh == 6)
+                    if (progressHigh == 6) {
                         tvPrice.setText("不限价格");
-                    else
-                        tvPrice.setText((int)progressHigh + "0万以下");
+                    }
+                    else {
+                        tvPrice.setText((int) progressHigh + "0万以下");
+                        endPrice = (int) progressHigh+"";
+                    }
                 } else {
-                    if (progressHigh == 6)
-                        tvPrice.setText((int)progressLow + "0万以上");
-                    else
-                        tvPrice.setText((int)progressLow + "0万-" + (int)progressHigh + "0万");
+                    if (progressHigh == 6) {
+                        tvPrice.setText((int) progressLow + "0万以上");
+                        startPrice = (int) progressLow+"";
+                    }
+                    else {
+                        tvPrice.setText((int) progressLow + "0万-" + (int) progressHigh + "0万");
+                        startPrice = (int) progressLow+"";
+                        endPrice = (int) progressHigh+"";
+                    }
                 }
             }
         });
@@ -444,7 +488,60 @@ public class BuyCar extends Fragment {
         jgAdapter.setOnItemClickListener(new AppraiseInterface() {
             @Override
             public void onClick(View view, int position) {
-
+//                jgList.add("不限价格");
+//                jgList.add("5万以下");
+//                jgList.add("5万-10万");
+//                jgList.add("10万-15万");
+//                jgList.add("15万-20万");
+//                jgList.add("20万-30万");
+//                jgList.add("30万-50万");
+//                jgList.add("50万以上");
+                switch (position) {
+                    case 0:
+                        // 不限
+                        break;
+                    case 1:
+                        startPrice = "";
+                        endPrice = 5+"";
+                        break;
+                    case 2:
+                        startPrice = 5+"";
+                        endPrice = 10+"";
+                        break;
+                    case 3:
+                        startPrice = 10+"";
+                        endPrice = 15+"";
+                        break;
+                    case 4:
+                        startPrice = 15+"";
+                        endPrice = 20+"";
+                        break;
+                    case 5:
+                        startPrice = 20+"";
+                        endPrice = 30+"";
+                        break;
+                    case 6:
+                        startPrice = 30+"";
+                        endPrice = 50+"";
+                        break;
+                    case 7:
+                        startPrice = 70+"";
+                        endPrice = "";
+                        break;
+                }
+                if (selectPrice != null){
+                    selectPrice.setSelected(false);
+                    TextView tv = selectPrice.findViewById(R.id.tv_appraise);
+                    tv.setTextColor(Color.parseColor("#333333"));
+                }
+                TextView tv = view.findViewById(R.id.tv_appraise);
+                if(!view.isSelected()) {
+                    view.setSelected(true);
+                    tv.setTextColor(Color.parseColor("#ff9696"));
+                }else{
+                    view.setSelected(false);
+                    tv.setTextColor(Color.parseColor("#333333"));
+                }
             }
         });
         priceGv.setAdapter(jgAdapter);
@@ -459,6 +556,8 @@ public class BuyCar extends Fragment {
                 getActivity().getWindow().setAttributes(wlp);
                 tvJg.setTextColor(Color.parseColor("#333333"));
                 imageJg.setImageResource(R.drawable.b_a);
+                // 获得选择的价格数据
+
             }
         });
         popupWindow.setOutsideTouchable(true);

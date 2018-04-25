@@ -127,8 +127,10 @@ public class CarTagLayout extends ViewGroup {
             }
 
             // 不断的叠加top值
-            MarginLayoutParams params = (MarginLayoutParams) childViews.get(0).getLayoutParams();
-            top += childViews.get(0).getMeasuredHeight() + params.topMargin + params.bottomMargin;
+            if (getChildCount()>0) {//---------------- 新加判断，否则下标越界
+                MarginLayoutParams params = (MarginLayoutParams) childViews.get(0).getLayoutParams();
+                top += childViews.get(0).getMeasuredHeight() + params.topMargin + params.bottomMargin;
+            }
         }
     }
 

@@ -39,6 +39,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
 import com.plt.yzplatform.R;
+import com.plt.yzplatform.activity.CityActivity;
 import com.plt.yzplatform.adapter.CarServiceListAdapter;
 import com.plt.yzplatform.adapter.MainGridViewAdapter;
 import com.plt.yzplatform.adapter.MainViewPagerAdapter;
@@ -54,6 +55,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -71,6 +73,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by glp on 2018/4/18.
@@ -141,6 +144,8 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     private List<CarServiceImage.DataBean.ResultBean.BannerListBean> bannerList = new ArrayList<>();
 
     private List<CarServiceList.DataBean.ResultBean> beanList = new ArrayList<>();
+
+    private RxPermissions rxPermission;
 
     private Handler handler = new Handler() {
         @Override
@@ -254,7 +259,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         }
         unbinder = ButterKnife.bind(this, view);
         /* 请求定位权限 */
-        checkLocationPermission();
+        initLoc();
         /* 初始化数据源 */
 //        initData();
 //        initView();
@@ -315,54 +320,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     }
                 });
 
-//                if (NetUtil.isNetAvailable(getContext())) {
-//                    OkHttpUtils.post()
-//                            .url(Config.GET_CAR_SERVICE)
-//                            .addHeader("user_token", Prefs.with(getContext()).read("user_token"))
-//                            .addParams("pageIndex", String.valueOf(++pageIndex))
-//                            .addParams("pageSize", "")
-//                            .addParams("comp_name", "")
-//                            .addParams("lat", lat)
-//                            .addParams("lon", lon)
-//                            .addParams("prod_service_type_item", dict_id)
-//                            .addParams("order_by", order_by)
-//                            .addParams("sort", sort)
-//                            .addParams("auth_comp_city", city_id)
-//                            .build()
-//                            .execute(new StringCallback() {
-//                                @Override
-//                                public void onError(Call call, Exception e, int id) {
-//                                    ToastUtil.noNAR(getContext());
-//                                }
-//
-//                                @Override
-//                                public void onResponse(String response, int id) {
-//                                    Log.e(TAG, "onResponse上拉加载更多: " + response);
-//                                    Gson gson = GsonFactory.create();
-//                                    CarServiceList list = gson.fromJson(response, CarServiceList.class);
-//                                    if ("1".equals(list.getStatus())) {
-//                                        /* 最大页数 */
-//                                        Log.d(TAG, "onResponse总数: " + pageTotal);
-//                                        Log.i(TAG, "onResponse加载的页数: " + pageIndex);
-//                                        if (pageIndex > pageTotal) {
-//                                            refreshlayout.finishLoadmore(2000);
-//                                        } else {
-//                                            List<CarServiceList.DataBean.ResultBean> beanList = list.getData().getResult();
-//
-//                                            for (int i = 0; i < beanList.size(); i++) {
-//                                                adapter.insert(beanList.get(i), adapter.getItemCount());
-//                                                adapter.notifyDataSetChanged();
-//                                                refreshlayout.finishLoadmore(2000);
-//                                            }
-//                                        }
-//                                    } else {
-//                                        ToastUtil.show(getContext(), list.getMessage());
-//                                    }
-//                                }
-//                            });
-//                } else {
-//                    ToastUtil.noNetAvailable(getContext());
-//                }
             }
         });
     }
@@ -396,42 +353,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             }
         });
 
-//        if (NetUtil.isNetAvailable(getContext())) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_SERVICE_IMG)
-//                    .addHeader("user_token", Prefs.with(getContext()).read("user_token"))
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(getContext());
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.d(TAG, "onResponse: " + response);
-//                            Gson gson = GsonFactory.create();
-//                            CarServiceImage serviceImage = gson.fromJson(response, CarServiceImage.class);
-//                            if ("1".equals(serviceImage.getStatus())) {
-//                                List<CarServiceImage.DataBean.ResultBean.BannerListBean> bannerList = serviceImage.getData().getResult().getBannerList();
-//                                Message message = new Message();
-//                                message.what = 001;
-//                                message.obj = bannerList;
-//                                handler.sendMessage(message);
-//
-//                                final List<CarServiceImage.DataBean.ResultBean.ItemListBean> itemListBeans = serviceImage.getData().getResult().getItemList();
-//                                Message message1 = new Message();
-//                                message1.what = 002;
-//                                message1.obj = itemListBeans;
-//                                handler.sendMessage(message1);
-//                            } else {
-//                                ToastUtil.show(getContext(), serviceImage.getMessage());
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(getContext());
-//        }
     }
 
     /* 初始化界面 */
@@ -506,104 +427,12 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
             }
         });
-
-//        if (NetUtil.isNetAvailable(context)) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_BASE64)
-//                    .addHeader("user_token", Prefs.with(context).read("user_token"))
-//                    .addParams("file_id", file_id)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(context);
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.w(TAG, "onResponse获取base64: " + response);
-//                            /**
-//                             * {"data":{"file_content":"/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB\nAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEB\nAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAHgAeADASIA\nAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA\nAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3\nODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm\np6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4 Tl5ufo6erx8vP09fb3 Pn6/8QAHwEA\nAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx\nBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK\nU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3\nuLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3 Pn6/9oADAMBAAIRAxEAPwD7q0jT\n927cd2MduvX368ds445557SwtPJDd3OPbozfXrgcfXnkZzdOj2buc569unX1/D8j612GnW3mbu2M\nepz97H8Xofr053A5/CMPa6vt73f 9b9T9M5ve309P6ZYs7Rxv29SV/RjzknAHynOfzz13bS035Qo\nSgx6c8uMcHJz8uM /JGTV62tThsdeP5tk9fYd/XnkA7ENvhZT9AevqRj16Dnj3ycHOVObhfVrs10\n1d u1ld qWrTOdVlK7XNdel//Snv6/Mpxacu0ny 47n/AD/nqacbBVST936eueGfHfr8o9eD7HO6\nkLsD5fGOSMcnOQDyT/dP/wBfqZjaOc89/UZ/i9/f XPBzF33f3v/ADNDk3t32n/9R4Lj1PbnPp6n\nOKD2zjzuf7vI r/989c89eehFdsLP/Wb139M/wDj CeTjPOP1Bzxjz2j/vuvb cg9O/b3/vdaRlh\nvhf NHMTWu4Bm /Hjg47MR1ye2D19ec1g3gESnzH6f8ALPg9z9f69eTkA11Nxbsglijh8 RseTHH\nkdS/OSfRe5/iPPBzzd1FDCHnup/OuRnEWP8AU/MwPOfx/LkkgjxszzHCZfRdSrbSyu07W99K2uvd\nJaNNN3Wr  4K4PzTi3Fv2P8AsOEV7ZpzOzac m6um99dtnKV K1CzuLrzQ8 y248iKMCCebBfIye\nR/Ceee2ehrEittOtFJx5cn/LKOQ5xyw7/XP9CCK273V45YZYU5f/AFQPPqw7nvjPqMEA8k1hWejX\nN3MqP5hmlH7tI8joWxxk56n36fMSRX55js7q41SpJ/7HbXe1 aWlm762W9t1rqf19wtkuS8J4D2e\nFw/1KN0nv3aaevS71W musmRW0807yQlJAVlHleXk4yW755yMe4BUZYhq qfhJ zX4m IR/tW88z\nw5oTgeTeXlp5Nxeg5z9ktMnHIzjvg9xlva/2ff2ftDsol8TeM7SO81JIraW00y4iBt7P5mz83TkY\nYg56hcggtX2fcX0VrapbWSeRBbYii8uIweXy4PU5GCvTBJOOcA5eDwlJ3q4nbpK1la8tdWmrPbXR\ntJN 9f8AP M/EussX9QyC31uy/4VUlveVrXa0slra22rk234dpv7J3wV0O3H9radJr90Ij5suoL5\n46vntj259Tg5DZW  D3wOWzfTU8B HGtz/BPoelT5wzjOL044Cgc9 55J9BvNZOx1keSSPjB6Z5Y\nZ4OQCSOpOMDrljXC6hqURnNwXHlyDPGeeSBzkHgq3/fRySRz1TzOlhl7PCYdYPol3fvK2rta7TUV\n2W97r86wOP4pqVHVxed5pv8A9Da93edn5tNbarXe92/nnx3 zF zdrSr5vwm8HNIn72K4h8P6bEO\nrji5ayYA8HBHfHJYsT8c/Fz4KeHvDdpdr4Q1P xrb7JPF/Z32Qz2/VsY xY789eM9SAGP3b4k8U2\ndt5 bo db4zHg/Ny46A8YHX3B5JJJ QvGuptqE2rzzzRiKb7N9k6/wAJcccnHXGCcZ9SRWFLG5hj\naj9q3jnaNndX0c XdvWydtXu7Wcfe/f/AA8z7iiFWhh8bneZYvB4F3tmeaLMo6vT3VLT4W/5rdWm\nfhx4g HXhz4UeJL9/GVtGn9oXVzdQ IfJ 3aRD9rvG/4  cWOccH6ZyVLV7N4W8M6QwhurVbe9t7\n3bLa3NuLQQT22ZB9qsxn0/8ArEnmvoT4oeAtP8UaPqMNzFG4uMAP5P7gEnUf9L6n 6e QCec4rT/\nAOCd3wD0D4vfCfxJLrutR6XpXgj4teNfBWm3luBPqlxp9s m6tZjOc/KNTBOSAAfvMQ2f3KWd1sR\nwpLNauJX1rArKcrzWSae8pxvvrq47q90173xH99Yvxyy3CcD/wCsnEuafUv7HeU5TmaXM7vM1OeV\nRSu3tCbSvZ3Sv0l4Vf8AhXRfMlhmsLdJvN/1scXH3nHTnsPqeM4IyWr4Y0u1ibdDbqkmBC78d39T\n34PXIORyd1fsBH wd8GJ5o3m8c KpSkolkijS2M82C/XFnz2zzxkgEndn6M H37Lf7Ong2eK7Twp\nb K9UixJFqXilW1E2WC PsdoH02yU4IyVYMDgk4YV8fU4kT1hi35K0rv4uiVvXX W7a0PxrN/pk \nHmV5fKrldPinOsXZuOWPK45XHm5pWTeZzlNc7mm1ytpWbvJH872ifCzxr4u12DS/h74I8Q ODPL5\nUsXh/wAO3OpCIjcT/ptpYgcBNx5yAB1ALH6yl/4JzftQRaPDr9v8DtcuTcRCWWxgvvDk qwncwx/\nZP2/rkcjPJPXK1/Rroeq2el2KWWiWen6Lp8ZMMdlo/2WzsPs 49bSzbP057qOCpz3eleIZVkYLIQ\n5hXnzcjgnOfmyOoz HGRzzR4hqYhOisS8HK6s aPw3lZtWbUtddWno7NpH4FxN9P/wAU6lWj/qrw\nVwnkuU4NRUVmuZZxmma5nK80/eyyrlClHSyioxaX2mkk/wCNbx18GvGXgm vrHxn4B8W DWtwDKf\nEPhzVdNtzcEnBF6LH zz8oznnAKjOCGbx 48PPbW11JBP9qS3x 7j6cFh6d8Z/mTgE/3mWWqaTrN\nlJpOu2Vpqlpc4iu7O/jtb2xkwZACLW9Ofm4yPoDuBYn5k KP/BPT9jn4ywXUmqfDWw8L63cxjyvE\nXgh5/DuoMMEHFray/YbvhT1045YlsFi273sDjcZUT9hiXjE2rKzaSvUT1tslezS1cmul39twV 0k\nwmFq4bCeIfh3mOUbKea8KZr/AGhdqTi TKM2nlmltW3nGYOKS92Unr/HTpmjaPc2KyXKW6TSRDPl\n5xDjeB39wfyJJIrgLnR7a3M/mW1uqiW4Pl/8Cb/S uecfz5O3Nfuv8fv CJHxf0d7nW/2dvHum O\nbF2nKeGvE0tj4a8RQQjcGFpqbSNo15kksF1AWIUK26QkR1 THin9m39oL4b63ceHfiT8MvFnhzUI\nZvIQ6jp1w1vIfmP2q01cN9gvbHBDY0/nay54KlvUw0qWBeLrYvM/qdrJvNOXLPtSs290/JtNLlSj\ndM/unwt kB4KeJ9LFY/g3xNyrF4yXKlwrmv\
-//                             */
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(response);
-//                                if (jsonObject.getString("status").equals("1")) {
-//                                    String data = jsonObject.getString("data");
-//                                    JSONObject object = new JSONObject(data);
-//                                    String file_content = object.getString("file_content");
-//                                    if (file_content.contains("base64,"))
-//                                        file_content = file_content.split("base64,")[1];
-//                                    Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
-//                                    if (bitmap != null)
-//                                        icon.setImageBitmap(bitmap);
-//                                    else
-//                                        icon.setImageResource(R.drawable.qy_heat);
-//                                } else {
-//                                    ToastUtil.noNAR(context);
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(context);
-//        }
-    }
-
-    /* 检查是否有定位权限 */
-    private void checkLocationPermission() {
-        // 检查权限的方法: ContextCompat.checkSelfPermission()两个参数分别是Context和权限名.
-        // 返回PERMISSION_GRANTED是有权限，PERMISSION_DENIED没有权限
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //没有权限，向系统申请该权限。
-            Log.i("MY", "没有权限");
-            requestPermission(LOCATION_PERMISSION_CODE);
-        } else {
-            initLoc();
-            //已经获得权限，则执行定位请求。
-//            Toast.makeText(getContext(), "已获取定位权限", Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
-    /* 请求权限 */
-    private void requestPermission(int permissioncode) {
-        String permission = getPermissionString(permissioncode);
-//        if (!IsEmptyOrNullString(permission)) {
-//            // Should we show an explanation?
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-//                    permission)) {
-//                // Show an expanation to the user *asynchronously* -- don't block
-//                // this thread waiting for the user's response! After the user
-//                // sees the explanation, try again to request the permission.
-//                if (permissioncode == LOCATION_PERMISSION_CODE) {
-//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.location_description_title,
-//                            R.string.location_description_why_we_need_the_permission,
-//                            permissioncode);
-//                    newFragment.show(getActivity().getFragmentManager(), HintDialogFragment.class.getSimpleName());
-//                } else if (permissioncode == STORAGE_PERMISSION_CODE) {
-//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.storage_description_title,
-//                            R.string.storage_description_why_we_need_the_permission,
-//                            permissioncode);
-//                    newFragment.show(getActivity().getFragmentManager(), HintDialogFragment.class.getSimpleName());
-//                }
-//
-//
-//            } else {
-                Log.i("MY", "返回false 不需要解释为啥要权限，可能是第一次请求，也可能是勾选了不再询问");
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{permission}, permissioncode);
-//            }
-//        }
     }
 
     /* 地图定位 */
     private void initLoc() {
         //初始化定位
-        mLocationClient = new AMapLocationClient(getContext());
+        mLocationClient = new AMapLocationClient(getActivity());
         //设置定位回调监听
         mLocationClient.setLocationListener(this);
         //初始化定位参数
@@ -623,22 +452,22 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         mLocationOption.setOnceLocation(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
-    }
-
-    /* 获取权限名 */
-    private String getPermissionString(int requestCode) {
-        String permission = "";
-        switch (requestCode) {
-            case LOCATION_PERMISSION_CODE:
-                permission = Manifest.permission.ACCESS_FINE_LOCATION;
-                break;
-            case STORAGE_PERMISSION_CODE:
-                permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-                break;
-        }
-        return permission;
+        // 申请定位权限
+        rxPermission = new RxPermissions(getActivity());
+        rxPermission.request(Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) throws Exception {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            // 已经获取权限
+                            //启动定位
+                            mLocationClient.startLocation();
+                        } else {
+                            // 未获取权限
+                            Toast.makeText(getActivity(), "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     /* 定位回调 */
@@ -859,47 +688,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             }
         });
 
-//        if (NetUtil.isNetAvailable(getContext())) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_CAR_SERVICE)
-//                    .addHeader("user_token", Prefs.with(getContext()).read("user_token"))
-//                    .addParams("pageIndex", String.valueOf(pageIndex))
-//                    .addParams("pageSize", "")
-//                    .addParams("comp_name", "")
-//                    .addParams("lat", lat)
-//                    .addParams("lon", lon)
-//                    .addParams("prod_service_type_item", dict_id)
-//                    .addParams("order_by", order_by)
-//                    .addParams("sort", sort)
-//                    .addParams("auth_comp_city", city_id)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(getContext());
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.d(TAG, "onResponse获取数据: " + response);
-//                            Gson gson = GsonFactory.create();
-//                            CarServiceList serviceList = gson.fromJson(response, CarServiceList.class);
-//                            if ("1".equals(serviceList.getStatus())) {
-//                                List<CarServiceList.DataBean.ResultBean> beanList = serviceList.getData().getResult();
-//                                    pageTotal = serviceList.getData().getPageCount();
-//                                    Message message = new Message();
-//                                    message.what = 003;
-//                                    message.obj = beanList;
-//                                    handler.sendMessage(message);
-//
-//                            } else {
-//                                ToastUtil.show(getContext(), serviceList.getMessage());
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(getContext());
-//        }
+
     }
 
     /* 上拉加载更多数据 */
@@ -940,54 +729,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             }
         });
 
-
-//        if (NetUtil.isNetAvailable(getContext())) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_CAR_SERVICE)
-//                    .addHeader("user_token", Prefs.with(getContext()).read("user_token"))
-//                    .addParams("pageIndex", String.valueOf(pageIndex))
-//                    .addParams("pageSize", "")
-//                    .addParams("comp_name", "")
-//                    .addParams("lat", lat)
-//                    .addParams("lon", lon)
-//                    .addParams("prod_service_type_item", dict_id)
-//                    .addParams("order_by", order_by)
-//                    .addParams("sort", sort)
-//                    .addParams("auth_comp_city", city_id)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(getContext());
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.e(TAG, "onResponse上拉加载更多: " + response);
-//                            Gson gson = GsonFactory.create();
-//                            CarServiceList list = gson.fromJson(response, CarServiceList.class);
-//                            if ("1".equals(list.getStatus())) {
-//                                /* 最大页数 */
-//                                pageTotal = list.getData().getPageCount();
-//                                if (pageIndex > pageTotal) {
-//
-//                                } else {
-//
-//                                }
-//                                List<CarServiceList.DataBean.ResultBean> beanList = list.getData().getResult();
-//
-//                                for (int i = 0; i < beanList.size(); i++) {
-//                                    adapter.insert(beanList.get(i), adapter.getItemCount());
-//                                    adapter.notifyDataSetChanged();
-//                                }
-//                            } else {
-//                                ToastUtil.show(getContext(), list.getMessage());
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(getContext());
-//        }
     }
 
     /* 获取省市id */
@@ -1019,47 +760,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
             }
         });
-//        if (NetUtil.isNetAvailable(getContext())) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_CITY_ID)
-//                    .addHeader("user_token", Prefs.with(getContext()).read("user_token"))
-//                    .addParams("cityName", s)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(getContext());
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.w(TAG, "onResponse获取省市id: " + response);
-//                            /**
-//                             * {"data":{"result":{"province_id":"shandong","city_id":"jinan"}},"message":"","status":"1"}
-//                             */
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(response);
-//                                if ("1".equals(jsonObject.getString("status"))) {
-//                                    String data = jsonObject.getString("data");
-//                                    JSONObject object = new JSONObject(data);
-//                                    String result = object.getString("result");
-//                                    JSONObject o = new JSONObject(result);
-//                                    city_id = o.getString("city_id");
-//                                    Message message = new Message();
-//                                    message.what = 004;
-//                                    message.obj = city_id;
-//                                    handler.sendMessage(message);
-//                                } else {
-//                                    ToastUtil.show(getContext(), jsonObject.getString("message"));
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
-//
-//        } else {
-//            ToastUtil.noNetAvailable(getContext());
-//        }
     }
+
+
 }

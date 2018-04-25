@@ -1,6 +1,7 @@
 package com.plt.yzplatform.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +22,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.plt.yzplatform.BuildConfig;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.ViewPagerAdapter;
 import com.plt.yzplatform.base.BaseActivity;
@@ -32,6 +34,8 @@ import com.plt.yzplatform.fragment.main.MainFragment;
 import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.ToastUtil;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +45,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, AMapLocationListener {
 
@@ -67,15 +72,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private FragmentTransaction transaction;
     private List<Fragment> fragmentList = new ArrayList<>();
 
-    private static final int LOCATION_PERMISSION_CODE = 100;
-    private static final int STORAGE_PERMISSION_CODE = 101;
     //定位需要的声明
     private AMapLocationClient mLocationClient = null;//定位发起端
     private AMapLocationClientOption mLocationOption = null;//定位参数
     //标识，用于判断是否只显示一次定位信息和用户重新定位
     private boolean isFirstLoc = true;
 
-    private String location;
+    private RxPermissions rxPermission;
+    private String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +87,39 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         ActivityUtil.addActivity(this);
+        rxPermission = new RxPermissions(this);
+        // 申请应用高危险权限
+        requestPermission();
         initView();
-         /* 获取定位权限  并且进行定位 */
-        checkLocationPermission();
+        // initLoc();
+    }
+
+
+    // Manifest.permission.ACCESS_COARSE_LOCATION,
+    private void requestPermission() {
+        rxPermission
+                .requestEach(
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.CALL_PHONE
+                        )
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+                            // 用户已经同意该权限
+                            Log.d(TAG, permission.name + " is granted.");
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                            Log.d(TAG, permission.name + " is denied. More info should be provided.");
+                        } else {
+                            // 用户拒绝了该权限，并且选中『不再询问』
+                            Log.d(TAG, permission.name + " is denied.");
+                        }
+                    }
+                });
     }
 
 
@@ -198,8 +232,21 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mLocationOption.setOnceLocation(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
+        // 申请定位权限
+        rxPermission.request(Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) throws Exception {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            // 已经获取权限
+                            //启动定位
+                            mLocationClient.startLocation();
+                        } else {
+                            // 未获取权限
+                            Toast.makeText(MainActivity.this, "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     /* 定位回调函数 */
@@ -235,7 +282,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //                    Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
                     ToastUtil.show(MainActivity.this, "已定位到当前城市");
                     mLocation.setText(amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1));
-
                     isFirstLoc = false;
                 }
 
@@ -248,93 +294,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 Toast.makeText(getApplicationContext(), "定位失败", Toast.LENGTH_LONG).show();
                 /* 定位失败 获取默认城市 */
                 mLocation.setText("北京");
-//                getDefaultCity();
             }
         }
     }
 
-    /* 检查是否有定位权限 */
-    private void checkLocationPermission() {
-        // 检查权限的方法: ContextCompat.checkSelfPermission()两个参数分别是Context和权限名.
-        // 返回PERMISSION_GRANTED是有权限，PERMISSION_DENIED没有权限
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //没有权限，向系统申请该权限。
-            Log.i("MY", "没有权限");
-            requestPermission(LOCATION_PERMISSION_CODE);
-        } else {
-            initLoc();
-            //已经获得权限，则执行定位请求。
-            Toast.makeText(MainActivity.this, "已获取定位权限", Toast.LENGTH_SHORT).show();
-//            mLocationClient.startLocation();
-
-        }
-    }
-
-    /* 检查是否有存储的读写权限 */
-    private void checkStoragePermission() {
-        // 检查权限的方法: ContextCompat.checkSelfPermission()两个参数分别是Context和权限名.
-        // 返回PERMISSION_GRANTED是有权限，PERMISSION_DENIED没有权限
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            //没有权限，向系统申请该权限。
-            Log.i("MY", "没有权限");
-            requestPermission(STORAGE_PERMISSION_CODE);
-        } else {
-            //同组的权限，只要有一个已经授权，则系统会自动授权同一组的所有权限，比如WRITE_EXTERNAL_STORAGE和READ_EXTERNAL_STORAGE
-            Toast.makeText(MainActivity.this, "已获取存储的读写权限", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /* 请求权限 */
-    private void requestPermission(int permissioncode) {
-        String permission = getPermissionString(permissioncode);
-//        if (!IsEmptyOrNullString(permission)) {
-            // Should we show an explanation?
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-//                    permission)) {
-//                // Show an expanation to the user *asynchronously* -- don't block
-//                // this thread waiting for the user's response! After the user
-//                // sees the explanation, try again to request the permission.
-//                if (permissioncode == LOCATION_PERMISSION_CODE) {
-//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.location_description_title,
-//                            R.string.location_description_why_we_need_the_permission,
-//                            permissioncode);
-//                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
-//                } else if (permissioncode == STORAGE_PERMISSION_CODE) {
-//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.storage_description_title,
-//                            R.string.storage_description_why_we_need_the_permission,
-//                            permissioncode);
-//                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
-//                }
-//
-//
-//            } else {
-                Log.i("MY", "返回false 不需要解释为啥要权限，可能是第一次请求，也可能是勾选了不再询问");
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{permission}, permissioncode);
-//            }
-//        }
-    }
-
-    /* 判断字符串是否为空 */
-    public static boolean IsEmptyOrNullString(String s) {
-        return (s == null) || (s.trim().length() == 0);
-    }
-
-    /* 获取权限名 */
-    private String getPermissionString(int requestCode) {
-        String permission = "";
-        switch (requestCode) {
-            case LOCATION_PERMISSION_CODE:
-                permission = Manifest.permission.ACCESS_FINE_LOCATION;
-                break;
-            case STORAGE_PERMISSION_CODE:
-                permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-                break;
-        }
-        return permission;
-    }
 }
