@@ -129,6 +129,7 @@ public class OKhttptils {
                                     if (file_content.contains("base64,"))
                                         file_content = file_content.split("base64,")[1];
                                     Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
+                                    FileUtils.getInstance(context).saveFile("file_id",bitmap);
                                     if (bitmap!=null)
                                         icon.setImageBitmap(bitmap);
                                     else
