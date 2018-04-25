@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DialogFragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -97,7 +98,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             case R.id.mLocation:
                 break;
             case R.id.mSearch:
-                JumpUtil.newInstance().jumpRight(this,CompDetail.class);
+                //搜索
+                JumpUtil.newInstance().jumpLeft(this,SearchActivity.class);
                 break;
         }
     }
@@ -293,29 +295,28 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         String permission = getPermissionString(permissioncode);
         if (!IsEmptyOrNullString(permission)) {
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                    permission)) {
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-                if (permissioncode == LOCATION_PERMISSION_CODE) {
-                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.location_description_title,
-                            R.string.location_description_why_we_need_the_permission,
-                            permissioncode);
-                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
-                } else if (permissioncode == STORAGE_PERMISSION_CODE) {
-                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.storage_description_title,
-                            R.string.storage_description_why_we_need_the_permission,
-                            permissioncode);
-                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
-                }
-
-
-            } else {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+//                    permission)) {
+//                // Show an expanation to the user *asynchronously* -- don't block
+//                // this thread waiting for the user's response! After the user
+//                // sees the explanation, try again to request the permission.
+//                if (permissioncode == LOCATION_PERMISSION_CODE) {
+//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.location_description_title,
+//                            R.string.location_description_why_we_need_the_permission,
+//                            permissioncode);
+//                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
+//                } else if (permissioncode == STORAGE_PERMISSION_CODE) {
+//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.storage_description_title,
+//                            R.string.storage_description_why_we_need_the_permission,
+//                            permissioncode);
+//                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
+//                }
+//
+//            } else {
                 Log.i("MY", "返回false 不需要解释为啥要权限，可能是第一次请求，也可能是勾选了不再询问");
                 ActivityCompat.requestPermissions(MainActivity.this,
                         new String[]{permission}, permissioncode);
-            }
+//            }
         }
     }
 
@@ -336,5 +337,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 break;
         }
         return permission;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

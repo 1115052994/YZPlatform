@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingRight="@dimen/common10dp"
+    android:paddingLeft="@dimen/common10dp"
+    android:paddingTop="@dimen/common10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--android:layout_height="match_parent"
+    >-->
+
+    <RelativeLayout
+        android:id="@+id/bg_appraise"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_apprase_bg">
+        <TextView
+            android:id="@+id/tv_appraise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/common8dp"
+            android:text="服务到位"
+            android:textSize="@dimen/text_size_13sp"
+            android:textColor="@color/text_33"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

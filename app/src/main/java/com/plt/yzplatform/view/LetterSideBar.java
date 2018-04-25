@@ -133,7 +133,7 @@ public class LetterSideBar extends View {
         void touch(CharSequence letter, boolean isTouch);
     }
 
-    public void setFirstVisibleLetter(String s){
+    public void setVisibleLetter(String s){
         mCurrentTouchLetter = s;
         //重新绘制
         invalidate();

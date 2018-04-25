@@ -545,7 +545,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     newFragment.show(getActivity().getFragmentManager(), HintDialogFragment.class.getSimpleName());
                 }
 
-
             } else {
                 Log.i("MY", "返回false 不需要解释为啥要权限，可能是第一次请求，也可能是勾选了不再询问");
                 ActivityCompat.requestPermissions(getActivity(),

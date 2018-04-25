@@ -40,13 +40,11 @@ import com.plt.yzplatform.entity.HotCity;
 import com.plt.yzplatform.entity.LetterCitysBean;
 import com.plt.yzplatform.entity.QueryCityBean;
 import com.plt.yzplatform.utils.CommonUtils;
-import com.plt.yzplatform.utils.NetUtil;
+import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.ExpandableGridView;
 import com.plt.yzplatform.view.LetterSideBar;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,14 +52,15 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 public class CityActivity extends AppCompatActivity implements AMapLocationListener {
 
@@ -103,6 +102,7 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
     private AMapLocationClientOption mLocationOption = null;//定位参数
     //标识，用于判断是否只显示一次定位信息和用户重新定位
     private boolean isFirstLoc = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,7 +194,7 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
         rvAdapter.setOnItemClickListener(new CommonRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                if(!list.get(position).matches("[A-Z]"))
+                if (!list.get(position).matches("[A-Z]"))
                     seleted(list.get(position));
             }
         });
@@ -202,6 +202,7 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
         // 设置布局管理器
         recyclerViewCity.setLayoutManager(layoutManager);
         recyclerViewCity.setAdapter(rvAdapter);
+        //recyclerViewCity.setNestedScrollingEnabled(false);
         recyclerViewCity.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -225,7 +226,7 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
                 int last = mLinearLayoutManager.findLastVisibleItemPosition();
                 for (int i = first; i < last; i++) {
                     if (list.get(i).toString().matches("[A-Z]")) {
-                        letterSideBar.setFirstVisibleLetter(list.get(i).toString());
+                        letterSideBar.setVisibleLetter(list.get(i).toString());
                         break;
                     }
                 }
@@ -254,207 +255,180 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
     }
 
     public void getCitys() {
-        if (NetUtil.isNetAvailable(CityActivity.this)) {
-            OkHttpUtils.post()
-                    .url(Config.QUERYHEADCITY)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("pageSize", "1000")
-                    .addParams("pageIndex", "1")
-                    .build()
-                    .execute(new StringCallback() {
+        Map<String, String> map = new HashMap<>();
+        map.put("pageSize", "100");
+        map.put("pageIndex", "1");
+        OKhttptils.post(this, Config.QUERYHEADCITY, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String data = object.getString("data");
+                    if (data != null) {
+                        list.clear();
+                        Gson gson = new Gson();
+                        LetterCitysBean letterCitysBean = gson.fromJson(response, LetterCitysBean.class);
+                        LetterCitysBean.DataBean.ResultBean resultBean = letterCitysBean.getData().getResult();
+                        List<String> A = resultBean.getA();
+                        list.add("A");
+                        list.addAll(A);
+                        List<String> B = resultBean.getB();
+                        list.add("B");
+                        list.addAll(B);
+                        List<String> C = resultBean.getC();
+                        list.add("C");
+                        list.addAll(C);
+                        List<String> D = resultBean.getD();
+                        list.add("D");
+                        list.addAll(D);
+                        List<String> E = resultBean.getE();
+                        list.add("E");
+                        list.addAll(E);
+                        List<String> F = resultBean.getF();
+                        list.add("F");
+                        list.addAll(F);
+                        List<String> G = resultBean.getG();
+                        list.add("G");
+                        list.addAll(G);
+                        List<String> H = resultBean.getH();
+                        list.add("H");
+                        list.addAll(H);
+                        //List<String> I = resultBean.getI();
+                        //list.add("I");
+                        List<String> J = resultBean.getJ();
+                        list.add("J");
+                        list.addAll(J);
+                        List<String> K = resultBean.getK();
+                        list.add("K");
+                        list.addAll(K);
+                        List<String> L = resultBean.getL();
+                        list.add("L");
+                        list.addAll(L);
+                        List<String> M = resultBean.getM();
+                        list.add("M");
+                        list.addAll(M);
+                        List<String> N = resultBean.getN();
+                        list.add("N");
+                        list.addAll(N);
+                        //list.add("O");
+                        List<String> P = resultBean.getP();
+                        list.add("P");
+                        list.addAll(P);
+                        List<String> Q = resultBean.getQ();
+                        list.add("Q");
+                        list.addAll(Q);
+                        List<String> R = resultBean.getR();
+                        list.add("R");
+                        list.addAll(R);
+                        List<String> S = resultBean.getS();
+                        list.add("S");
+                        list.addAll(S);
+                        //List<String> T = resultBean.getT();
+                        //list.add("T");
+                        //list.addAll(T);
+                        //List<String> U = resultBean.getU();
+                        //list.add("U");
+                        //list.addAll(U);
+                        //List<String> V = resultBean.getV();
+                        //list.add("V");
+                        //list.addAll(V);
+                        List<String> W = resultBean.getW();
+                        list.add("W");
+                        list.addAll(W);
+                        List<String> X = resultBean.getX();
+                        list.add("X");
+                        list.addAll(X);
+                        List<String> Y = resultBean.getY();
+                        list.add("Y");
+                        list.addAll(Y);
+                        List<String> Z = resultBean.getZ();
+                        list.add("Z");
+                        list.addAll(Z);
+                        rvAdapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
+            @Override
+            public void fail(String response) {
 
-                        }
-
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.d("onResponse", "onResponse" + response);
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                String data = object.getString("data");
-                                if (data != null) {
-                                    list.clear();
-                                    Gson gson = new Gson();
-                                    LetterCitysBean letterCitysBean = gson.fromJson(response, LetterCitysBean.class);
-                                    LetterCitysBean.DataBean.ResultBean resultBean = letterCitysBean.getData().getResult();
-                                    List<String> A = resultBean.getA();
-                                    list.add("A");
-                                    list.addAll(A);
-                                    List<String> B = resultBean.getB();
-                                    list.add("B");
-                                    list.addAll(B);
-                                    List<String> C = resultBean.getC();
-                                    list.add("C");
-                                    list.addAll(C);
-                                    List<String> D = resultBean.getD();
-                                    list.add("D");
-                                    list.addAll(D);
-                                    List<String> E = resultBean.getE();
-                                    list.add("E");
-                                    list.addAll(E);
-                                    List<String> F = resultBean.getF();
-                                    list.add("F");
-                                    list.addAll(F);
-                                    List<String> G = resultBean.getG();
-                                    list.add("G");
-                                    list.addAll(G);
-                                    List<String> H = resultBean.getH();
-                                    list.add("H");
-                                    list.addAll(H);
-                                    //List<String> I = resultBean.getI();
-                                    //list.add("I");
-                                    List<String> J = resultBean.getJ();
-                                    list.add("J");
-                                    list.addAll(J);
-                                    List<String> K = resultBean.getK();
-                                    list.add("K");
-                                    list.addAll(K);
-                                    List<String> L = resultBean.getL();
-                                    list.add("L");
-                                    list.addAll(L);
-                                    List<String> M = resultBean.getM();
-                                    list.add("M");
-                                    list.addAll(M);
-                                    List<String> N = resultBean.getN();
-                                    list.add("N");
-                                    list.addAll(N);
-                                    //list.add("O");
-                                    List<String> P = resultBean.getP();
-                                    list.add("P");
-                                    list.addAll(P);
-                                    List<String> Q = resultBean.getQ();
-                                    list.add("Q");
-                                    list.addAll(Q);
-                                    List<String> R = resultBean.getR();
-                                    list.add("R");
-                                    list.addAll(R);
-                                    List<String> S = resultBean.getS();
-                                    list.add("S");
-                                    list.addAll(S);
-                                    //List<String> T = resultBean.getT();
-                                    //list.add("T");
-                                    //list.addAll(T);
-                                    //List<String> U = resultBean.getU();
-                                    //list.add("U");
-                                    //list.addAll(U);
-                                    //List<String> V = resultBean.getV();
-                                    //list.add("V");
-                                    //list.addAll(V);
-                                    List<String> W = resultBean.getW();
-                                    list.add("W");
-                                    list.addAll(W);
-                                    List<String> X = resultBean.getX();
-                                    list.add("X");
-                                    list.addAll(X);
-                                    List<String> Y = resultBean.getY();
-                                    list.add("Y");
-                                    list.addAll(Y);
-                                    List<String> Z = resultBean.getZ();
-                                    list.add("Z");
-                                    list.addAll(Z);
-                                    rvAdapter.notifyDataSetChanged();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(CityActivity.this);
-        }
+            }
+        });
     }
 
     public void getHotCitys() {
-        if (NetUtil.isNetAvailable(CityActivity.this)) {
-            OkHttpUtils.post()
-                    .url(Config.QUERYHOTCITY)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("pageSize", "")
-                    .addParams("pageIndex", "")
-                    .build()
-                    .execute(new StringCallback() {
-
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.d("onResponse", "onResponse" + response);
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                String data = object.getString("data");
-                                if (data != null) {
-                                    Gson gson = new Gson();
-                                    hotcity.clear();
-                                    HotCity hotCity = gson.fromJson(response, HotCity.class);
-                                    List<String> list = hotCity.getData().getResult();
+        Map<String, String> map = new HashMap<>();
+        map.put("pageSize", "100");
+        map.put("pageIndex", "1");
+        OKhttptils.post(this, Config.QUERYHOTCITY, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String data = object.getString("data");
+                    if (data != null) {
+                        Gson gson = new Gson();
+                        hotcity.clear();
+                        HotCity hotCity = gson.fromJson(response, HotCity.class);
+                        List<String> list = hotCity.getData().getResult();
 //                                    List<String> list1 = new ArrayList<>();
 //                                    for (int i = list.size()-1; i >=0 ; i--) {
 //                                        list1.add(list.get(i));
 //                                    }
-                                    for (int i = 0; i < list.size(); i++) {
-                                        if (i < 8) {
-                                            hotcity.add(list.get(i));
-                                        }
-                                    }
-                                    hotAdapter.notifyDataSetChanged();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                        for (int i = 0; i < list.size(); i++) {
+                            if (i < 8) {
+                                hotcity.add(list.get(i));
                             }
                         }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(CityActivity.this);
-        }
+                        hotAdapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 
     private void getSearchCity(String s) {
-        if (NetUtil.isNetAvailable(CityActivity.this)) {
-            OkHttpUtils.post()
-                    .url(Config.QUERYCITY)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("value", s.trim())
-                    .addParams("pageSize", "8")
-                    .addParams("pageIndex", "1")
-                    .build()
-                    .execute(new StringCallback() {
-
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-
+        Map<String, String> map = new HashMap<>();
+        map.put("pageSize", "100");
+        map.put("pageIndex", "1");
+        map.put("value", s.trim());
+        OKhttptils.post(this, Config.QUERYCITY, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String data = object.getString("data");
+                    if (data != null) {
+                        Gson gson = new Gson();
+                        searchCity.clear();
+                        QueryCityBean bean = gson.fromJson(response, QueryCityBean.class);
+                        List<String> list = bean.getData().getResult();
+                        for (String s : list) {
+                            if (searchCity.size() < 8)
+                                searchCity.add(s);
                         }
+                        if (searchCity.size() != 0)
+                            PopupWindow();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.d("onResponse", "onResponse" + response);
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                String data = object.getString("data");
-                                if (data != null) {
-                                    Gson gson = new Gson();
-                                    searchCity.clear();
-                                    QueryCityBean bean = gson.fromJson(response, QueryCityBean.class);
-                                    List<String> list = bean.getData().getResult();
-                                    for (String s : list) {
-                                        if (searchCity.size() < 8)
-                                            searchCity.add(s);
-                                    }
-                                    if (searchCity.size()!=0)
-                                        PopupWindow();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(CityActivity.this);
-        }
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 
     //弹出查询window
@@ -482,7 +456,7 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
         window.setTouchable(true);
         // 显示PopupWindow，其中：
         // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
-        window.showAsDropDown(search, 20, 20);
+        window.showAsDropDown(search, 0, 0);
         // 或者也可以调用此方法显示PopupWindow，其中：
         // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
         // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
@@ -543,7 +517,7 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
         Log.i("selected", city);
     }
 
-    @OnClick({R.id.loc_place,R.id.clear_history,R.id.cancle})
+    @OnClick({R.id.loc_place, R.id.clear_history, R.id.cancle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.loc_place:
@@ -649,12 +623,14 @@ public class CityActivity extends AppCompatActivity implements AMapLocationListe
 //            Toast.makeText(CityActivity.this, "已获取定位权限", Toast.LENGTH_SHORT).show();
         }
     }
+
     /* 请求权限 */
     private void requestPermission(int permissioncode) {
         String permission = getPermissionString(permissioncode);
         ActivityCompat.requestPermissions(CityActivity.this,
-                        new String[]{permission}, permissioncode);
+                new String[]{permission}, permissioncode);
     }
+
     /* 获取权限名 */
     private String getPermissionString(int requestCode) {
         String permission = "";

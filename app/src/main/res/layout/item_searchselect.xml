@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ss_ki"
+    >
+    <RelativeLayout
+        android:id="@+id/ly_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/common15dp"
+        android:layout_marginTop="@dimen/common15dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/image_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ss_car"/>
+        <TextView
+            android:id="@+id/car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="汽车"
+            android:layout_toRightOf="@id/image_car"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/text_size_16sp"
+            android:textColor="@color/text_ff56"
+            android:layout_marginLeft="@dimen/common11dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ly_comp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/common15dp"
+        android:layout_marginTop="@dimen/common10dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/image_comp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ss_shop"/>
+        <TextView
+            android:id="@+id/comp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="商家"
+            android:layout_toRightOf="@id/image_comp"
+            android:textSize="@dimen/text_size_16sp"
+            android:textColor="@color/text_66"
+            android:layout_marginLeft="@dimen/common11dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

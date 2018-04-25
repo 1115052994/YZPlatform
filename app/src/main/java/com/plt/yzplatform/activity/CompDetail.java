@@ -18,7 +18,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -39,8 +38,8 @@ import com.plt.yzplatform.entity.CompDetailBean;
 import com.plt.yzplatform.entity.WeixiuBean;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.NetUtil;
+import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
-import com.plt.yzplatform.utils.ScreenUtils;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.CircleImageView;
 import com.plt.yzplatform.view.indicator.IndicatorAdapter;
@@ -56,7 +55,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,6 +108,10 @@ public class CompDetail extends BaseActivity {
     CoordinatorLayout corrdinLayout;
     @BindView(R.id.recyclerView_foot_more)
     ClassicsFooter recyclerViewFootMore;
+    @BindView(R.id.image_coll)
+    ImageView imageColl;
+    @BindView(R.id.tv_coll)
+    TextView tvColl;
     private ViewGroup viewGroup;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
@@ -155,7 +160,8 @@ public class CompDetail extends BaseActivity {
 
     private String comp_id = "24";//商家Id
     private String comp_phone = "";
-    private Double comp_lon,comp_lat;
+    private Double comp_lon, comp_lat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,11 +171,10 @@ public class CompDetail extends BaseActivity {
         initData();
         getData();
         Intent intent = getIntent();
-        if(intent!=null){
+        if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if(bundle!=null) {
+            if (bundle != null) {
                 comp_id = bundle.getString("comp_id");
-                Log.i("com_id", "comp_id=" + comp_id);
             }
         }
         //设置不加载更多
@@ -190,6 +195,8 @@ public class CompDetail extends BaseActivity {
 
     private void initView() {
         viewGroup = findViewById(R.id.head_title);
+        //查看那是否收藏过
+        collect();
         staffAdapter = new IndicatorAdapter<View>() {
             @Override
             public int getCount() {
@@ -235,7 +242,6 @@ public class CompDetail extends BaseActivity {
                 tv.setTextColor(Color.parseColor("#ff7979"));
                 LinearLayout bg = view.findViewById(R.id.bg);
                 bg.setVisibility(View.VISIBLE);
-                Log.i("highLightIndicator", "position=" + position);
                 // 切换Adapter
                 if (position == serverList.size()) {
                     recyclerView.setAdapter(appraiseAdapter);
@@ -244,11 +250,11 @@ public class CompDetail extends BaseActivity {
                         recyclerView.setAdapter(wxAdapter);
                     } else if (serverList.get(position).getServerDesc().contains("喷漆")) {
                         recyclerView.setAdapter(pqAdapter);
-                    }else if (serverList.get(position).getServerDesc().contains("电瓶")) {
+                    } else if (serverList.get(position).getServerDesc().contains("电瓶")) {
                         recyclerView.setAdapter(dpAdapter);
-                    }else if (serverList.get(position).getServerDesc().contains("洗车")) {
+                    } else if (serverList.get(position).getServerDesc().contains("洗车")) {
                         recyclerView.setAdapter(xcAdapter);
-                    }else if (serverList.get(position).getServerDesc().contains("美容")) {
+                    } else if (serverList.get(position).getServerDesc().contains("美容")) {
                         recyclerView.setAdapter(mrAdapter);
                     }
                 }
@@ -269,7 +275,6 @@ public class CompDetail extends BaseActivity {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
                 //此处可以自行选择，我直接用的Picasso
-                Log.i("banner", "path=" + (String) path);
 //                Picasso.with(CompDetail.this).load("http://pic.58pic.com/58pic/14/54/14/09E58PICUpb_1024.jpg").into(imageView);
                 getPic(CompDetail.this, (String) path, imageView);
             }
@@ -457,7 +462,6 @@ public class CompDetail extends BaseActivity {
                 ImageView star3 = holder.getView(R.id.star3);
                 ImageView star4 = holder.getView(R.id.star4);
                 ImageView star5 = holder.getView(R.id.star5);
-                Log.i("level", "level=" + level);
                 switch (level) {
                     case 5:
                         star5.setImageResource(R.drawable.pj_pinkstar);
@@ -478,89 +482,80 @@ public class CompDetail extends BaseActivity {
     }
 
     private void getData() {
-        if (NetUtil.isNetAvailable(getApplicationContext())) {
-            OkHttpUtils.post()
-                    .url(Config.GETCOMPDETAIL)
-                    .addHeader("user_token", Prefs.with(this).read("user_token"))
-                    .addParams("comp_id", comp_id)
-                    .build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-                            ToastUtil.noNAR(CompDetail.this);
+        Map<String,String> map = new HashMap<>();
+        map.put("comp_id",comp_id);
+        OKhttptils.post(this, Config.GETCOMPDETAIL, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("status").equals("1")) {
+                        Gson gson = new Gson();
+                        CompDetailBean detailBean = gson.fromJson(response, CompDetailBean.class);
+                        CompDetailBean.DataBean.ResultBean resultBean = detailBean.getData().getResult();
+                        //获取banner
+                        List<CompDetailBean.DataBean.ResultBean.BannerListBean> bannerListBeans = resultBean.getBannerList();
+                        for (CompDetailBean.DataBean.ResultBean.BannerListBean bannerBean : bannerListBeans) {
+                            images.add(bannerBean.getAdve_file_id());
                         }
+                        banner.setImages(images);
+                        banner.start();
+                        //公司名字星级地址
+                        CompDetailBean.DataBean.ResultBean.InfoBean infoBean = resultBean.getInfo();
+                        compName.setText(infoBean.getAuth_comp_name());
+                        locTv.setText(infoBean.getAuth_comp_addr());
+                        numTv.setText(infoBean.getComp_order_count() + "人");
+                        comp_phone = infoBean.getPhone_number();
+                        comp_lon = infoBean.getAuth_comp_lon();
+                        comp_lat = infoBean.getAuth_comp_lat();
+                        switch (infoBean.getComp_eval_level()) {
+                            case 5:
+                                star5.setChecked(true);
+                            case 4:
+                                star4.setChecked(true);
+                            case 3:
+                                star3.setChecked(true);
+                            case 2:
+                                star2.setChecked(true);
+                            case 1:
+                                star1.setChecked(true);
+                                break;
+                        }
+                        // 明星员工
+                        staffList.clear();
+                        for (CompDetailBean.DataBean.ResultBean.StaffListBean staffListBean : resultBean.getStaffList()) {
+                            staffList.add(staffListBean);
+                        }
+                        staffsView.setmTabVisibleNums(1.5f);
+                        staffsView.setAdapter(staffAdapter);
+                        //tabs服务项目
+                        serverList.clear();
+                        List<CompDetailBean.DataBean.ResultBean.ServerTypeListBean> serverTypeListBean = resultBean.getServerTypeList();
+                        for (CompDetailBean.DataBean.ResultBean.ServerTypeListBean serverBean : serverTypeListBean) {
+                            serverList.add(serverBean);
+                        }
+                        tabsView.setmTabVisibleNums(3.0f);
+                        tabsView.setAdapter(tabAdapter);
+                        //服务项目（维修、洗车、评价等）
+                        getServerItem();
+                    } else {
+                        ToastUtil.noNAR(CompDetail.this);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.w("onResponse", "onResponse:" + response);
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                if (jsonObject.getString("status").equals("1")) {
-                                    Gson gson = new Gson();
-                                    CompDetailBean detailBean = gson.fromJson(response, CompDetailBean.class);
-                                    CompDetailBean.DataBean.ResultBean resultBean = detailBean.getData().getResult();
-                                    //获取banner
-                                    List<CompDetailBean.DataBean.ResultBean.BannerListBean> bannerListBeans = resultBean.getBannerList();
-                                    for (CompDetailBean.DataBean.ResultBean.BannerListBean bannerBean : bannerListBeans) {
-                                        images.add(bannerBean.getAdve_file_id());
-                                    }
-                                    banner.setImages(images);
-                                    banner.start();
-                                    //公司名字星级地址
-                                    CompDetailBean.DataBean.ResultBean.InfoBean infoBean = resultBean.getInfo();
-                                    compName.setText(infoBean.getAuth_comp_name());
-                                    locTv.setText(infoBean.getAuth_comp_addr());
-                                    numTv.setText(infoBean.getComp_order_count() + "人");
-                                    comp_phone = infoBean.getPhone_number();
-                                    comp_lon = infoBean.getAuth_comp_lon();
-                                    comp_lat = infoBean.getAuth_comp_lat();
-                                    switch (infoBean.getComp_eval_level()) {
-                                        case 5:
-                                            star5.setChecked(true);
-                                        case 4:
-                                            star4.setChecked(true);
-                                        case 3:
-                                            star3.setChecked(true);
-                                        case 2:
-                                            star2.setChecked(true);
-                                        case 1:
-                                            star1.setChecked(true);
-                                            break;
-                                    }
-                                    // 明星员工
-                                    staffList.clear();
-                                    for (CompDetailBean.DataBean.ResultBean.StaffListBean staffListBean : resultBean.getStaffList()) {
-                                        staffList.add(staffListBean);
-                                    }
-                                    staffsView.setmTabVisibleNums(1.5f);
-                                    staffsView.setAdapter(staffAdapter);
-                                    //tabs服务项目
-                                    serverList.clear();
-                                    List<CompDetailBean.DataBean.ResultBean.ServerTypeListBean> serverTypeListBean = resultBean.getServerTypeList();
-                                    for (CompDetailBean.DataBean.ResultBean.ServerTypeListBean serverBean : serverTypeListBean) {
-                                        serverList.add(serverBean);
-                                    }
-                                    tabsView.setmTabVisibleNums(3.0f);
-                                    tabsView.setAdapter(tabAdapter);
-                                    //服务项目（维修、洗车、评价等）
-                                    getServerItem();
-                                } else {
-                                    ToastUtil.noNAR(CompDetail.this);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(CompDetail.this);
-        }
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 
     // 服务项目（维修、洗车等）
     private void getServerItem() {
         for (int i = 0; i < serverList.size(); i++) {
-            Log.i("serverItemId",serverList.get(i).getServerDesc()+"----"+serverList.get(i).getServerId());
             getServerItem(serverList.get(i).getServerDesc(), serverList.get(i).getServerId(), i);
         }
         // 商家评价
@@ -569,129 +564,118 @@ public class CompDetail extends BaseActivity {
 
     //请求服务项目
     private void getServerItem(final String item, String serverId, final int index) {
-        if (NetUtil.isNetAvailable(CompDetail.this)) {
-            OkHttpUtils.post()
-                    .url(Config.GETPRODUCTITEMBYSERVERTYPE)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("pageSize", "100")
-                    .addParams("pageIndex", "1")
-                    .addParams("comp_id", comp_id)
-                    .addParams("serverId", serverId)
-                    .build()
-                    .execute(new StringCallback() {
-
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-
+        Map<String, String> map = new HashMap<>();
+        map.put("pageSize","100");
+        map.put("pageIndex","1");
+        map.put("comp_id",comp_id);
+        map.put("serverId",serverId);
+        OKhttptils.post(this, Config.GETPRODUCTITEMBYSERVERTYPE, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String data = object.getString("data");
+                    Gson gson = new Gson();
+                    if (item.contains("维修")) {
+                        WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
+                        List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
+                        for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
+                            weixiuList.add(bean);
                         }
-
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.d("onResponseWX", "onResponse" + response);
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                String data = object.getString("data");
-                                Gson gson = new Gson();
-                                if (item.contains("维修")) {
-                                    WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
-                                    List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
-                                    for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
-                                        weixiuList.add(bean);
-                                    }
-                                    wxAdapter.notifyDataSetChanged();
-                                    if (index == 0) {
-                                        recyclerView.setAdapter(wxAdapter);
-                                    }
-                                } else if (item.contains("喷漆")) {
-                                    WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
-                                    List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
-                                    for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
-                                        pqList.add(bean);
-                                    }
-                                    pqAdapter.notifyDataSetChanged();
-                                    if (index == 0) {
-                                        recyclerView.setAdapter(pqAdapter);
-                                    }
-                                }else if (item.contains("美容")) {
-                                    WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
-                                    List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
-                                    for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
-                                        mrList.add(bean);
-                                    }
-                                    mrAdapter.notifyDataSetChanged();
-                                    if (index == 0) {
-                                        recyclerView.setAdapter(mrAdapter);
-                                    }
-                                }else if (item.contains("电瓶")) {
-                                    WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
-                                    List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
-                                    for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
-                                        dpList.add(bean);
-                                    }
-                                    dpAdapter.notifyDataSetChanged();
-                                    if (index == 0) {
-                                        recyclerView.setAdapter(dpAdapter);
-                                    }
-                                }else if (item.contains("洗车")) {
-                                    WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
-                                    List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
-                                    for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
-                                        xcList.add(bean);
-                                    }
-                                    xcAdapter.notifyDataSetChanged();
-                                    if (index == 0) {
-                                        recyclerView.setAdapter(xcAdapter);
-                                    }
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        wxAdapter.notifyDataSetChanged();
+                        if (index == 0) {
+                            recyclerView.setAdapter(wxAdapter);
                         }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(CompDetail.this);
-        }
+                    } else if (item.contains("喷漆")) {
+                        WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
+                        List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
+                        for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
+                            pqList.add(bean);
+                        }
+                        pqAdapter.notifyDataSetChanged();
+                        if (index == 0) {
+                            recyclerView.setAdapter(pqAdapter);
+                        }
+                    } else if (item.contains("美容")) {
+                        WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
+                        List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
+                        for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
+                            mrList.add(bean);
+                        }
+                        mrAdapter.notifyDataSetChanged();
+                        if (index == 0) {
+                            recyclerView.setAdapter(mrAdapter);
+                        }
+                    } else if (item.contains("电瓶")) {
+                        WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
+                        List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
+                        for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
+                            dpList.add(bean);
+                        }
+                        dpAdapter.notifyDataSetChanged();
+                        if (index == 0) {
+                            recyclerView.setAdapter(dpAdapter);
+                        }
+                    } else if (item.contains("洗车")) {
+                        WeixiuBean weixiuBean = gson.fromJson(response, WeixiuBean.class);
+                        List<WeixiuBean.DataBean.ResultBean> weixiu = weixiuBean.getData().getResult();
+                        for (WeixiuBean.DataBean.ResultBean bean : weixiu) {
+                            xcList.add(bean);
+                        }
+                        xcAdapter.notifyDataSetChanged();
+                        if (index == 0) {
+                            recyclerView.setAdapter(xcAdapter);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 
     //请求评价信息
     private void getAppraise() {
-        if (NetUtil.isNetAvailable(CompDetail.this)) {
-            OkHttpUtils.post()
-                    .url(Config.QUERYCOMPEVALUATE)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("pageSize", "100")
-                    .addParams("pageIndex", "1")
-                    .addParams("comp_id", comp_id)
-                    .build()
-                    .execute(new StringCallback() {
-
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.d("onResponseAppraise", "onResponse" + response);
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                String data = object.getString("data");
-                                Gson gson = new Gson();
-                                CompAppraise compAppraise = gson.fromJson(response, CompAppraise.class);
-                                compAppraiseList.clear();
-                                for (CompAppraise.DataBean.ResultBean bean : compAppraise.getData().getResult()) {
-                                    compAppraiseList.add(bean);
-                                }
-                                appraiseAdapter.notifyDataSetChanged();
-//                                recyclerView.setAdapter(wxAdapter);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+        Map<String, String> map = new HashMap<>();
+        map.put("pageSize","100");
+        map.put("pageIndex","1");
+        map.put("comp_id",comp_id);
+        OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String status = object.getString("status");
+                    if ("1".equals(status)) {
+                        try {
+                            String data = object.getString("data");
+                            Gson gson = new Gson();
+                            CompAppraise compAppraise = gson.fromJson(response, CompAppraise.class);
+                            compAppraiseList.clear();
+                            for (CompAppraise.DataBean.ResultBean bean : compAppraise.getData().getResult()) {
+                                compAppraiseList.add(bean);
                             }
+                            appraiseAdapter.notifyDataSetChanged();
+//                                recyclerView.setAdapter(wxAdapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(CompDetail.this);
-        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 
     @OnClick({R.id.image_dh, R.id.phone, R.id.evaluate, R.id.collect, R.id.kefu})
@@ -704,24 +688,26 @@ public class CompDetail extends BaseActivity {
 //        offset = -position[1] + headHeight + statusHeight;
         switch (view.getId()) {
             case R.id.image_dh:
-                ToastUtil.show(this,"正在进入导航请稍等...");
-                Intent intent = new Intent();
-                JumpUtil.newInstance().jumpLeft(this,Map_navigation.class);
+                ToastUtil.show(this, "正在进入导航请稍等...");
+                Bundle bundle = new Bundle();
+                bundle.putString("comp_lon", comp_lon + "");
+                bundle.putString("comp_lat", comp_lat + "");
+                JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
                 break;
             case R.id.phone:
                 call(comp_phone);
-                ToastUtil.show(this,"打电话");
-//                corrdinLayout.animate().translationY(-position[1] + headHeight + statusHeight).setDuration(200).start();
+                ToastUtil.show(this, "打电话");
                 break;
             case R.id.evaluate:
-                Bundle bundle =new Bundle();
-                bundle.putString("comp_id",comp_id);
-                JumpUtil.newInstance().jumpRight(this,AppraiseActivity.class,bundle);
+                Bundle loc = new Bundle();
+                loc.putString("comp_id", comp_id);
+                JumpUtil.newInstance().jumpRight(this, AppraiseActivity.class, loc);
 //                ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(2,0);
 //                appBar.animate().translationY(offset).setDuration(200).start();
 //                recyclerView.animate().translationY(offset).setDuration(200).start();
                 break;
             case R.id.collect:
+                addCollect();
                 break;
             case R.id.kefu:
                 call("4001198698");
@@ -729,10 +715,10 @@ public class CompDetail extends BaseActivity {
         }
     }
 
-    private void call(String phone){
+    private void call(String phone) {
         // 检查是否获得了权限（Android6.0运行时权限）
         if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             // 没有获得授权，申请授权
             if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) this,
                     Manifest.permission.CALL_PHONE)) {
@@ -747,13 +733,13 @@ public class CompDetail extends BaseActivity {
                 Uri uri = Uri.fromParts("package", this.getPackageName(), null);
                 intent.setData(uri);
                 this.startActivity(intent);
-            }else{
+            } else {
                 // 不需要解释为何需要该权限，直接请求授权
                 ActivityCompat.requestPermissions((Activity) this,
                         new String[]{Manifest.permission.CALL_PHONE},
                         MY_PERMISSIONS_REQUEST_CALL_PHONE);
             }
-        }else {
+        } else {
             // 已经获得授权，可以打电话
             if (TextUtils.isEmpty(phone)) {
                 // 提醒用户
@@ -769,5 +755,72 @@ public class CompDetail extends BaseActivity {
                 this.startActivity(intent); // 激活Activity组件
             }
         }
+    }
+
+    private void collect() {
+        Map<String, String> map = new HashMap<>();
+        map.put("coll_content_id", comp_id);
+        OKhttptils.post(this, Config.WHETHERCOLLCOMP, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String status = object.getString("status");
+                    Log.i("collect",response);
+                    if ("1".equals(status)) {
+                        JSONObject data = object.getJSONObject("data");
+                        String result = data.getString("result");
+                        if (!"".equals(result)) {
+                            //收藏过
+                            isCollected = true;
+                            tvColl.setTextColor(Color.parseColor("#ff9696"));
+                            imageColl.setImageResource(R.drawable.qy_yelowstar1);
+                        } else {
+                            //没收藏过
+                            imageColl.setImageResource(R.drawable.qy_huistar0);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
+    }
+
+    private Boolean isCollected = false;
+    private void addCollect() {
+        if(isCollected)
+            ToastUtil.show(this,"您已收藏过");
+        Map<String, String> map = new HashMap<>();
+        map.put("coll_content_id", comp_id);
+        OKhttptils.post(this, Config.ACCRETIONCOLLCOMP, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String status = object.getString("status");
+                    if ("1".equals(status)) {
+                        JSONObject data = object.getJSONObject("data");
+                        String result = data.getString("result");
+                        if ("1".equals(result)) {
+                            //收藏成功
+                            ToastUtil.show(CompDetail.this, "收藏成功");
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 }

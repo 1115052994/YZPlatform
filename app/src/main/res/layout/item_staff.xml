@@ -15,8 +15,8 @@
         >
         <com.plt.yzplatform.view.CircleImageView
             android:id="@+id/circleImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/common85dp"
+            android:layout_height="@dimen/common85dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/common15dp"
             android:src="@drawable/qy_heat"/>

@@ -27,15 +27,14 @@ import com.plt.yzplatform.adapter.GrideViewAdapter;
 import com.plt.yzplatform.adapter.ViewHolder;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.HotCar;
+import com.plt.yzplatform.entity.SearchCarBean;
+import com.plt.yzplatform.entity.SearchCompBean;
 import com.plt.yzplatform.utils.CommonUtils;
 import com.plt.yzplatform.utils.JumpUtil;
-import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.ExpandableGridView;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +49,6 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -70,7 +68,6 @@ public class SearchActivity extends AppCompatActivity {
     RelativeLayout search;
 
 
-    private String secleted = "";
     private GrideViewAdapter hotAdapter;
     private GrideViewAdapter hisGvAapter;
     private List<String> hotList = new ArrayList<>();
@@ -81,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
     private List<String> searchList = new ArrayList<>();
     private List<String> searchListId = new ArrayList<>();
     //类别（汽车、商户）car/comp
-    private String type = "car";
+    private String type = "comp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
+        editSearch.setText("");
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -147,47 +144,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void getHot() {
-//        if (NetUtil.isNetAvailable(SearchActivity.this)) {
-//            OkHttpUtils.post()
-//                    .url(Config.GETSEARCHHOTWORD)
-//                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-//                    .addParams("hotword_type", type)//car/comp
-//                    .build()
-//                    .execute(new StringCallback() {
-//
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.d("onResponse", "onResponse" + response);
-//                            try {
-//                                JSONObject object = new JSONObject(response);
-//                                String data = object.getString("data");
-//                                if (data != null) {
-//                                    Gson gson = new Gson();
-//                                    hotList.clear();
-//                                    //hotListId.clear();
-//                                    HotCar hotCar = gson.fromJson(response, HotCar.class);
-//                                    List<HotCar.DataBean.ResultBean> list = hotCar.getData().getResult();
-//                                    for (int i = 0; i < list.size(); i++) {
-//                                        if (i < 8) {
-//                                            hotList.add(list.get(i).getHotword_name());
-//                                            //hotListId.add(list.get(i).getHotword_id());
-//                                        }
-//                                    }
-//                                    hotAdapter.notifyDataSetChanged();
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(SearchActivity.this);
-//        }
         Map<String, String> map = new HashMap<>();
         //请求参数有几个put几个
         map.put("hotword_type", type);
@@ -224,89 +180,101 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void getHis() {
-        Set<String> value = new HashSet<>();
-        value.add("大众");
-        value.add("宝马");
-        Prefs.with(getApplicationContext()).putStringSet("historyCars", value);
-        Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyCars", null);
-        for (String s : set) {
-            hisList.add(s);
+        hisList.clear();
+        if ("car".equals(type)) {
+            Set<String> value = new HashSet<>();
+            value.add("大众");
+            value.add("宝马");
+            Prefs.with(getApplicationContext()).putStringSet("historyCars", value);
+            Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyCars", null);
+            for (String s : set) {
+                hisList.add(s);
+            }
+            hisGvAapter.notifyDataSetChanged();
+        } else if ("comp".equals(type)) {
+            Set<String> value = new HashSet<>();
+            value.add("山东");
+            value.add("北京");
+            Prefs.with(getApplicationContext()).putStringSet("historyComp", value);
+            Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyComp", null);
+            for (String s : set) {
+                hisList.add(s);
+            }
+            hisGvAapter.notifyDataSetChanged();
         }
-//        Set<String> valueId = new HashSet<>();
-//        value.add("1");
-//        value.add("3");
-//        Prefs.with(getApplicationContext()).putStringSet("historyCarsId", value);
-//        Set<String> setId = Prefs.with(getApplicationContext()).getStringSet("historyCarsId", null);
-//        for (String s : set) {
-//            hisListId.add(s);
-//        }
-        hisGvAapter.notifyDataSetChanged();
     }
 
     private void getSearchComp(String s) {
-        if (NetUtil.isNetAvailable(SearchActivity.this)) {
-            OkHttpUtils.post()
-                    .url(Config.GETSEARCHCOMP)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("comp_name", s)
-                    .build()
-                    .execute(new StringCallback() {
-
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-
+        Map<String, String> map = new HashMap<>();
+        map.put("comp_name", s);
+        OKhttptils.post(this, Config.GETSEARCHCOMP, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String data = object.getString("data");
+                    if (data != null) {
+                        Gson gson = new Gson();
+                        SearchCompBean searchCompBean = gson.fromJson(response, SearchCompBean.class);
+                        List<SearchCompBean.DataBean.ResultBean> beans = searchCompBean.getData().getResult();
+                        searchList.clear();
+                        searchListId.clear();
+                        for (SearchCompBean.DataBean.ResultBean bean : beans) {
+                            searchList.add(bean.getAuth_comp_name());
+                            searchListId.add(bean.getComp_id());
                         }
-
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.d("onResponse", "onResponse" + response);
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                String data = object.getString("data");
-                                if (data != null) {
-                                    Gson gson = new Gson();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        if (searchList.size() > 0) {
+                            PopupWindow();
+                        } else {
+                            ToastUtil.show(SearchActivity.this, "未查询到相关信息");
                         }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(SearchActivity.this);
-        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 
     private void getSeachCar(String s) {
-        if (NetUtil.isNetAvailable(SearchActivity.this)) {
-            OkHttpUtils.post()
-                    .url(Config.GETSEARCHCOMP)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("car_name", s)
-                    .build()
-                    .execute(new StringCallback() {
-
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-
+        Map<String, String> map = new HashMap<>();
+        map.put("car_name", s);
+        OKhttptils.post(this, Config.GETSEARCHCAR, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String data = object.getString("data");
+                    if (data != null) {
+                        Gson gson = new Gson();
+                        SearchCarBean searchCarBean = gson.fromJson(response, SearchCarBean.class);
+                        List<SearchCarBean.DataBean.ResultBean> resultBeans = searchCarBean.getData().getResult();
+                        searchListId.clear();
+                        searchList.clear();
+                        for (SearchCarBean.DataBean.ResultBean bean : resultBeans) {
+                            searchList.add(bean.getCar_name());
+                            searchListId.add(bean.getCar_id());
                         }
+                        if (searchList.size() > 0)
+                            PopupWindow();
+                        else
+                            ToastUtil.show(SearchActivity.this, "未查询到相关信息");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.d("onResponse", "onResponse" + response);
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                String data = object.getString("data");
-                                if (data != null) {
-                                    Gson gson = new Gson();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(SearchActivity.this);
-        }
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 
     private void preSearch(String str) {
@@ -344,7 +312,7 @@ public class SearchActivity extends AppCompatActivity {
         window.setTouchable(true);
         // 显示PopupWindow，其中：
         // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
-        window.showAsDropDown(search, 20, 20);
+        window.showAsDropDown(search, 0, 0);
         // 或者也可以调用此方法显示PopupWindow，其中：
         // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
         // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
@@ -368,9 +336,96 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(int position) {
                 window.dismiss();
+                //跳转
+                if ("car".equals(type)) {
+
+                } else if ("comp".equals(type)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("comp_id", searchListId.get(position));
+                    JumpUtil.newInstance().jumpLeft(SearchActivity.this, CompDetail.class, bundle);
+                }
             }
         });
         recyclerView.setAdapter(adapter);
     }
 
+    @OnClick({R.id.name, R.id.trangle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.name:
+            case R.id.trangle:
+                popupSelect();
+                break;
+        }
+    }
+
+    //弹出选择框
+    private void popupSelect(){
+        // 用于PopupWindow的View
+        View contentView = LayoutInflater.from(this).inflate(R.layout.item_searchselect, null, false);
+        final View car = contentView.findViewById(R.id.ly_car);
+        final View comp = contentView.findViewById(R.id.ly_comp);
+        final TextView tv_car = car.findViewById(R.id.car);
+        final TextView tv_comp = comp.findViewById(R.id.comp);
+        if("car".equals(type)){
+            tv_car.setTextColor(Color.parseColor("#ff5656"));
+            tv_comp.setTextColor(Color.parseColor("#666666"));
+        }else{
+            tv_comp.setTextColor(Color.parseColor("#ff5656"));
+            tv_car.setTextColor(Color.parseColor("#666666"));
+        }
+        // 创建PopupWindow对象，其中：
+        // 第一个参数是用于PopupWindow中的View，第二个参数是PopupWindow的宽度，
+        // 第三个参数是PopupWindow的高度，第四个参数指定PopupWindow能否获得焦点
+        final PopupWindow window = new PopupWindow(contentView, RelativeLayout.LayoutParams.WRAP_CONTENT, /*CommonUtils.dip2px(CityActivity.this,150)*/RelativeLayout.LayoutParams.WRAP_CONTENT, true);
+        // 设置PopupWindow的背景
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // 设置PopupWindow是否能响应外部点击事件
+        window.setOutsideTouchable(true);
+        // 设置PopupWindow是否能响应点击事件
+        window.setTouchable(true);
+        // 显示PopupWindow，其中：
+        // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
+        window.showAsDropDown(trangle, -80, 20);
+        // 或者也可以调用此方法显示PopupWindow，其中：
+        // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
+        // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
+        // window.showAtLocation(parent, gravity, x, y);
+        // 设置背景颜色变暗
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+//                WindowManager.LayoutParams lp = SearchActivity.this.getWindow().getAttributes();
+//                lp.alpha = 1f;
+//                SearchActivity.this.getWindow().setAttributes(lp);
+            }
+        });
+//        WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+//        lp.verticalMargin = CommonUtils.dip2px(SearchActivity.this, 30);
+//        lp.alpha = 0.9f;
+//        this.getWindow().setAttributes(lp);
+        car.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_car.setTextColor(Color.parseColor("#ff5656"));
+                tv_comp.setTextColor(Color.parseColor("#666666"));
+                type = "car";
+                getData();
+                name.setText("汽车");
+                window.dismiss();
+            }
+        });
+        comp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_comp.setTextColor(Color.parseColor("#ff5656"));
+                tv_car.setTextColor(Color.parseColor("#666666"));
+                type = "comp";
+                name.setText("商家");
+                getData();
+                window.dismiss();
+            }
+        });
+    }
 }

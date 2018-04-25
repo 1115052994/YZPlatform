@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <com.plt.yzplatform.view.ExpandableGridView
+        android:id="@+id/price_gv"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/common20dp"
+        android:layout_marginRight="@dimen/common20dp"
+        android:layout_marginTop="@dimen/common10dp"
+        android:horizontalSpacing="@dimen/common1dp"
+        android:numColumns="3"
+        android:verticalSpacing="@dimen/common1dp"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common30dp"
+            android:layout_marginTop="@dimen/common20dp">
+            <TextView
+                android:id="@+id/tv_zdy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_33"
+                android:textSize="@dimen/text_size_16sp"
+                android:text="自定义价格"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_zdy"
+                android:layout_alignBaseline="@id/tv_zdy"
+                android:textColor="@color/text_66"
+                android:textSize="@dimen/text_size_14sp"
+                android:text="/万元"/>
+            <TextView
+                android:id="@+id/tv_zdyprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/common20dp"
+                android:layout_alignBaseline="@id/tv_zdy"
+                android:text="36万以下"
+                android:textSize="@dimen/text_size_14sp"
+                android:textColor="@color/text_ff96"
+                />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common30dp"
+        android:layout_marginRight="@dimen/common30dp"
+        android:orientation="vertical">
+        <com.plt.yzplatform.view.SeekBarPressure
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="不限" />
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common38dp"
+        android:background="@drawable/shape_button"
+        android:layout_marginRight="@dimen/common40dp"
+        android:layout_marginLeft="@dimen/common40dp"
+        android:layout_marginTop="@dimen/common30dp"
+        android:layout_marginBottom="@dimen/common20dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp"
+        android:text="确定"/>
+</LinearLayout>

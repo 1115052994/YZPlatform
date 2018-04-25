@@ -39,7 +39,7 @@ public class AppraiseGVAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         AppraiseGVAdapter.ViewHolder viewHolder;
         if (convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_appraise,null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_appraise_tag,null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         }else{
@@ -50,7 +50,8 @@ public class AppraiseGVAdapter extends BaseAdapter {
             viewGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    appraiseInterface.onClick(v,position);
+                    if (appraiseInterface!=null)
+                        appraiseInterface.onClick(v,position);
                 }
             });
 

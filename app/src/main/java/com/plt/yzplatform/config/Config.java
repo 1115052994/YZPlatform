@@ -9,15 +9,14 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.2.223/";
+    public static final String BASE_URL = "http://192.168.1.222/";
 
-    public static final String URL = "http://192.168.2.223/";
+    public static final String URL = "http://192.168.1.222/";
 
 
     public static final String S = "mymvc?mvc_id=";
 
-//    public static final String M = "http://192.168.2.233/";
-    public static final String M = "http://192.168.2.223/";
+    public static final String M = "http://192.168.1.222/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -120,5 +119,30 @@ public class Config {
     //商家删除明星员工
     public static final String DELETESTAR = M + S + "deleteStaff";
 
+    //查看服务商是否收藏过
+    public static final String WHETHERCOLLCOMP = URL + S +"whetherCollComp";
 
+    //服务商添加收藏
+    public static final String ACCRETIONCOLLCOMP = URL + S +"accretionCollComp";
+
+    //删除收藏
+    public static final String REMOVECOLL = URL + S +"removeColl";
+
+    //模糊查询car
+    public static final String SEARCHCAR = URL + S +"searchCar";
+
+    // 查询Car信息
+    public static final String GETCARPARAMDICT = URL + S +"getCarParamDict";
+
+    // (热门车辆/模糊搜索品牌)
+    public static final String GETCARBRANDDICT = URL + S +"getCarBrandDict";
+
+    /*
+    *getCarTrianByCarBrand  品牌查车系
+    getHotCarBrandDict     获取热门
+    getCarBrandDictByInitials   字母筛选
+     */
+    public static final String GETCARTRIANBYCARBRAND = URL + S +"getCarTrianByCarBrand";
+    public static final String GETHOTCARBRANDDICT = URL + S +"getHotCarBrandDict";
+    public static final String GETCARBRANDDICTBYINITIALS = URL + S +"getCarBrandDictByInitials";
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common40dp"
+    android:orientation="vertical"
+   >
+
+    <TextView
+        android:id="@+id/tv_rankName"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/common160dp"
+        android:paddingLeft="@dimen/common25dp"
+        android:layout_height="@dimen/common38dp"
+        android:background="@drawable/selector_service_menu_bg"
+        android:drawableLeft="@drawable/selector_menu_drawable_left"
+        android:drawablePadding="@dimen/common12dp"
+        android:gravity="center_vertical"
+        android:text="智能排序"
+        android:textColor="@color/selector_service_menu_text" />
+    <View
+        style="@style/gray_line"/>
+</LinearLayout>

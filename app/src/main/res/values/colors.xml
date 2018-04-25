@@ -17,7 +17,8 @@
 
     <color name="theme_coloer">#ff9696</color>
     <color name="bg_theme_pressed">#ff7c7c</color>
-
+    <color name="ffb5">#ffb5b5</color>
+    <color name="ffef">#ffefef</color>
     <!-- 标题字颜色 -->
     <color name="black_22">#222222</color>
     <color name="black_D2">#D2D2D2</color>
@@ -44,13 +45,16 @@
     <color name="back_f4">#f4f4f4</color>
     <color name="back_d6">#d6d6d6</color>
     <color name="text_ff96">#ff9696</color>
+    <color name="text_ff56">#ff5656</color>
     <color name="text_22">#222222</color>
     <color name="text_a2">#a2a2a2</color>
     <color name="text_33">#333333</color>
     <color name="text_66">#666666</color>
     <color name="text_ff2a">#ff2a2a</color>
+    <color name="text_ff3c">#ff3c3c</color>
     <color name="text_44">#444444</color>
     <color name="text_99">#999999</color>
+    <color name="text_ff35454">#f35454</color>
     <!-- 分割线 -->
     <color name="gray_line">#c5c5c5</color>
     <color name="trans">#80000000</color>

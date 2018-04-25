@@ -44,14 +44,16 @@
                 android:layout_toRightOf="@id/qy"
                 android:layout_marginLeft="@dimen/common10dp"
                 android:layout_centerVertical="true"
-                android:text="汽车"/>
+                android:clickable="true"
+                android:text="商户"/>
             <ImageView
                 android:id="@+id/trangle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/name"
-                android:layout_marginLeft="@dimen/common6dp"/>
+                android:layout_marginLeft="@dimen/common3dp"
+                android:src="@drawable/ss_sj"/>
             <EditText
                 android:id="@+id/edit_search"
                 android:layout_width="match_parent"
@@ -59,7 +61,7 @@
                 android:textColorHint="@color/gray_b9"
                 android:textSize="@dimen/text_size_16sp"
                 android:layout_toRightOf="@id/trangle"
-                android:layout_marginLeft="@dimen/common10dp"
+                android:layout_marginLeft="@dimen/common15dp"
                 android:background="@null"
                 android:hint="请输入车辆名称"/>
         </RelativeLayout>
