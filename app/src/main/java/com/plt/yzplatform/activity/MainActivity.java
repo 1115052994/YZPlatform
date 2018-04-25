@@ -1,7 +1,6 @@
 package com.plt.yzplatform.activity;
 
 import android.Manifest;
-import android.app.DialogFragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -33,7 +32,6 @@ import com.plt.yzplatform.fragment.main.MainFragment;
 import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.ToastUtil;
-import com.plt.yzplatform.view.HintDialogFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,9 +93,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mLocation:
+                JumpUtil.newInstance().jumpRight(MainActivity.this,CityActivity.class);
                 break;
             case R.id.mSearch:
-                JumpUtil.newInstance().jumpRight(this,CompDetail.class);
+                JumpUtil.newInstance().jumpRight(this,SearchActivity.class);
                 break;
         }
     }
@@ -168,8 +167,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 transaction.replace(R.id.view_pager, fragment);
                 break;
             case R.id.life:
-                fragment = fragmentList.get(4);
-                transaction.replace(R.id.view_pager, fragment);
+//                fragment = fragmentList.get(4);
+//                transaction.replace(R.id.view_pager, fragment);
+                JumpUtil.newInstance().jumpRight(MainActivity.this,ShowProductDetailActivity.class);
                 break;
         }
         transaction.commit();
@@ -291,32 +291,32 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     /* 请求权限 */
     private void requestPermission(int permissioncode) {
         String permission = getPermissionString(permissioncode);
-        if (!IsEmptyOrNullString(permission)) {
+//        if (!IsEmptyOrNullString(permission)) {
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                    permission)) {
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-                if (permissioncode == LOCATION_PERMISSION_CODE) {
-                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.location_description_title,
-                            R.string.location_description_why_we_need_the_permission,
-                            permissioncode);
-                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
-                } else if (permissioncode == STORAGE_PERMISSION_CODE) {
-                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.storage_description_title,
-                            R.string.storage_description_why_we_need_the_permission,
-                            permissioncode);
-                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
-                }
-
-
-            } else {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+//                    permission)) {
+//                // Show an expanation to the user *asynchronously* -- don't block
+//                // this thread waiting for the user's response! After the user
+//                // sees the explanation, try again to request the permission.
+//                if (permissioncode == LOCATION_PERMISSION_CODE) {
+//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.location_description_title,
+//                            R.string.location_description_why_we_need_the_permission,
+//                            permissioncode);
+//                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
+//                } else if (permissioncode == STORAGE_PERMISSION_CODE) {
+//                    DialogFragment newFragment = HintDialogFragment.newInstance(R.string.storage_description_title,
+//                            R.string.storage_description_why_we_need_the_permission,
+//                            permissioncode);
+//                    newFragment.show(getFragmentManager(), HintDialogFragment.class.getSimpleName());
+//                }
+//
+//
+//            } else {
                 Log.i("MY", "返回false 不需要解释为啥要权限，可能是第一次请求，也可能是勾选了不再询问");
                 ActivityCompat.requestPermissions(MainActivity.this,
                         new String[]{permission}, permissioncode);
-            }
-        }
+//            }
+//        }
     }
 
     /* 判断字符串是否为空 */

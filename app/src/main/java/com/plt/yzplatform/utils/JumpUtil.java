@@ -65,6 +65,14 @@ public class JumpUtil {
         ((Activity) context).startActivityForResult(mIntent, tag);
     }
 
+    public void jumpRight(Context context, Class<?> cls, int tag, Bundle bundle) {
+        mIntent.setClass(context, cls);
+        mIntent.putExtras(bundle);
+        ((Activity) context).startActivityForResult(mIntent, tag);
+    }
+
+
+
     // 向右走的页面跳转
     public void jumpLeft(Context context, Class<?> cls) {
         mIntent.setClass(context, cls);

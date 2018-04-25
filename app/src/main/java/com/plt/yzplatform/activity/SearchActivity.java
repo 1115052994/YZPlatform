@@ -218,7 +218,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void fail(String response) {
-
+                ToastUtil.noNAR(SearchActivity.this);
             }
         });
     }

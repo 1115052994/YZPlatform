@@ -156,7 +156,7 @@ public class Addstar extends BaseActivity {
     //将数据上传到服务器
     private void PostData() {
         if (NetUtil.isNetAvailable(this)) {
-            if(file_id2!=null){
+            if(file_id!=null){
                 OkHttpUtils.post()
                         .url(Config.SAVESTAR)
                         .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))

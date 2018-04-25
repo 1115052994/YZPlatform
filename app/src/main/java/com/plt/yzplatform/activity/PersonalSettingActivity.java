@@ -16,21 +16,21 @@ import com.plt.yzplatform.entity.PersonalSetting;
 import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.DataCleanManager;
 import com.plt.yzplatform.utils.JumpUtil;
-import com.plt.yzplatform.utils.NetUtil;
+import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.CircleImageView;
 import com.plt.yzplatform.view.OrdinaryDialog;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 /* 个人设置 */
 public class PersonalSettingActivity extends BaseActivity {
@@ -90,51 +90,80 @@ public class PersonalSettingActivity extends BaseActivity {
 
     /* 获取数据 */
     private void getData() {
-        if (NetUtil.isNetAvailable(this)) {
-            OkHttpUtils.post()
-                    .url(Config.GET_PERS_INFO)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-                            ToastUtil.noNAR(PersonalSettingActivity.this);
-                        }
+        Map<String, String> map = new HashMap<>();
+        OKhttptils.post(PersonalSettingActivity.this, Config.GET_PERS_INFO, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Gson gson = GsonFactory.create();
+                PersonalSetting setting = gson.fromJson(response, PersonalSetting.class);
+                PersonalSetting.DataBean.ResultBean resultBean = setting.getData().getResult();
+                pers_id = resultBean.getPers_id();
+                head_file_id = resultBean.getPers_head_file_id();
+                if (head_file_id == "") {
 
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: " + response);
-                            /**
-                             * {"data":{"result":{"user_id":"27","pers_id":"27"}},"message":"","status":"1"}
-                             */
-                            Gson gson = GsonFactory.create();
-                            PersonalSetting setting = gson.fromJson(response,PersonalSetting.class);
-                            if ("1".equals(setting.getStatus())){
-                                PersonalSetting.DataBean.ResultBean resultBean = setting.getData().getResult();
-                                pers_id = resultBean.getPers_id();
-                                head_file_id = resultBean.getPers_head_file_id();
-                                if (head_file_id == ""){
+                } else {
+                    getPic(PersonalSettingActivity.this, head_file_id, icon);
+                }
+                String sSex = resultBean.getPers_sex();
+                if (sSex.equals(boy.getText().toString())) {
+                    boy.setChecked(true);
+                } else {
+                    girl.setChecked(true);
+                }
 
-                                }else {
-                                    getPic(PersonalSettingActivity.this,head_file_id,icon);
-                                }
-                                String sSex = resultBean.getPers_sex();
-                                if (sSex.equals(boy.getText().toString())){
-                                    boy.setChecked(true);
-                                }else {
-                                    girl.setChecked(true);
-                                }
+                nick.setText(resultBean.getPers_nickname());
+            }
 
-                                nick.setText(resultBean.getPers_nickname());
-
-                            }else {
-                                ToastUtil.show(PersonalSettingActivity.this,setting.getMessage());
-                            }
-                        }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(this);
-        }
+            @Override
+            public void fail(String response) {
+                ToastUtil.noNAR(PersonalSettingActivity.this);
+            }
+        });
+//        if (NetUtil.isNetAvailable(this)) {
+//            OkHttpUtils.post()
+//                    .url(Config.GET_PERS_INFO)
+//                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
+//                    .build()
+//                    .execute(new StringCallback() {
+//                        @Override
+//                        public void onError(Call call, Exception e, int id) {
+//                            ToastUtil.noNAR(PersonalSettingActivity.this);
+//                        }
+//
+//                        @Override
+//                        public void onResponse(String response, int id) {
+//                            Log.e(TAG, "onResponse: " + response);
+//                            /**
+//                             * {"data":{"result":{"user_id":"27","pers_id":"27"}},"message":"","status":"1"}
+//                             */
+//                            Gson gson = GsonFactory.create();
+//                            PersonalSetting setting = gson.fromJson(response,PersonalSetting.class);
+//                            if ("1".equals(setting.getStatus())){
+//                                PersonalSetting.DataBean.ResultBean resultBean = setting.getData().getResult();
+//                                pers_id = resultBean.getPers_id();
+//                                head_file_id = resultBean.getPers_head_file_id();
+//                                if (head_file_id == ""){
+//
+//                                }else {
+//                                    getPic(PersonalSettingActivity.this,head_file_id,icon);
+//                                }
+//                                String sSex = resultBean.getPers_sex();
+//                                if (sSex.equals(boy.getText().toString())){
+//                                    boy.setChecked(true);
+//                                }else {
+//                                    girl.setChecked(true);
+//                                }
+//
+//                                nick.setText(resultBean.getPers_nickname());
+//
+//                            }else {
+//                                ToastUtil.show(PersonalSettingActivity.this,setting.getMessage());
+//                            }
+//                        }
+//                    });
+//        } else {
+//            ToastUtil.noNetAvailable(this);
+//        }
     }
 
     @OnClick({R.id.icon, R.id.clean, R.id.save})
@@ -175,46 +204,67 @@ public class PersonalSettingActivity extends BaseActivity {
     private void upLoading() {
         head_file_id = Prefs.with(getApplicationContext()).read("用户头像");
         Log.d(TAG, "upLoading个人id！！！: " + pers_id);
-        Log.w(TAG, "upLoading头像id！！！: " +head_file_id );
-        Log.i(TAG, "upLoading昵称！！！: "+nick.getText().toString().trim());
-        Log.e(TAG, "upLoading性别！！！: " + sType );
-        if (NetUtil.isNetAvailable(this)) {
-            OkHttpUtils.post()
-                    .url(Config.UPDATE_PERS_INFO)
-                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                    .addParams("pers_id", pers_id)
-                    .addParams("pers_head_file_id", head_file_id)
-                    .addParams("pers_nickname", nick.getText().toString().trim())
-                    .addParams("pers_sex", sType)
-                    .build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-                            ToastUtil.noNAR(PersonalSettingActivity.this);
-                        }
+        Log.w(TAG, "upLoading头像id！！！: " + head_file_id);
+        Log.i(TAG, "upLoading昵称！！！: " + nick.getText().toString().trim());
+        Log.e(TAG, "upLoading性别！！！: " + sType);
+        Map<String, String> map = new HashMap<>();
+        map.put("pers_id", pers_id);
+        map.put("pers_head_file_id", head_file_id);
+        map.put("pers_nickname", nick.getText().toString().trim());
+        map.put("pers_sex", sType);
+        OKhttptils.post(PersonalSettingActivity.this, Config.UPDATE_PERS_INFO, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    ToastUtil.show(PersonalSettingActivity.this, "保存成功");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.i(TAG, "onResponse: " + response);
-                            /**
-                             * {"data":{},"message":"","status":"1"}
-                             */
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                if ("1".equals(jsonObject.getString("status"))){
-                                    ToastUtil.show(PersonalSettingActivity.this,"保存成功");
-                                }else {
-                                    ToastUtil.show(PersonalSettingActivity.this,jsonObject.getString("message"));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    });
-        } else {
-            ToastUtil.noNetAvailable(this);
-        }
+            @Override
+            public void fail(String response) {
+                ToastUtil.noNAR(PersonalSettingActivity.this);
+            }
+        });
+//        if (NetUtil.isNetAvailable(this)) {
+//            OkHttpUtils.post()
+//                    .url(Config.UPDATE_PERS_INFO)
+//                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
+//                    .addParams("pers_id", pers_id)
+//                    .addParams("pers_head_file_id", head_file_id)
+//                    .addParams("pers_nickname", nick.getText().toString().trim())
+//                    .addParams("pers_sex", sType)
+//                    .build()
+//                    .execute(new StringCallback() {
+//                        @Override
+//                        public void onError(Call call, Exception e, int id) {
+//                            ToastUtil.noNAR(PersonalSettingActivity.this);
+//                        }
+//
+//                        @Override
+//                        public void onResponse(String response, int id) {
+//                            Log.i(TAG, "onResponse: " + response);
+//                            /**
+//                             * {"data":{},"message":"","status":"1"}
+//                             */
+//                            try {
+//                                JSONObject jsonObject = new JSONObject(response);
+//                                if ("1".equals(jsonObject.getString("status"))){
+//                                    ToastUtil.show(PersonalSettingActivity.this,"保存成功");
+//                                }else {
+//                                    ToastUtil.show(PersonalSettingActivity.this,jsonObject.getString("message"));
+//                                }
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                        }
+//                    });
+//        } else {
+//            ToastUtil.noNetAvailable(this);
+//        }
     }
 
     @Override

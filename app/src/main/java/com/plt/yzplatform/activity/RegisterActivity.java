@@ -14,20 +14,20 @@ import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.MyCountDownTimer;
-import com.plt.yzplatform.utils.NetUtil;
+import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.StringUtil;
 import com.plt.yzplatform.utils.ToastUtil;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -108,89 +108,85 @@ public class RegisterActivity extends BaseActivity {
                 if (phone.equals(Prefs.with(getApplicationContext()).read("验证码手机号"))) {
                     Log.i(TAG, "register推荐码: " + invi_code);
                     if (invi_code.isEmpty()) {
-                        //提交注册
-                        if (NetUtil.isNetAvailable(this)) {
-                            OkHttpUtils.post()
-                                    .url(Config.REG)
-                                    .addHeader("user_token", "")
-                                    .addParams("phone", phone)
-                                    .addParams("user_type", user_type)
-                                    .addParams("invi_code", invi_code)
-                                    .build()
-                                    .execute(new StringCallback() {
-                                        @Override
-                                        public void onError(Call call, Exception e, int id) {
-                                            ToastUtil.noNAR(RegisterActivity.this);
-                                        }
-
-                                        @Override
-                                        public void onResponse(String response, int id) {
-                                            Log.e(TAG, "onResponse: " + response);
-                                            /**
-                                             * {"data":{"flag":"true"},"message":"","status":"1"}
-                                             */
-                                            try {
-                                                JSONObject jsonObject = new JSONObject(response);
-                                                if ("1".equals(jsonObject.getString("status"))) {
-                                                    String data = jsonObject.getString("data");
-                                                    JSONObject object = new JSONObject(data);
-                                                    String flag = object.getString("flag");
-
-                                                    if ("true".equals(flag)) {
-                                                        login();
-                                                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
-                                                    } else {
-                                                        ToastUtil.show(RegisterActivity.this, object.getString("message"));
-                                                    }
-
-                                                } else {
-                                                    ToastUtil.show(RegisterActivity.this, jsonObject.getString("message"));
-                                                }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                        }
-                                    });
-                        } else {
-                            ToastUtil.noNetAvailable(RegisterActivity.this);
-                        }
-
-
+                        //无邀请码注册
+                        Map<String, String> map = new HashMap<>();
+                        map.put("phone", phone);
+                        map.put("user_type", user_type);
+                        map.put("invi_code", invi_code);
+                        register2(map);
                     } else {
                         //校验邀请码是否正确
-                        if (NetUtil.isNetAvailable(this)) {
-                            OkHttpUtils.post()
-                                    .url(Config.VERIFY_CODE)
-                                    .addParams("code", invi_code)
-                                    .build()
-                                    .execute(new StringCallback() {
-                                        @Override
-                                        public void onError(Call call, Exception e, int id) {
-                                            ToastUtil.noNAR(RegisterActivity.this);
-                                        }
+                        final Map<String, String> map2 = new HashMap<>();
+                        map2.put("phone", phone);
+                        map2.put("user_type", user_type);
+                        map2.put("invi_code", invi_code);
+                        OKhttptils.post(RegisterActivity.this, Config.VERIFY_CODE, map2, new OKhttptils.HttpCallBack() {
+                            @Override
+                            public void success(String response) {
+                                register2(map2);
+                            }
 
-                                        @Override
-                                        public void onResponse(String response, int id) {
-                                            Log.d(TAG, "onResponse: " + response);
-                                            //如果邀请码错误 则提示  如果邀请码正确 提交注册
-                                        }
-                                    });
-                        } else {
-                            ToastUtil.noNetAvailable(this);
-                        }
+                            @Override
+                            public void fail(String response) {
+                                ToastUtil.noNAR(RegisterActivity.this);
+                            }
+                        });
                     }
                 } else {
                     ToastUtil.show(RegisterActivity.this, "注册手机号与获取验证码手机号不一致");
                 }
-
-
             } else {
                 ToastUtil.show(RegisterActivity.this, "验证码填写错误");
             }
         } else {
             ToastUtil.show(RegisterActivity.this, "手机号格式不正确");
         }
+    }
+
+    /* 无邀请码注册 */
+    private void register2(Map<String, String> m) {
+        OKhttptils.post(RegisterActivity.this, Config.REG, m, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.e(TAG, "onResponse: " + response);
+                /**
+                 * {"data":{"flag":"true"},"message":"","status":"1"}
+                 */
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String data = jsonObject.getString("data");
+                    JSONObject object = new JSONObject(data);
+                    String flag = object.getString("flag");
+
+                    if ("true".equals(flag)) {
+                        login();
+                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
+                    } else {
+                        ToastUtil.show(RegisterActivity.this, object.getString("message"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+                Log.i(TAG, "fail: " + response);
+                /**
+                 * {"message":"手机已经注册过！","status":"0"}
+                 * */
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String message = jsonObject.getString("message");
+                    ToastUtil.show(RegisterActivity.this, message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+//                ToastUtil.noNAR(RegisterActivity.this);
+
+            }
+        });
     }
 
     /*  获取验证码*/
@@ -200,57 +196,30 @@ public class RegisterActivity extends BaseActivity {
         if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
             countDownTimer = new MyCountDownTimer(registerGetCode, 60000, 1000);
             countDownTimer.start();
-            if (NetUtil.isNetAvailable(this)) {
-                OkHttpUtils.post()
-                        .url(Config.GETCODE)
-                        .addHeader("user_token", "")
-                        .addParams("phone", phone)
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                                ToastUtil.noNAR(RegisterActivity.this);
-                            }
+            Map<String, String> map = new HashMap<>();
+            map.put("phone", phone);
+            OKhttptils.post(RegisterActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
+                @Override
+                public void success(String response) {
+                    try {
 
-                            @Override
-                            public void onResponse(String response, int id) {
-                                Log.d(TAG, "onResponse: " + response);
-                                /**
-                                 *{
-                                 "data": {
-                                 "result": {
-                                 "code": "242638",
-                                 "body": {
-                                 "code": "0",
-                                 "msg": "SUCCESS",
-                                 "smUuid": "13594_1_0_18366135023_1_pQRA1Ya_1"
-                                 }
-                                 }
-                                 },
-                                 "message": "",
-                                 "status": "1"
-                                 }
-                                 */
-                                try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String data = jsonObject.getString("data");
+                        JSONObject object = new JSONObject(data);
+                        String result = object.getString("result");
+                        JSONObject o = new JSONObject(result);
+                        code = o.getString("code");
+                        Log.e(TAG, "onResponse验证码: " + code);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    if ("1".equals(jsonObject.getString("status"))) {
-                                        String data = jsonObject.getString("data");
-                                        JSONObject object = new JSONObject(data);
-                                        String result = object.getString("result");
-                                        JSONObject o = new JSONObject(result);
-                                        code = o.getString("code");
-                                        Log.e(TAG, "onResponse验证码: " + code);
-                                        ToastUtil.show(RegisterActivity.this, "验证码获取成功");
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-            } else {
-                ToastUtil.noNetAvailable(RegisterActivity.this);
-            }
+                @Override
+                public void fail(String response) {
+                    ToastUtil.noNAR(RegisterActivity.this);
+                }
+            });
         } else {
             ToastUtil.show(RegisterActivity.this, "手机号错误");
         }
@@ -260,62 +229,36 @@ public class RegisterActivity extends BaseActivity {
     private void login() {
         String phone = registerPhone.getText().toString().trim();
         if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
-            if (NetUtil.isNetAvailable(this)) {
-                OkHttpUtils.post()
-                        .url(Config.LOGIN)
-                        .addParams("phone", phone)
-                        .addHeader("user_token","")
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                                ToastUtil.noNAR(RegisterActivity.this);
-                            }
+            Map<String, String> map = new HashMap<>();
+            map.put("phone", phone);
+            OKhttptils.post(RegisterActivity.this, Config.LOGIN, map, new OKhttptils.HttpCallBack() {
+                @Override
+                public void success(String response) {
+                    try {
 
-                            @Override
-                            public void onResponse(String response, int id) {
-                                Log.e(TAG, "onResponse: " + response );
-                                /**
-                                 * {
-                                 "message": "账号不存在",
-                                 "status": "0"
-                                 }
-                                 */
+                        JSONObject object = new JSONObject(response);
+                        String data = object.getString("data");
+                        JSONObject obj = new JSONObject(data);
+                        String user_token = obj.getString("user_token");
+                        Prefs.with(getApplicationContext()).write("user_token", user_token);
+                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, EnterpriseActivity.class);
 
-                                /**
-                                 *{
-                                 "data": {
-                                 "user_token": "96730A47BBCD8F345203CFAB9A2CA83AFBBA8AAA6CF39FB4C43C77884BCF7698F0F8976573622E870DE2352FD1908EADDDFB735DA5E3A77DE3C6E2520B61D7F6"
-                                 },
-                                 "message": "",
-                                 "status": "1"
-                                 }
-                                 */
-                                try {
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                                    JSONObject object = new JSONObject(response);
-                                    if ("1".equals(object.getString("status"))){
-                                        String data = object.getString("data");
-                                        JSONObject obj = new JSONObject(data);
-                                        String user_token = obj.getString("user_token");
-                                        Prefs.with(getApplicationContext()).write("user_token",user_token);
-                                        JumpUtil.newInstance().jumpRight(RegisterActivity.this,EnterpriseActivity.class);
-                                    }else {
-                                        ToastUtil.show(RegisterActivity.this,object.getString("message"));
-                                    }
+                @Override
+                public void fail(String response) {
+                    ToastUtil.noNAR(RegisterActivity.this);
+                }
+            });
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-            } else {
-                ToastUtil.noNAR(RegisterActivity.this);
-            }
         } else {
             ToastUtil.show(RegisterActivity.this, "手机号错误");
         }
     }
+
 
     @Override
     protected void onStart() {
@@ -331,7 +274,7 @@ public class RegisterActivity extends BaseActivity {
         setRightTextClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpUtil.newInstance().jumpRight(RegisterActivity.this,LoginActivity.class);
+                JumpUtil.newInstance().jumpRight(RegisterActivity.this, LoginActivity.class);
             }
         });
     }

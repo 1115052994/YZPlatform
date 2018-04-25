@@ -11,30 +11,131 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="@dimen/common44dp">
+        android:layout_height="@dimen/common44dp"
+        android:background="@color/white">
 
         <ImageView
+            android:id="@+id/left_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="@dimen/common15dp"
             android:src="@drawable/left_back_unchecked" />
 
-        <TextView
+        <AutoCompleteTextView
             android:id="@+id/mSearch"
             android:layout_width="@dimen/common240dp"
-            android:layout_marginLeft="@dimen/common31dp"
             android:layout_height="@dimen/common31dp"
-            android:layout_centerVertical="true"
             android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/common31dp"
             android:layout_marginRight="@dimen/common15dp"
             android:background="@drawable/bg_main_search"
             android:drawableLeft="@drawable/search_pic"
-            android:gravity="center"
             android:paddingLeft="@dimen/common6dp"
-            android:text="搜索服务项"
+            android:drawablePadding="@dimen/common10dp"
+            android:hint="搜索服务项"
+            android:completionThreshold="1"
+            android:textSize="@dimen/text_size_15sp"
             android:textColor="@color/gray_a2" />
 
+        <TextView
+            android:id="@+id/mQuit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_alignParentRight="true"
+            android:text="取消"
+            android:textColor="@color/theme_coloer"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/common15dp"
+            android:paddingRight="@dimen/common15dp"/>
+
     </RelativeLayout>
+
+    <ExpandableListView
+        android:id="@+id/mList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="@dimen/common1dp">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--style="@style/black33_text_16sp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/common44dp"-->
+                    <!--android:background="@color/white"-->
+                    <!--android:drawableLeft="@drawable/product_maintain"-->
+                    <!--android:drawablePadding="@dimen/common13dp"-->
+                    <!--android:paddingLeft="@dimen/common15dp"-->
+                    <!--android:text="维修保养" />-->
+
+                <!--<ListView-->
+                    <!--android:id="@+id/mWeixiu"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--style="@style/black33_text_16sp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/common44dp"-->
+                    <!--android:background="@color/white"-->
+                    <!--android:drawableLeft="@drawable/product_water"-->
+                    <!--android:drawablePadding="@dimen/common13dp"-->
+                    <!--android:paddingLeft="@dimen/common15dp"-->
+                    <!--android:text="洗车美容" />-->
+
+                <!--<ListView-->
+                    <!--android:id="@+id/mXiche"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--style="@style/black33_text_16sp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/common44dp"-->
+                    <!--android:background="@color/white"-->
+                    <!--android:drawableLeft="@drawable/product_beauty"-->
+                    <!--android:drawablePadding="@dimen/common13dp"-->
+                    <!--android:paddingLeft="@dimen/common15dp"-->
+                    <!--android:text="钣金维修" />-->
+
+                <!--<ListView-->
+                    <!--android:id="@+id/mMeirong"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+            <!--</LinearLayout>-->
+
+
+        <!--</LinearLayout>-->
+
+    <!--</ScrollView>-->
 
 </LinearLayout>

@@ -122,7 +122,7 @@ public class PhotoUtils {
     public static String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        String pathHead = "file:///";
+        String pathHead = "life:///";
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
@@ -169,7 +169,7 @@ public class PhotoUtils {
             return pathHead + getDataColumn(context, uri, null, null);
         }
         // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+        else if ("life".equalsIgnoreCase(uri.getScheme())) {
             return pathHead + uri.getPath();
         }
         return null;
@@ -177,13 +177,13 @@ public class PhotoUtils {
 
     /**
      * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other file-based ContentProviders.
+     * MediaStore Uris, and other life-based ContentProviders.
      *
      * @param context       The context.
      * @param uri           The Uri to query.
      * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
-     * @return The value of the _data column, which is typically a file path.
+     * @return The value of the _data column, which is typically a life path.
      */
     private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
 

@@ -12,24 +12,24 @@ import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.MyCountDownTimer;
-import com.plt.yzplatform.utils.NetUtil;
+import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.StringUtil;
 import com.plt.yzplatform.utils.ToastUtil;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 public class LoginActivity extends BaseActivity {
 
-    private static final String TAG = "登录" ;
+    private static final String TAG = "登录";
     @BindView(R.id.login_phone)
     EditText loginPhone;
     @BindView(R.id.login_code)
@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
 
         } else {
             //自动登录
-            JumpUtil.newInstance().jumpRight(this,SearchActivity.class);
+            JumpUtil.newInstance().jumpRight(this, MainActivity.class);
         }
     }
 
@@ -72,63 +72,44 @@ public class LoginActivity extends BaseActivity {
 
     /* 登录 */
     private void login() {
-        String phone = loginPhone.getText().toString().trim();
+        final String phone = loginPhone.getText().toString().trim();
+        Map<String, String> map = new HashMap<>();
+        map.put("phone", phone);
         if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
-            if (NetUtil.isNetAvailable(this)) {
-                OkHttpUtils.post()
-                        .url(Config.LOGIN)
-                        .addParams("phone", phone)
-                        .addHeader("user_token","")
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                                ToastUtil.noNAR(LoginActivity.this);
-                            }
+            OKhttptils.post(this, Config.LOGIN, map, new OKhttptils.HttpCallBack() {
+                @Override
+                public void success(String response) {
+                    Log.i(TAG, "success: " + response);
+                    try {
 
-                            @Override
-                            public void onResponse(String response, int id) {
-                                Log.e(TAG, "onResponse: " + response );
-                                /**
-                                 * {
-                                 "message": "账号不存在",
-                                 "status": "0"
-                                 }
-                                 */
+                        JSONObject object = new JSONObject(response);
+                            String data = object.getString("data");
+                            JSONObject obj = new JSONObject(data);
+                            String user_token = obj.getString("user_token");
+                            Prefs.with(getApplicationContext()).write("user_token", user_token);
+                            Prefs.with(getApplicationContext()).write("user_phone", phone);
+                            JumpUtil.newInstance().jumpRight(LoginActivity.this, MainActivity.class);
 
-                                /**
-                                 *{
-                                 "data": {
-                                 "user_token": "96730A47BBCD8F345203CFAB9A2CA83AFBBA8AAA6CF39FB4C43C77884BCF7698F0F8976573622E870DE2352FD1908EADDDFB735DA5E3A77DE3C6E2520B61D7F6"
-                                 },
-                                 "message": "",
-                                 "status": "1"
-                                 }
-                                 */
-                                try {
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                                    JSONObject object = new JSONObject(response);
-                                    if ("1".equals(object.getString("status"))){
-                                        String data = object.getString("data");
-                                        JSONObject obj = new JSONObject(data);
-                                        String user_token = obj.getString("user_token");
-                                        Prefs.with(getApplicationContext()).write("user_token",user_token);
-                                        JumpUtil.newInstance().jumpRight(LoginActivity.this,SearchActivity.class);
-                                    }else {
-                                        ToastUtil.show(LoginActivity.this,object.getString("message"));
-                                    }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-            } else {
-                ToastUtil.noNAR(LoginActivity.this);
-            }
+                @Override
+                public void fail(String response) {
+                    Log.e(TAG, "fail: " + response );
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        ToastUtil.show(LoginActivity.this,jsonObject.getString("message"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } else {
             ToastUtil.show(LoginActivity.this, "手机号错误");
         }
+
     }
 
     /* 获取验证码 */
@@ -137,56 +118,36 @@ public class LoginActivity extends BaseActivity {
         if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
             countDownTimer = new MyCountDownTimer(loginGetCode, 60000, 1000);
             countDownTimer.start();
-            if (NetUtil.isNetAvailable(this)) {
-                OkHttpUtils.post()
-                        .url(Config.GETCODE)
-                        .addHeader("user_token", "")
-                        .addParams("phone", phone)
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                                ToastUtil.noNAR(LoginActivity.this);
-                            }
+            Map<String, String> map = new HashMap<>();
+            map.put("phone", phone);
+            OKhttptils.post(LoginActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
+                @Override
+                public void success(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                            String data = jsonObject.getString("data");
+                            JSONObject object = new JSONObject(data);
+                            String result = object.getString("result");
+                            JSONObject o = new JSONObject(result);
+                            code = o.getString("code");
+                            Log.e(TAG, "onResponse验证码: " + code);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                            @Override
-                            public void onResponse(String response, int id) {
-                                Log.d(TAG, "onResponse: " + response);
-                                /**
-                                 *{
-                                 "data": {
-                                 "result": {
-                                 "code": "242638",
-                                 "body": {
-                                 "code": "0",
-                                 "msg": "SUCCESS",
-                                 "smUuid": "13594_1_0_18366135023_1_pQRA1Ya_1"
-                                 }
-                                 }
-                                 },
-                                 "message": "",
-                                 "status": "1"
-                                 }
-                                 */
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    if ("1".equals(jsonObject.getString("status"))) {
-                                        String data = jsonObject.getString("data");
-                                        JSONObject object = new JSONObject(data);
-                                        String result = object.getString("result");
-                                        JSONObject o = new JSONObject(result);
-                                        code = o.getString("code");
-                                        Log.e(TAG, "onResponse验证码: " + code);
-                                        ToastUtil.show(LoginActivity.this, "验证码获取成功");
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-            } else {
-                ToastUtil.noNetAvailable(LoginActivity.this);
-            }
+                @Override
+                public void fail(String response) {
+                    try {
+
+                        JSONObject jsonObject = new JSONObject(response);
+                        ToastUtil.show(LoginActivity.this,jsonObject.getString("message"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
         } else {
             ToastUtil.show(LoginActivity.this, "手机号错误");
         }

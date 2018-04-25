@@ -1,8 +1,6 @@
 package com.plt.yzplatform.utils;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
 
 import com.plt.yzplatform.activity.LoginActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -34,7 +32,7 @@ public class OKhttptils {
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.d("onResponse", "onResponse" + response);
+//                            Log.d("onResponse", "onResponse" + response);
                             try {
                                 JSONObject object = new JSONObject(response);
                                 String status = object.getString("status");
@@ -50,6 +48,9 @@ public class OKhttptils {
                                         break;
                                     case "0":
                                         //失败
+                                        callBack.fail(response);
+                                        break;
+                                    case "103":
                                         callBack.fail(response);
                                         break;
                                 }
