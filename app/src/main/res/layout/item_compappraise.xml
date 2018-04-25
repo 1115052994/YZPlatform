@@ -35,12 +35,12 @@
                 android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/common5dp"
                 android:layout_marginTop="@dimen/common15dp">
+
                 <ImageView
                     android:id="@+id/star1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/pj_hstar"
-                    />
+                    android:layout_height="match_parent"
+                    android:src="@drawable/pj_hstar" />
                 <ImageView
                     android:id="@+id/star2"
                     android:layout_width="wrap_content"

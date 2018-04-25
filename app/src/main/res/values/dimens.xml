@@ -42,6 +42,7 @@
     <dimen name="common45dp">45dp</dimen>
     <dimen name="common46dp">46dp</dimen>
     <dimen name="common49dp">49dp</dimen>
+    <dimen name="common48dp">48dp</dimen>
     <dimen name="common50dp">50dp</dimen>
     <dimen name="common53dp">53dp</dimen>
     <dimen name="common54dp">54dp</dimen>
@@ -71,6 +72,7 @@
     <dimen name="common105dp">105dp</dimen>
     <dimen name="common107dp">107dp</dimen>
     <dimen name="common110dp">110dp</dimen>
+    <dimen name="common111dp">111dp</dimen>
     <dimen name="common114dp">114dp</dimen>
     <dimen name="common116dp">116dp</dimen>
     <dimen name="common120dp">120dp</dimen>
@@ -78,6 +80,8 @@
     <dimen name="common126dp">126dp</dimen>
     <dimen name="common127dp">127dp</dimen>
     <dimen name="common137dp">137dp</dimen>
+    <dimen name="common130dp">130dp</dimen>
+    <dimen name="common135dp">135dp</dimen>
     <dimen name="common140dp">140dp</dimen>
     <dimen name="common144dp">144dp</dimen>
     <dimen name="common150dp">150dp</dimen>
@@ -90,7 +94,9 @@
     <dimen name="common185dp">185dp</dimen>
     <dimen name="common199dp">199dp</dimen>
     <dimen name="common200dp">200dp</dimen>
+    <dimen name="common213dp">213dp</dimen>
     <dimen name="common220dp">220dp</dimen>
+    <dimen name="common231dp">231dp</dimen>
     <dimen name="common240dp">240dp</dimen>
     <dimen name="common250dp">250dp</dimen>
     <dimen name="common264dp">264dp</dimen>

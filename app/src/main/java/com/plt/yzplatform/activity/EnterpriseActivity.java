@@ -571,7 +571,7 @@ ToastUtil.noNAR(EnterpriseActivity.this);
 
     }
 
-
+//    addView1(parentLayout, types.get(i), ids.get(i));
     private void addView1(LinearLayout linearLayout, final String s, final String id) {
         final CheckBox item = (CheckBox) getLayoutInflater().inflate(R.layout.item_service_types, linearLayout, false);
         item.setText(s);

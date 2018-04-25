@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 这个是设置控件的圆角-->
+    <corners android:radius="@dimen/common4dp"/>
+    <solid android:color="@color/bg_theme_pressed" />
+</shape>

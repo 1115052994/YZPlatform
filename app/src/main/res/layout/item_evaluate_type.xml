@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:id="@+id/text3"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="服务到位"
+    android:textColor="@color/text_ff96"
+    android:background="@drawable/text_type"
+    android:textSize="@dimen/text_size_13sp"
+    android:paddingTop="@dimen/common2dp"
+    android:paddingLeft="@dimen/common14dp"
+    android:paddingBottom="@dimen/common3dp"
+    android:paddingRight="@dimen/common14dp">
+</TextView>

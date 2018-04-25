@@ -1,13 +1,12 @@
 package com.plt.yzplatform.activity;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +22,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.scwang.smartrefresh.layout.util.DensityUtil.dp2px;
 
 public class MyFavorite extends BaseActivity {
     private ArrayList<Fragment> fragment=new ArrayList<>();
@@ -44,14 +45,7 @@ public class MyFavorite extends BaseActivity {
         collectPager.setAdapter(new CollectAdapter(getSupportFragmentManager(),fragment,str));
         collectTab.setupWithViewPager(collectPager);
         collectTab.setTabMode(TabLayout.MODE_FIXED);
-//        collectTab.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                setIndicator(collectTab, 72, 72);
-//            }
-//        });
-        //添加完所有tab后调用！！
-        reflex(collectTab );
+        showTabTextAdapteIndicator(collectTab);
     }
 
     @Override
@@ -65,92 +59,52 @@ public class MyFavorite extends BaseActivity {
             }
         });
     }
-
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
-    }
-    public void reflex(final TabLayout tabLayout){
-        //了解源码得知 线的宽度是根据 tabView的宽度来设置的
-        tabLayout.post(new Runnable() {
+    public static void showTabTextAdapteIndicator(final TabLayout tab) {
+        tab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void run() {
+            public void onGlobalLayout() {
+                tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                Class<?> tabLayout = tab.getClass();
+                Field tabStrip = null;
                 try {
-                    //拿到tabLayout的mTabStrip属性
-                    Field mTabStripField = tabLayout.getClass().getDeclaredField("mTabStrip");
-                    mTabStripField.setAccessible(true);
-
-                    LinearLayout mTabStrip = (LinearLayout) mTabStripField.get(tabLayout);
-
-                    int dp10 = dip2px(tabLayout.getContext(), 65);
-
-                    for (int i = 0; i < mTabStrip.getChildCount(); i++) {
-                        View tabView = mTabStrip.getChildAt(i);
-
-                        //拿到tabView的mTextView属性
-                        Field mTextViewField = tabView.getClass().getDeclaredField("mTextView");
-                        mTextViewField.setAccessible(true);
-
-                        TextView mTextView = (TextView) mTextViewField.get(tabView);
-
-                        tabView.setPadding(0, 0, 0, 0);
-
-                        //因为我想要的效果是   字多宽线就多宽，所以测量mTextView的宽度
-                        int width = 0;
-                        width = mTextView.getWidth();
-                        if (width == 0) {
-                            mTextView.measure(0, 0);
-                            width = mTextView.getMeasuredWidth();
-                        }
-
-                        //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                        params.width = width ;
-                        params.leftMargin = dp10;
-                        params.rightMargin = dp10;
-                        tabView.setLayoutParams(params);
-
-                        tabView.invalidate();
-                    }
-
+                    tabStrip = tabLayout.getDeclaredField("mTabStrip");
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
+                }
+                tabStrip.setAccessible(true);
+                LinearLayout ll_tab = null;
+                try {
+                    ll_tab = (LinearLayout) tabStrip.get(tab);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
+                int maxLen = 0;
+                int maxTextSize = 0;
+                int tabCount = ll_tab.getChildCount();
+                for (int i = 0; i < tabCount; i++) {
+                    View child = ll_tab.getChildAt(i);
+                    child.setPadding(0, 0, 0, 0);
+                    if (child instanceof ViewGroup) {
+                        ViewGroup viewGroup = (ViewGroup) child;
+                        for (int j = 0; j < ll_tab.getChildCount(); j++) {
+                            if (viewGroup.getChildAt(j) instanceof TextView) {
+                                TextView tabTextView = (TextView) viewGroup.getChildAt(j);
+                                int length = tabTextView.getText().length();
+                                maxTextSize = (int) tabTextView.getTextSize() > maxTextSize ? (int) tabTextView.getTextSize() : maxTextSize;
+                                maxLen = length > maxLen ? length : maxLen;
+                            }
+                        }
+
+                    }
+
+                    int margin = (tab.getWidth() / tabCount - (maxTextSize + dp2px(0)) * maxLen) / 2 - dp2px(0);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+                    params.leftMargin = margin;
+                    params.rightMargin = margin;
+                    child.setLayoutParams(params);
+                    child.invalidate();
+                }
             }
         });
-
-    }
-    //dp转px方法
-    public static int dip2px(Context context, float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
     }
 }

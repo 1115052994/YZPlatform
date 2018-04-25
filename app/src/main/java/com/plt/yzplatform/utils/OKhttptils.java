@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ImageView;
+import android.util.Log;
 
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.LoginActivity;
@@ -24,8 +25,8 @@ public class OKhttptils {
 //        Log.i("user_token",Prefs.with(context).read("user_token"));
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
-                    .url(url)
-                    .addHeader("user_token", Prefs.with(context).read("user_token"))
+                    .url(url)      //Prefs.with(context).read("user_token")
+                    .addHeader("user_token","96730A47BBCD8F345203CFAB9A2CA83ABDD25AE0426DCFB3ECD9DC3D956DA3A601719BC10114E399002F03384B081C6F0EC270098992C56EDF3946BEBEAA85CD" )
                     //.addParams("car_name", s)
                     .params(params)
                     .build()
@@ -35,6 +36,7 @@ public class OKhttptils {
                         public void onError(Call call, Exception e, int id) {
                             //失败
                             callBack.fail(e.getMessage());
+                            Log.i("oneror","onError");
                         }
 
                         @Override
@@ -56,6 +58,7 @@ public class OKhttptils {
                                     case "0":
                                         //失败
                                         callBack.fail(response);
+                                        Log.i("oneror","fail");
                                         break;
                                     case "103":
                                         callBack.fail(response);
