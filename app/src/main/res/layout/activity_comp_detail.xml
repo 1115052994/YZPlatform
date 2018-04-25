@@ -212,6 +212,7 @@
                             android:layout_toRightOf="@id/image_loc"
                             android:layout_marginLeft="@dimen/common8dp"
                             android:layout_centerVertical="true"
+                            android:lines="1"
                             android:text="北京市海淀区西三旗"/>
                         <ImageView
                             android:id="@+id/image_dh"

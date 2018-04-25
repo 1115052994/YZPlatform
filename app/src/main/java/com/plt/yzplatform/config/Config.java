@@ -179,8 +179,6 @@ public class Config {
     //查看服务商是否收藏过
     public static final String WHETHERCOLLCOMP = URL + S +"whetherCollComp";
 
-    //服务商添加收藏
-    public static final String ACCRETIONCOLLCOMP = URL + S +"accretionCollComp";
     //商家添加产品 - 服务类型
     public static final String GET_COMP_SERVICE_TYPE = URL + S + "serverItemType";
 
@@ -196,8 +194,6 @@ public class Config {
     //商家产品 - 查看产品信息
     public static  final String SHOW_PRODUCT = URL + S + "showProductDetail";
 
-    //删除收藏
-    public static final String REMOVECOLL = URL + S +"removeColl";
 
     //模糊查询car
     public static final String SEARCHCAR = URL + S +"searchCar";
