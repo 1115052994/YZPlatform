@@ -115,7 +115,6 @@ public class CarBrandSearch extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.i("edittextview", "afterTextChanged");
             }
         });
 
@@ -165,21 +164,8 @@ public class CarBrandSearch extends BaseActivity {
         });
         gvSshot.setAdapter(hotAdapter);
 
-        // 字母A-Z(tv_carbrand/image_carbrand)
-//        Map<String, String> carMap1 = new HashMap<>();
-//        carMap1.put("tv_carbrand", "A");
-//        carMap1.put("image_carbrand", "");
-//        carMap1.put("id_carbrand", "");
-//        Map<String, String> carMap2 = new HashMap<>();
-//        carMap2.put("tv_carbrand", "大众");
-//        carMap2.put("image_carbrand", "");
-//        carMap1.put("id_carbrand", "");
-//        recyclerList.add(carMap1);
-//        recyclerList.add(carMap2);
-//        recyclerList.add(carMap1);
-//        recyclerList.add(carMap2);
-//        recyclerList.add(carMap1);
-//        recyclerList.add(carMap2);
+
+        // A-Z车品牌
         recyclerAdapter = new CommonRecyclerAdapter(this, recyclerList, new MultiTypeSupport() {
             @Override
             public int getLayoutId(Object item, int position) {

@@ -88,6 +88,12 @@ public class AdvanceSX extends BaseActivity {
     private int pfbzPosition = 0;
     private int rylxPosition = 0;
     private int zwsPosition = 0;
+    private int clStart = 0;
+    private int clEnd = 6;// 不限标记为
+    private int lcStart = 0;
+    private int lcEnd = 15;// 不限标记为
+    private float plStart = 0;
+    private float plEnd = 5.0f;// 不限标记为
     // 保留上次选中状态
     private View cx = null;
     private View bsx = null;
@@ -101,6 +107,18 @@ public class AdvanceSX extends BaseActivity {
         ButterKnife.bind(this);
         initView();
         getCarParams();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setTitle("高级筛选");
+        setLeftImageClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpUtil.newInstance().finishRightTrans(AdvanceSX.this);
+            }
+        });
     }
 
     private void initView() {
@@ -251,18 +269,64 @@ public class AdvanceSX extends BaseActivity {
         seekBarCl.setOnSeekBarChangeListener(new SeekBarPressure.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBarPressure seekBar, double progressLow, double progressHigh) {
+                if (progressLow == 0) {
+                    if (progressHigh == 6) {
+                        tvCl.setText("不限价格");
+                        clStart = 0;
+                        clEnd = 6;
+                    }
+                    else {
+                        tvCl.setText((int) progressHigh + "年以内");
+                        clStart = 0;
+                        clEnd = (int) progressHigh;
+                    }
+                } else {
+                    if (progressHigh == 6) {
+                        tvCl.setText((int) progressLow + "年以上");
+                        clStart = (int) progressLow;
+                        clEnd = 6;
+                    }
+                    else {
+                        tvCl.setText((int) progressLow + "年-" + (int) progressHigh + "年");
+                        clStart = (int) progressLow;
+                        clEnd = (int) progressHigh;
+                    }
+                }
             }
         });
 
         // 里程
         //显示最大值
-        seekBarLc.setMaxSize(6);
+        seekBarLc.setMaxSize(5);
         //设置分几块区域
-        seekBarLc.setMaxCount(7);
+        seekBarLc.setMaxCount(6);
         seekBarLc.isInside(true);
         seekBarLc.setOnSeekBarChangeListener(new SeekBarPressure.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBarPressure seekBar, double progressLow, double progressHigh) {
+                if (progressLow == 0) {
+                    if (progressHigh == 5) {
+                        tvLc.setText("不限里程");
+                        lcStart = 0;
+                        lcEnd = 15;
+                    }
+                    else {
+                        tvLc.setText((int) progressHigh*3 + "万公里以内");
+                        lcStart = 0;
+                        lcEnd = (int) progressHigh*3;
+                    }
+                } else {
+                    if (progressHigh == 5) {
+                        tvLc.setText((int) progressLow*3 + "万公里以上");
+                        lcStart = (int) progressLow*3;
+                        lcEnd = 15;
+                    }
+                    else {
+                        tvLc.setText((int) progressLow*3 + "万公里-" + (int) progressHigh*3 + "万公里");
+                        lcStart = (int) progressLow*3;
+                        lcEnd = (int) progressHigh*3;
+                    }
+                }
             }
         });
         // 排量
@@ -274,6 +338,29 @@ public class AdvanceSX extends BaseActivity {
         seekBarPl.setOnSeekBarChangeListener(new SeekBarPressure.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBarPressure seekBar, double progressLow, double progressHigh) {
+                if (progressLow == 0) {
+                    if (progressHigh == 5) {
+                        tvPl.setText("不限排量");
+                        plStart = 0;
+                        plEnd = (float) 5.0;
+                    }
+                    else {
+                        tvPl.setText((float) progressHigh + "L以内");
+                        plStart = 0;
+                        plEnd = (float) progressHigh;
+                    }
+                } else {
+                    if (progressHigh == 5) {
+                        tvPl.setText((float) progressLow + "L以上");
+                        plStart = (float) progressLow;
+                        plEnd = (float)5.0;
+                    }
+                    else {
+                        tvPl.setText((float) progressLow + "L-" + (float) progressHigh + "L");
+                        plStart = (float) progressLow;
+                        plEnd = (float) progressHigh;
+                    }
+                }
             }
         });
     }
@@ -385,17 +472,20 @@ public class AdvanceSX extends BaseActivity {
     public void submit1(View view){
         //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数zws
         Map<String,String> map = new HashMap<>();
-        map.put("cx",cxPosition==0?"":cxParamsList.get(cxPosition).get("paramName")+"_"+cxParamsList.get(cxPosition).get("paramId"));
-        map.put("bsx",bsxPosition==0?"":bsxParamsList.get(bsxPosition).get("paramName")+"_"+bsxParamsList.get(bsxPosition).get("paramId"));
-        map.put("pfbz",pfbzPosition==0?"":pfbzParamsList.get(pfbzPosition).get("paramName")+"_"+pfbzParamsList.get(pfbzPosition).get("paramId"));
-        map.put("rylx",rylxPosition==0?"":rylxParamsList.get(rylxPosition).get("paramName")+"_"+rylxParamsList.get(rylxPosition).get("paramId"));
-        map.put("zws",zwsPosition==0?"":zwsParamsList.get(zwsPosition).get("paramName")+"_"+zwsParamsList.get(zwsPosition).get("paramId"));
+        map.put("cx",cxPosition==0?"":cxParamsList.get(cxPosition).get("paramName")+","+cxParamsList.get(cxPosition).get("paramId"));
+        map.put("bsx",bsxPosition==0?"":bsxParamsList.get(bsxPosition).get("paramName")+","+bsxParamsList.get(bsxPosition).get("paramId"));
+        map.put("pfbz",pfbzPosition==0?"":pfbzParamsList.get(pfbzPosition).get("paramName")+","+pfbzParamsList.get(pfbzPosition).get("paramId"));
+        map.put("rylx",rylxPosition==0?"":rylxParamsList.get(rylxPosition).get("paramName")+","+rylxParamsList.get(rylxPosition).get("paramId"));
+        map.put("zws",zwsPosition==0?"":zwsParamsList.get(zwsPosition).get("paramName")+","+zwsParamsList.get(zwsPosition).get("paramId"));
+        // 车龄cl 里程lc 排量pl
+        map.put("cl",clStart+","+clEnd);
+        map.put("lc",lcStart+","+lcEnd);
+        map.put("pl",plStart+","+plEnd);
         dataBackListener.backData(map);
         // 关闭
         JumpUtil.newInstance().finishRightTrans(this);
     }
     public void reset1(View view){
-        //响应单击事件
         if(cx != null){
             // 取消之前选中
             cx.setSelected(false);
@@ -417,7 +507,6 @@ public class AdvanceSX extends BaseActivity {
             TextView tv = pfbz.findViewById(R.id.tv_type);
             tv.setTextColor(Color.parseColor("#333333"));
         }
-        //设置响应事件
         if(rllx != null){
             // 取消之前选中
             rllx.setSelected(false);
@@ -425,7 +514,6 @@ public class AdvanceSX extends BaseActivity {
             TextView tv = rllx.findViewById(R.id.tv_type);
             tv.setTextColor(Color.parseColor("#333333"));
         }
-        //设置响应事件
         if(zws != null){
             // 取消之前选中
             zws.setSelected(false);

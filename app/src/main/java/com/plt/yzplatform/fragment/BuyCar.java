@@ -104,9 +104,30 @@ public class BuyCar extends Fragment {
 
     private List<BuyCarBean.DataBean.ResultBean> recyclerList = new ArrayList<>();
     private CommonRecyclerAdapter recyclerAdapter;
+
+    // 城市
     private String cityName = "济南";
     private String cityId = "";
 
+    //高级筛选
+    //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数(zwsparamName,paramId）
+    // 车龄cl 里程lc 排量pl(start,end)
+    private String sxCx = "";//不限全是Id
+    private String sxBsx = "";
+    private String sxPfbz = "";
+    private String sxRylx = "";
+    private String sxZws = "";
+    private String sxClStart = "",sxClEnd="";
+    private String sxLcStart = "",sxLcEnd ="";
+    private String sxPlStart = "",sxPlEnd = "";
+    // 价格
+    private String startPrice = "0",endPrice="";
+    // 品牌车系
+    /**
+     * carMap1.put("tv_carbrand", "A");
+     carMap1.put("image_carbrand", "");
+     carMap1.put("id_carbrand", "");
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -165,7 +186,6 @@ public class BuyCar extends Fragment {
         jgList.add("20万-30万");
         jgList.add("30万-50万");
         jgList.add("50万以上");
-
     }
 
     @Override
@@ -184,21 +204,25 @@ public class BuyCar extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ly_zn:
+                // 智能排序
                 tvZn.setTextColor(Color.parseColor("#ff9696"));
                 imageZn.setImageResource(R.drawable.b_g);
                 rzPopupWindow();
                 break;
             case R.id.ly_pp:
+                // 品牌
                 tvPp.setTextColor(Color.parseColor("#ff9696"));
                 imagePp.setImageResource(R.drawable.b_g);
                 JumpUtil.newInstance().jumpLeft(getActivity(), CarBrandSearch.class);
                 break;
             case R.id.ly_jg:
+                // 价格
                 tvJg.setTextColor(Color.parseColor("#ff9696"));
                 imageJg.setImageResource(R.drawable.b_g);
                 jgPopupWindow();
                 break;
             case R.id.ly_sx:
+                // 筛选
                 tvSx.setTextColor(Color.parseColor("#ff9696"));
                 imageSx.setImageResource(R.drawable.b_g);
                 JumpUtil.newInstance().jumpLeft(getActivity(), AdvanceSX.class);
@@ -206,21 +230,130 @@ public class BuyCar extends Fragment {
                     @Override
                     public void backData(Map<String, String> map) {
                         Log.i("databack",map.toString());
-                        //显示搜索选项   重新搜索
-                        //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数zws
-                        View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
-                        TextView tv = view.findViewById(R.id.tv_tag);
-                        tv.setText(map.get("cx").split("_")[0]);
-                        if (tv.getParent() != null) {
-                            ViewGroup group = (ViewGroup) tv.getParent();
+                        cartagLayout.removeAllViews();
+                        //显示搜索选项   重新搜索  返回数据（
+                        //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数(zwsparamName,paramId）
+                        // 车龄cl 里程lc 排量pl(start,end)
+                        if(!"".equals(map.get("cx"))) {
+                            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                            TextView tv = view.findViewById(R.id.tv_tag);
+                            tv.setText(map.get("cx").split(",")[0]);
+                            if (tv.getParent() != null) {
+                                ViewGroup group = (ViewGroup) tv.getParent();
+                                group.removeAllViews();
+                            }
+                            cartagLayout.addView(tv);
+                            sxCx = map.get("cx").split(",")[1];
+                        }
+                        if(!"".equals(map.get("bsx"))) {
+                            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                            TextView tv = view.findViewById(R.id.tv_tag);
+                            tv.setText(map.get("bsx").split(",")[0]);
+                            if (tv.getParent() != null) {
+                                ViewGroup group = (ViewGroup) tv.getParent();
+                                group.removeAllViews();
+                            }
+                            cartagLayout.addView(tv);
+                            sxBsx = map.get("bsx").split(",")[1];
+                        }
+                        if(!"".equals(map.get("pfbz"))) {
+                            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                            TextView tv = view.findViewById(R.id.tv_tag);
+                            tv.setText(map.get("pfbz").split(",")[0]);
+                            if (tv.getParent() != null) {
+                                ViewGroup group = (ViewGroup) tv.getParent();
+                                group.removeAllViews();
+                            }
+                            cartagLayout.addView(tv);
+                            sxPfbz = map.get("pfbz").split(",")[1];
+                        }
+                        if(!"".equals(map.get("rylx"))) {
+                            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                            TextView tv = view.findViewById(R.id.tv_tag);
+                            tv.setText(map.get("rylx").split(",")[0]);
+                            if (tv.getParent() != null) {
+                                ViewGroup group = (ViewGroup) tv.getParent();
+                                group.removeAllViews();
+                            }
+                            cartagLayout.addView(tv);
+                            sxRylx = map.get("rylx").split(",")[1];
+                        }
+                        if(!"".equals(map.get("zws"))) {
+                            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                            TextView tv = view.findViewById(R.id.tv_tag);
+                            tv.setText(map.get("zws").split(",")[0]);
+                            if (tv.getParent() != null) {
+                                ViewGroup group = (ViewGroup) tv.getParent();
+                                group.removeAllViews();
+                            }
+                            cartagLayout.addView(tv);
+                            sxZws = map.get("zws").split(",")[1];
+                        }
+                        // 车龄0-6
+                        View view_cl = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                        TextView tv_cl = view_cl.findViewById(R.id.tv_tag);
+                        if (tv_cl.getParent() != null) {
+                            ViewGroup group = (ViewGroup) tv_cl.getParent();
                             group.removeAllViews();
                         }
-                        cartagLayout.addView(tv);
+                        String cl[] = map.get("cl").split(",");
+                        if ("0".equals(cl[0])){
+                            if (!"6".equals(cl[1])){
+                                //<6
+                                tv_cl.setText(cl[1]+"年以内");
+                                cartagLayout.addView(tv_cl);
+                            }else {
+                                // 车龄不限
+                            }
+                        }else{
+                            if ("6".equals(cl[1])){
+                                //>0
+                                tv_cl.setText(cl[0]+"年以上");
+                                cartagLayout.addView(tv_cl);
+                            }else {
+                                tv_cl.setText(cl[0]+"年-"+cl[1]+"年");
+                                cartagLayout.addView(tv_cl);
+                            }
+                        }
+                        // 里程0-15
+                        String lc[] = map.get("lc").split(",");
+                        Log.i("shaixuan",lc[0]+"---"+lc[1]);
+                        if ("0.0".equals(lc[0])){
+                            if (!"15".equals(lc[1])){
+                                //<15
+                            }else {
+                                // 不限
+                            }
+                        }else{
+                            if ("15".equals(lc[1])){
+                                //>0
+                            }else {
+
+                            }
+                        }
+                        // 排量0-5.0
+                        String pl[] = map.get("pl").split(",");
+                        Log.i("shaixuan",pl[0]+"---"+pl[1]);
+                        if ("0".equals(pl[0])){
+                            if (!"5.0".equals(pl[1])){
+                                //<5.0
+                            }else {
+                                // 不限
+                            }
+                        }else{
+                            if ("5.0".equals(pl[1])){
+                                //>0
+                            }else {
+
+                            }
+                        }
+                        // 显示搜索筛选信息
                         carLy.setVisibility(View.VISIBLE);
                     }
                 });
                 break;
             case R.id.ly_cz:
+                // 重置
                 tvCz.setTextColor(Color.parseColor("#ff9696"));
                 //tvCz.setTextColor(Color.parseColor("#333333"));
                 break;
@@ -296,12 +429,12 @@ public class BuyCar extends Fragment {
                     if (progressHigh == 6)
                         tvPrice.setText("不限价格");
                     else
-                        tvPrice.setText(progressHigh + "万以下");
+                        tvPrice.setText((int)progressHigh + "0万以下");
                 } else {
                     if (progressHigh == 6)
-                        tvPrice.setText(progressLow + "0万以上");
+                        tvPrice.setText((int)progressLow + "0万以上");
                     else
-                        tvPrice.setText(progressLow + "0万-" + progressHigh + "0万");
+                        tvPrice.setText((int)progressLow + "0万-" + (int)progressHigh + "0万");
                 }
             }
         });
@@ -344,6 +477,7 @@ public class BuyCar extends Fragment {
         getCarParams();
     }
 
+    //通过城市名获取城市Id
     public void getCityId() {
         Map<String, String> map = new HashMap<>();
         map.put("cityName", cityName);
@@ -381,6 +515,7 @@ public class BuyCar extends Fragment {
         });
     }
 
+     // 搜索Car列表(添加筛选条件)
     public void getCarList() {
         Map<String, String> map = new HashMap<>();
         map.put("city", cityId);
@@ -429,6 +564,7 @@ public class BuyCar extends Fragment {
         });
     }
 
+    // 获得car各种信息字典以及banner
     public void getCarParams() {
         Map<String,String> map =new HashMap<>();
         OKhttptils.post(getActivity(), Config.GETCARPARAMDICT, map, new OKhttptils.HttpCallBack() {
