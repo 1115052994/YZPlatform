@@ -35,6 +35,8 @@
             android:drawablePadding="@dimen/common10dp"
             android:hint="搜索服务项"
             android:completionThreshold="1"
+            android:dropDownHeight="@dimen/common150dp"
+            android:dropDownWidth="@dimen/common240dp"
             android:textSize="@dimen/text_size_15sp"
             android:textColor="@color/gray_a2" />
 

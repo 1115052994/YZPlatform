@@ -51,7 +51,7 @@ public class ProductServiceActivity extends BaseActivity {
     private Map<String, List<String>> dataset = new HashMap<>();
     private MyExpandableListViewAdapter adapter;
     private ArrayAdapter<String> arrayAdapter;
-    private String [] arr;
+    private String[] arr;
 
 
     private Handler handler = new Handler() {
@@ -67,11 +67,45 @@ public class ProductServiceActivity extends BaseActivity {
                         dataset.put(parentList.get(i), childList);
                     }
                     initAdapter();
-                    arr = (String[]) childList.toArray(new String [childList.size()]);
+
                     break;
             }
         }
     };
+
+    /* 设置搜索自动提示adapter */
+    private void initSearchText() {
+        Log.i(TAG, "initSearchText: " + arr.toString());
+        Map<String, String> map = new HashMap<>();
+        String suppostWord = mSearch.getText().toString();
+        Log.i(TAG, "getData: " + suppostWord);
+        map.put("suppostWord", "");
+        OKhttptils.post(this, Config.ADD_COMP_SERVICE_TYPE, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.e(TAG, "success: " + response);
+                Gson gson = GsonFactory.create();
+                CompAddServiceType addServiceType = gson.fromJson(response, CompAddServiceType.class);
+                List<CompAddServiceType.DataBean.ResultBean> beanList = addServiceType.getData().getResult();
+                CompAddServiceType.DataBean.ResultBean resultBean;
+                for (int i = 0; i < beanList.size(); i++) {
+                    resultBean = beanList.get(i);
+                    for (int j = 0; j < resultBean.getSuppostList().size(); j++) {
+                        childList.add(resultBean.getSuppostList().get(j));
+                    }
+                }
+                Log.i(TAG, "success: " + childList.toString());
+            }
+
+            @Override
+            public void fail(String response) {
+                ToastUtil.noNAR(ProductServiceActivity.this);
+            }
+        });
+        arr = (String[]) childList.toArray(new String[childList.size()]);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_product_search_item, arr);
+        mSearch.setAdapter(arrayAdapter);
+    }
 
 
     @Override
@@ -82,9 +116,8 @@ public class ProductServiceActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getString("type");
         index = bundle.getInt("index");
-//        arrayAdapter = new ArrayAdapter<String>(this,R.layout.item_product_search_item,arr);
-//        mSearch.setAdapter(arrayAdapter);
         getData();
+        initSearchText();
     }
 
     /* 填充adapter */
@@ -142,7 +175,7 @@ public class ProductServiceActivity extends BaseActivity {
                 JumpUtil.newInstance().finishRightTrans(ProductServiceActivity.this);
                 break;
             case R.id.mQuit:
-                
+
                 break;
         }
     }
@@ -191,43 +224,57 @@ public class ProductServiceActivity extends BaseActivity {
 
         @Override
         public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-            if (view == null){
+            if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) ProductServiceActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.item_parent_type,null);
+                view = inflater.inflate(R.layout.item_parent_type, null);
             }
-            view.setTag(R.layout.item_parent_type,i);
-            view.setTag(R.layout.item_product_service,-1);
-            List<Drawable> drawables = new ArrayList<>();
-            drawables.add(ProductServiceActivity.this.getResources().getDrawable(R.drawable.product_maintain));
-            drawables.add(ProductServiceActivity.this.getResources().getDrawable(R.drawable.product_water));
-            drawables.add(ProductServiceActivity.this.getResources().getDrawable(R.drawable.product_beauty));
+            view.setTag(R.layout.item_parent_type, i);
+            view.setTag(R.layout.item_product_service, -1);
             TextView textView = view.findViewById(R.id.mParent);
             textView.setText(parentList.get(i));
-            drawables.get(i).setBounds(0,0,drawables.get(i).getMinimumWidth(),drawables.get(i).getMinimumHeight());
-            textView.setCompoundDrawables(drawables.get(i),null,null,null);
+            for (int j = 0; j < parentList.size(); j++) {
+                switch (j) {
+                    case 0:
+                        Drawable d1 = ProductServiceActivity.this.getResources().getDrawable(R.drawable.product_maintain);
+                        d1.setBounds(0, 0, d1.getMinimumWidth(), d1.getMinimumHeight());
+                        textView.setCompoundDrawables(d1, null, null, null);
+                        break;
+                    case 1:
+                        Drawable d2 = ProductServiceActivity.this.getResources().getDrawable(R.drawable.product_water);
+                        d2.setBounds(0, 0, d2.getMinimumWidth(), d2.getMinimumHeight());
+
+                        textView.setCompoundDrawables(d2, null, null, null);
+                        break;
+                    case 2:
+                        Drawable d3 = ProductServiceActivity.this.getResources().getDrawable(R.drawable.product_beauty);
+                        d3.setBounds(0, 0, d3.getMinimumWidth(), d3.getMinimumHeight());
+
+                        textView.setCompoundDrawables(d3, null, null, null);
+                        break;
+                }
+            }
             return view;
         }
 
         @Override
         public View getChildView(final int i, final int i1, boolean b, View view, ViewGroup viewGroup) {
-            if (view == null){
+            if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) ProductServiceActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.item_product_service,null);
+                view = inflater.inflate(R.layout.item_product_service, null);
             }
-            view.setTag(R.layout.item_parent_type,i);
-            view.setTag(R.layout.item_product_service,i1);
+            view.setTag(R.layout.item_parent_type, i);
+            view.setTag(R.layout.item_product_service, i1);
             final TextView tv = view.findViewById(R.id.mItem);
             tv.setText(dataset.get(parentList.get(i)).get(i1));
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    ToastUtil.show(ProductServiceActivity.this,"点击了" + i1);
                     Bundle bundle = new Bundle();
-                    bundle.putString("service_type",dataset.get(parentList.get(i)).get(i1));
+                    bundle.putString("service_type", dataset.get(parentList.get(i)).get(i1));
                     if (type.equals("新增")) {
                         JumpUtil.newInstance().finishRightTrans(ProductServiceActivity.this, bundle, 1);
-                    }else if (type.equals("修改")) {
-                        bundle.putInt("index",index);
+                    } else if (type.equals("修改")) {
+                        bundle.putInt("index", index);
                         JumpUtil.newInstance().finishRightTrans(ProductServiceActivity.this, bundle, 2);
                     }
                 }

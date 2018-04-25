@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/common5dp">
 
     <RelativeLayout
-        android:layout_width="@dimen/common178dp"
+        android:layout_width="@dimen/common158dp"
         android:layout_height="@dimen/common105dp">
 
         <com.plt.yzplatform.view.ZQImageViewRoundOval
@@ -21,7 +21,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
-            android:src="@drawable/text" />
+            android:src="@drawable/text"
+            android:layout_marginLeft="@dimen/common10dp"
+            android:layout_marginTop="@dimen/common10dp"/>
 
         <ImageView
             android:id="@+id/isR"

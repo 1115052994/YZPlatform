@@ -37,9 +37,7 @@ import com.plt.yzplatform.entity.CompAppraise;
 import com.plt.yzplatform.entity.CompDetailBean;
 import com.plt.yzplatform.entity.WeixiuBean;
 import com.plt.yzplatform.utils.JumpUtil;
-import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
-import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.CircleImageView;
 import com.plt.yzplatform.view.indicator.IndicatorAdapter;
@@ -48,8 +46,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,7 +58,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 public class CompDetail extends BaseActivity {
 
@@ -169,8 +164,6 @@ public class CompDetail extends BaseActivity {
         setContentView(R.layout.activity_comp_detail);
         ButterKnife.bind(this);
         initView();
-        initData();
-        getData();
         Intent intent = getIntent();
         if (intent != null) {
             Bundle bundle = intent.getExtras();
@@ -191,6 +184,8 @@ public class CompDetail extends BaseActivity {
                 Log.i("com_id", "comp_id=" + comp_id);
             }
         }
+        initData();
+        getData();
 
         //设置不加载更多
 //        smartRefreshLayout.setEnableLoadmore(false);
@@ -497,6 +492,7 @@ public class CompDetail extends BaseActivity {
     }
 
     private void getData() {
+        Log.d("comp_id", "getData: " + comp_id);
         Map<String,String> map = new HashMap<>();
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.GETCOMPDETAIL, map, new OKhttptils.HttpCallBack() {

@@ -54,24 +54,29 @@
                     android:id="@+id/getLocation"
                     style="@style/black33_text_16sp"
                     android:layout_width="match_parent"
-                    android:drawableRight="@drawable/qy_place"
+                    android:drawableRight="@drawable/qy_places"
                     android:hint="点击获取公司位置"
                     android:paddingRight="@dimen/common15dp" />
             </LinearLayout>
 
-            <LinearLayout style="@style/ll_normal_horizontal">
+            <LinearLayout
+                android:layout_height="wrap_content"
+                style="@style/ll_normal_horizontal">
 
                 <TextView
                     style="@style/black33_text_16sp"
                     android:layout_width="@dimen/common120dp"
+                    android:layout_gravity="center_vertical"
                     android:paddingLeft="@dimen/common15dp"
                     android:text="办公地址" />
 
                 <EditText
+                    android:minHeight="@dimen/common50dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/compAddress"
                     style="@style/black33_edit_16sp"
-                    android:lines="2"
-                    android:maxLines="2" />
+                    android:paddingRight="@dimen/common15dp"
+                    android:maxLines="3" />
             </LinearLayout>
 
             <LinearLayout style="@style/ll_normal_horizontal">
