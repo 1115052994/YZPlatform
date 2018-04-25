@@ -111,6 +111,9 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.ChangeOldPhoneActivity" />
         <activity android:name=".activity.ChangeNewPhoneActivity"></activity>
+        <activity android:name=".activity.MyBrowsing" />
+        <activity android:name=".activity.EvaluationList" />
+        <activity android:name=".activity.AddCarProduct"></activity>
     </application>
 
 </manifest>

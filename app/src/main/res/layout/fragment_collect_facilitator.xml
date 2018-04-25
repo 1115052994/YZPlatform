@@ -4,13 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.plt.yzplatform.fragment.CollectCardeal">
-
-    <ListView
-        android:id="@+id/service_provider_listview"
-        android:layout_width="match_parent"
+    tools:context="com.plt.yzplatform.fragment.CollectCardeal"
+    android:background="@color/bg_color">
+    <ImageView
+        android:id="@+id/no_collect_car_image"
+        android:layout_width="@dimen/common180dp"
         android:layout_height="match_parent"
-        >
-    </ListView>
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:src="@drawable/no_information"
+        />
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <ListView
+            android:id="@+id/service_provider_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </ListView>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
 </LinearLayout>

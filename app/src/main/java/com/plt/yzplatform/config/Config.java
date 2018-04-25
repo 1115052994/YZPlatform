@@ -101,6 +101,7 @@ public class Config {
 
     //车商评价
     public static final String ACCRETIONEVALUATE = URL + S +"accretionEvaluate";
+
     //车服列表-获取列表（智能排序）
     public static final String GET_CAR_SERVICE = URL + S + "getPassCompList";
 
@@ -118,6 +119,64 @@ public class Config {
 
     //商家删除明星员工
     public static final String DELETESTAR = M + S + "deleteStaff";
+
+    //查询二手车收藏
+    public static final String CHECKCAR = M + S + "checkCar";
+
+    //统计平台有多少人申请卖车
+    public static final String SELLCOUNT = M + S + "sellCount";
+
+    //个人预约卖车
+    public static final String SAVESELLER = M + S + "saveSeller";
+
+    //查询服务商收藏
+    public static final String CHECKCOMP = M + S + "checkComp";
+
+    //删除收藏
+    public static final String REMOVECOLL = M + S + "removeColl";
+
+    //添加二手车收藏
+    public static final String ACCRETIONCOLLCAR = M + S + "accretionCollCar";
+
+    //添加二手车收藏
+    public static final String ACCRETIONCOLLCOMP = M + S + "accretionCollComp ";
+
+
+    //二手车浏览记录
+    public static final String BROWSECARCOOKIES = M + S + "browseCarCookies";
+
+    //企业浏览记录
+    public static final String BROWSECOMPCOOKIES = M + S + "browseCompCookies";
+
+    //删除浏览记录
+    public static final String BROWSEDLOG = M + S + "browseDLog";
+
+    //添加浏览企业记录
+    public static final String BROWSECOMP = M + S + "browseComp";
+
+    //添加浏览二手车记录
+    public static final String CARVISIT = M + S + "car_visit";
+
+    //查看企业评价
+    public static final String QUERYCOMPVALUATE = M + S + "queryCompeValuate";
+
+    //全部评价
+    public static final String ALLCOMPEVALUATE = M + S + "allCompEvaluate";
+
+    //好评
+    public static final String PRAISECOMPEVALUATE = M + S + "praiseCompEvaluate";
+
+    //中评
+    public static final String MEDIUMCOMPEVALUATE = M + S + "mediumCompEvaluate";
+
+    //差评
+    public static final String POORREVIEWCOMPEVALUATE = M + S + "poorReviewCompEvaluate";
+
+    //评价次数
+    public static final String SCOREBYCOMPCOUNT = M + S + "scoreByCompCount";
+
+    //得到评价词典
+    public static final String GETVALUE = M + S + "getValue";
 
     //商家添加产品 - 服务类型
     public static final String GET_COMP_SERVICE_TYPE = URL + S + "serverItemType";

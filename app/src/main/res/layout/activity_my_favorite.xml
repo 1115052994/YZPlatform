@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.plt.yzplatform.activity.MyFavorite">
+    tools:context="com.plt.yzplatform.activity.MyFavorite"
+    android:background="@color/white">
     <include layout="@layout/header_layout" />
     <View
         android:id="@+id/view1"
@@ -25,6 +26,7 @@
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabMode="fixed"
+        android:background="@color/white"
         >
 
     </android.support.design.widget.TabLayout>

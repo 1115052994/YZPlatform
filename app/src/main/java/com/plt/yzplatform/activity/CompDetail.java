@@ -18,7 +18,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -39,8 +38,8 @@ import com.plt.yzplatform.entity.CompDetailBean;
 import com.plt.yzplatform.entity.WeixiuBean;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.NetUtil;
+import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
-import com.plt.yzplatform.utils.ScreenUtils;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.CircleImageView;
 import com.plt.yzplatform.view.indicator.IndicatorAdapter;
@@ -56,7 +55,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,6 +111,7 @@ public class CompDetail extends BaseActivity {
     private ViewGroup viewGroup;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
+    private Map<String, String> map = new HashMap<>();
     private IndicatorAdapter<View> staffAdapter;//明星员工
     private List<CompDetailBean.DataBean.ResultBean.StaffListBean> staffList = new ArrayList<>();//staffs
     private List<String> images = new ArrayList<>();//banner
@@ -153,7 +155,7 @@ public class CompDetail extends BaseActivity {
     private List<CompAppraise.DataBean.ResultBean> compAppraiseList = new ArrayList<>();
     private CommonRecyclerAdapter appraiseAdapter;
 
-    private String comp_id = "24";//商家Id
+    private String comp_id = "25";//商家Id
     private String comp_phone = "";
     private Double comp_lon,comp_lat;
     @Override
@@ -169,9 +171,22 @@ public class CompDetail extends BaseActivity {
             Bundle bundle = intent.getExtras();
             if(bundle!=null) {
                 comp_id = bundle.getString("comp_id");
+                map.put("comp_id",comp_id);
+                OKhttptils.post(CompDetail.this, Config.BROWSECOMP, map, new OKhttptils.HttpCallBack() {
+                    @Override
+                    public void success(String response) {
+                        Log.i("aaaaa", "添加企业浏览记录: " + response);
+                    }
+
+                    @Override
+                    public void fail(String response) {
+                        Toast.makeText(CompDetail.this, "添加失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 Log.i("com_id", "comp_id=" + comp_id);
             }
         }
+
         //设置不加载更多
 //        smartRefreshLayout.setEnableLoadmore(false);
     }

@@ -49,4 +49,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.1'
     compile 'com.jcodecraeer:xrecyclerview:1.5.9'//支持头布局和吸顶效果
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //flow-layout
+    compile 'com.nex3z:flow-layout:0.1.2'
 }

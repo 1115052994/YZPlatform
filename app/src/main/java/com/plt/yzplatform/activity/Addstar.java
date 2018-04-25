@@ -17,6 +17,7 @@ import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.NetUtil;
+import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.PhotoUtils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
@@ -27,6 +28,9 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +47,7 @@ public class Addstar extends BaseActivity {
     @BindView(R.id.addition_layout)
     LinearLayout additionLayout;
     private String file_id;
-    private String file_id2;
+    private Map<String, String> map = new HashMap<>();
     private String id;
     private String text = "示例 精通汽车工作原理以及各种故障排查和解决，有较强的... （最多输入150个字）";
 
@@ -71,38 +75,29 @@ public class Addstar extends BaseActivity {
                         ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
                             @Override
                             public void onYesClick() {
-                                if (NetUtil.isNetAvailable(Addstar.this)) {
-                                    OkHttpUtils.post()
-                                            .url(Config.UPDATASTAR)
-                                            .addHeader("user_token", Prefs.with(Addstar.this).read("user_token"))
-                                            .addParams("staff_name",additionEdName.getText().toString())
-                                            .addParams("staff_photo_file_id",file_id)
-                                            .addParams("staff_reco","2")
-                                            .addParams("staff_info",additionEdIntroduce.getText().toString())
-                                            .addParams("staff_id",id)
-                                            .build()
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onError(Call call, Exception e, int id) {
-                                                    ToastUtil.noNAR(Addstar.this);
-                                                }
+                                file_id = Prefs.with(getApplicationContext()).read("员工头像");
+                                map.clear();
+                                map.put("staff_name",additionEdName.getText().toString());
+                                map.put("staff_photo_file_id",file_id);
+                                map.put("staff_reco","2");
+                                map.put("staff_info",additionEdIntroduce.getText().toString());
+                                map.put("staff_id",id);
+                                if(file_id!=null){
+                                    OKhttptils.post(Addstar.this, Config.UPDATASTAR, map, new OKhttptils.HttpCallBack() {
+                                        @Override
+                                        public void success(String response) {
+                                            Intent intent = new Intent();
+                                            setResult(1, intent);
+                                            finish();
+                                        }
+                                        @Override
+                                        public void fail(String response) {
+                                            Toast.makeText(Addstar.this, "获取失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                                                @Override
-                                                public void onResponse(String response, int id) {
-                                                    try {
-                                                        JSONObject obj = new JSONObject(response);
-                                                        String status = obj.get("status").toString();
-                                                        if(status.equals("1")){
-                                                            Intent intent = new Intent();
-                                                            setResult(4, intent);
-                                                            finish();
-                                                        }
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-
-                                                }
-                                            });
+                                }else {
+                                    Toast.makeText(Addstar.this, "头像ID获取失败", Toast.LENGTH_SHORT).show();
                                 }
                                 ordinaryDialog.dismiss();
                             }
@@ -123,8 +118,8 @@ public class Addstar extends BaseActivity {
             //给字体设置大小
             int end = text.length();
             SpannableString textSpan = new SpannableString(text);
-            textSpan.setSpan(new AbsoluteSizeSpan(34), 0, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-            textSpan.setSpan(new AbsoluteSizeSpan(32), 2, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            textSpan.setSpan(new AbsoluteSizeSpan(22), 0, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            textSpan.setSpan(new AbsoluteSizeSpan(20), 2, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             additionEdIntroduce.setHint(textSpan);
         }
 
@@ -150,47 +145,32 @@ public class Addstar extends BaseActivity {
     @OnClick(R.id.addition_image)
     public void onViewClicked() {
         upDataPicture(this,additionImage,null,"员工头像");
-        file_id2 = Prefs.with(getApplicationContext()).read("员工头像");
-        Log.d("aaaaa", "图片1:"+file_id2);
+        Log.d("aaaaa", "图片1:"+file_id);
     }
     //将数据上传到服务器
     private void PostData() {
-        if (NetUtil.isNetAvailable(this)) {
-            if(file_id!=null){
-                OkHttpUtils.post()
-                        .url(Config.SAVESTAR)
-                        .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-                        .addParams("staff_name",additionEdName.getText().toString())
-                        .addParams("staff_photo_file_id",file_id2)
-                        .addParams("staff_reco","2")
-                        .addParams("staff_info",additionEdIntroduce.getText().toString())
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                                ToastUtil.noNAR(Addstar.this);
-                            }
-                            @Override
-                            public void onResponse(String response, int id) {
-                                try {
-                                    Log.d("aaaaa", "图片2: "+file_id2);
-                                    JSONObject obj = new JSONObject(response);
-                                    String status = obj.get("status").toString();
-                                    if(status.equals("1")){
-                                        Intent intent = new Intent();
-                                        setResult(1, intent);
-                                        finish();
-                                    }
+        file_id = Prefs.with(getApplicationContext()).read("员工头像");
+        map.clear();
+        map.put("staff_name",additionEdName.getText().toString());
+        map.put("staff_photo_file_id",file_id);
+        map.put("staff_reco","2");
+        map.put("staff_info",additionEdIntroduce.getText().toString());
+        if(file_id!=null){
+            OKhttptils.post(Addstar.this, Config.SAVESTAR, map, new OKhttptils.HttpCallBack() {
+                @Override
+                public void success(String response) {
+                    Intent intent = new Intent();
+                    setResult(1, intent);
+                    finish();
+                }
+                @Override
+                public void fail(String response) {
+                    Toast.makeText(Addstar.this, "上传失败", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        });
-            }else {
-                Toast.makeText(this, "请选择头像", Toast.LENGTH_SHORT).show();
-            }
+        }else {
+            Toast.makeText(this, "头像ID获取失败", Toast.LENGTH_SHORT).show();
         }
     }
     public void getBitmap(final String file_id, final CircleImageView circleImageView){
