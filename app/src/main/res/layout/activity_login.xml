@@ -117,8 +117,9 @@
                 android:layout_width="@dimen/common1dp"
                 android:layout_height="@dimen/common15dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/common20dp"
+                android:layout_marginRight="@dimen/common20dp"
                 android:background="@color/bg_color"
-
                 />
 
             <Button

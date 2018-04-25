@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_icon_popup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#60000000"
+    android:focusableInTouchMode="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common50dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common84dp"
+                android:text="名称" />
+
+            <TextView
+                android:id="@+id/mName"
+                style="@style/black33_edit_16sp"
+                android:layout_width="@dimen/common0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:hint="输入产品名称"
+                android:gravity="center_vertical"
+                android:textColorHint="@color/gray_99"
+                android:paddingLeft="@dimen/common28dp" />
+
+            <ImageView
+                android:id="@+id/mChange"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/common18dp"
+                android:paddingRight="@dimen/common18dp"
+                android:src="@drawable/product_refresh"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common1dp"
+            android:background="@color/bg_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common50dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/black33_text_16sp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common84dp"
+                android:text="价格" />
+
+            <EditText
+                android:id="@+id/mPrice"
+                style="@style/black33_edit_16sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="输入产品价格"
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/gray_99"
+                android:paddingLeft="@dimen/common28dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common1dp"
+            android:background="@color/bg_color" />
+
+        <TextView
+            android:id="@+id/mOk"
+            style="@style/button_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common50dp"
+            android:layout_alignParentBottom="true"
+            android:text="确定" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,7 +1,6 @@
 package com.plt.yzplatform.config;
 
 /**
- *
  * 通用配置文件，用于配置整个系统使用的资源
  */
 
@@ -16,6 +15,8 @@ public class Config {
 
     public static final String S = "mymvc?mvc_id=";
 
+    public static final String M = "http://192.168.1.222/";
+//    public static final String M = "http://192.168.2.233/";
     public static final String M = "http://192.168.1.222/";
 
     //用于拼接图片地址url
@@ -124,6 +125,20 @@ public class Config {
 
     //服务商添加收藏
     public static final String ACCRETIONCOLLCOMP = URL + S +"accretionCollComp";
+    //商家添加产品 - 服务类型
+    public static final String GET_COMP_SERVICE_TYPE = URL + S + "serverItemType";
+
+    //商家添加产品 - 添加服务项
+    public static final String ADD_COMP_SERVICE_TYPE = URL + S + "findSuppostWord";
+
+    //商家添加产品
+    public static final String ADD_PRODUCT = URL + S + "addProDuct";
+
+    //商家产品 - 修改产品
+    public static final String UPDATE_PRODUCT = URL + S + "updateProDuct";
+
+    //商家产品 - 查看产品信息
+    public static  final String SHOW_PRODUCT = URL + S + "showProductDetail";
 
     //删除收藏
     public static final String REMOVECOLL = URL + S +"removeColl";

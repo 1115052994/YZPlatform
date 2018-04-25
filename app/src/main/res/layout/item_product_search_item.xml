@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common44dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/common1dp">
+
+    <TextView
+        android:id="@+id/mItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/common45dp"
+        android:textColor="@color/selector_service_menu_text"
+        android:drawablePadding="@dimen/common18dp"
+        android:background="@drawable/selector_service_menu_bg"
+        android:text="刹车系统保养"/>
+
+</LinearLayout>

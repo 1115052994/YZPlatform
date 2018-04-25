@@ -47,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.DecimalFormat;
 
 import okhttp3.Call;
 
@@ -88,6 +89,18 @@ public class BaseActivity extends AppCompatActivity{
                     finish();
                 }
             });
+        }
+    }
+
+
+    public String setNumberText(EditText numberText){
+        String s = numberText.getText().toString().trim();
+        if (s.isEmpty()){
+            return "";
+        }else {
+            double d = Double.valueOf(s);
+            DecimalFormat df = new DecimalFormat("#0.00");
+            return df.format(d);
         }
     }
 
@@ -465,12 +478,6 @@ public class BaseActivity extends AppCompatActivity{
                 }
                 break;
             }
-//            case PERMISSON_REQUESTCODE:
-//                if (!verifyPermissions(grantResults)) {
-//                    showMissingPermissionDialog();
-//                    isNeedCheck = false;
-//                }
-//                break;
         }
     }
 

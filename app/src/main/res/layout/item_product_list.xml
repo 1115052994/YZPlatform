@@ -11,11 +11,13 @@
 
     <TextView
         android:id="@+id/mName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/common0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
         android:background="@null"
         android:drawableLeft="@drawable/product"
         android:drawablePadding="@dimen/common15dp"
+        android:gravity="center_vertical"
         android:hint="输入产品名称"
         android:text="刹车系统保养"
         android:textColor="@color/black_33"
@@ -26,9 +28,10 @@
         android:id="@+id/mPrice"
         android:layout_width="@dimen/common0dp"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/common53dp"
+        android:layout_height="match_parent"
         android:text="¥36.00"
+        android:inputType="numberDecimal"
+        android:gravity="center_vertical"
         android:textColor="@color/theme_coloer"
         android:textColorHint="@color/gray_99"
         android:textSize="@dimen/text_size_15sp" />
