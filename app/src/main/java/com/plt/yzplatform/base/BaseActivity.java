@@ -66,7 +66,7 @@ public class BaseActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        //横屏
+        //禁止横屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActivityUtil.addActivity(this);
     }
@@ -290,9 +290,9 @@ public class BaseActivity extends AppCompatActivity{
                 if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                         || ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(getParent(), Manifest.permission.CAMERA)) {
-                        ToastUtil.show(mContext, "您已经拒绝过一次");
-                    }
+//                    if (ActivityCompat.shouldShowRequestPermissionRationale(getParent(), Manifest.permission.CAMERA)) {
+//                        ToastUtil.show(mContext, "您已经拒绝过一次");
+//                    }
                     ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, CAMERA_PERMISSIONS_REQUEST_CODE);
                 } else {//有权限直接调用系统相机拍照
                     if (hasSdcard()) {

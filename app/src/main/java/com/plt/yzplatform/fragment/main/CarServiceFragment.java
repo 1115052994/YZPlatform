@@ -2,7 +2,6 @@ package com.plt.yzplatform.fragment.main;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,9 +10,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +38,6 @@ import com.google.gson.Gson;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.CityActivity;
 import com.plt.yzplatform.activity.SearchActivity;
-import com.plt.yzplatform.activity.CityActivity;
 import com.plt.yzplatform.adapter.CarServiceListAdapter;
 import com.plt.yzplatform.adapter.MainGridViewAdapter;
 import com.plt.yzplatform.adapter.MainViewPagerAdapter;
@@ -504,9 +500,13 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     StringBuffer buffer = new StringBuffer();
                     buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince() + "" + amapLocation.getCity() + "" + amapLocation.getProvince() + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet() + "" + amapLocation.getStreetNum());
                     isFirstLoc = false;
-                    city = amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1);
-                    lon = String.valueOf(amapLocation.getLongitude());
-                    lat = String.valueOf(amapLocation.getLatitude());
+//                    city = amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1);
+//                    lon = String.valueOf(amapLocation.getLongitude());
+//                    lat = String.valueOf(amapLocation.getLatitude());
+                    city = "济南";
+                    mLocation.setText(city);
+                    lon = "116.988";
+                    lat = "36.6883";
                     //
                     getCityId(city);
                 }
@@ -519,6 +519,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 Toast.makeText(getContext(), "定位失败", Toast.LENGTH_LONG).show();
                 /* 定位失败 获取默认城市 - 北京 */
                 city = "北京";
+                mLocation.setText(city);
                 lon = "116.38";
                 lat = "39.9";
                 getCityId(city);
@@ -767,5 +768,32 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         });
     }
 
+    @OnClick({R.id.mLocation, R.id.mSearch})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.mLocation:
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "车服务");
+                JumpUtil.newInstance().jumpRight(getContext(), CityActivity.class, 01, bundle);
+                break;
+            case R.id.mSearch:
+                JumpUtil.newInstance().jumpRight(getContext(), SearchActivity.class);
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        images.clear();
+        Bundle bundle = getArguments();
+        String city = bundle.getString("selected_city");
+        if (null != city) {
+            mLocation.setText(city);
+            getCityId(city);
+//            getData(dict_id,"apart","ASC",city_id,1);
+        }
+        Log.i(TAG, "onResume: " + bundle.getString("selected_city"));
+    }
 
 }

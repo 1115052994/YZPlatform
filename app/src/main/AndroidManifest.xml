@@ -53,9 +53,21 @@
             android:name=".activity.CityActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
+        <!-- 高德权限 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="5c5963867fdf2fb9122e5a9de9dffd04" />
+
+        <!-- 拍照权限 -->
+        <provider
+            android:name=".utils.MyFileProvider"
+            android:authorities="com.plt.yzplatform.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
 
         <activity
             android:name=".activity.RegisterActivity"
@@ -98,13 +110,16 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.AppraiseActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".activity.AddProductActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".activity.ProductServiceActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".activity.Map_navigation"
             android:windowSoftInputMode="adjustPan|stateHidden" />

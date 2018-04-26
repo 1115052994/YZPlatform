@@ -51,17 +51,19 @@
             <RadioGroup
                 android:id="@+id/group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/boy"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:button="@drawable/selector_sex"
                     android:checked="true"
                     android:paddingLeft="@dimen/common10dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:layout_marginRight="@dimen/common15dp"
                     android:text="男"
                     android:textColor="@color/gray_88"
                     android:textSize="@dimen/text_size_15sp" />
@@ -69,10 +71,10 @@
                 <RadioButton
                     android:id="@+id/girl"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/common30dp"
+                    android:layout_height="match_parent"
                     android:button="@drawable/selector_sex"
                     android:paddingLeft="@dimen/common10dp"
+                    android:paddingRight="@dimen/common15dp"
                     android:text="女"
                     android:textColor="@color/gray_88"
                     android:textSize="@dimen/text_size_15sp" />

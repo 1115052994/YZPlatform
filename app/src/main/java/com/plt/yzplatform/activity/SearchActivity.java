@@ -67,7 +67,6 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search)
     RelativeLayout search;
 
-
     private GrideViewAdapter hotAdapter;
     private GrideViewAdapter hisGvAapter;
     private List<String> hotList = new ArrayList<>();

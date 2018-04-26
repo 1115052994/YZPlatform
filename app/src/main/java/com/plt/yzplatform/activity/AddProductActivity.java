@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -145,6 +146,7 @@ public class AddProductActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
         ButterKnife.bind(this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
 
@@ -311,6 +313,7 @@ public class AddProductActivity extends BaseActivity {
         popupWindow.setOutsideTouchable(true);
         mName.setText(item_name);
         mPrice.setText(item_price);
+        hideInputMethod(mPrice);
 
         popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
 
