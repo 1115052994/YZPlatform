@@ -68,6 +68,8 @@ public class AppraiseActivity extends BaseActivity {
     private List<String> appraiseListId = new ArrayList<>();
     private String comp_id = "24";
     private String comp_name = "";
+    private String type ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +83,7 @@ public class AppraiseActivity extends BaseActivity {
             if(bundle!=null) {
                 comp_id = bundle.getString("comp_id");
                 Log.i("com_id", "comp_id=" + comp_id);
+                type = bundle.getString("type");
             }
         }
     }
@@ -252,9 +255,18 @@ public class AppraiseActivity extends BaseActivity {
             ToastUtil.show(AppraiseActivity.this,"请输入评价内容");
             return;
         }
+        //ACCRETIONEVALUATESERVICECOMP服务商
+        //ACCRETIONEVALUATE车商
+        String url = "";
+        if("car".equals(type)){
+            url = Config.ACCRETIONEVALUATE;
+        }else{
+            url = Config.ACCRETIONEVALUATESERVICECOMP;
+        }
+        Log.i("appraise===",type+"---"+url+"----"+comp_id);
         if (NetUtil.isNetAvailable(getApplicationContext())) {
             OkHttpUtils.post()
-                    .url(Config.ACCRETIONEVALUATE)
+                    .url(url)
                     .addHeader("user_token", Prefs.with(this).read("user_token"))
                     .addParams("log_to", comp_id)
                     .addParams("log_1", comp_name)//名字

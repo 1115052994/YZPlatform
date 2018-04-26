@@ -113,6 +113,7 @@ public class AdvanceSX extends BaseActivity {
     protected void onStart() {
         super.onStart();
         setTitle("高级筛选");
+        dataBackListener.backData(null);
         setLeftImageClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -300,7 +301,7 @@ public class AdvanceSX extends BaseActivity {
         seekBarLc.setMaxSize(5);
         //设置分几块区域
         seekBarLc.setMaxCount(6);
-        seekBarLc.isInside(true);
+        seekBarLc.isInside(false);
         seekBarLc.setOnSeekBarChangeListener(new SeekBarPressure.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBarPressure seekBar, double progressLow, double progressHigh) {
@@ -334,7 +335,7 @@ public class AdvanceSX extends BaseActivity {
         seekBarPl.setMaxSize(5);
         //设置分几块区域
         seekBarPl.setMaxCount(6);
-        seekBarPl.isInside(true);
+        seekBarPl.isInside(false);
         seekBarPl.setOnSeekBarChangeListener(new SeekBarPressure.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBarPressure seekBar, double progressLow, double progressHigh) {

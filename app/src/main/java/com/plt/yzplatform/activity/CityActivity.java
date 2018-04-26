@@ -127,16 +127,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
     }
 
     private void initView() {
-        letter.getBackground().setAlpha(60);
-        letterSideBar.setOnLetterTouchListener(new LetterSideBar.LetterTouchListener() {
-            @Override
-            public void touch(CharSequence letter, boolean isTouch) {
-                String s = letter.toString();
-                int index = list.indexOf(s);
-                //recyclerViewCity.scrollToPosition(index);
-                moveToPosition(index);
-            }
-        });
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -176,6 +166,17 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         hotPlace.setAdapter(hotAdapter);
         historyPlace.setAdapter(hisGvAapter);
 
+        // 滚动字母条
+        letter.getBackground().setAlpha(60);
+        letterSideBar.setOnLetterTouchListener(new LetterSideBar.LetterTouchListener() {
+            @Override
+            public void touch(CharSequence letter, boolean isTouch) {
+                String s = letter.toString();
+                int index = list.indexOf(s);
+                //recyclerViewCity.scrollToPosition(index);
+                moveToPosition(index);
+            }
+        });
         /* recycler绑定adapter*/
         rvAdapter = new CommonRecyclerAdapter(this, list,
                 new MultiTypeSupport<String>() {
@@ -495,31 +496,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         recyclerView.setAdapter(adapter);
     }
 
-    // recyclerview滑动到指定位置
-    private boolean move = false;
-    private int mIndex = 0;
-    private void moveToPosition(int n) {
-        mIndex = n;
-        //先从RecyclerView的LayoutManager中获取第一项和最后一项的Position
-        GridLayoutManager mLinearLayoutManager = (GridLayoutManager) recyclerViewCity.getLayoutManager();
-        int firstItem = mLinearLayoutManager.findFirstVisibleItemPosition();
-        int lastItem = mLinearLayoutManager.findLastVisibleItemPosition();
-        //然后区分情况
-        if (n <= firstItem) {
-            //当要置顶的项在当前显示的第一个项的前面时
-            recyclerViewCity.scrollToPosition(n);
-        } else if (n <= lastItem) {
-            //当要置顶的项已经在屏幕上显示时
-            int top = recyclerViewCity.getChildAt(n - firstItem).getTop();
-            recyclerViewCity.scrollBy(0, top);
-        } else {
-            //当要置顶的项在当前显示的最后一项的后面时
-            recyclerViewCity.scrollToPosition(n);
-            //这里这个变量是用在RecyclerView滚动监听里面的
-            move = true;
-        }
-    }
-
     private void seleted(String city) {
         selectedCity = city;
         Bundle bundle = new Bundle();
@@ -633,4 +609,29 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         }
     }
 
+
+    // recyclerview滑动到指定位置
+    private boolean move = false;
+    private int mIndex = 0;
+    private void moveToPosition(int n) {
+        mIndex = n;
+        //先从RecyclerView的LayoutManager中获取第一项和最后一项的Position
+        GridLayoutManager mLinearLayoutManager = (GridLayoutManager) recyclerViewCity.getLayoutManager();
+        int firstItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+        int lastItem = mLinearLayoutManager.findLastVisibleItemPosition();
+        //然后区分情况
+        if (n <= firstItem) {
+            //当要置顶的项在当前显示的第一个项的前面时
+            recyclerViewCity.scrollToPosition(n);
+        } else if (n <= lastItem) {
+            //当要置顶的项已经在屏幕上显示时
+            int top = recyclerViewCity.getChildAt(n - firstItem).getTop();
+            recyclerViewCity.scrollBy(0, top);
+        } else {
+            //当要置顶的项在当前显示的最后一项的后面时
+            recyclerViewCity.scrollToPosition(n);
+            //这里这个变量是用在RecyclerView滚动监听里面的
+            move = true;
+        }
+    }
 }

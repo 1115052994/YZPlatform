@@ -102,10 +102,12 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("edittextview", "onTextChanged=" + editSearch.getText().toString());
-                if ("car".equals(type)) {
-                    getSeachCar(editSearch.getText().toString().trim());
-                } else if ("comp".equals(type)) {
-                    getSearchComp(editSearch.getText().toString().trim());
+                if(""!=s.toString()) {
+                    if ("car".equals(type)) {
+                        getSeachCar(editSearch.getText().toString().trim());
+                    } else if ("comp".equals(type)) {
+                        getSearchComp(editSearch.getText().toString().trim());
+                    }
                 }
             }
 
