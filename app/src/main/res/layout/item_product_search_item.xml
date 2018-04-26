@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mItem"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/common44dp"
-    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/common1dp"
+    android:background="@drawable/selector_service_menu_bg"
+    android:drawablePadding="@dimen/common18dp"
+    android:gravity="center_vertical"
     android:orientation="vertical"
-    android:layout_marginBottom="@dimen/common1dp">
-
-    <TextView
-        android:id="@+id/mItem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/common45dp"
-        android:textColor="@color/selector_service_menu_text"
-        android:drawablePadding="@dimen/common18dp"
-        android:background="@drawable/selector_service_menu_bg"
-        android:text="刹车系统保养"/>
-
-</LinearLayout>
+    android:paddingLeft="@dimen/common45dp"
+    android:text="刹车系统保养"
+    android:paddingTop="@dimen/common15dp"
+    android:paddingBottom="@dimen/common15dp"
+    android:textColor="@color/selector_service_menu_text">
+</TextView>

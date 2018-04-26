@@ -89,7 +89,7 @@ public class CarServiceListAdapter extends RecyclerView.Adapter<CarServiceListAd
                 Bundle bundle = new Bundle();
                 bundle.putString("comp_id",comp_id);
                 JumpUtil.newInstance().jumpRight(context, CompDetail.class,bundle);
-                ToastUtil.show(context,"点了"+position);
+                ToastUtil.show(context,"点了"+comp_id);
             }
         });
 

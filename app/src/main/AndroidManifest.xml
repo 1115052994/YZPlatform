@@ -53,9 +53,21 @@
             android:name=".activity.CityActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
+        <!-- 高德权限 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="5c5963867fdf2fb9122e5a9de9dffd04" />
+
+        <!-- 拍照权限 -->
+        <provider
+            android:name=".utils.MyFileProvider"
+            android:authorities="com.plt.yzplatform.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
 
         <activity
             android:name=".activity.RegisterActivity"
@@ -78,26 +90,63 @@
         <activity
             android:name=".activity.PersonalSettingActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.CompDetail" />
-        <activity android:name=".activity.Starperformers" />
-        <activity android:name=".activity.Addstar" />
-        <activity android:name=".activity.MyFavorite" />
-        <activity android:name=".activity.AppraiseActivity" />
-        <activity android:name=".activity.AddProductActivity" />
-        <activity android:name=".activity.ProductServiceActivity" />
-        <activity android:name=".activity.Map_navigation" />
-        <activity android:name=".activity.AdvanceSX" />
-        <activity android:name=".activity.CarBrandSearch"></activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CompDetail"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.Starperformers"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.Addstar"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.MyFavorite"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.AppraiseActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".activity.AddProductActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".activity.ProductServiceActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".activity.Map_navigation"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.AdvanceSX"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarBrandSearch"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.ShowProductDetailActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.ChangeOldPhoneActivity" />
-        <activity android:name=".activity.ChangeNewPhoneActivity"></activity>
-        <activity android:name=".activity.MyBrowsing" />
-        <activity android:name=".activity.EvaluationList" />
-        <activity android:name=".activity.AddCarProduct"></activity>
+        <activity
+            android:name=".activity.ChangeOldPhoneActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.ChangeNewPhoneActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.MyBrowsing"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.EvaluationList"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.AddCarProduct"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>
 
 </manifest>

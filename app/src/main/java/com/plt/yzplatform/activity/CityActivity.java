@@ -39,6 +39,7 @@ import com.plt.yzplatform.entity.HotCity;
 import com.plt.yzplatform.entity.LetterCitysBean;
 import com.plt.yzplatform.entity.QueryCityBean;
 import com.plt.yzplatform.utils.CommonUtils;
+import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
@@ -83,6 +84,9 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
     TextView locPlace;
     @BindView(R.id.clear_history)
     TextView clearHistory;
+
+    private String type;
+
     private List<String> hotcity = new ArrayList<>();
     private List<String> list = new ArrayList<>();
     private List<String> hisCity = new ArrayList<>();
@@ -111,6 +115,11 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         Window win = getWindow();
         WindowManager.LayoutParams params = win.getAttributes();
         win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            type = bundle.getString("type");
+            //车服务、二手车等type
+        }
         initView();
         initData();
         getData();
@@ -513,6 +522,11 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
 
     private void seleted(String city) {
         selectedCity = city;
+        Bundle bundle = new Bundle();
+        bundle.putString("selected_city", selectedCity);
+        if (type.equals("车服务")) {
+            JumpUtil.newInstance().finishRightTrans(CityActivity.this, bundle, 01);
+        }
         Log.i("selected", city);
     }
 
