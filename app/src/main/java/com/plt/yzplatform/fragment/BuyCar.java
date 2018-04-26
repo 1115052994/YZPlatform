@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -146,6 +147,9 @@ public class BuyCar extends Fragment {
     // 分页
     private int pageIndex = 1;
     private int pageTotal = 1;
+
+    // 记录tag view
+    private TextView brandView,carView,priceView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -153,8 +157,13 @@ public class BuyCar extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         iniData();
         initView();
-        getData();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 
     private void initView() {
@@ -182,6 +191,19 @@ public class BuyCar extends Fragment {
                 }else if (name.equals(sxCxName)){
                     sxCx = "";
                     sxCxName = "";
+                }else if (name.equals(selectedBrand.get("tv_carbrand"))){
+                    selectedBrand.clear();
+                    selectedBrand.put("tv_carbrand","");
+                    selectedBrand.put("id_carbrand","");
+                    selectedBrand.put("image_carbrand","");
+                }else if (name.equals(selectedCarName.get("tv_carbrand"))){
+                    selectedCarName.clear();
+                    selectedCarName.put("tv_carbrand","");
+                    selectedCarName.put("id_carbrand","");
+                    selectedCarName.put("image_carbrand","");
+                }else if (name.contains(startPrice)||name.contains(endPrice)){
+                    startPrice ="";
+                    endPrice = "";
                 }
                 cartagLayout.removeView(view);
                 if (cartagLayout.getChildCount()==0) {
@@ -273,8 +295,6 @@ public class BuyCar extends Fragment {
 
     @OnClick({R.id.ly_zn, R.id.ly_pp, R.id.ly_jg, R.id.ly_sx, R.id.ly_cz})
     public void onViewClicked(View view) {
-        // 重置请求参数
-        resetParams();
         switch (view.getId()) {
             case R.id.ly_zn:
                 // 智能排序
@@ -306,6 +326,35 @@ public class BuyCar extends Fragment {
                             selectedBrand = brand;
                             selectedCarName =carName;
                             Log.i("carbrand",selectedBrand.toString()+"---"+selectedCarName.toString());
+                            //----------加入tag布局--------------
+                            if (!"".equals(selectedBrand.get("tv_carbrand"))) {
+                                if (brandView ==null) {
+                                    View ly = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                                    brandView = ly.findViewById(R.id.tv_tag);
+                                    if (brandView.getParent() != null) {
+                                        ViewGroup group = (ViewGroup) brandView.getParent();
+                                        group.removeAllViews();
+                                    }
+                                    cartagLayout.addView(brandView);
+                                    carLy.setVisibility(View.VISIBLE);
+                                }
+                                brandView.setText(selectedBrand.get("tv_carbrand"));
+                            }
+                            if (!"".equals(selectedCarName.get("tv_carbrand"))) {
+                                if (carView == null) {
+                                    View ly = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                                    carView = ly.findViewById(R.id.tv_tag);
+                                    if (carView.getParent() != null) {
+                                        ViewGroup group = (ViewGroup) carView.getParent();
+                                        group.removeAllViews();
+                                    }
+                                    cartagLayout.addView(carView);
+                                    carLy.setVisibility(View.VISIBLE);
+                                }
+                                carView.setText(selectedCarName.get("tv_carbrand"));
+
+                            }
+
                             // 重新筛选
                             getCarList();
                         }
@@ -333,9 +382,15 @@ public class BuyCar extends Fragment {
                         }
                         Log.i("shaixuan",map.toString());
                         // 显示搜索筛选信息
-                        if(cartagLayout.isInLayout()) {
-                                cartagLayout.removeAllViews();
-                        }
+                        //if(cartagLayout.isInLayout()) {
+                            cartagLayout.removeAllViews();
+                            if (priceView!=null)
+                                cartagLayout.addView(priceView);
+                            if (brandView!=null)
+                                cartagLayout.addView(brandView);
+                            if (carView!=null)
+                                cartagLayout.addView(carView);
+                        //}
                         carLy.setVisibility(View.VISIBLE);
                         //显示搜索选项   重新搜索  返回数据（
                         //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数(zws paramName,paramId）
@@ -485,7 +540,7 @@ public class BuyCar extends Fragment {
                             if (!"5.0".equals(pl[1])){
                                 //<5.0
                                 tv_pl.setText(pl[1]+"排量以内");
-                                cartagLayout.addView(tv_lc);
+                                cartagLayout.addView(tv_pl);
                                 sxPlStart = "";
                                 sxPlEnd = pl[1];
                             }else {
@@ -520,10 +575,15 @@ public class BuyCar extends Fragment {
                 });
                 break;
             case R.id.ly_cz:
-                // 重置
+                // 重置请求参数
+                resetParams();
                 tvCz.setTextColor(Color.parseColor("#ff9696"));
-                //tvCz.setTextColor(Color.parseColor("#333333"));
-                //resetParams();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvCz.setTextColor(Color.parseColor("#333333"));
+                    }
+                },500);
                 // 重新筛选
                 getCarList();
                 break;
@@ -641,6 +701,28 @@ public class BuyCar extends Fragment {
                 imageJg.setImageResource(R.drawable.b_a);
                 // 获得选择的价格，数据重新筛选
                 Log.i("price===",startPrice+"---"+endPrice);
+                // 加入tag布局
+                View ly = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                if (!"".equals(startPrice)||!"".equals(endPrice)) {
+                    if (priceView == null) {
+                        priceView = ly.findViewById(R.id.tv_tag);
+                        if (priceView.getParent() != null) {
+                            ViewGroup group = (ViewGroup) priceView.getParent();
+                            group.removeAllViews();
+                        }
+                        cartagLayout.addView(priceView);
+                    }
+                    if ("".equals(startPrice)){
+                        if (!"".equals(endPrice))
+                            priceView.setText(endPrice+"万以下");
+                    }else{
+                        if ("".equals(endPrice))
+                            priceView.setText(startPrice+"万以上");
+                        else
+                            priceView.setText(startPrice+"-"+endPrice+"万");
+                    }
+                    carLy.setVisibility(View.VISIBLE);
+                }
                 // 重新筛选
                 getCarList();
             }
@@ -714,6 +796,7 @@ public class BuyCar extends Fragment {
 //                    tv.setTextColor(Color.parseColor("#333333"));
 //                }
                 selectPrice = view;
+
                 popupWindow.dismiss();
             }
         });
@@ -812,6 +895,10 @@ public class BuyCar extends Fragment {
 
     // 搜索Car列表(添加筛选条件)
     public void getCarList() {
+        String startPrice1="",endPrice1="";
+        String brand = "",carname = "";
+        Log.i("getCarList","index="+pageIndex);
+        Log.i("getCarList","total="+pageTotal);
         Log.i("getCarList","cityId="+cityId);
         Log.i("getCarList","sxLcStart="+sxLcStart);
         Log.i("getCarList","sxLcEnd="+sxLcEnd);
@@ -822,15 +909,17 @@ public class BuyCar extends Fragment {
         Log.i("getCarList","sxBsx="+sxBsx);
         Log.i("getCarList","sxZws="+sxZws);
         if(!"".equals(startPrice))
-            startPrice = (int)Double.parseDouble(startPrice)*10000+"";
+            startPrice1 = (int)Double.parseDouble(startPrice)*10000+"";
         if (!"".equals(endPrice))
-            endPrice = (int)Double.parseDouble(endPrice)*10000+"";
+            endPrice1 = (int)Double.parseDouble(endPrice)*10000+"";
+        carname = selectedCarName.get("id_carbrand")==null?"":selectedCarName.get("id_carbrand");
+        brand = selectedBrand.get("id_carbrand")==null?"":selectedBrand.get("id_carbrand");
         Log.i("getCarList","startPrice="+startPrice);
         Log.i("getCarList","endPrice="+endPrice);
-        Log.i("getCarList","selectedCarName.get(\"id_carbrand\")="+selectedCarName.get("id_carbrand")==null?"":selectedCarName.get("id_carbrand"));
+        Log.i("getCarList","brand="+brand);
         Log.i("getCarList","selectedRankId="+selectedRankId);
         Log.i("getCarList","sxRylx="+sxRylx);
-        Log.i("getCarList","selectedBrand.get(\"id_carbrand\")="+selectedBrand.get("id_carbrand")==null?"":selectedBrand.get("id_carbrand"));
+        Log.i("getCarList","carname="+carname);
         Log.i("getCarList","sxPlStart="+sxPlStart);
         Log.i("getCarList","sxPlEnd="+sxPlEnd);
 
@@ -844,16 +933,16 @@ public class BuyCar extends Fragment {
         map.put("car_type", sxCx);//车辆类型（SUV、MPV、皮卡）
         map.put("car_gearbox", sxBsx);
         map.put("car_seating", sxZws);
-        map.put("car_price_start", startPrice);//元为单位
-        map.put("car_price_end", endPrice);//元为单位
+        map.put("car_price_start", startPrice1);//元为单位
+        map.put("car_price_end", endPrice1);//元为单位
         //map.put("car_train", "");//车系大
-        map.put("car_train_item", selectedCarName.get("id_carbrand")==null?"":selectedCarName.get("id_carbrand"));//车系小
+        map.put("car_train_item", carname);//车系小
         map.put("sort", selectedRankId);//排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
         map.put("pageIndex", pageIndex+"");
         map.put("pageSize", "20");
         map.put("car_name", "");//模糊搜索匹配
         map.put("car_fuel_type", sxRylx);
-        map.put("car_brand",selectedBrand.get("id_carbrand")==null?"":selectedBrand.get("id_carbrand"));
+        map.put("car_brand",brand);
         map.put("car_emissions_start",sxPlStart);
         map.put("car_emissions_end",sxPlEnd);
         map.put("histroy_word","");
@@ -867,6 +956,7 @@ public class BuyCar extends Fragment {
                     if ("1".equals(object.getString("status"))) {
                         Gson gson = new Gson();
                         BuyCarBean buyCarBean = gson.fromJson(response, BuyCarBean.class);
+                        pageIndex = buyCarBean.getData().getPageCount();
                         pageTotal = buyCarBean.getData().getPageTotal();
                         recyclerList.clear();
                         List<BuyCarBean.DataBean.ResultBean> list = buyCarBean.getData().getResult();
@@ -892,11 +982,15 @@ public class BuyCar extends Fragment {
     }
     // 加载更多
     private void getCarListLoadMore(final RefreshLayout refreshlayout){
+        String startPrice1="",endPrice1="";
+        String brand = "",carname = "";
         if (pageIndex == pageTotal){
             ToastUtil.show(getActivity(),"没有更多");
             refreshlayout.finishLoadmore(200);
             return;
         }
+        Log.i("getCarList","index="+pageIndex);
+        Log.i("getCarList","total="+pageTotal);
         Log.i("getCarList","cityId="+cityId);
         Log.i("getCarList","sxLcStart="+sxLcStart);
         Log.i("getCarList","sxLcEnd="+sxLcEnd);
@@ -907,15 +1001,17 @@ public class BuyCar extends Fragment {
         Log.i("getCarList","sxBsx="+sxBsx);
         Log.i("getCarList","sxZws="+sxZws);
         if(!"".equals(startPrice))
-            startPrice = (int)Double.parseDouble(startPrice)*10000+"";
+            startPrice1 = (int)Double.parseDouble(startPrice)*10000+"";
         if (!"".equals(endPrice))
-            endPrice = (int)Double.parseDouble(endPrice)*10000+"";
+            endPrice1 = (int)Double.parseDouble(endPrice)*10000+"";
+        carname = selectedCarName.get("id_carbrand")==null?"":selectedCarName.get("id_carbrand");
+        brand = selectedBrand.get("id_carbrand")==null?"":selectedBrand.get("id_carbrand");
         Log.i("getCarList","startPrice="+startPrice);
         Log.i("getCarList","endPrice="+endPrice);
-        Log.i("getCarList","selectedCarName.get(\"id_carbrand\")="+selectedCarName.get("id_carbrand")==null?"":selectedCarName.get("id_carbrand"));
+        Log.i("getCarList","brand="+brand);
         Log.i("getCarList","selectedRankId="+selectedRankId);
         Log.i("getCarList","sxRylx="+sxRylx);
-        Log.i("getCarList","selectedBrand.get(\"id_carbrand\")="+selectedBrand.get("id_carbrand")==null?"":selectedBrand.get("id_carbrand"));
+        Log.i("getCarList","carname="+carname);
         Log.i("getCarList","sxPlStart="+sxPlStart);
         Log.i("getCarList","sxPlEnd="+sxPlEnd);
 
@@ -929,16 +1025,16 @@ public class BuyCar extends Fragment {
         map.put("car_type", sxCx);//车辆类型（SUV、MPV、皮卡）
         map.put("car_gearbox", sxBsx);
         map.put("car_seating", sxZws);
-        map.put("car_price_start", startPrice);//元为单位
-        map.put("car_price_end", endPrice);//元为单位
+        map.put("car_price_start", startPrice1);//元为单位
+        map.put("car_price_end", endPrice1);//元为单位
         //map.put("car_train", "");//车系大
-        map.put("car_train_item", selectedCarName.get("id_carbrand")==null?"":selectedCarName.get("id_carbrand"));//车系小
+        map.put("car_train_item", carname);//车系小
         map.put("sort", selectedRankId);//排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
         map.put("pageIndex", ++pageIndex+"");
         map.put("pageSize", "20");
         map.put("car_name", "");//模糊搜索匹配
         map.put("car_fuel_type", sxRylx);
-        map.put("car_brand",selectedBrand.get("id_carbrand")==null?"":selectedBrand.get("id_carbrand"));
+        map.put("car_brand",brand);
         map.put("car_emissions_start",sxPlStart);
         map.put("car_emissions_end",sxPlEnd);
         map.put("histroy_word","");
@@ -952,6 +1048,8 @@ public class BuyCar extends Fragment {
                     if ("1".equals(object.getString("status"))) {
                         Gson gson = new Gson();
                         BuyCarBean buyCarBean = gson.fromJson(response, BuyCarBean.class);
+                        pageTotal = buyCarBean.getData().getPageTotal();
+                        pageIndex = buyCarBean.getData().getPageCount();
                         List<BuyCarBean.DataBean.ResultBean> list = buyCarBean.getData().getResult();
                         if (list.size() == 0){
                             ToastUtil.show(getActivity(),"没有更多了!");
@@ -1022,6 +1120,11 @@ public class BuyCar extends Fragment {
         cartagLayout.removeAllViews();
         carLy.setVisibility(View.GONE);
 
-//        tvCz.setTextColor(Color.parseColor("#333333"));
+        //tvCz.setTextColor(Color.parseColor("#333333"));
+        tvZn.setText(rankList.get(0));
+
+        priceView = null;
+        brandView = null;
+        carView = null;
     }
 }
