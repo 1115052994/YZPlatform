@@ -204,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/qy_splace"
                             android:layout_marginLeft="@dimen/common15dp"
-                            android:layout_marginTop="@dimen/common5dp"/>
+                            android:layout_marginTop="@dimen/common3dp"/>
                         <TextView
                             android:id="@+id/loc_tv"
                             android:layout_width="wrap_content"

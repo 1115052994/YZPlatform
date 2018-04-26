@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common10dp"
+        android:layout_marginBottom="@dimen/common10dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/image_carbrand"
+            android:layout_width="@dimen/common38dp"
+            android:layout_height="@dimen/common38dp"
+            android:layout_marginLeft="@dimen/common15dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/benchi"
+            />
+        <TextView
+            android:id="@+id/tv_carbrand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common8dp"
+            android:layout_marginBottom="@dimen/common8dp"
+            android:layout_marginLeft="@dimen/common15dp"
+            android:text="奔驰"
+            android:textColor="@color/text_33"
+            android:textSize="@dimen/text_size_18sp"/>
+    </LinearLayout>
+    <!-- 灰色间隔 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common8dp"
+        android:background="@color/bg_color"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common20dp"
+        android:layout_marginBottom="@dimen/common10dp"
+        android:layout_marginTop="@dimen/common10dp"
+        android:src="@drawable/star_pinkbig"/>
+    <View
+        style="@style/gray_line"
+        android:layout_marginTop="@dimen/common5dp"/>
+    <!-- 不限品牌 -->
+    <TextView
+        android:id="@+id/tv_all"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common44dp"
+        android:textSize="@dimen/text_size_15sp"
+        android:textColor="@color/text_33"
+        android:gravity="center_vertical"
+        android:text="不限车系"
+        android:layout_marginLeft="@dimen/common20dp"
+        />
+    <View
+        style="@style/gray_line"
+        android:layout_marginTop="@dimen/common5dp"/>
+</LinearLayout>

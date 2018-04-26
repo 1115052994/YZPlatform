@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -61,6 +61,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/search"
         >
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -144,7 +145,7 @@
                 <TextView
                     android:id="@+id/tv_all"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/common40dp"
+                    android:layout_height="@dimen/common44dp"
                     android:textSize="@dimen/text_size_15sp"
                     android:textColor="@color/text_33"
                     android:gravity="center_vertical"
@@ -159,4 +160,20 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
     </android.support.design.widget.CoordinatorLayout>
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/letter"
+        android:layout_width="@dimen/common20dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/common20dp"
+        android:layout_marginRight="@dimen/common5dp"
+        android:layout_marginTop="@dimen/common180dp"
+        android:layout_alignParentRight="true">
+        <!--android:background="@color/back_d6">-->
+        <com.plt.yzplatform.view.LetterSideBar
+            android:id="@+id/letter_side_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="@dimen/common10dp"/>
+    </RelativeLayout>
+</RelativeLayout>

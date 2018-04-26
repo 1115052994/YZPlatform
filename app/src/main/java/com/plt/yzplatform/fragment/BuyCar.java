@@ -94,9 +94,9 @@ public class BuyCar extends Fragment {
     @BindView(R.id.line1)
     View line1;
     @BindView(R.id.cartag_layout)
-    CarTagLayout cartagLayout;
+    CarTagLayout cartagLayout;//流布局
     @BindView(R.id.car_ly)
-    RelativeLayout carLy;
+    RelativeLayout carLy;//流布局(根布局)
 
     // 轮播图
     private List<String> bannersImage = new ArrayList<>();
@@ -110,24 +110,29 @@ public class BuyCar extends Fragment {
 
     //高级筛选
     //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数(zwsparamName,paramId）
+    private String sxCx = "",sxCxName = "";//不限全是Id
+    private String sxBsx = "",sxBsxName = "";
+    private String sxPfbz = "",sxPfbzName = "";
+    private String sxRylx = "",sxRylxName = "";
+    private String sxZws = "",sxZwsName = "";
     // 车龄cl 里程lc 排量pl(start,end)
-    private String sxCx = "";//不限全是Id
-    private String sxBsx = "";
-    private String sxPfbz = "";
-    private String sxRylx = "";
-    private String sxZws = "";
     private String sxClStart = "",sxClEnd="";
     private String sxLcStart = "",sxLcEnd ="";
     private String sxPlStart = "",sxPlEnd = "";
+
     // 价格
     private String startPrice = "",endPrice="";
     private View selectPrice = null;
+
     // 品牌车系
     /**
      * carMap1.put("tv_carbrand", "A");
      carMap1.put("image_carbrand", "");
      carMap1.put("id_carbrand", "");
      */
+    private Map<String,String> selectedBrand = new HashMap<>();
+    private Map<String,String> selectedCarName = new HashMap<>();
+
     // 排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
     private List<String> rankList = new ArrayList<>();
     private List<String> rankId =new ArrayList<>();
@@ -145,7 +150,36 @@ public class BuyCar extends Fragment {
     private void initView() {
         //隐藏筛选tag布局
         carLy.setVisibility(View.GONE);
+        cartagLayout.setOnItemClickListener(new CarTagLayout.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                // 删除筛选标签
+                TextView textView = (TextView) view;
+                String name = textView.getText().toString();
+                Log.i("tagClick",position+"---"+ name);
+                if (name.equals(sxBsxName)){
+                    sxBsx = "";
+                    sxBsxName = "";
+                }else if (name.equals(sxPfbzName)){
+                    sxPfbz = "";
+                    sxPfbzName = "";
+                }else if (name.equals(sxRylxName)){
+                    sxRylx = "";
+                    sxRylxName = "";
+                }else if (name.equals(sxZwsName)){
+                    sxZws = "";
+                    sxZwsName = "";
+                }else if (name.equals(sxCxName)){
+                    sxCx = "";
+                    sxCxName = "";
+                }
+                cartagLayout.removeView(view);
+                if (cartagLayout.getChildCount()==0)
+                    carLy.setVisibility(View.GONE);
+                // 重新筛选
 
+            }
+        });
         banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
@@ -155,18 +189,20 @@ public class BuyCar extends Fragment {
             }
         });
 
-
+        // 二手车列表
         recyclerAdapter = new CommonRecyclerAdapter(getActivity(), recyclerList, R.layout.item_car_buy) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-//                TextView tvCarsDes = holder.getView(R.id.tv_cardes);
-//                tvCarsDes.setText(recyclerList.get(position).getCar_name());
-//                TextView tvPrice = holder.getView(R.id.tv_price);
-//                tvPrice.setText("￥"+recyclerList.get(position).getCar_price()/10000.0+"万");
-//                TextView tvYearAndMiles = holder.getView(R.id.tv_year_miles);
-//                tvYearAndMiles.setText(recyclerList.get(position).getCar_sign_date().split("_")[0]+"年/"+recyclerList.get(position).getCar_mileage()+"公里");
-//                ImageView carImage = holder.getView(R.id.image_car);
-//                OKhttptils.getPic(getActivity(),recyclerList.get(position).getCar_1_icon_file_id(),carImage);
+                TextView tvCarsDes = holder.getView(R.id.tv_cardes);
+                tvCarsDes.setText(recyclerList.get(position).getCar_name());
+                TextView tvPrice = holder.getView(R.id.tv_price);
+                tvPrice.setText("￥"+recyclerList.get(position).getCar_price()/10000.0+"万");
+                TextView tvYearAndMiles = holder.getView(R.id.tv_year_miles);
+                tvYearAndMiles.setText(recyclerList.get(position).getCar_sign_date().split("-")[0]+"年/"+recyclerList.get(position).getCar_mileage()+"公里");
+                ImageView carImage = holder.getView(R.id.image_car);
+                if(recyclerList.get(position).getCar_1_icon_file_id()!=null) {
+                    OKhttptils.getPic(getActivity(),recyclerList.get(position).getCar_1_icon_file_id(),carImage);
+                }
             }
         };
         recyclerViewCar.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -222,9 +258,31 @@ public class BuyCar extends Fragment {
                 break;
             case R.id.ly_pp:
                 // 品牌
+                /**
+                 * carMap1.put("tv_carbrand", "A");
+                 carMap1.put("image_carbrand", "");
+                 carMap1.put("id_carbrand", "");
+                 */
                 tvPp.setTextColor(Color.parseColor("#ff9696"));
                 imagePp.setImageResource(R.drawable.b_g);
                 JumpUtil.newInstance().jumpLeft(getActivity(), CarBrandSearch.class);
+                CarBrandSearch.setOnDataBackListener(new CarBrandSearch.DataBackListener(){
+                    @Override
+                    public void backData(Map<String, String> brand, Map<String, String> carName) {
+                        tvPp.setTextColor(Color.parseColor("#333333"));
+                        imagePp.setImageResource(R.drawable.b_a);
+                        if(brand == null){
+                            selectedBrand.put("tv_carbrand","");
+                            selectedBrand.put("id_carbrand","");
+                            selectedCarName.put("tv_carbrand","");
+                            selectedCarName.put("id_carbrand","");
+                        }else{
+                            selectedBrand = brand;
+                            selectedCarName =carName;
+                            Log.i("carbrand",selectedBrand.toString()+"---"+selectedCarName.toString());
+                        }
+                    }
+                });
                 break;
             case R.id.ly_jg:
                 // 价格
@@ -240,16 +298,19 @@ public class BuyCar extends Fragment {
                 AdvanceSX.setOnDataBackListener(new AdvanceSX.DataBackListener() {
                     @Override
                     public void backData(Map<String, String> map) {
-                        Log.i("databack",map.toString());
                         tvSx.setTextColor(Color.parseColor("#333333"));
                         imageSx.setImageResource(R.drawable.b_a);
+                        if (map == null){
+                            return;
+                        }
+                        Log.i("databack",map.toString());
                         // 显示搜索筛选信息
-                        carLy.setVisibility(View.VISIBLE);
                         if(cartagLayout.isInLayout()) {
                                 cartagLayout.removeAllViews();
                         }
+                        carLy.setVisibility(View.VISIBLE);
                         //显示搜索选项   重新搜索  返回数据（
-                        //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数(zwsparamName,paramId）
+                        //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数(zws paramName,paramId）
                         // 车龄cl 里程lc 排量pl(start,end)
                         if(!"".equals(map.get("cx"))) {
                             View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
@@ -260,6 +321,7 @@ public class BuyCar extends Fragment {
                                 group.removeAllViews();
                             }
                             cartagLayout.addView(tv);
+                            sxCxName = map.get("cx").split(",")[0];
                             sxCx = map.get("cx").split(",")[1];
                         }
                         if(!"".equals(map.get("bsx"))) {
@@ -271,6 +333,7 @@ public class BuyCar extends Fragment {
                                 group.removeAllViews();
                             }
                             cartagLayout.addView(tv);
+                            sxBsxName = map.get("bsx").split(",")[0];
                             sxBsx = map.get("bsx").split(",")[1];
                         }
                         if(!"".equals(map.get("pfbz"))) {
@@ -282,6 +345,7 @@ public class BuyCar extends Fragment {
                                 group.removeAllViews();
                             }
                             cartagLayout.addView(tv);
+                            sxBsxName = map.get("bsx").split(",")[0];
                             sxPfbz = map.get("pfbz").split(",")[1];
                         }
                         if(!"".equals(map.get("rylx"))) {
@@ -293,6 +357,7 @@ public class BuyCar extends Fragment {
                                 group.removeAllViews();
                             }
                             cartagLayout.addView(tv);
+                            sxRylxName = map.get("rylx").split(",")[0];
                             sxRylx = map.get("rylx").split(",")[1];
                         }
                         if(!"".equals(map.get("zws"))) {
@@ -304,9 +369,15 @@ public class BuyCar extends Fragment {
                                 group.removeAllViews();
                             }
                             cartagLayout.addView(tv);
+                            sxZwsName = map.get("zws").split(",")[0];
                             sxZws = map.get("zws").split(",")[1];
                         }
                         // 车龄0-6
+                        /*
+                        private String sxClStart = "",sxClEnd="";
+                        private String sxLcStart = "",sxLcEnd ="";
+                        private String sxPlStart = "",sxPlEnd = "";
+                         */
                         View view_cl = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
                         TextView tv_cl = view_cl.findViewById(R.id.tv_tag);
                         if (tv_cl.getParent() != null) {
@@ -319,17 +390,25 @@ public class BuyCar extends Fragment {
                                 //<6
                                 tv_cl.setText(cl[1]+"年以内");
                                 cartagLayout.addView(tv_cl);
+                                sxClStart = "";
+                                sxClEnd=cl[1];
                             }else {
                                 // 车龄不限
+                                sxClStart = "";
+                                sxClEnd="";
                             }
                         }else{
                             if ("6".equals(cl[1])){
                                 //>0
                                 tv_cl.setText(cl[0]+"年以上");
                                 cartagLayout.addView(tv_cl);
+                                sxClStart = cl[0];
+                                sxClEnd="";
                             }else {
                                 tv_cl.setText(cl[0]+"-"+cl[1]+"年");
                                 cartagLayout.addView(tv_cl);
+                                sxClStart = cl[0];
+                                sxClEnd = cl[1];
                             }
                         }
                         // 里程0-15
@@ -345,17 +424,25 @@ public class BuyCar extends Fragment {
                                 //<15
                                 tv_lc.setText(lc[1]+"里程以内");
                                 cartagLayout.addView(tv_lc);
+                                sxLcStart = "";
+                                sxLcEnd = lc[1];
                             }else {
                                 // 不限
+                                sxLcStart = "";
+                                sxLcEnd ="";
                             }
                         }else{
                             if ("15".equals(lc[1])){
                                 //>0
                                 tv_lc.setText(lc[0]+"里程以上");
                                 cartagLayout.addView(tv_lc);
+                                sxLcStart = lc[0];
+                                sxLcEnd ="";
                             }else {
                                 tv_lc.setText(lc[0]+"-"+lc[1]+"里程");
                                 cartagLayout.addView(tv_lc);
+                                sxLcStart = lc[0];
+                                sxLcEnd = lc[1];
                             }
                         }
                         // 排量0-5.0
@@ -371,19 +458,31 @@ public class BuyCar extends Fragment {
                                 //<5.0
                                 tv_pl.setText(pl[1]+"排量以内");
                                 cartagLayout.addView(tv_lc);
+                                sxPlStart = "";
+                                sxPlEnd = pl[1];
                             }else {
                                 // 不限
+                                sxPlStart = "";
+                                sxPlEnd = "";
                             }
                         }else{
                             if ("5.0".equals(pl[1])){
                                 //>0
                                 tv_pl.setText(pl[0]+"排量以上");
                                 cartagLayout.addView(tv_pl);
+                                sxPlStart = pl[0];
+                                sxPlEnd = "";
                             }else {
                                 tv_pl.setText(pl[0]+"-"+pl[1]+"排量");
                                 cartagLayout.addView(tv_pl);
+                                sxPlStart = pl[0];
+                                sxPlEnd = pl[1];
                             }
                         }
+                        // 如果没有筛选条件xianshi
+                        Log.i("databack","count==="+cartagLayout.getChildCount());
+                        if (cartagLayout.getChildCount()==0)
+                            carLy.setVisibility(View.GONE);
                     }
                 });
                 break;
@@ -464,15 +563,19 @@ public class BuyCar extends Fragment {
                 if (progressLow == 0) {
                     if (progressHigh == 6) {
                         tvPrice.setText("不限价格");
+                        startPrice = "";
+                        endPrice = "";
                     }
                     else {
                         tvPrice.setText((int) progressHigh + "0万以下");
                         endPrice = (int) progressHigh+"";
+                        startPrice = "";
                     }
                 } else {
                     if (progressHigh == 6) {
                         tvPrice.setText((int) progressLow + "0万以上");
                         startPrice = (int) progressLow+"";
+                        endPrice = "";
                     }
                     else {
                         tvPrice.setText((int) progressLow + "0万-" + (int) progressHigh + "0万");
@@ -535,13 +638,14 @@ public class BuyCar extends Fragment {
                     tv.setTextColor(Color.parseColor("#333333"));
                 }
                 TextView tv = view.findViewById(R.id.tv_appraise);
-                if(!view.isSelected()) {
+//                if(!view.isSelected()) {
                     view.setSelected(true);
                     tv.setTextColor(Color.parseColor("#ff9696"));
-                }else{
-                    view.setSelected(false);
-                    tv.setTextColor(Color.parseColor("#333333"));
-                }
+//                }else{
+//                    view.setSelected(false);
+//                    tv.setTextColor(Color.parseColor("#333333"));
+//                }
+                selectPrice = view;
             }
         });
         priceGv.setAdapter(jgAdapter);
@@ -556,7 +660,7 @@ public class BuyCar extends Fragment {
                 getActivity().getWindow().setAttributes(wlp);
                 tvJg.setTextColor(Color.parseColor("#333333"));
                 imageJg.setImageResource(R.drawable.b_a);
-                // 获得选择的价格数据
+                // 获得选择的价格，数据重新筛选
 
             }
         });
@@ -614,54 +718,6 @@ public class BuyCar extends Fragment {
         });
     }
 
-     // 搜索Car列表(添加筛选条件)
-    public void getCarList() {
-        Map<String, String> map = new HashMap<>();
-        map.put("city", cityId);
-        map.put("car_mileage_start", "");
-        map.put("car_mileage_end", "");
-        map.put("car_age_start", "");
-        map.put("car_age_end", "");
-        map.put("car_letout", "");
-        map.put("car_type", "");//车辆类型（SUV、MPV、皮卡）
-        map.put("car_gearbox", "");
-        map.put("car_seating", "");
-        map.put("car_price_start", "");
-        map.put("car_price_end", "");
-        map.put("car_train", "");
-        map.put("car_train_item", "");
-        map.put("sort", "");//排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
-        map.put("pageIndex", "");
-        map.put("pageSize", "");
-        map.put("car_name", "");
-        map.put("car_fuel_type", "");
-        OKhttptils.post(getActivity(), Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                try {
-                    JSONObject object = new JSONObject(response);
-                    if ("1".equals(object.getString("status"))) {
-                        Gson gson = new Gson();
-                        BuyCarBean buyCarBean = gson.fromJson(response, BuyCarBean.class);
-                        recyclerList.clear();
-                        List<BuyCarBean.DataBean.ResultBean> list = buyCarBean.getData().getResult();
-                        for (BuyCarBean.DataBean.ResultBean bean : list
-                                ) {
-                            recyclerList.add(bean);
-                        }
-                        recyclerAdapter.notifyDataSetChanged();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void fail(String response) {
-
-            }
-        });
-    }
 
     // 获得car各种信息字典以及banner
     public void getCarParams() {
@@ -685,6 +741,62 @@ public class BuyCar extends Fragment {
                         banner.setImages(bannersImage);
                         banner.start();
                         //carParams
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
+    }
+
+
+    // 搜索Car列表(添加筛选条件)
+    public void getCarList() {
+        Map<String, String> map = new HashMap<>();
+        map.put("city", cityId);
+        map.put("car_mileage_start", "");
+        map.put("car_mileage_end", "");
+        map.put("car_age_start", "");
+        map.put("car_age_end", "");
+        map.put("car_letout", "");
+        map.put("car_type", "");//车辆类型（SUV、MPV、皮卡）
+        map.put("car_gearbox", "");
+        map.put("car_seating", "");
+        map.put("car_price_start", "");
+        map.put("car_price_end", "");
+        //map.put("car_train", "");//车系大
+        map.put("car_train_item", "");//车系小
+        map.put("sort", "");//排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
+        map.put("pageIndex", "");
+        map.put("pageSize", "");
+        map.put("car_name", "");
+        map.put("car_fuel_type", "");
+        map.put("car_brand","");
+        map.put("car_emissions_start","");
+        map.put("car_emissions_end","");
+        map.put("histroy_word","");
+        //car_brand  car_emissions_start  car_emissions_end  histroy_word
+        OKhttptils.post(getActivity(), Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.i("BuyCarresponse",response);
+                try {
+                    JSONObject object = new JSONObject(response);
+                    if ("1".equals(object.getString("status"))) {
+                        Gson gson = new Gson();
+                        BuyCarBean buyCarBean = gson.fromJson(response, BuyCarBean.class);
+                        recyclerList.clear();
+                        List<BuyCarBean.DataBean.ResultBean> list = buyCarBean.getData().getResult();
+                        for (BuyCarBean.DataBean.ResultBean bean : list
+                                ) {
+                            recyclerList.add(bean);
+                        }
+                        recyclerAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
