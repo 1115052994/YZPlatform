@@ -27,6 +27,15 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    //李岩加入。删除了几个so包后，虚拟机无法运行。加入此配置，用于在虚拟机上跑起应用。
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a','x86_64'
+            universalApk true
+        }
+    }
     repositories {
         jcenter() // If not already there
     }
