@@ -422,7 +422,7 @@ public class CarBrandSearch extends BaseActivity {
         window.setTouchable(true);
         // 显示PopupWindow，其中：
         // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
-        window.showAsDropDown(search, width / 4, CommonUtils.dip2px(CarBrandSearch.this, 25));
+        window.showAsDropDown(search, width / 4, 0);
         // 或者也可以调用此方法显示PopupWindow，其中：
         // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
         // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
