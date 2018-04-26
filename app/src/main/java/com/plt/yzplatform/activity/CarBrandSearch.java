@@ -385,7 +385,6 @@ public class CarBrandSearch extends BaseActivity {
 
     // 通过品牌查出车系弹出popwindow
     List<Map<String, String>> carList = new ArrayList<>();
-
     private void popSearchChexi(final String brandName, String brandId) {
         carList.clear();
         Map<String, String> brand = new HashMap<>();
@@ -680,7 +679,6 @@ public class CarBrandSearch extends BaseActivity {
     }
 
     static DataBackListener dataBackListener;
-
     public interface DataBackListener {
         void backData(Map<String, String> brand, Map<String, String> carName);
     }
