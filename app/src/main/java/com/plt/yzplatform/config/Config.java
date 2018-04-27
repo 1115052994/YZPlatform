@@ -224,8 +224,20 @@ public class Config {
     //二手车详情
     public static final String CAR_DETAIL = URL + S + "car_detail";
 
-    //二手车详情-获取广告
+    //二手车详情 - 获取广告
     public static final String CAR_DETAIL_AD = URL + S + "selectAdveToApp";
+
+    //二手车详情 - 是否收藏   coll_content_id (car_id)
+    public static final String CAR_DETAIL_COLLECT = URL + S + "whetherCollCar";
+
+    //二手车详情 - 添加收藏   coll_content_id  (car_id)
+    public static final String CAR_DETAIL_ADD_COLLECT = URL + S + "accretionCollCar";
+
+    //二手车详情 - 订阅降价通知
+    public static final String CAR_DETAIL_ADD_SALE = URL + S + "subscriptionCar";
+
+    //二手车详情 - 查看是否订阅降价通知
+    public static final String CAR_DETAIL_IS_SALE =  URL + S + "whetherSubscription";
 
     // 二手车详情页查询所在公司信息
     public static final String FINDCOMPBYCOMPID = URL + S +"findCompByCompId";

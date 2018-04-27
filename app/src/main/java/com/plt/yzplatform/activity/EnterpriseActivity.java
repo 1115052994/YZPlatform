@@ -88,6 +88,7 @@ public class EnterpriseActivity extends BaseActivity {
 
     /* 获取数据 */
     private void getData() {
+        Log.i(TAG, "getData: " + "===============");
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(EnterpriseActivity.this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
@@ -211,6 +212,7 @@ ToastUtil.noNAR(EnterpriseActivity.this);
 
             @Override
             public void fail(String response) {
+                Log.i(TAG, "fail: " + response);
                 ToastUtil.noNAR(EnterpriseActivity.this);
             }
         });

@@ -1,9 +1,12 @@
 package com.plt.yzplatform.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.plt.yzplatform.R;
@@ -35,6 +39,7 @@ import com.plt.yzplatform.utils.ToastUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -51,6 +56,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 /* 二手车 - 车辆详情 */
 public class CarDetailsActivity extends BaseActivity {
@@ -106,6 +112,10 @@ public class CarDetailsActivity extends BaseActivity {
     RelativeLayout mEvaluate;
     @BindView(R.id.coll_Icon)
     ImageView collIcon;
+    @BindView(R.id.mCollect)
+    LinearLayout mCollect;
+    @BindView(R.id.mSale)
+    ImageView mSale;
     private Activity currtActivity = this;
     private String car_id;//二手车id
     private List<String> images = new ArrayList<>();
@@ -144,11 +154,11 @@ public class CarDetailsActivity extends BaseActivity {
                 case 004:
                     page = (int) msg.obj;
                     Log.i(TAG, "handleMessage页数: " + page);
-                    if (page > 5){
+                    if (page > 5) {
 
-                    }else {
+                    } else {
                         for (int i = page * 4; i < page * 4 + 4; i++) {
-                            if (i<carImgInfoListBeans.size()) {
+                            if (i < carImgInfoListBeans.size()) {
                                 adapter.insert(carImgInfoListBeans.get(i), adapter.getItemCount());
                                 adapter.notifyDataSetChanged();
                             }
@@ -176,7 +186,168 @@ public class CarDetailsActivity extends BaseActivity {
         }
         getData();
         getAd();
+        getCollect();
+        getSale();
         initView();
+    }
+
+    /* 查看是否订阅降价通知 */
+    private void getSale() {
+        Map<String, String> map = new HashMap<>();
+        map.put("car_id", car_id);
+        OKhttptils.post(currtActivity, Config.CAR_DETAIL_IS_SALE, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.i(TAG, "success降价: " + response);
+                /**
+                 * {"data":{"result":""},"message":"","status":"1"}
+                 */
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String data = jsonObject.getString("data");
+                    JSONObject object = new JSONObject(data);
+                    String result = object.getString("result");
+                    Log.d(TAG, "success降价: " + result);
+                    if (result.isEmpty()) {
+                        //没有订阅过
+                        mSale.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Map<String,String> map = new HashMap<>();
+                                map.put("car_id",car_id);
+                                OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_SALE, map, new OKhttptils.HttpCallBack() {
+                                    @Override
+                                    public void success(String response) {
+                                        Log.i(TAG, "success订阅: " + response);
+                                    }
+
+                                    @Override
+                                    public void fail(String response) {
+                                        Log.i(TAG, "fail订阅: " + response);
+                                    }
+                                });
+                            }
+                        });
+                    }else {
+                        //订阅过 不做任何操作
+                        Log.i(TAG, "success订阅: " + result);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+                Log.i(TAG, "fail降价: " + response);
+
+            }
+        });
+    }
+
+    /* 查看是否收藏 */
+    private void getCollect() {
+        Map<String, String> map = new HashMap<>();
+        map.put("coll_content_id", car_id);
+        OKhttptils.post(currtActivity, Config.CAR_DETAIL_COLLECT, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.d(TAG, "success是否收藏: " + response);
+                /**
+                 * {"data":{"result":""},"message":"","status":"1"}
+                 */
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String data = jsonObject.getString("data");
+                    JSONObject object = new JSONObject(data);
+                    String result = object.getString("result");
+                    if (result.isEmpty()) {
+                        //没有收藏过
+                        collIcon.setImageResource(R.drawable.qy_huistar0);
+                        mCollect.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Map<String, String> map = new HashMap<>();
+                                map.put("coll_content_id", car_id);
+                                OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_COLLECT, map, new OKhttptils.HttpCallBack() {
+                                    @Override
+                                    public void success(String response) {
+                                        Log.d(TAG, "success添加收藏: " + response);
+                                        collIcon.setImageResource(R.drawable.qy_yelowstar1);
+                                    }
+
+                                    @Override
+                                    public void fail(String response) {
+                                        Log.d(TAG, "fail添加收藏: " + response);
+                                        try {
+                                            JSONObject jsonObject1 = new JSONObject(response);
+                                            ToastUtil.show(currtActivity, jsonObject1.getString("message"));
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        //收藏过
+                        collIcon.setImageResource(R.drawable.qy_yelowstar1);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void fail(String response) {
+                Log.d(TAG, "fail手否收藏: " + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    ToastUtil.show(currtActivity, jsonObject.getString("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /* 拨打客服电话 */
+    private RxPermissions rxPermission;
+
+    private void call(final String phone) {
+        // 申请定位权限
+        rxPermission = new RxPermissions(this);
+        rxPermission.request(Manifest.permission.CALL_PHONE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) throws Exception {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            // 已经获取权限
+                            Intent intent = new Intent(); // 意图对象：动作 + 数据
+                            intent.setAction(Intent.ACTION_CALL); // 设置动作
+                            Uri data = Uri.parse("tel:" + phone); // 设置数据
+                            intent.setData(data);
+                            currtActivity.startActivity(intent); // 激活Activity组件
+                        } else {
+                            // 未获取权限
+                            Toast.makeText(currtActivity, "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            if (Build.VERSION.SDK_INT >= 9) {
+                                intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                                intent.setData(Uri.fromParts("package", getPackageName(), null));
+                            } else if (Build.VERSION.SDK_INT <= 8) {
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+                                intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+                            }
+                            startActivity(intent);
+                        }
+                    }
+                });
+
     }
 
     /* 底部24张图 */
@@ -536,7 +707,7 @@ public class CarDetailsActivity extends BaseActivity {
                 handler.sendMessage(message1);
 
                 List<CarDetaile.DataBean.ResultBean.CarDetailBean.CarImgInfoListBean> carImgInfoListBeans = carDetaile.getData().getResult().getCarDetail().getCarImgInfoList();
-                Log.d(TAG, "success个数: " +carImgInfoListBeans.size());
+                Log.d(TAG, "success个数: " + carImgInfoListBeans.size());
                 Message message2 = new Message();
                 message2.what = 003;
                 message2.obj = carImgInfoListBeans;
@@ -566,7 +737,7 @@ public class CarDetailsActivity extends BaseActivity {
                 getPic(currtActivity, (String) path, imageView);
             }
         });
-        Log.e(TAG, "initBanner广告图: " +topImgListBeans.size() );
+        Log.e(TAG, "initBanner广告图: " + topImgListBeans.size());
         for (int i = 0; i < topImgListBeans.size(); i++) {
             String file_id = topImgListBeans.get(i).getIconImg();
             images.add(file_id);
@@ -590,14 +761,11 @@ public class CarDetailsActivity extends BaseActivity {
 //        mIntroduce.setText(spannableString);
     }
 
-    @OnClick({R.id.mLoan, R.id.mSale, R.id.mGPS, R.id.mDetails, R.id.mDeploy, R.id.mCollect, R.id.mKefu})
+    @OnClick({R.id.mLoan, R.id.mGPS, R.id.mDetails, R.id.mDeploy, R.id.mKefu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mLoan:
                 //车辆贷款
-                break;
-            case R.id.mSale:
-                //订阅降价信息
                 break;
             case R.id.mGPS:
                 //导航
@@ -608,9 +776,9 @@ public class CarDetailsActivity extends BaseActivity {
             case R.id.mDeploy:
                 //查看详细参数配置
                 break;
-            case R.id.mCollect:
-                break;
             case R.id.mKefu:
+                //拨打客服电话
+                call("4001198698");
                 break;
         }
     }

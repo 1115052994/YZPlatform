@@ -2,15 +2,11 @@ package com.plt.yzplatform.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
-import android.util.Log;
 
-import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.LoginActivity;
 import com.plt.yzplatform.config.Config;
 import com.squareup.picasso.Picasso;
@@ -20,24 +16,17 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.ref.SoftReference;
 import java.util.Map;
 
 import okhttp3.Call;
 
 public class OKhttptils {
     public static void post(final Activity context, String url, Map<String, String> params, final HttpCallBack callBack){
-//        Log.i("user_token",Prefs.with(context).read("user_token"));
+        Log.i("user_token",Prefs.with(context).read("user_token"));
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
                     .url(url)      //Prefs.with(context).read("user_token")
-                    .addHeader("user_token","96730A47BBCD8F345203CFAB9A2CA83ABDD25AE0426DCFB3ECD9DC3D956DA3A601719BC10114E399002F03384B081C6F0EC270098992C56EDF3946BEBEAA85CD" )
+                    .addHeader("user_token",Prefs.with(context).read("user_token") )
                     //.addParams("car_name", s)
                     .params(params)
                     .build()
