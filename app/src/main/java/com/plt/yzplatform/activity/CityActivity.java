@@ -253,13 +253,14 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
     }
 
     public void getHisCitys() {
-        Set<String> value = new HashSet<>();
-        value.add("北京");
-        value.add("济南");
-        Prefs.with(getApplicationContext()).putStringSet("historyCitys", value);
+//        Set<String> value = new HashSet<>();
+//        value.add("北京");
+//        value.add("济南");
+//        Prefs.with(getApplicationContext()).putStringSet("historyCitys", value);
         Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyCitys", null);
         for (String s : set) {
-            hisCity.add(s);
+            if (hisCity.size()<8)
+                hisCity.add(s);
         }
         hisGvAapter.notifyDataSetChanged();
     }
@@ -504,6 +505,9 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
             JumpUtil.newInstance().finishRightTrans(CityActivity.this, bundle, 01);
         }
         Log.i("selected", city);
+        Set<String> value = new HashSet<>();
+        value.add(city);
+        Prefs.with(getApplicationContext()).putStringSet("historyCitys", value);
     }
 
     @OnClick({R.id.loc_place, R.id.clear_history, R.id.cancle})
