@@ -75,7 +75,7 @@ public class Config {
     //根据图片id获取base64
     public static final String GET_BASE64 = URL + S + "getFile";
 
-    //根据图片id获取图片
+    //根据图片id获取图片(Picasso)
     public static final String GET_Pic= URL + Y ;
 
     //联想搜索商户
@@ -99,7 +99,7 @@ public class Config {
     //查看企业评价
     public static final String QUERYCOMPEVALUATE = URL + S + "queryCompeValuate";
 
-    //车商评价获取信息
+    //评价获取信息
     public static final String COMMENTORCOMPNAME = URL + S + "commentOrCompName";
 
     //车商评价
@@ -226,4 +226,10 @@ public class Config {
 
     //二手车详情-获取广告
     public static final String CAR_DETAIL_AD = URL + S + "selectAdveToApp";
+
+    // 二手车详情页查询所在公司信息
+    public static final String FINDCOMPBYCOMPID = URL + S +"findCompByCompId";
+
+    //查询车商下的二手车信息
+    public static final String FINDCOMPCARBYCOMPID = URL + S +"findCompCarByCompId";
 }

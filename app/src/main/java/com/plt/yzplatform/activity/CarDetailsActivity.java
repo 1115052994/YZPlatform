@@ -2,6 +2,7 @@ package com.plt.yzplatform.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -166,6 +167,13 @@ public class CarDetailsActivity extends BaseActivity {
         //禁止刷新
         mRefresh.setEnableRefresh(false);
         car_id = "5630";
+        Intent intent = getIntent();
+        if(intent!=null){
+            String id = intent.getStringExtra("String");
+            if (id!=null&&!"".equals(id)){
+                car_id = id;
+            }
+        }
         getData();
         getAd();
         initView();

@@ -42,8 +42,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            >
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -148,7 +147,8 @@
         <activity
             android:name=".activity.AddCarProduct"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.CarDetailsActivity"></activity>
+        <activity android:name=".activity.CarDetailsActivity" />
+        <activity android:name=".activity.CarCompDetail"></activity>
     </application>
 
 </manifest>

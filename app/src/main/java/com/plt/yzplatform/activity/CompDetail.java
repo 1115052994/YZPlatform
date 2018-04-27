@@ -114,7 +114,6 @@ public class CompDetail extends BaseActivity {
     @BindView(R.id.tv_coll)
     TextView tvColl;
     private ViewGroup viewGroup;
-    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
     private Map<String, String> map = new HashMap<>();
     private IndicatorAdapter<View> staffAdapter;//明星员工

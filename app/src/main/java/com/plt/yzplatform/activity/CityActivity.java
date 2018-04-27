@@ -258,11 +258,13 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
 //        value.add("济南");
 //        Prefs.with(getApplicationContext()).putStringSet("historyCitys", value);
         Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyCitys", null);
-        for (String s : set) {
-            if (hisCity.size()<8)
-                hisCity.add(s);
+        if (set!=null) {
+            for (String s : set) {
+                if (hisCity.size() < 8)
+                    hisCity.add(s);
+            }
+            hisGvAapter.notifyDataSetChanged();
         }
-        hisGvAapter.notifyDataSetChanged();
     }
 
     public void getCitys() {

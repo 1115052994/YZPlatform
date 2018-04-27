@@ -74,6 +74,9 @@ public class OKhttptils {
                                     case "103":
                                         callBack.fail(response);
                                         break;
+                                    default:
+                                        callBack.fail(response);
+                                            break;
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -175,7 +178,6 @@ public class OKhttptils {
 //        }
 
         String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name="+file_id+".jpg";
-        Log.i("url","url==="+url);
         Picasso.with(context).load(Uri.parse(url)).into(icon);
     }
 
