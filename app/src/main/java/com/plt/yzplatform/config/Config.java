@@ -74,6 +74,9 @@ public class Config {
     //根据图片id获取base64
     public static final String GET_BASE64 = URL + S + "getFile";
 
+    //根据图片id获取图片
+    public static final String GET_Pic= URL + Y ;
+
     //联想搜索商户
     public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
 

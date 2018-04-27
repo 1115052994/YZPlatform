@@ -207,7 +207,10 @@ public class BuyCar extends Fragment {
                     selectedCarName.put("tv_carbrand","");
                     selectedCarName.put("id_carbrand","");
                     selectedCarName.put("image_carbrand","");
-                    carView = null;
+                    if (carView!=null) {
+                        cartagLayout.removeView(carView);
+                        carView = null;
+                    }
                 }else if (name.contains(startPrice)||name.contains(endPrice)){
                     startPrice ="";
                     endPrice = "";
