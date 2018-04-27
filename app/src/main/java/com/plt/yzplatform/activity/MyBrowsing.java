@@ -9,8 +9,8 @@ import android.view.View;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.CollectAdapter;
 import com.plt.yzplatform.base.BaseActivity;
-import com.plt.yzplatform.fragment.BrowseRecord;
-import com.plt.yzplatform.fragment.BrowseRecord2;
+import com.plt.yzplatform.fragment.BrowseCarRecord;
+import com.plt.yzplatform.fragment.BrowseServerRecord;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.TabUtil;
 
@@ -32,8 +32,8 @@ public class MyBrowsing extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_browsing);
         ButterKnife.bind(this);
-        fragment.add(new BrowseRecord(MyBrowsing.this));
-        fragment.add(new BrowseRecord2(MyBrowsing.this));
+        fragment.add(new BrowseCarRecord(MyBrowsing.this));
+        fragment.add(new BrowseServerRecord(MyBrowsing.this));
         str.add("车辆买卖");
         str.add("服务商");
         browsingPager.setAdapter(new CollectAdapter(getSupportFragmentManager(),fragment,str));

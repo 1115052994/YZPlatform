@@ -10,6 +10,7 @@
 
     <!-- 背景色-f4 -->
     <color name="bg_color">#f4f4f4</color>
+    <color name="bg_f2">#f2f2f2</color>
     <color name="ba">#bababa</color>
     <color name="bg_ff">#ffffff</color>
     <color name="bg_bf">#bfbfbf</color>

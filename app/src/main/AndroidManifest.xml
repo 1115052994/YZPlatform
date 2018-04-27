@@ -147,6 +147,11 @@
         <activity
             android:name=".activity.AddCarProduct"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+         <activity android:name=".activity.Sellcars" />
+        <activity android:name=".activity.BrandChoice" />
+        <activity android:name=".activity.ModelsChoose" />
+        <activity android:name=".activity.CarChoose" />
+        <activity android:name=".activity.CarPhoto"></activity>
         <activity android:name=".activity.CarDetailsActivity" />
         <activity android:name=".activity.CarCompDetail"></activity>
     </application>

@@ -33,6 +33,7 @@ public class StarAdapter extends BaseAdapter {
     private Context context;
     private String staff_id;
     private CallStar callRenewal;
+    private String staff_photo_file_id;
     private Map<String, String> map = new HashMap<>();
     private List<Querystar.DataBean.ResultBean> result;
 
@@ -72,6 +73,7 @@ public class StarAdapter extends BaseAdapter {
         }else {
             viewHolder= (ViewHolder) view.getTag();
         }
+        Log.d("getView", "getView: "+result.get(i).getStaff_name());
         viewHolder.item_name.setText(result.get(i).getStaff_name());
         viewHolder.item_introduce.setText(result.get(i).getStaff_info());
         //通过ID获得图片
@@ -131,6 +133,7 @@ public class StarAdapter extends BaseAdapter {
             public void onClick(final View view) {
                 Toast.makeText(context, i+"删除", Toast.LENGTH_SHORT).show();
                 staff_id = result.get(i).getStaff_id();
+                staff_photo_file_id = result.get(i).getStaff_photo_file_id();
                 final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("删除明星员工").setMessage2("删除后不可恢复，确定清除？").showDialog();
                 ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                     @Override
@@ -145,6 +148,7 @@ public class StarAdapter extends BaseAdapter {
                             if (NetUtil.isNetAvailable(context)) {
                                 map.clear();
                                 map.put("staff_id",staff_id);
+                                map.put("staff_photo_file_id",staff_photo_file_id);
                                 OKhttptils.post((Activity) context, Config.DELETESTAR, map, new OKhttptils.HttpCallBack() {
                                     @Override
                                     public void success(String response) {

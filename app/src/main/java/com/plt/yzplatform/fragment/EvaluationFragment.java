@@ -64,13 +64,11 @@ public class EvaluationFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_evaluation_list, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         evaluationAdapter = new EvaluationAdapter(context, result);
         evaluationListListview.setAdapter(evaluationAdapter);
-
         switch (index) {
             case "1":
                 loading(Config.ALLCOMPEVALUATE);
@@ -126,12 +124,12 @@ public class EvaluationFragment extends Fragment {
                         if(refreshlayout!=null){
                             if (pageIndex > pageCount) {
                                 Log.d("aaaaa", "过界了小心点: "+pageIndex+"pageCount"+pageCount);
-                                refreshlayout.finishLoadmore(2000);
+                                refreshlayout.finishLoadmore(1000);
                             } else {
                                 Log.d("aaaaa", "没过界: "+pageIndex);
                                 evaluationAdapter.notifyDataSetChanged();
-                                refreshlayout.finishRefresh(2000);
-                                refreshlayout.finishLoadmore(2000);
+                                refreshlayout.finishRefresh(1000);
+                                refreshlayout.finishLoadmore(1000);
                             }
                         }else {
                             Log.d("aaaaa", "刷新: ");

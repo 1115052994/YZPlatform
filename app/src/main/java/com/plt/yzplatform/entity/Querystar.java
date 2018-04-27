@@ -10,7 +10,7 @@ public class Querystar {
 
 
     /**
-     * data : {"result":[{"staff_name":"张三","staff_info":"这是一个优秀的员工","staff_id":"10","staff_photo_file_id":"asdfad","staff_state":"3"},{"staff_name":"张三","staff_info":"这是一个优秀的员工","staff_id":"11","staff_photo_file_id":"asdfad","staff_state":"3"},{"staff_name":"张三","staff_info":"这是一个优秀的员工","staff_id":"12","staff_photo_file_id":"asdfad","staff_state":"3"},{"staff_name":"张三","staff_info":"这是一个优秀的员工","staff_id":"13","staff_photo_file_id":"asdfad","staff_state":"3"},{"staff_name":"张三","staff_info":"这是一个优秀的员工","staff_id":"14","staff_photo_file_id":"asdfad","staff_state":"3"},{"staff_name":"lisi","staff_info":"aaadad","staff_id":"16","staff_photo_file_id":"asdfadfadf","staff_state":"3"},{"staff_name":"lisi","staff_info":"aaadad","staff_id":"17","staff_photo_file_id":"asdfadfadf","staff_state":"3"},{"staff_name":"lisi","staff_info":"aaadad","staff_id":"19","staff_photo_file_id":"asdfadfadf","staff_state":"3"},{"staff_name":"aaaaa","staff_info":"aaaaaa11111","staff_id":"4","staff_photo_file_id":"1341341","staff_state":"3"},{"staff_name":"张三","staff_info":"这是一个优秀的员工","staff_id":"8","staff_photo_file_id":"asdfad","staff_state":"3"},{"staff_name":"张三","staff_info":"这是一个优秀的员工","staff_id":"9","staff_photo_file_id":"asdfad","staff_state":"3"}]}
+     * data : {"result":[{"staff_name":"fff","staff_info":"fff","staff_id":"124","staff_photo_file_id":"1b75ebf825e24dca92eeda565765ffba","staff_state":"2"},{"staff_name":"123456","staff_info":"123456","staff_id":"128","staff_photo_file_id":"11459e25181545069e8ff6a57161bb27","staff_state":"3"},{"staff_name":"456789","staff_info":"456789","staff_id":"129","staff_photo_file_id":"98aeab43f7ec475f99f3731a2679ea1f","staff_state":"3"}]}
      * message :
      * status : 1
      */
@@ -56,11 +56,11 @@ public class Querystar {
 
         public static class ResultBean {
             /**
-             * staff_name : 张三
-             * staff_info : 这是一个优秀的员工
-             * staff_id : 10
-             * staff_photo_file_id : asdfad
-             * staff_state : 3
+             * staff_name : fff
+             * staff_info : fff
+             * staff_id : 124
+             * staff_photo_file_id : 1b75ebf825e24dca92eeda565765ffba
+             * staff_state : 2
              */
 
             private String staff_name;

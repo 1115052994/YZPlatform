@@ -408,6 +408,7 @@ ToastUtil.noNAR(EnterpriseActivity.this);
         OKhttptils.post(EnterpriseActivity.this, Config.GETSERVERTYPE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                Log.d(TAG, "success: "+response);
                 try {
 
                     JSONObject jsonObject = new JSONObject(response);

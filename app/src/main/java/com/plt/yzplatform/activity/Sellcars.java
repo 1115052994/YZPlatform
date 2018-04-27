@@ -1,14 +1,11 @@
-package com.plt.yzplatform.fragment;
-
+package com.plt.yzplatform.activity;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -28,35 +25,27 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class Sellcars extends Fragment {
+public class Sellcars extends AppCompatActivity {
 
     @BindView(R.id.Sellcars_tv)
     TextView SellcarsTv;
-    @BindView(R.id.Sellcars_ed)
-    EditText SellcarsEd;
     @BindView(R.id.Sellcars_button)
     Button SellcarsButton;
+    @BindView(R.id.Sellcars_ed)
+    EditText SellcarsEd;
     @BindView(R.id.radio01)
     RadioButton radio01;
     @BindView(R.id.radio02)
     RadioButton radio02;
-    Unbinder unbinder;
+
     private HashMap<String, String> map = new HashMap<>();
 
-    public Sellcars() {
-
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_sellcars, container, false);
-        unbinder = ButterKnife.bind(getActivity());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sellcars);
+        ButterKnife.bind(this);
         PostSellcars();
         SellcarsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +54,9 @@ public class Sellcars extends Fragment {
                 if (trim.length() == 11) {
                     PostSellcarsPhone(trim);
                 } else if (trim.length() == 0) {
-                    Toast.makeText(getContext(), "请输入号码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Sellcars.this, "请输入号码", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "号码格式不对", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Sellcars.this, "号码格式不对", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -76,16 +65,14 @@ public class Sellcars extends Fragment {
             public void onClick(View v) {
                 //跳转电话
                 Intent intent=new Intent("android.intent.action.CALL", Uri.parse("tel:"+"4001198698"));
-                getActivity().startActivity(intent);
+                Sellcars.this.startActivity(intent);
             }
         });
-
-        return inflate;
     }
 
     public void PostSellcars() {
-        if (NetUtil.isNetAvailable(getContext())) {
-            OKhttptils.post(getActivity(), Config.SELLCOUNT, null, new OKhttptils.HttpCallBack() {
+        if (NetUtil.isNetAvailable(this)) {
+            OKhttptils.post(this, Config.SELLCOUNT, null, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
                     Log.i("aaaaa", "查询卖车申请次数: " + response);
@@ -100,7 +87,7 @@ public class Sellcars extends Fragment {
 
                 @Override
                 public void fail(String response) {
-                    Toast.makeText(getContext(), "查询失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Sellcars.this, "查询失败", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -108,9 +95,9 @@ public class Sellcars extends Fragment {
 
     public void PostSellcarsPhone(String phone) {
         map.clear();
-        if (NetUtil.isNetAvailable(getContext())) {
+        if (NetUtil.isNetAvailable(this)) {
             map.put("sell_phone", phone);
-            OKhttptils.post(getActivity(), Config.SAVESELLER, map, new OKhttptils.HttpCallBack() {
+            OKhttptils.post(this, Config.SAVESELLER, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
                     try {
@@ -122,7 +109,7 @@ public class Sellcars extends Fragment {
                         if(state==1){
                             PostIntent("恭喜您预约成功！",null);
                         }else if(state==0){
-                            PostIntent("您已经预约了！",null);
+                           PostIntent("您已经预约了！",null);
                         }
 
                     } catch (JSONException e) {
@@ -132,20 +119,20 @@ public class Sellcars extends Fragment {
 
                 @Override
                 public void fail(String response) {
-                    Toast.makeText(getContext(), "预约失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Sellcars.this, "预约失败", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
     public void PostIntent(String mesage, final Class clas){
         PostSellcars();
-        final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(getContext()).setMessage1("温馨提示").setMessage2("   "+mesage).setConfirm("知道了").setCancel("返回首页").showDialog();
+        final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(Sellcars.this).setMessage1("温馨提示").setMessage2("   "+mesage).setConfirm("知道了").setCancel("返回首页").showDialog();
         ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
             @Override
             public void onNoClick() {
                 ordinaryDialog.dismiss();
 //                startActivity(new Intent(Sellcars.this,clas));
-                Toast.makeText(getContext(), "我跳到主页了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sellcars.this, "我跳到主页了", Toast.LENGTH_SHORT).show();
             }
         });
         ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
@@ -156,10 +143,4 @@ public class Sellcars extends Fragment {
         });
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

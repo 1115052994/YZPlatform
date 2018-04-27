@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common45dp"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common45dp"
+        >
+        <TextView
+            android:id="@+id/tv_carbrand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common16dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/image_carbrand"
+            android:text="奔驰"
+            android:textColor="@color/text_66"
+            android:textSize="@dimen/text_size_15sp"
+            />
+    </RelativeLayout>
+    <View
+        style="@style/gray_line"
+        />
+</LinearLayout>

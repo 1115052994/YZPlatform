@@ -138,6 +138,15 @@ public class Config {
     //查询服务商收藏
     public static final String CHECKCOMP = M + S + "checkComp";
 
+    //添加二手车信息
+    public static final String ACCRETIONCAR = M + S + "accretionCar";
+
+    //添加二手车信息
+    public static final String QUERYCARSTYLE = M + S + "queryCarStyle";
+
+    //上传图片获取车架号
+    public static final String PARSEVIN = M + S + "parseVIN";
+
     //删除收藏
     public static final String REMOVECOLL = M + S + "removeColl";
 

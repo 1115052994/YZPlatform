@@ -65,9 +65,9 @@ public class CollectFacilitator extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_collect_facilitator, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        PostFaci(1,null);
         serviceListAdapter = new ServiceListAdapter(context, result);
         serviceProviderListview.setAdapter(serviceListAdapter);
-        PostFaci(1,null);
         serviceListAdapter.getServerCall(new CallCollect() {
             @Override
             public void getCallcollect(View view, int id) {

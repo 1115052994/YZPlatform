@@ -19,7 +19,7 @@ import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.BrowsingAdapter;
 import com.plt.yzplatform.adapter.CallBrowsing;
 import com.plt.yzplatform.config.Config;
-import com.plt.yzplatform.entity.QueryRecord;
+import com.plt.yzplatform.entity.QueryCarRecord;
 import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
@@ -40,7 +40,7 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class BrowseRecord extends Fragment {
+public class BrowseCarRecord extends Fragment {
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsing_Cardeal_image;
     @BindView(R.id.browsing_listview)
@@ -50,12 +50,12 @@ public class BrowseRecord extends Fragment {
     SmartRefreshLayout smartRefreshLayout;
     private HashMap<String,String> map=new HashMap<>();
     private Context context;
-    private List<QueryRecord.DataBean.ResultBean> result = new ArrayList<>();
+    private List<QueryCarRecord.DataBean.ResultBean> result = new ArrayList<>();
     private BrowsingAdapter browsingAdapter;
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
 
-    public BrowseRecord(Context context) {
+    public BrowseCarRecord(Context context) {
         this.context = context;
     }
 
@@ -64,10 +64,10 @@ public class BrowseRecord extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_browse_record, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        //  浏览记录地址
+        PostRecord(Config.BROWSECARCOOKIES,1,null);
         browsingAdapter = new BrowsingAdapter(context, result);
         browsingListview.setAdapter(browsingAdapter);
-            //  浏览记录地址
-                PostRecord(Config.BROWSECARCOOKIES,1,null);
                 smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
                     @Override
                     public void onRefresh(RefreshLayout refreshlayout) {
@@ -103,12 +103,12 @@ public class BrowseRecord extends Fragment {
                 public void success(String response) {
                     Log.i("aaaaa", "查询浏览记录: " + response);
                     Gson gson = GsonFactory.create();
-                    QueryRecord queryRecord = gson.fromJson(response, QueryRecord.class);
+                    QueryCarRecord queryRecord = gson.fromJson(response, QueryCarRecord.class);
                     pageCount=queryRecord.getData().getPageCount();
-                    List<QueryRecord.DataBean.ResultBean> result2 = queryRecord.getData().getResult();
+                    List<QueryCarRecord.DataBean.ResultBean> result2 = queryRecord.getData().getResult();
                     result.addAll(result2);
                     //没有信息图片显示
-                    if (BrowseRecord.this.result.size() <= 0) {
+                    if (BrowseCarRecord.this.result.size() <= 0) {
                         browsing_Cardeal_image.setVisibility(View.VISIBLE);
                     }else {
                         if(refreshlayout!=null){
