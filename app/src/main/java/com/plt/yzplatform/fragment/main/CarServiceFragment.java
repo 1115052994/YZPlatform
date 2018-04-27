@@ -224,24 +224,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
     /* 填充banner */
     private void initBanner() {
-        /**
-         *  "bannerList": [
-         {
-         "adve_location": "03",
-         "adve_turn_type": "外部url",
-         "adve_name": "12341",
-         "adve_state": "1",
-         "adve_turn_url": "wqwq",
-         "adve_oper_user_id": "6",
-         "adve_id": "16",
-         "adve_file_id": "1c817c1b748f4dfa82a23c17b90641ca",
-         "adve_turn_android_url": "wqwq",
-         "adve_order": 4,
-         "adve_turn_ios_url": "wqwq",
-         "adve_oper_date": "2018-04-17 10:45:12"
-         }
-         ],
-         * */
         for (int i = 0; i < bannerList.size(); i++) {
             CarServiceImage.DataBean.ResultBean.BannerListBean listBean = bannerList.get(i);
             String file_id = listBean.getAdve_file_id();

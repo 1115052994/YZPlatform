@@ -42,7 +42,7 @@ public class MainFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.renzheng, R.id.setting, R.id.add,R.id.carDetail})
+    @OnClick({R.id.renzheng, R.id.setting, R.id.add, R.id.carDetail})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.renzheng:
@@ -54,9 +54,9 @@ public class MainFragment extends Fragment {
             case R.id.add:
                 JumpUtil.newInstance().jumpRight(getContext(), AddProductActivity.class);
                 break;
-                case R.id.carDetail:
-                    JumpUtil.newInstance().jumpRight(getContext(), CarDetailsActivity.class);
-                    break;
+            case R.id.carDetail:
+                JumpUtil.newInstance().jumpRight(getContext(), CarDetailsActivity.class);
+                break;
         }
     }
 }

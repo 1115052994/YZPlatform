@@ -726,8 +726,8 @@ public class CompDetail extends BaseActivity {
                 loc.putString("type", "comp");
                 JumpUtil.newInstance().jumpRight(this, AppraiseActivity.class, loc);
 //                ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(2,0);
-//                appBar.animate().translationY(offset).setDuration(200).start();
-//                recyclerView.animate().translationY(offset).setDuration(200).start();
+//                appBar.animate().translationY(offset).setDuration(200).star();
+//                recyclerView.animate().translationY(offset).setDuration(200).star();
                 break;
             case R.id.collect:
                 addCollect();

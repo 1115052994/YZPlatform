@@ -26,11 +26,26 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
-    <!-- 自定义星星评分样式 -->
+    <!-- 车服列表显示评分 -->
     <style name="roomRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/room_rating_bar</item>
         <item name="android:minHeight">@dimen/common19dp</item>
         <item name="android:maxHeight">@dimen/common19dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@drawable/room_rating_bar</item>
+        <item name="android:thumb">@null</item>
+        <item name="android:isIndicator">true</item>
+    </style>
+
+    <!-- 二手车 车辆详情 评分 -->
+    <style name="carDetailBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/car_detail_grade</item>
+        <item name="android:minHeight">@dimen/common16dp</item>
+        <item name="android:maxHeight">@dimen/common16dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@drawable/car_detail_grade</item>
+        <item name="android:thumb">@null</item>
+        <item name="android:isIndicator">true</item>
     </style>
 
     <style name="ll_normal_horizontal">

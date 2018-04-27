@@ -120,7 +120,7 @@ public class BuyCar extends Fragment {
     private String sxPfbz = "",sxPfbzName = "";
     private String sxRylx = "",sxRylxName = "";
     private String sxZws = "",sxZwsName = "";
-    // 车龄cl 里程lc 排量pl(start,end)
+    // 车龄cl 里程lc 排量pl(star,end)
     private String sxClStart = "",sxClEnd="";
     private String sxLcStart = "",sxLcEnd ="";
     private String sxPlStart = "",sxPlEnd = "";
@@ -405,7 +405,7 @@ public class BuyCar extends Fragment {
                         carLy.setVisibility(View.VISIBLE);
                         //显示搜索选项   重新搜索  返回数据（
                         //车型cx  变速箱bsx   排放标准pfbz   燃油类型rylx   座位数(zws paramName,paramId）
-                        // 车龄cl 里程lc 排量pl(start,end)
+                        // 车龄cl 里程lc 排量pl(star,end)
                         if(!"".equals(map.get("cx"))) {
                             View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
                             TextView tv = view.findViewById(R.id.tv_tag);
