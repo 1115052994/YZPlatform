@@ -77,6 +77,9 @@ public class Config {
     //联想搜索商户
     public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
 
+    //根据图片id获取图片(Picasso)
+    public static final String GET_Pic= URL + Y ;
+
     //联想搜索Car
     public static final String GETSEARCHCAR = URL + S +"getSearchCar";
 
@@ -103,6 +106,9 @@ public class Config {
 
     //车服列表-获取列表（智能排序）
     public static final String GET_CAR_SERVICE = URL + S + "getPassCompList";
+
+    // 服务商评价
+    public static final String ACCRETIONEVALUATESERVICECOMP = URL + S +"accretionEvaluateServiceComp";
 
     //企业保存明星员工
     public static final String SAVESTAR = M +S+ "saveStaff";
@@ -210,9 +216,6 @@ public class Config {
     getHotCarBrandDict     获取热门
     getCarBrandDictByInitials   字母筛选
      */
-    public static final String GETCARTRIANBYCARBRAND = URL + S + "getCarTrianByCarBrand";
-    public static final String GETHOTCARBRANDDICT = URL + S + "getHotCarBrandDict";
-    public static final String GETCARBRANDDICTBYINITIALS = URL + S + "getCarBrandDictByInitials";
 
     //二手车详情
     public static final String CAR_DETAIL = URL + S + "car_detail";

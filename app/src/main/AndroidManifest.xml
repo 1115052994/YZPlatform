@@ -44,11 +44,7 @@
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.CityActivity"
@@ -149,6 +145,23 @@
             android:name=".activity.AddCarProduct"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.CarDetailsActivity"></activity>
+
+        <!-- liyan start -->
+        <activity
+            android:name=".activity.OrdersSubmitActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.OrdersPaySuccessActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <!-- liyan  end -->
+
     </application>
 
 </manifest>
