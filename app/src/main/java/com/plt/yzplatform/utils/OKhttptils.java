@@ -136,10 +136,15 @@ public class OKhttptils {
                                     if (file_content.contains("base64,"))
                                         file_content = file_content.split("base64,")[1];
                                     Bitmap bit = PhotoUtils.base64ToBitmap(file_content);
+                                    Log.i("wechat", "压缩之前图片的大小" + (bit.getByteCount() / 1024) + "KB宽度为"
+                                            + bit.getWidth() + "高度为" + bit.getHeight());
                                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                    bit.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                                    bit.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                     byte[] bytes = baos.toByteArray();
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    BitmapFactory.Options options = new BitmapFactory.Options();
+                                    options.inSampleSize = 2;
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length,options);
                                     Log.i("wechat", "压缩后图片的大小" + (bitmap.getByteCount() / 1024) + "KB宽度为"
                                             + bitmap.getWidth() + "高度为" + bitmap.getHeight());
                                     if (bitmap!=null) {

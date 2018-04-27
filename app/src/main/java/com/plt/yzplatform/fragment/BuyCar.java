@@ -197,6 +197,11 @@ public class BuyCar extends Fragment {
                     selectedBrand.put("id_carbrand","");
                     selectedBrand.put("image_carbrand","");
                     brandView = null;
+                    selectedCarName.clear();
+                    selectedCarName.put("tv_carbrand","");
+                    selectedCarName.put("id_carbrand","");
+                    selectedCarName.put("image_carbrand","");
+                    carView = null;
                 }else if (name.equals(selectedCarName.get("tv_carbrand"))){
                     selectedCarName.clear();
                     selectedCarName.put("tv_carbrand","");
