@@ -135,7 +135,13 @@ public class OKhttptils {
                                     String file_content = object.getString("file_content");
                                     if (file_content.contains("base64,"))
                                         file_content = file_content.split("base64,")[1];
-                                    Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
+                                    Bitmap bit = PhotoUtils.base64ToBitmap(file_content);
+                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                    bit.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                                    byte[] bytes = baos.toByteArray();
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    Log.i("wechat", "压缩后图片的大小" + (bitmap.getByteCount() / 1024) + "KB宽度为"
+                                            + bitmap.getWidth() + "高度为" + bitmap.getHeight());
                                     if (bitmap!=null) {
                                         icon.setImageBitmap(bitmap);
                                         FileUtils.getInstance(context).saveFile(file_id,bitmap);

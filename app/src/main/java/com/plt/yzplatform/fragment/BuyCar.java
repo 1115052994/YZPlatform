@@ -196,14 +196,17 @@ public class BuyCar extends Fragment {
                     selectedBrand.put("tv_carbrand","");
                     selectedBrand.put("id_carbrand","");
                     selectedBrand.put("image_carbrand","");
+                    brandView = null;
                 }else if (name.equals(selectedCarName.get("tv_carbrand"))){
                     selectedCarName.clear();
                     selectedCarName.put("tv_carbrand","");
                     selectedCarName.put("id_carbrand","");
                     selectedCarName.put("image_carbrand","");
+                    carView = null;
                 }else if (name.contains(startPrice)||name.contains(endPrice)){
                     startPrice ="";
                     endPrice = "";
+                    priceView = null;
                 }
                 cartagLayout.removeView(view);
                 if (cartagLayout.getChildCount()==0) {
@@ -668,20 +671,20 @@ public class BuyCar extends Fragment {
                         endPrice = "";
                     }
                     else {
-                        tvPrice.setText((int) progressHigh + "万以下");
-                        endPrice = (int) progressHigh+"";
+                        tvPrice.setText((int) progressHigh + "0万以下");
+                        endPrice = (int) progressHigh*10+"";
                         startPrice = "";
                     }
                 } else {
                     if (progressHigh == 6) {
-                        tvPrice.setText((int) progressLow + "0万以上");
-                        startPrice = (int) progressLow+"";
+                        tvPrice.setText((int) progressLow*10 + "0万以上");
+                        startPrice = (int) progressLow*10+"";
                         endPrice = "";
                     }
                     else {
                         tvPrice.setText((int) progressLow + "0万-" + (int) progressHigh + "0万");
-                        startPrice = (int) progressLow+"";
-                        endPrice = (int) progressHigh+"";
+                        startPrice = (int) progressLow*10+"";
+                        endPrice = (int) progressHigh*10+"";
                     }
                 }
             }
@@ -895,6 +898,7 @@ public class BuyCar extends Fragment {
 
     // 搜索Car列表(添加筛选条件)
     public void getCarList() {
+        pageIndex = 1;
         String startPrice1="",endPrice1="";
         String brand = "",carname = "";
         Log.i("getCarList","index="+pageIndex);
@@ -938,7 +942,7 @@ public class BuyCar extends Fragment {
         //map.put("car_train", "");//车系大
         map.put("car_train_item", carname);//车系小
         map.put("sort", selectedRankId);//排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
-        map.put("pageIndex", pageIndex+"");
+        map.put("pageIndex", ""+pageIndex++);
         map.put("pageSize", "20");
         map.put("car_name", "");//模糊搜索匹配
         map.put("car_fuel_type", sxRylx);
@@ -956,7 +960,7 @@ public class BuyCar extends Fragment {
                     if ("1".equals(object.getString("status"))) {
                         Gson gson = new Gson();
                         BuyCarBean buyCarBean = gson.fromJson(response, BuyCarBean.class);
-                        pageIndex = buyCarBean.getData().getPageCount();
+                        //pageIndex = buyCarBean.getData().getPageCount();
                         pageTotal = buyCarBean.getData().getPageTotal();
                         recyclerList.clear();
                         List<BuyCarBean.DataBean.ResultBean> list = buyCarBean.getData().getResult();
@@ -984,11 +988,11 @@ public class BuyCar extends Fragment {
     private void getCarListLoadMore(final RefreshLayout refreshlayout){
         String startPrice1="",endPrice1="";
         String brand = "",carname = "";
-        if (pageIndex == pageTotal){
-            ToastUtil.show(getActivity(),"没有更多");
-            refreshlayout.finishLoadmore(200);
-            return;
-        }
+//        if (pageIndex == pageTotal){
+//            ToastUtil.show(getActivity(),"没有更多");
+//            refreshlayout.finishLoadmore(200);
+//            return;
+//        }
         Log.i("getCarList","index="+pageIndex);
         Log.i("getCarList","total="+pageTotal);
         Log.i("getCarList","cityId="+cityId);
@@ -1030,7 +1034,7 @@ public class BuyCar extends Fragment {
         //map.put("car_train", "");//车系大
         map.put("car_train_item", carname);//车系小
         map.put("sort", selectedRankId);//排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）
-        map.put("pageIndex", ++pageIndex+"");
+        map.put("pageIndex", ""+pageIndex++);
         map.put("pageSize", "20");
         map.put("car_name", "");//模糊搜索匹配
         map.put("car_fuel_type", sxRylx);
@@ -1048,8 +1052,8 @@ public class BuyCar extends Fragment {
                     if ("1".equals(object.getString("status"))) {
                         Gson gson = new Gson();
                         BuyCarBean buyCarBean = gson.fromJson(response, BuyCarBean.class);
-                        pageTotal = buyCarBean.getData().getPageTotal();
-                        pageIndex = buyCarBean.getData().getPageCount();
+//                        pageTotal = buyCarBean.getData().getPageTotal();
+//                        pageIndex = buyCarBean.getData().getPageCount();
                         List<BuyCarBean.DataBean.ResultBean> list = buyCarBean.getData().getResult();
                         if (list.size() == 0){
                             ToastUtil.show(getActivity(),"没有更多了!");
