@@ -143,7 +143,11 @@ public class OKhttptils {
                                     byte[] bytes = baos.toByteArray();
 //                                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                     BitmapFactory.Options options = new BitmapFactory.Options();
-                                    options.inSampleSize = 2;
+                                    options.inJustDecodeBounds = true;
+                                    BitmapFactory.decodeByteArray(bytes,0,bytes.length,options);
+                                    options.inSampleSize = computeSampleSize(options, -1, 512*512);
+                                    Log.i("wechat","inSampleSize="+options.inSampleSize);
+                                    options.inJustDecodeBounds = false;
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length,options);
                                     Log.i("wechat", "压缩后图片的大小" + (bitmap.getByteCount() / 1024) + "KB宽度为"
                                             + bitmap.getWidth() + "高度为" + bitmap.getHeight());
@@ -166,4 +170,39 @@ public class OKhttptils {
             ToastUtil.noNetAvailable(context);
         }
     }
+
+
+    // 计算压缩比例
+    public static int computeSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
+        int initialSize = computeInitialSampleSize(options, minSideLength, maxNumOfPixels);
+        int roundedSize;
+        if (initialSize <= 8) {
+            roundedSize = 1;
+            while (roundedSize < initialSize) {
+                roundedSize <<= 1;
+            }
+        } else {
+            roundedSize = (initialSize + 7) / 8 * 8;
+        }
+        return roundedSize;
+    }
+
+    private static int computeInitialSampleSize(BitmapFactory.Options options,int minSideLength, int maxNumOfPixels) {
+        double w = options.outWidth;
+        double h = options.outHeight;
+        int lowerBound = (maxNumOfPixels == -1) ? 1 : (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
+        int upperBound = (minSideLength == -1) ? 128 :(int) Math.min(Math.floor(w / minSideLength), Math.floor(h / minSideLength));
+        if (upperBound < lowerBound) {
+            // return the larger one when there is no overlapping zone.
+            return lowerBound;
+        }
+        if ((maxNumOfPixels == -1) && (minSideLength == -1)) {
+            return 1;
+        } else if (minSideLength == -1) {
+            return lowerBound;
+        } else {
+            return upperBound;
+        }
+    }
 }
+
