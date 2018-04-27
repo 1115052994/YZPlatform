@@ -197,6 +197,11 @@ public class BuyCar extends Fragment {
                     selectedBrand.put("id_carbrand","");
                     selectedBrand.put("image_carbrand","");
                     brandView = null;
+                    selectedCarName.clear();
+                    selectedCarName.put("tv_carbrand","");
+                    selectedCarName.put("id_carbrand","");
+                    selectedCarName.put("image_carbrand","");
+                    carView = null;
                 }else if (name.equals(selectedCarName.get("tv_carbrand"))){
                     selectedCarName.clear();
                     selectedCarName.put("tv_carbrand","");
@@ -229,16 +234,16 @@ public class BuyCar extends Fragment {
         recyclerAdapter = new CommonRecyclerAdapter(getActivity(), recyclerList, R.layout.item_car_buy) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-                TextView tvCarsDes = holder.getView(R.id.tv_cardes);
-                tvCarsDes.setText(recyclerList.get(position).getCar_name());
-                TextView tvPrice = holder.getView(R.id.tv_price);
-                tvPrice.setText("￥"+recyclerList.get(position).getCar_price()/10000.0+"万");
-                TextView tvYearAndMiles = holder.getView(R.id.tv_year_miles);
-                tvYearAndMiles.setText(recyclerList.get(position).getCar_sign_date().split("-")[0]+"年/"+recyclerList.get(position).getCar_mileage()+"公里");
-                ImageView carImage = holder.getView(R.id.image_car);
-                if(recyclerList.get(position).getCar_1_icon_file_id()!=null) {
-                    OKhttptils.getPic(getActivity(),recyclerList.get(position).getCar_1_icon_file_id(),carImage);
-                }
+//                TextView tvCarsDes = holder.getView(R.id.tv_cardes);
+//                tvCarsDes.setText(recyclerList.get(position).getCar_name());
+//                TextView tvPrice = holder.getView(R.id.tv_price);
+//                tvPrice.setText("￥"+recyclerList.get(position).getCar_price()/10000.0+"万");
+//                TextView tvYearAndMiles = holder.getView(R.id.tv_year_miles);
+//                tvYearAndMiles.setText(recyclerList.get(position).getCar_sign_date().split("-")[0]+"年/"+recyclerList.get(position).getCar_mileage()+"公里");
+//                ImageView carImage = holder.getView(R.id.image_car);
+//                if(recyclerList.get(position).getCar_1_icon_file_id()!=null) {
+//                    OKhttptils.getPic(getActivity(),recyclerList.get(position).getCar_1_icon_file_id(),carImage);
+//                }
             }
         };
         recyclerViewCar.setLayoutManager(new LinearLayoutManager(getActivity()));
