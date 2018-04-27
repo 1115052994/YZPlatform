@@ -81,6 +81,8 @@ public class ShowProductDetaile {
             private double prod_price;
             private String comp_id;
             private String prod_id;
+            private String auth_comp_name;//ly加
+            private String user_id;//ly加
             private List<ProductItemListBean> productItemList;
 
             public String getProd_oper_date() {
@@ -161,6 +163,22 @@ public class ShowProductDetaile {
 
             public void setProductItemList(List<ProductItemListBean> productItemList) {
                 this.productItemList = productItemList;
+            }
+
+            public String getAuth_comp_name() {
+                return auth_comp_name;
+            }
+
+            public void setAuth_comp_name(String auth_comp_name) {
+                this.auth_comp_name = auth_comp_name;
+            }
+
+            public String getUser_id() {
+                return user_id;
+            }
+
+            public void setUser_id(String user_id) {
+                this.user_id = user_id;
             }
 
             public static class ProductItemListBean {
