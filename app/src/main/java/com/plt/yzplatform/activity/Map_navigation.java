@@ -99,7 +99,7 @@ public class Map_navigation extends AppCompatActivity implements AMapNaviViewLis
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //start.add(new NaviLatLng(39.92, 116.43));
+        //star.add(new NaviLatLng(39.92, 116.43));
         end.add(new NaviLatLng(38.92, 116.53));
 
         //这是from：起点坐标；

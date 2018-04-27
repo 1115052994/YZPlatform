@@ -116,6 +116,8 @@ public class AdvanceSX extends BaseActivity {
         setLeftImageClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (dataBackListener!=null)
+                    dataBackListener.backData(null);
                 JumpUtil.newInstance().finishRightTrans(AdvanceSX.this);
             }
         });
@@ -300,7 +302,7 @@ public class AdvanceSX extends BaseActivity {
         seekBarLc.setMaxSize(5);
         //设置分几块区域
         seekBarLc.setMaxCount(6);
-        seekBarLc.isInside(true);
+        seekBarLc.isInside(false);
         seekBarLc.setOnSeekBarChangeListener(new SeekBarPressure.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBarPressure seekBar, double progressLow, double progressHigh) {
@@ -334,7 +336,7 @@ public class AdvanceSX extends BaseActivity {
         seekBarPl.setMaxSize(5);
         //设置分几块区域
         seekBarPl.setMaxCount(6);
-        seekBarPl.isInside(true);
+        seekBarPl.isInside(false);
         seekBarPl.setOnSeekBarChangeListener(new SeekBarPressure.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBarPressure seekBar, double progressLow, double progressHigh) {
@@ -524,7 +526,7 @@ public class AdvanceSX extends BaseActivity {
     }
 
     public static void setOnDataBackListener(DataBackListener listenr){
-        dataBackListener = listenr;
+            dataBackListener = listenr;
     }
     static DataBackListener dataBackListener;
     public interface DataBackListener{

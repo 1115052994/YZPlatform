@@ -20,6 +20,7 @@ public class Config {
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
 
+
     //获取验证码
     public static final String GETCODE = BASE_URL + S + "sendCode";
 
@@ -74,14 +75,17 @@ public class Config {
     //根据图片id获取base64
     public static final String GET_BASE64 = URL + S + "getFile";
 
+    //根据图片id获取图片
+    public static final String GET_Pic= URL + Y ;
+
     //联想搜索商户
-    public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
+    public static final String GETSEARCHCOMP = URL + S + "getSearchComp";
 
     //联想搜索Car
-    public static final String GETSEARCHCAR = URL + S +"getSearchCar";
+    public static final String GETSEARCHCAR = URL + S + "getSearchCar";
 
     //热搜
-    public static final String GETSEARCHHOTWORD = URL + S +"getSearchHotWord";
+    public static final String GETSEARCHHOTWORD = URL + S + "getSearchHotWord";
 
     //首页车服获取banner和icon
     public static final String GET_SERVICE_IMG = URL + S + "getCompIcon";
@@ -93,19 +97,22 @@ public class Config {
     public static final String GETPRODUCTITEMBYSERVERTYPE = URL + S + "getProductItemByServerType";
 
     //查看企业评价
-    public static final String QUERYCOMPEVALUATE = URL + S +"queryCompeValuate";
+    public static final String QUERYCOMPEVALUATE = URL + S + "queryCompeValuate";
 
     //车商评价获取信息
-    public static final String COMMENTORCOMPNAME = URL + S +"commentOrCompName";
+    public static final String COMMENTORCOMPNAME = URL + S + "commentOrCompName";
 
     //车商评价
-    public static final String ACCRETIONEVALUATE = URL + S +"accretionEvaluate";
+    public static final String ACCRETIONEVALUATE = URL + S + "accretionEvaluate";
+
+    // 服务商评价
+    public static final String ACCRETIONEVALUATESERVICECOMP = URL + S +"accretionEvaluateServiceComp";
 
     //车服列表-获取列表（智能排序）
     public static final String GET_CAR_SERVICE = URL + S + "getPassCompList";
 
     //企业保存明星员工
-    public static final String SAVESTAR = M +S+ "saveStaff";
+    public static final String SAVESTAR = M + S + "saveStaff";
 
     //企业更新明星员工
     public static final String UPDATASTAR = M + S + "updateStaff";
@@ -178,7 +185,7 @@ public class Config {
     public static final String GETVALUE = M + S + "getValue";
 
     //查看服务商是否收藏过
-    public static final String WHETHERCOLLCOMP = URL + S +"whetherCollComp";
+    public static final String WHETHERCOLLCOMP = URL + S + "whetherCollComp";
 
     //商家添加产品 - 服务类型
     public static final String GET_COMP_SERVICE_TYPE = URL + S + "serverItemType";
@@ -193,24 +200,30 @@ public class Config {
     public static final String UPDATE_PRODUCT = URL + S + "updateProDuct";
 
     //商家产品 - 查看产品信息
-    public static  final String SHOW_PRODUCT = URL + S + "showProductDetail";
+    public static final String SHOW_PRODUCT = URL + S + "showProductDetail";
 
 
     //模糊查询car
-    public static final String SEARCHCAR = URL + S +"searchCar";
+    public static final String SEARCHCAR = URL + S + "searchCar";
 
     // 查询Car信息
-    public static final String GETCARPARAMDICT = URL + S +"getCarParamDict";
+    public static final String GETCARPARAMDICT = URL + S + "getCarParamDict";
 
     // (热门车辆/模糊搜索品牌)
-    public static final String GETCARBRANDDICT = URL + S +"getCarBrandDict";
+    public static final String GETCARBRANDDICT = URL + S + "getCarBrandDict";
 
     /*
     *getCarTrianByCarBrand  品牌查车系
     getHotCarBrandDict     获取热门
     getCarBrandDictByInitials   字母筛选
      */
-    public static final String GETCARTRIANBYCARBRAND = URL + S +"getCarTrianByCarBrand";
-    public static final String GETHOTCARBRANDDICT = URL + S +"getHotCarBrandDict";
-    public static final String GETCARBRANDDICTBYINITIALS = URL + S +"getCarBrandDictByInitials";
+    public static final String GETCARTRIANBYCARBRAND = URL + S + "getCarTrianByCarBrand";
+    public static final String GETHOTCARBRANDDICT = URL + S + "getHotCarBrandDict";
+    public static final String GETCARBRANDDICTBYINITIALS = URL + S + "getCarBrandDictByInitials";
+
+    //二手车详情
+    public static final String CAR_DETAIL = URL + S + "car_detail";
+
+    //二手车详情-获取广告
+    public static final String CAR_DETAIL_AD = URL + S + "selectAdveToApp";
 }

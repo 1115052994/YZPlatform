@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
@@ -194,6 +195,8 @@ public class CompDetail extends BaseActivity {
 //        smartRefreshLayout.setEnableLoadmore(false);
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -256,6 +259,7 @@ public class CompDetail extends BaseActivity {
                 LinearLayout bg = view.findViewById(R.id.bg);
                 bg.setVisibility(View.VISIBLE);
                 // 切换Adapter
+                Log.i("appraise===",position+"");
                 if (position == serverList.size()) {
                     recyclerView.setAdapter(appraiseAdapter);
                 } else {
@@ -458,11 +462,14 @@ public class CompDetail extends BaseActivity {
         };
 
         //评价
-        appraiseAdapter = new CommonRecyclerAdapter(this, weixiuList, R.layout.item_compappraise) {
+        appraiseAdapter = new CommonRecyclerAdapter(this, compAppraiseList, R.layout.item_compappraise) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
                 CircleImageView circleImageView = holder.getView(R.id.circle_Name);
-                getPic(CompDetail.this, compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
+                if(compAppraiseList.get(position).getPers_head_file_id()!=null) {
+                    //getPic(CompDetail.this, compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
+                    OKhttptils.getPic(CompDetail.this,compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
+                }
                 TextView phone = holder.getView(R.id.tv_phone);
                 phone.setText(compAppraiseList.get(position).getPers_phone());
                 TextView time = holder.getView(R.id.tv_appraiseTime);
@@ -657,10 +664,12 @@ public class CompDetail extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put("pageSize","100");
         map.put("pageIndex","1");
+        map.put("type","fws");//(cs 车商，fws 服务商)
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                Log.i("appraise===",response);
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
@@ -674,7 +683,8 @@ public class CompDetail extends BaseActivity {
                                 compAppraiseList.add(bean);
                             }
                             appraiseAdapter.notifyDataSetChanged();
-//                                recyclerView.setAdapter(wxAdapter);
+                            Log.i("appraise===",compAppraiseList.toString());
+//                                recyclerView.setAdapter(appraiseAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -713,10 +723,11 @@ public class CompDetail extends BaseActivity {
             case R.id.evaluate:
                 Bundle loc = new Bundle();
                 loc.putString("comp_id", comp_id);
+                loc.putString("type", "comp");
                 JumpUtil.newInstance().jumpRight(this, AppraiseActivity.class, loc);
 //                ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(2,0);
-//                appBar.animate().translationY(offset).setDuration(200).start();
-//                recyclerView.animate().translationY(offset).setDuration(200).start();
+//                appBar.animate().translationY(offset).setDuration(200).star();
+//                recyclerView.animate().translationY(offset).setDuration(200).star();
                 break;
             case R.id.collect:
                 addCollect();
@@ -746,6 +757,17 @@ public class CompDetail extends BaseActivity {
                         } else {
                             // 未获取权限
                             Toast.makeText(CompDetail.this, "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            if(Build.VERSION.SDK_INT >= 9){
+                                intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                                intent.setData(Uri.fromParts("package", getPackageName(), null));
+                            } else if(Build.VERSION.SDK_INT <= 8){
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+                                intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+                            }
+                            startActivity(intent);
                         }
                     }
                 });

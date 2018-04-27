@@ -274,6 +274,13 @@ public class PhotoUtils {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
+    public static byte[] base64ToBytes(String base64Data) {
+        base64Data = base64Data.replaceAll(" ","+");
+        byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
+        return bytes;
+    }
+
+
 
     /**
      * base64字符串转文件
