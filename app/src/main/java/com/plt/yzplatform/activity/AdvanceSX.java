@@ -113,10 +113,11 @@ public class AdvanceSX extends BaseActivity {
     protected void onStart() {
         super.onStart();
         setTitle("高级筛选");
-        dataBackListener.backData(null);
         setLeftImageClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (dataBackListener!=null)
+                    dataBackListener.backData(null);
                 JumpUtil.newInstance().finishRightTrans(AdvanceSX.this);
             }
         });
@@ -525,7 +526,7 @@ public class AdvanceSX extends BaseActivity {
     }
 
     public static void setOnDataBackListener(DataBackListener listenr){
-        dataBackListener = listenr;
+            dataBackListener = listenr;
     }
     static DataBackListener dataBackListener;
     public interface DataBackListener{
