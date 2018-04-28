@@ -24,6 +24,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
+import com.amap.api.navi.INaviInfoCallback;
+import com.amap.api.navi.model.AMapNaviLocation;
 import com.google.gson.Gson;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.CommonRecyclerAdapter;
@@ -735,10 +742,11 @@ public class CompDetail extends BaseActivity {
         switch (view.getId()) {
             case R.id.image_dh:
                 ToastUtil.show(this, "正在进入导航请稍等...");
-                Bundle bundle = new Bundle();
-                bundle.putString("comp_lon", comp_lon + "");
-                bundle.putString("comp_lat", comp_lat + "");
-                JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("comp_lon", comp_lon + "");
+//                bundle.putString("comp_lat", comp_lat + "");
+                Navigation(new LatLng(comp_lon,comp_lat));
+//                JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
                 break;
             case R.id.phone:
                 call(comp_phone);
@@ -759,6 +767,68 @@ public class CompDetail extends BaseActivity {
                 call("4001198698");
                 break;
         }
+    }
+    public void Navigation(LatLng latLng){
+//        Poi start = new Poi("三元桥", new LatLng(39.96087,116.45798), "");
+/**终点传入的是北京站坐标,但是POI的ID "B000A83M61"对应的是北京西站，所以实际算路以北京西站作为终点**/
+//        Poi end = new Poi("北京站", latLng, "");
+        Poi end = new Poi("北京站", new LatLng(39.904556, 116.427231), "");
+//        List<Poi> wayList = new ArrayList();//途径点目前最多支持3个。
+//        wayList.add(new Poi("团结湖", new LatLng(39.93413,116.461676), ""));
+//        wayList.add(new Poi("呼家楼", new LatLng(39.923484,116.461327), ""));
+//        wayList.add(new Poi("华润大厦", new LatLng(39.912914,116.434247), ""));
+        AmapNaviPage.getInstance().showRouteActivity(this, new AmapNaviParams(null, null, end, AmapNaviType.DRIVER), new INaviInfoCallback() {
+            @Override
+            public void onInitNaviFailure() {
+
+            }
+
+            @Override
+            public void onGetNavigationText(String s) {
+
+            }
+
+            @Override
+            public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
+
+            }
+
+            @Override
+            public void onArriveDestination(boolean b) {
+
+            }
+
+            @Override
+            public void onStartNavi(int i) {
+
+            }
+
+            @Override
+            public void onCalculateRouteSuccess(int[] ints) {
+
+            }
+
+            @Override
+            public void onCalculateRouteFailure(int i) {
+
+            }
+
+            @Override
+            public void onStopSpeaking() {
+
+            }
+
+            @Override
+            public void onReCalculateRoute(int i) {
+
+            }
+
+            @Override
+            public void onExitPage(int i) {
+
+            }
+        });
+
     }
 
 
