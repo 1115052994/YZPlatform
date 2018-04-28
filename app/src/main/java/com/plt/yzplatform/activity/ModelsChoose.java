@@ -373,7 +373,6 @@ public class ModelsChoose extends BaseActivity {
         Log.d("aaaaa", "selected: "+tv_carbrand+"-----------"+id_carbrand);
         intent.putExtra("bundle", bundle);
         startActivity(intent);
-        finish();
     }
 
 

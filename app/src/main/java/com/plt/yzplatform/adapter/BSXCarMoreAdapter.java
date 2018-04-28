@@ -1,7 +1,6 @@
 package com.plt.yzplatform.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,9 @@ import android.widget.TextView;
 import com.plt.yzplatform.AppraiseInterface;
 import com.plt.yzplatform.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/4/25.
@@ -20,10 +21,11 @@ import java.util.List;
 public class BSXCarMoreAdapter extends BaseAdapter {
     private List<String> list;
     private Context context;
+    private Map<Integer, View> map;
     public BSXCarMoreAdapter(Context context,List<String> list){
         this.context = context;
         this.list = list;
-        Log.w("test", list.size() + "aaaaaaaaa");
+        map = new HashMap<>();
     }
     @Override
     public int getCount() {
@@ -42,19 +44,17 @@ public class BSXCarMoreAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        if (convertView == null){
+
+        if(map.containsKey(position)){
+            convertView = map.get(position);
+        } else {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_gv_carsxmoreone,null);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        }else{
-            viewHolder = (ViewHolder) convertView.getTag();
+            map.put(position, convertView);
         }
+
         final ViewGroup viewGroup = convertView.findViewById(R.id.bg);
         if (position == 0){
-            Log.w("test", "aaabbb");
-            viewGroup.setSelected(true);
-            Log.w("test", ((TextView)viewGroup.getChildAt(0)).getText().toString());
+//            viewGroup.setSelected(true);
             if (appraiseInterface!=null){
                 appraiseInterface.onClick(viewGroup,0);
             }
@@ -69,20 +69,11 @@ public class BSXCarMoreAdapter extends BaseAdapter {
             });
 
         }
-        TextView tv = viewHolder.getTv();
+        TextView tv = convertView.findViewById(R.id.tv_type);
         tv.setText(list.get(position));
         return convertView;
     }
 
-    static class ViewHolder{
-        TextView tv;
-        public ViewHolder(View view){
-            tv = view.findViewById(R.id.tv_type);
-        }
-        public TextView getTv() {
-            return tv;
-        }
-    }
 
     AppraiseInterface appraiseInterface;
     public void setOnItemClickListener(AppraiseInterface appraiseInterface){

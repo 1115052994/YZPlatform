@@ -26,7 +26,6 @@ import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.ChassisNumber;
 import com.plt.yzplatform.entity.Enterprise;
-import com.plt.yzplatform.entity.QueryCarList;
 import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.NetUtil;
@@ -36,11 +35,8 @@ import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.view.ExpandableGridView;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,21 +85,21 @@ public class AddCarProduct extends BaseActivity {
 
 
     private HashMap<String, String> map = new HashMap<>();
-    private HashMap<String, Object> map2 = new HashMap<>();
+    private HashMap<String, String> map2 = new HashMap<>();
     private String car_number;  //车架号     已赋值
     private String car_brand;  //品牌id      已赋值
     private String car_models; //车型        已赋值
-    private double car_mileage;  //车显里程   已赋值
-    private double car_price;  //车辆售价     已赋值
-    private Date car_time;  //上牌时间    已赋值
+    private String car_mileage;  //车显里程   已赋值
+    private String car_price;  //车辆售价     已赋值
+    private String car_time;  //上牌时间    已赋值
     private String car_gearbox; //变速箱     已赋值
     private String car_letout;  //排放标准   已赋值
     private String car_seating; //座位数   已赋值
     private String car_fuel_type; //燃料类型   已赋值
     private String car_resum;  //车辆简历    已赋值
     private String car_place_city; //所在城市   已赋值
-    private double car_displacement; //车排量  已赋值
-    private String car_name;  //车辆名称
+    private String car_displacement; //车排量  已赋值
+    private String car_name;  //车辆名称     已賦值
 
     private float plStart = 0;
     private float plEnd = 5.0f;// 不限标记为
@@ -202,7 +198,7 @@ public class AddCarProduct extends BaseActivity {
             public void onRangeChanged(RangeSeekbar rangeSeekbar, float min, float max, boolean isFromUser) {
                 if (isFromUser) {
 //                    tv2.setText(""+(float)Math.round(min*10)/10);
-                    car_displacement=(double)Math.round(min*10)/10;
+                    car_displacement=(Math.round(min*10)/10)+"";
                     Log.d(TAG, "onRangeChanged: "+(double)Math.round(min*10)/10);
                     seekbar.setLeftProgress(df.format(min));
                 }
@@ -245,13 +241,14 @@ public class AddCarProduct extends BaseActivity {
                     public void onDatePicked(String year, String month, String day) {
                         carSp.setText(year + "年" + month + "月" + day + "日");
 
-                        try {
-                            SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-                            car_time = bartDateFormat.parse(year + "年" + month + "月" + day + "日");
-                            Log.d("aaaaa", "onDatePicked: " + car_time);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+//                            car_time = bartDateFormat.parse(year + "年" + month + "月" + day + "日");
+                            car_time=year + month + day;
+//                            Log.d("aaaaa", "onDatePicked: " + car_time);
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
 
                     }
                 });
@@ -269,7 +266,7 @@ public class AddCarProduct extends BaseActivity {
                 } else {
                     //有权限，直接拍照
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);// 启动系统相机
-                    startActivityForResult(intent, 1);
+                    startActivityForResult(intent, 0);
                 }
             }
         });
@@ -296,6 +293,7 @@ public class AddCarProduct extends BaseActivity {
         startActivityForResult(intent, 0);
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -306,7 +304,6 @@ public class AddCarProduct extends BaseActivity {
                 startActivityForResult(intent, 0);
             } else {
                 Toast.makeText(this, "请在应用管理中打开“相机”访问权限！", Toast.LENGTH_LONG).show();
-                finish();
             }
         }
     }
@@ -315,13 +312,16 @@ public class AddCarProduct extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("bbbbbbbb", "onActivityResult: bbbbbbbbb");
         if (resultCode == RESULT_OK && requestCode == 0) { // 如果返回数据
+            Log.d("bbbbbb", "onActivityResult: aaaaaaaaa");
             Bitmap data1 = (Bitmap) data.getExtras().get("data");
             String base64 = PhotoUtils.bitmapToBase64(data1);
+            Log.d("bbbbbb", "onActivityResult: "+base64);
             map.clear();
             if (NetUtil.isNetAvailable(this)) {
                 map.put("imgBase64", base64);
-                Log.d("aaaaa", "onActivityResult: ");
+                Log.d("bbbbbb", "onActivityResult: ");
                 OKhttptils.post(this, Config.PARSEVIN, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
@@ -330,10 +330,12 @@ public class AddCarProduct extends BaseActivity {
                         String vin = chassisNumber.getData().getResult().getVin();
                         car_number = vin;
                         carCjh.setText(vin);
+
                     }
 
                     @Override
                     public void fail(String response) {
+                        Log.d("bbbbbb", "fail: "+response);
                         Toast.makeText(AddCarProduct.this, "获取车架号失败", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -385,8 +387,8 @@ public class AddCarProduct extends BaseActivity {
             String id_carbrand = bundle.getString("id_carbrand");
             car_brand = id_carbrand;
             carPp.setText(tv_carbrand);
+            car_name=tv_carbrand;
 
-            Log.d("aaaaa", "onActivityResult: " + "你选择了" + tv_carbrand + id_carbrand);
 
         }
 
@@ -394,14 +396,12 @@ public class AddCarProduct extends BaseActivity {
     }
 
     public void initView() {
-        bsxAdapter = new BSXCarMoreAdapter(this, carBsxList);
-        Log.w("test", carBsxList.size() + "...........");
+        BSXCarMoreAdapter bsxAdapter = new BSXCarMoreAdapter(this, carBsxList);
         bsxAdapter.setOnItemClickListener(new AppraiseInterface() {
             @Override
             public void onClick(View view, int position) {
-                Log.i("BSXCarMoreAdapter","position===="+position);
                     //设置响应事件
-                    if (bsx != null) {
+                    if (bsx != null && bsx != view) {
                         // 取消之前选中
                         bsx.setSelected(false);
                         //设置字体颜色
@@ -421,78 +421,78 @@ public class AddCarProduct extends BaseActivity {
             }
         });
         gvBsx.setAdapter(bsxAdapter);
-//
-//        pfbzAdapter = new BSXCarMoreAdapter(this, carPfbzList);
-//        pfbzAdapter.setOnItemClickListener(new AppraiseInterface() {
-//            @Override
-//            public void onClick(View view, int position) {
-//                //设置响应事件
-//                if (pfbz != null) {
-//                    // 取消之前选中
-//                    pfbz.setSelected(false);
-//                    //设置字体颜色
-//                    TextView tv = pfbz.findViewById(R.id.tv_type);
-//                    tv.setTextColor(Color.parseColor("#333333"));
-//                }
-//                view.setSelected(true);
-//                //设置字体颜色
-//                TextView tv = view.findViewById(R.id.tv_type);
-//                tv.setTextColor(Color.parseColor("#ff9696"));
-//                pfbz = view;
-//                TextView text_type1 = view.findViewById(R.id.tv_type);
-//                car_letout = text_type1.getText().toString().trim();
-//                pfbzPosition = position;
-//            }
-//        });
-//        gvPfbz.setAdapter(pfbzAdapter);
-//
-//        zwsAdapter = new BSXCarMoreAdapter(this, carZwsList);
-//        zwsAdapter.setOnItemClickListener(new AppraiseInterface() {
-//            @Override
-//            public void onClick(View view, int position) {
-//                //设置响应事件
-//                if (zws != null) {
-//                    // 取消之前选中
-//                    zws.setSelected(false);
-//                    //设置字体颜色
-//                    TextView tv = zws.findViewById(R.id.tv_type);
-//                    tv.setTextColor(Color.parseColor("#333333"));
-//                }
-//                view.setSelected(true);
-//                //设置字体颜色
-//                TextView tv = view.findViewById(R.id.tv_type);
-//                tv.setTextColor(Color.parseColor("#ff9696"));
-//                zws = view;
-//                TextView text_type1 = view.findViewById(R.id.tv_type);
-//                car_seating = text_type1.getText().toString().trim();
-//                zwsPosition = position;
-//            }
-//        });
-//        gvZws.setAdapter(zwsAdapter);
-//
-//        rllxAdapter = new BSXCarMoreAdapter(this, carRllxList);
-//        rllxAdapter.setOnItemClickListener(new AppraiseInterface() {
-//            @Override
-//            public void onClick(View view, int position) {
-//                //设置响应事件
-//                if (rllx != null) {
-//                    // 取消之前选中
-//                    rllx.setSelected(false);
-//                    //设置字体颜色
-//                    TextView tv = rllx.findViewById(R.id.tv_type);
-//                    tv.setTextColor(Color.parseColor("#333333"));
-//                }
-//                view.setSelected(true);
-//                //设置字体颜色
-//                TextView tv = view.findViewById(R.id.tv_type);
-//                tv.setTextColor(Color.parseColor("#ff9696"));
-//                rllx = view;
-//                TextView text_type1 = view.findViewById(R.id.tv_type);
-//                car_fuel_type = text_type1.getText().toString().trim();
-//                rllxPosition = position;
-//            }
-//        });
-//        gvRllx.setAdapter(rllxAdapter);
+
+        pfbzAdapter = new BSXCarMoreAdapter(this, carPfbzList);
+        pfbzAdapter.setOnItemClickListener(new AppraiseInterface() {
+            @Override
+            public void onClick(View view, int position) {
+                //设置响应事件
+                if (pfbz != null) {
+                    // 取消之前选中
+                    pfbz.setSelected(false);
+                    //设置字体颜色
+                    TextView tv = pfbz.findViewById(R.id.tv_type);
+                    tv.setTextColor(Color.parseColor("#333333"));
+                }
+                view.setSelected(true);
+                //设置字体颜色
+                TextView tv = view.findViewById(R.id.tv_type);
+                tv.setTextColor(Color.parseColor("#ff9696"));
+                pfbz = view;
+                TextView text_type1 = view.findViewById(R.id.tv_type);
+                car_letout = text_type1.getText().toString().trim();
+                pfbzPosition = position;
+            }
+        });
+        gvPfbz.setAdapter(pfbzAdapter);
+
+        zwsAdapter = new BSXCarMoreAdapter(this, carZwsList);
+        zwsAdapter.setOnItemClickListener(new AppraiseInterface() {
+            @Override
+            public void onClick(View view, int position) {
+                //设置响应事件
+                if (zws != null) {
+                    // 取消之前选中
+                    zws.setSelected(false);
+                    //设置字体颜色
+                    TextView tv = zws.findViewById(R.id.tv_type);
+                    tv.setTextColor(Color.parseColor("#333333"));
+                }
+                view.setSelected(true);
+                //设置字体颜色
+                TextView tv = view.findViewById(R.id.tv_type);
+                tv.setTextColor(Color.parseColor("#ff9696"));
+                zws = view;
+                TextView text_type1 = view.findViewById(R.id.tv_type);
+                car_seating = text_type1.getText().toString().trim();
+                zwsPosition = position;
+            }
+        });
+        gvZws.setAdapter(zwsAdapter);
+
+        rllxAdapter = new BSXCarMoreAdapter(this, carRllxList);
+        rllxAdapter.setOnItemClickListener(new AppraiseInterface() {
+            @Override
+            public void onClick(View view, int position) {
+                //设置响应事件
+                if (rllx != null) {
+                    // 取消之前选中
+                    rllx.setSelected(false);
+                    //设置字体颜色
+                    TextView tv = rllx.findViewById(R.id.tv_type);
+                    tv.setTextColor(Color.parseColor("#333333"));
+                }
+                view.setSelected(true);
+                //设置字体颜色
+                TextView tv = view.findViewById(R.id.tv_type);
+                tv.setTextColor(Color.parseColor("#ff9696"));
+                rllx = view;
+                TextView text_type1 = view.findViewById(R.id.tv_type);
+                car_fuel_type = text_type1.getText().toString().trim();
+                rllxPosition = position;
+            }
+        });
+        gvRllx.setAdapter(rllxAdapter);
 
 
         //下一步
@@ -501,27 +501,28 @@ public class AddCarProduct extends BaseActivity {
             public void onClick(View v) {
                 car_resum = carResume.getText().toString().trim();
                 if (!carLc.getText().toString().trim().isEmpty()) {
-                    car_mileage = Double.parseDouble(carLc.getText().toString().trim());
+                    car_mileage = carLc.getText().toString().trim();
                 }
                 if (!carSj.getText().toString().trim().isEmpty()) {
-                    car_price = Double.parseDouble(carSj.getText().toString().trim());
+                    car_price = carSj.getText().toString().trim();
                 }
-                //&&
+
                 if (carCjh != null && carCx != null && carPp != null && carLc != null && carSj != null && carSp != null && carResume != null) {
                     //已选择
-                    Toast.makeText(AddCarProduct.this, "请选择完整", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCarProduct.this, "选择完整", Toast.LENGTH_SHORT).show();
+//                    postMeages(car_number,car_brand,car_models,car_mileage,car_price,car_time,car_gearbox,car_letout,car_seating,car_fuel_type,car_resum,car_name,car_displacement,car_place_city);
+
                 }
-                Log.d("aaaaa", "onClick: " + "车架号" + car_number + "----品牌id" + car_brand + "----车型" +
+                Log.d("oneror", "onClick: " + "车架号" + car_number + "----品牌id" + car_brand + "----车型" +
                         car_models + "----车显里程" + car_mileage + "----车辆售价" + car_price + "----上牌时间" + car_time +
                         "----变速箱" + car_gearbox + "----排放标准" + car_letout + "----座位数" + car_seating + "----燃料类型" +
-                        car_fuel_type + "----车辆简历" + car_resum);
-//              PostMeages(car_number,car_brand,car_models,car_mileage,car_price,car_time,car_gearbox,car_letout,car_seating,car_fuel_type,car_resum,,,car_place_city);
-            }
+                        car_fuel_type + "----车辆简历" + car_resum+"----車排量"+car_displacement+"----車名稱"+car_name+"----所在城市"+car_place_city);
+                  }
         });
     }
 
 
-    public void postMeages(String car_number, String car_brand, String car_model, double car_mileage, double car_price, Date car_time, String car_gearbox, String car_letout, String car_seating, String car_fuel_type, String car_resum, String car_name, double car_emissions, String car_place_city) {
+    public void postMeages(String car_number, String car_brand, String car_model, String car_mileage, String car_price, String car_time, String car_gearbox, String car_letout, String car_seating, String car_fuel_type, String car_resum, String car_name, String car_emissions, String car_place_city) {
         map2.clear();
         if (NetUtil.isNetAvailable(this)) {
             map2.put("car_name", car_name);
@@ -538,24 +539,23 @@ public class AddCarProduct extends BaseActivity {
             map2.put("car_fuel_type", car_fuel_type);
             map2.put("car_seating", car_seating);
             map2.put("car_vin", car_number);
-            OKhttptils.post(this, Config.ACCRETIONCAR, map, new OKhttptils.HttpCallBack() {
+//            post(AddCarProduct.this,Config.QUERYCARSTYLE,map2);
+            OKhttptils.post(this, Config.ACCRETIONCAR, map2, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
-                    Log.i("aaaaa", "添加二手车信息: " + response);
-                    Gson gson = GsonFactory.create();
-                    QueryCarList querystar = gson.fromJson(response, QueryCarList.class);
-                    List<QueryCarList.DataBean.ResultBean> result = querystar.getData().getResult();
-                    // 没有信息图片显示
+                    Log.i("oneror", "添加二手车信息: " + response);
+
 
                 }
 
                 @Override
                 public void fail(String response) {
-                    Toast.makeText(AddCarProduct.this, "查询失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCarProduct.this, "添加失敗", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
 
 
     @Override

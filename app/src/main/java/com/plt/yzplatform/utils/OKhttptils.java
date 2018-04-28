@@ -58,7 +58,7 @@ public class OKhttptils {
                                     case "0":
                                         //失败
                                         callBack.fail(response);
-                                        Log.i("oneror","fail");
+                                        Log.i("oneror","fail"+response);
                                         break;
                                     case "103":
                                         callBack.fail(response);
