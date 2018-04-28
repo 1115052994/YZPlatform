@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.CommonRecyclerAdapter;
@@ -34,8 +35,6 @@ import com.plt.yzplatform.view.CircleImageView;
 import com.plt.yzplatform.view.indicator.IndicatorAdapter;
 import com.plt.yzplatform.view.indicator.TrackIndicatorView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -123,10 +122,11 @@ public class CarCompDetail extends BaseActivity {
                 break;
             case R.id.image_dh:
                 ToastUtil.show(this, "正在进入导航请稍等...");
-                Bundle bundle = new Bundle();
-                bundle.putString("comp_lon", comp_lon + "");
-                bundle.putString("comp_lat", comp_lat + "");
-                JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("comp_lon", comp_lon + "");
+//                bundle.putString("comp_lat", comp_lat + "");
+                Navigation(new LatLng(comp_lon,comp_lat));
+//                JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
                 break;
         }
     }
