@@ -199,40 +199,6 @@ public class ProductServiceActivity extends BaseActivity {
         listView.setAdapter(mAdapter);
     }
 
-    /* 设置搜索自动提示adapter */
-//    private void initSearchText() {
-//        Map<String, String> map = new HashMap<>();
-//        String suppostWord = mSearch.getText().toString();
-//        Log.i(TAG, "getData: " + suppostWord);
-//        map.put("suppostWord", "");
-//        OKhttptils.post(this, Config.ADD_COMP_SERVICE_TYPE, map, new OKhttptils.HttpCallBack() {
-//            @Override
-//            public void success(String response) {
-//                Log.e(TAG, "success: " + response);
-//                Gson gson = GsonFactory.create();
-//                keywords.clear();
-//                CompAddServiceType addServiceType = gson.fromJson(response, CompAddServiceType.class);
-//                List<CompAddServiceType.DataBean.ResultBean> beanList = addServiceType.getData().getResult();
-//                CompAddServiceType.DataBean.ResultBean resultBean;
-//                for (int i = 0; i < beanList.size(); i++) {
-//                    resultBean = beanList.get(i);
-//                    for (int j = 0; j < resultBean.getSuppostList().size(); j++) {
-//                        keywords.add(resultBean.getSuppostList().get(j));
-//                    }
-//                }
-//                searchAdapter.notifyDataSetChanged();
-//                Log.i(TAG, "success搜索: " + keywords.toString());
-//            }
-//
-//            @Override
-//            public void fail(String response) {
-//                ToastUtil.noNAR(ProductServiceActivity.this);
-//            }
-//        });
-//        searchAdapter = new ArrayAdapter(this, R.layout.item_product_search_item, keywords);
-//        mSearch.setAdapter(searchAdapter);
-//    }
-
 
     /* 填充adapter */
     private void initAdapter() {

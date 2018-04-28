@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -39,6 +40,7 @@ import com.plt.yzplatform.view.JudgeNestedScrollView;
 import com.plt.yzplatform.view.OrdinaryDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
@@ -117,6 +119,20 @@ public class CarDetailsActivity extends BaseActivity {
     LinearLayout mCollect;
     @BindView(R.id.mSale)
     ImageView mSale;
+    //    @BindView(R.id.ll_banner)
+//    LinearLayout llBanner;
+    @BindView(R.id.mLoan)
+    ImageView mLoan;
+    @BindView(R.id.mDeploy)
+    LinearLayout mDeploy;
+    @BindView(R.id.recyclerView_foot_more)
+    ClassicsFooter recyclerViewFootMore;
+    @BindView(R.id.tv_coll)
+    TextView tvColl;
+    @BindView(R.id.mKefu)
+    LinearLayout mKefu;
+    @BindView(R.id.tab_bottom)
+    RelativeLayout tabBottom;
     private Activity currtActivity = this;
     private String car_id;//二手车id
     private List<String> images = new ArrayList<>();
@@ -174,13 +190,15 @@ public class CarDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_details);
         ButterKnife.bind(this);
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT/3*2);
+//        llBanner.setLayoutParams(params);
         //禁止刷新
         mRefresh.setEnableRefresh(false);
         car_id = "5630";
         Intent intent = getIntent();
-        if(intent!=null){
+        if (intent != null) {
             String id = intent.getStringExtra("String");
-            if (id!=null&&!"".equals(id)){
+            if (id != null && !"".equals(id)) {
                 car_id = id;
             }
         }
@@ -227,8 +245,8 @@ public class CarDetailsActivity extends BaseActivity {
                                     public void onYesClick() {
                                         dialog.dismiss();
 
-                                        Map<String,String> map = new HashMap<>();
-                                        map.put("car_id",car_id);
+                                        Map<String, String> map = new HashMap<>();
+                                        map.put("car_id", car_id);
                                         OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_SALE, map, new OKhttptils.HttpCallBack() {
                                             @Override
                                             public void success(String response) {
@@ -261,7 +279,7 @@ public class CarDetailsActivity extends BaseActivity {
 
                             }
                         });
-                    }else {
+                    } else {
                         //订阅过 不做任何操作
                         Log.i(TAG, "success订阅过: " + result);
                     }
@@ -470,7 +488,7 @@ public class CarDetailsActivity extends BaseActivity {
         comp_lat = carDetailBean.getComp_lat();
         comp_lon = carDetailBean.getComp_lon();
         DecimalFormat df2 = new DecimalFormat("#0");
-        String km = String.valueOf(df2.format(carDetailBean.getCar_mileage()/10000));
+        String km = String.valueOf(df2.format(carDetailBean.getCar_mileage() / 10000));
         mKm.setText(km + "万公里");
         String sign_date = carDetailBean.getCar_sign_date();//上牌时间
         mWhen.setText(sign_date + "上牌");
@@ -545,6 +563,16 @@ public class CarDetailsActivity extends BaseActivity {
 
     /* 设置banner */
     private void initBanner() {
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (double)(mBanner.getWidth()/3*2));
+        WindowManager wm = (WindowManager) this
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        int height = wm.getDefaultDisplay().getHeight();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (width / 3 * 2));
+        Log.i(TAG, "initBanner高度: " + mBanner.getWidth() / 3 * 2);
+        Log.i(TAG, "initBanner高度: " + LinearLayout.LayoutParams.MATCH_PARENT);
+
+        mBanner.setLayoutParams(params);
         mBanner.setIndicatorGravity(BannerConfig.LEFT);
         mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         mBanner.setImageLoader(new ImageLoader() {
@@ -585,7 +613,7 @@ public class CarDetailsActivity extends BaseActivity {
                 break;
             case R.id.mGPS:
                 //导航
-                navigation(comp_lat,comp_lon);
+                navigation(comp_lat, comp_lon);
                 break;
             case R.id.mDetails:
                 //公司详情
@@ -597,6 +625,9 @@ public class CarDetailsActivity extends BaseActivity {
                 //拨打客服电话
                 call("4001198698");
                 break;
+//            case R.id.back:
+//                JumpUtil.newInstance().finishRightTrans(currtActivity);
+//                break;
         }
     }
 
