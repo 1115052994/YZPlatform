@@ -25,6 +25,7 @@ import com.plt.yzplatform.AppraiseInterface;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.AdvanceSX;
 import com.plt.yzplatform.activity.CarBrandSearch;
+import com.plt.yzplatform.activity.CarDetailsActivity;
 import com.plt.yzplatform.adapter.AppraiseGVAdapter;
 import com.plt.yzplatform.adapter.CommonRecyclerAdapter;
 import com.plt.yzplatform.adapter.ViewHolder;
@@ -157,13 +158,13 @@ public class BuyCar extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         iniData();
         initView();
+        getData();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getData();
     }
 
     private void initView() {
@@ -237,20 +238,26 @@ public class BuyCar extends Fragment {
         recyclerAdapter = new CommonRecyclerAdapter(getActivity(), recyclerList, R.layout.item_car_buy) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-//                TextView tvCarsDes = holder.getView(R.id.tv_cardes);
-//                tvCarsDes.setText(recyclerList.get(position).getCar_name());
-//                TextView tvPrice = holder.getView(R.id.tv_price);
-//                tvPrice.setText("￥"+recyclerList.get(position).getCar_price()/10000.0+"万");
-//                TextView tvYearAndMiles = holder.getView(R.id.tv_year_miles);
-//                tvYearAndMiles.setText(recyclerList.get(position).getCar_sign_date().split("-")[0]+"年/"+recyclerList.get(position).getCar_mileage()+"公里");
-//                ImageView carImage = holder.getView(R.id.image_car);
-//                if(recyclerList.get(position).getCar_1_icon_file_id()!=null) {
-//                    OKhttptils.getPic(getActivity(),recyclerList.get(position).getCar_1_icon_file_id(),carImage);
-//                }
+                TextView tvCarsDes = holder.getView(R.id.tv_cardes);
+                tvCarsDes.setText(recyclerList.get(position).getCar_name());
+                TextView tvPrice = holder.getView(R.id.tv_price);
+                tvPrice.setText("￥"+recyclerList.get(position).getCar_price()/10000.0+"万");
+                TextView tvYearAndMiles = holder.getView(R.id.tv_year_miles);
+                tvYearAndMiles.setText(recyclerList.get(position).getCar_sign_date().split("-")[0]+"年/"+recyclerList.get(position).getCar_mileage()+"万公里");
+                ImageView carImage = holder.getView(R.id.image_car);
+                if(recyclerList.get(position).getCar_1_icon_file_id()!=null) {
+                    OKhttptils.getPic(getActivity(),recyclerList.get(position).getCar_1_icon_file_id(),carImage);
+                }
             }
         };
         recyclerViewCar.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewCar.setAdapter(recyclerAdapter);
+        recyclerAdapter.setOnItemClickListener(new CommonRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                JumpUtil.newInstance().jumpLeft(getActivity(), CarDetailsActivity.class,recyclerList.get(position).getCar_id()+"");
+            }
+        });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -625,7 +632,10 @@ public class BuyCar extends Fragment {
                 WindowManager.LayoutParams wlp = getActivity().getWindow().getAttributes();
                 wlp.alpha = 1.0f;
                 getActivity().getWindow().setAttributes(wlp);
-                tvZn.setText(selectedRank);
+                if (!"".equals(selectedRank))
+                    tvZn.setText(selectedRank);
+                else
+                    tvZn.setText(rankList.get(0));
                 tvZn.setTextColor(Color.parseColor("#333333"));
                 imageZn.setImageResource(R.drawable.b_a);
                 // 获得排序方式（智能：intelligence， 价格升序：price_up， 价格降序， price_down， 车龄：car_age， 上架时间：sale_time，里程：car_mileage）

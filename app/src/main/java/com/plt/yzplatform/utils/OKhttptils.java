@@ -2,15 +2,11 @@ package com.plt.yzplatform.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
-import android.util.Log;
 
-import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.LoginActivity;
 import com.plt.yzplatform.config.Config;
 import com.squareup.picasso.Picasso;
@@ -20,13 +16,6 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.ref.SoftReference;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -69,11 +58,14 @@ public class OKhttptils {
                                     case "0":
                                         //失败
                                         callBack.fail(response);
-                                        Log.i("oneror","fail");
+                                        Log.i("oneror","fail"+response);
                                         break;
                                     case "103":
                                         callBack.fail(response);
                                         break;
+                                    default:
+                                        callBack.fail(response);
+                                            break;
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

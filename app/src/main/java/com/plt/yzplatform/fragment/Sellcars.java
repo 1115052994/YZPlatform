@@ -113,24 +113,21 @@ public class Sellcars extends Fragment {
             OKhttptils.post(getActivity(), Config.SAVESELLER, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
-                    Log.i("aaaaa", "查询二手车收藏: " + response);
-                    Toast.makeText(getContext(), "预约成功", Toast.LENGTH_SHORT).show();
-                    PostSellcars();
-                    final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(getContext()).setMessage1("温馨提示").setMessage2("   恭喜您预约成功！").setConfirm("知道了").setCancel("返回首页").showDialog();
-                    ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
-                        @Override
-                        public void onNoClick() {
-                            ordinaryDialog.dismiss();
-                            //这里要跳转到主页面
-                            Toast.makeText(getContext(), "我跳到主页了", Toast.LENGTH_SHORT).show();
+                    try {
+                        Log.i("aaaaa", "查询二手车收藏: " + response);
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        int state = data.getInt("state");
+                        Log.d("aaaaa", "是否预约成功: "+state+"--------");
+                        if(state==1){
+                            PostIntent("恭喜您预约成功！",null);
+                        }else if(state==0){
+                            PostIntent("您已经预约了！",null);
                         }
-                    });
-                    ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
-                        @Override
-                        public void onYesClick() {
-                            ordinaryDialog.dismiss();
-                        }
-                    });
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -139,6 +136,24 @@ public class Sellcars extends Fragment {
                 }
             });
         }
+    }
+    public void PostIntent(String mesage, final Class clas){
+        PostSellcars();
+        final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(getContext()).setMessage1("温馨提示").setMessage2("   "+mesage).setConfirm("知道了").setCancel("返回首页").showDialog();
+        ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                ordinaryDialog.dismiss();
+//                startActivity(new Intent(Sellcars.this,clas));
+                Toast.makeText(getContext(), "我跳到主页了", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                ordinaryDialog.dismiss();
+            }
+        });
     }
 
 

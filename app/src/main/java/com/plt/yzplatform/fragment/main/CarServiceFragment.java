@@ -104,6 +104,8 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     RelativeLayout rlMenu;
     @BindView(R.id.mLocation)
     TextView mLocation;
+    @BindView(R.id.rl_titleBar)
+    RelativeLayout rlTitleBar;
     private TextView mDistance;
     private TextView mApprise;
     private TextView mHot;
@@ -406,7 +408,12 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void fail(String response) {
-                ToastUtil.noNAR(getContext());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    ToastUtil.show(context, jsonObject.getString("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -575,11 +582,10 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             createPopupWindow();
             if (!popupWindow.isShowing()) {
                 View rootview = LayoutInflater.from(getContext()).inflate(R.layout.fragment_car_service, null);
-                View v = LayoutInflater.from(getContext()).inflate(R.layout.activity_main, null);
                 //一半减去两个高度   DensityUtil.dp2px(-height/2)
-                popupWindow.showAtLocation(rootview, Gravity.RIGHT | Gravity.TOP, 0, v.findViewById(R.id.rl_titleBar).getHeight() + rank.getHeight() + DensityUtil.dp2px(getStatusBarHeight(getContext())));
-                View view = LinearLayout.inflate(getContext(), R.layout.activity_main, null);
-                popupWindow.showAsDropDown(view.findViewById(R.id.rl_titleBar), R.dimen.common264dp, 0);
+//                popupWindow.showAtLocation(rootview, Gravity.RIGHT | Gravity.TOP, 0, v.findViewById(R.id.rl_titleBar).getHeight() + rank.getHeight() + DensityUtil.dp2px(getStatusBarHeight(getContext())));
+                popupWindow.showAtLocation(rootview, Gravity.RIGHT | Gravity.TOP, 0, rlTitleBar.getHeight() + rank.getHeight() + DensityUtil.dp2px(getStatusBarHeight(getContext())));
+                popupWindow.showAsDropDown(null, R.dimen.common264dp, 0);
                 WindowManager.LayoutParams wlp = getActivity().getWindow().getAttributes();
                 wlp.alpha = 0.7f;
                 getActivity().getWindow().setAttributes(wlp);

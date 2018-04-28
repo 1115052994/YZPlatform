@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.config.Config;
-import com.plt.yzplatform.entity.QueryRecord2;
+import com.plt.yzplatform.entity.QueryServerRecord;
 import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.PhotoUtils;
@@ -35,10 +35,10 @@ import java.util.Map;
 
 public class BrowsingAdapter2 extends BaseAdapter {
     private Context context;
-    private List<QueryRecord2.DataBean.ResultBean> result;
+    private List<QueryServerRecord.DataBean.ResultBean> result;
     private CallBrowsing callBrowsing;
     private Map<String, String> map = new HashMap<>();
-    public BrowsingAdapter2(Context context, List<QueryRecord2.DataBean.ResultBean> result) {
+    public BrowsingAdapter2(Context context, List<QueryServerRecord.DataBean.ResultBean> result) {
         this.context = context;
         this.result = result;
 

@@ -64,9 +64,9 @@ public class CollectCardeal extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_collect_cardeal, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        PostCar(1, null);
         carListAdapter = new CarListAdapter(context, result);
         carDealListview.setAdapter(carListAdapter);
-        PostCar(1, null);
         carListAdapter.getCallCar(new CallCollect() {
             @Override
             public void getCallcollect(View view, int id) {

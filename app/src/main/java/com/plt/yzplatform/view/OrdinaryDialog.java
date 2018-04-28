@@ -65,6 +65,7 @@ public class OrdinaryDialog extends Dialog {
 
         setCanceledOnTouchOutside(false);   // 按空白处
 
+        mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         initView();     // 初始化界面控件
         initData();     // 初始化界面数据
         initEvent();    // 初始化界面控件的事件

@@ -6,11 +6,11 @@ import java.util.List;
  * Created by Administrator on 2018/4/22.
  */
 
-public class QueryRecord2 {
+public class QueryCarRecord {
 
 
     /**
-     * data : {"result":[{"log_id":"551","log_to":"24","log_type":"compbrow","log_from":"superadmin","auth_comp_name":"山东派乐特网络科技有限公司","log_date":"2018-04-24 09:43:38","auth_comp_img_head_file_id":"f17e89777dc64ba899db620d4c3d8420"}],"pageCount":1,"pageTotal":1}
+     * data : {"result":[{"log_id":"556","log_to":"3","car_name":"马自达阿特兹 2017款 2.0L 蓝天豪华版","log_type":"carbrow","log_from":"superadmin","log_date":"2018-04-24 10:52:14","carphone":"4444","car_1_file_id":"44"}],"pageCount":1,"pageTotal":1}
      * message :
      * status : 1
      */
@@ -45,7 +45,7 @@ public class QueryRecord2 {
 
     public static class DataBean {
         /**
-         * result : [{"log_id":"551","log_to":"24","log_type":"compbrow","log_from":"superadmin","auth_comp_name":"山东派乐特网络科技有限公司","log_date":"2018-04-24 09:43:38","auth_comp_img_head_file_id":"f17e89777dc64ba899db620d4c3d8420"}]
+         * result : [{"log_id":"556","log_to":"3","car_name":"马自达阿特兹 2017款 2.0L 蓝天豪华版","log_type":"carbrow","log_from":"superadmin","log_date":"2018-04-24 10:52:14","carphone":"4444","car_1_file_id":"44"}]
          * pageCount : 1
          * pageTotal : 1
          */
@@ -80,22 +80,24 @@ public class QueryRecord2 {
 
         public static class ResultBean {
             /**
-             * log_id : 551
-             * log_to : 24
-             * log_type : compbrow
+             * log_id : 556
+             * log_to : 3
+             * car_name : 马自达阿特兹 2017款 2.0L 蓝天豪华版
+             * log_type : carbrow
              * log_from : superadmin
-             * auth_comp_name : 山东派乐特网络科技有限公司
-             * log_date : 2018-04-24 09:43:38
-             * auth_comp_img_head_file_id : f17e89777dc64ba899db620d4c3d8420
+             * log_date : 2018-04-24 10:52:14
+             * carphone : 4444
+             * car_1_file_id : 44
              */
 
             private String log_id;
             private String log_to;
+            private String car_name;
             private String log_type;
             private String log_from;
-            private String auth_comp_name;
             private String log_date;
-            private String auth_comp_img_head_file_id;
+            private String carphone;
+            private String car_1_file_id;
 
             public String getLog_id() {
                 return log_id;
@@ -111,6 +113,14 @@ public class QueryRecord2 {
 
             public void setLog_to(String log_to) {
                 this.log_to = log_to;
+            }
+
+            public String getCar_name() {
+                return car_name;
+            }
+
+            public void setCar_name(String car_name) {
+                this.car_name = car_name;
             }
 
             public String getLog_type() {
@@ -129,14 +139,6 @@ public class QueryRecord2 {
                 this.log_from = log_from;
             }
 
-            public String getAuth_comp_name() {
-                return auth_comp_name;
-            }
-
-            public void setAuth_comp_name(String auth_comp_name) {
-                this.auth_comp_name = auth_comp_name;
-            }
-
             public String getLog_date() {
                 return log_date;
             }
@@ -145,12 +147,20 @@ public class QueryRecord2 {
                 this.log_date = log_date;
             }
 
-            public String getAuth_comp_img_head_file_id() {
-                return auth_comp_img_head_file_id;
+            public String getCarphone() {
+                return carphone;
             }
 
-            public void setAuth_comp_img_head_file_id(String auth_comp_img_head_file_id) {
-                this.auth_comp_img_head_file_id = auth_comp_img_head_file_id;
+            public void setCarphone(String carphone) {
+                this.carphone = carphone;
+            }
+
+            public String getCar_1_file_id() {
+                return car_1_file_id;
+            }
+
+            public void setCar_1_file_id(String car_1_file_id) {
+                this.car_1_file_id = car_1_file_id;
             }
         }
     }

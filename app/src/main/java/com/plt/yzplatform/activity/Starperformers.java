@@ -2,6 +2,7 @@ package com.plt.yzplatform.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,9 +46,9 @@ public class Starperformers extends BaseActivity {
         ButterKnife.bind(this);
         starList = findViewById(R.id.star_list);
         layout = findViewById(R.id.layout);
+        getData();
         starAdapter = new StarAdapter(this, result);
         starList.setAdapter(starAdapter);
-        getData();
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,16 +74,19 @@ public class Starperformers extends BaseActivity {
         starAdapter.getcall(new CallStar() {
             @Override
             public void Call(View view, String id, int i, String file_id) {
-                if (i > -1 && id != null && file_id != null) {
-                    Intent intent = new Intent(Starperformers.this, Addstar.class);
-                    intent.putExtra("id", id);
-                    intent.putExtra("file_id", file_id);
-                    intent.putExtra("name", result.get(i).getStaff_name());
-                    intent.putExtra("info", result.get(i).getStaff_info());
-                    startActivityForResult(intent, 3);
-                }
+                    if (i > -1 && id != null && file_id != null) {
+                        Intent intent = new Intent(Starperformers.this, Addstar.class);
+                        intent.putExtra("id", id);
+                        intent.putExtra("file_id", file_id);
+                        intent.putExtra("name", result.get(i).getStaff_name());
+                        intent.putExtra("info", result.get(i).getStaff_info());
+                        Log.d("Call", "Call: "+id);
+                        startActivityForResult(intent, 3);
+                    }
                 getData();
                 starAdapter.notifyDataSetChanged();
+
+
             }
         });
     }
@@ -113,12 +117,15 @@ public class Starperformers extends BaseActivity {
         OKhttptils.post(Starperformers.this, Config.SELECTSTAR, null, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                Log.d("aaaaa", "getData1: "+response);
                 Gson gson = GsonFactory.create();
                 Querystar querystar = gson.fromJson(response, Querystar.class);
+                Log.d("aaaaa", "getData2: "+response);
                 if (querystar.getData().getResult() == null) {
                     ToastUtil.show(Starperformers.this, "数据为空");
                 }
                 result.addAll(querystar.getData().getResult());
+                Log.d("aaaaa", "getData3: "+response);
                 if(result.size()<=0){
                     noInformationImage.setVisibility(View.VISIBLE);
                 }

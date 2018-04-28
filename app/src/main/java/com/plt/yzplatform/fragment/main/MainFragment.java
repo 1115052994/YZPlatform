@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.AddProductActivity;
+import com.plt.yzplatform.activity.CarCompDetail;
 import com.plt.yzplatform.activity.CarDetailsActivity;
 import com.plt.yzplatform.activity.EnterpriseActivity;
 import com.plt.yzplatform.activity.PersonalSettingActivity;
@@ -42,7 +43,7 @@ public class MainFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.renzheng, R.id.setting, R.id.add, R.id.carDetail})
+    @OnClick({R.id.renzheng, R.id.setting, R.id.add, R.id.carDetail,R.id.test})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.renzheng:
@@ -56,6 +57,9 @@ public class MainFragment extends Fragment {
                 break;
             case R.id.carDetail:
                 JumpUtil.newInstance().jumpRight(getContext(), CarDetailsActivity.class);
+                break;
+            case R.id.test:
+                JumpUtil.newInstance().jumpLeft(getContext(), CarCompDetail.class);
                 break;
         }
     }

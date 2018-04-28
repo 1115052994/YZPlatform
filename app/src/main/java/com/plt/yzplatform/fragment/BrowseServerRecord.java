@@ -19,7 +19,7 @@ import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.BrowsingAdapter2;
 import com.plt.yzplatform.adapter.CallBrowsing;
 import com.plt.yzplatform.config.Config;
-import com.plt.yzplatform.entity.QueryRecord2;
+import com.plt.yzplatform.entity.QueryServerRecord;
 import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
@@ -40,7 +40,7 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class BrowseRecord2 extends Fragment {
+public class BrowseServerRecord extends Fragment {
 
     @BindView(R.id.browsing2_Cardeal_image)
     ImageView browsingCardealImage;
@@ -51,12 +51,12 @@ public class BrowseRecord2 extends Fragment {
     Unbinder unbinder;
     private HashMap<String,String> map=new HashMap<>();
     private Context context;
-    private List<QueryRecord2.DataBean.ResultBean> result = new ArrayList<>();
+    private List<QueryServerRecord.DataBean.ResultBean> result = new ArrayList<>();
     private BrowsingAdapter2 browsingAdapter;
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
 
-    public BrowseRecord2(Context context) {
+    public BrowseServerRecord(Context context) {
         this.context = context;
     }
 
@@ -66,10 +66,10 @@ public class BrowseRecord2 extends Fragment {
 
         View inflate = inflater.inflate(R.layout.fragment_browse_record2, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        //  浏览记录地址
+        PostRecord(Config.BROWSECOMPCOOKIES,1,null);
         browsingAdapter = new BrowsingAdapter2(context, result);
         browsing2Listview.setAdapter(browsingAdapter);
-
-        PostRecord(Config.BROWSECOMPCOOKIES,1,null);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -105,12 +105,12 @@ public class BrowseRecord2 extends Fragment {
                 public void success(String response) {
                     Log.i("aaaaa", "查询服务商浏览记录: " + response);
                     Gson gson = GsonFactory.create();
-                    QueryRecord2 queryRecord2 = gson.fromJson(response, QueryRecord2.class);
+                    QueryServerRecord queryRecord2 = gson.fromJson(response, QueryServerRecord.class);
                     pageCount=queryRecord2.getData().getPageCount();
-                    List<QueryRecord2.DataBean.ResultBean> result2 = queryRecord2.getData().getResult();
-                    BrowseRecord2.this.result.addAll(result2);
+                    List<QueryServerRecord.DataBean.ResultBean> result2 = queryRecord2.getData().getResult();
+                    BrowseServerRecord.this.result.addAll(result2);
                     //没有信息图片显示
-                    if (BrowseRecord2.this.result.size() <= 0) {
+                    if (BrowseServerRecord.this.result.size() <= 0) {
                         browsingCardealImage.setVisibility(View.VISIBLE);
                     }else {
                         if(refreshlayout!=null){

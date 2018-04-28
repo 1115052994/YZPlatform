@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CarBrandSearch"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/parent"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_carBrand"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </android.support.design.widget.CoordinatorLayout>
+    <RelativeLayout
+        android:id="@+id/letter"
+        android:layout_width="@dimen/common25dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/common5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+        <!--android:background="@color/back_d6">-->
+        <com.plt.yzplatform.view.LetterSideBar
+            android:id="@+id/letter_side_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:paddingRight="@dimen/common10dp"
+            android:paddingLeft="@dimen/common10dp"/>
+    </RelativeLayout>
+</RelativeLayout>

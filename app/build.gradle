@@ -38,6 +38,7 @@ android {
     }
     repositories {
         jcenter() // If not already there
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -55,10 +56,19 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'ca.barrenechea.header-decor:header-decor:0.2.6'
     implementation 'com.android.support:design:26.1.0'
     compile 'com.youth.banner:banner:1.4.9'
     compile 'com.squareup.picasso:picasso:2.5.1'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //RangeSeekBar
+    compile 'com.github.Jay-Goo:RangeSeekBar:v1.0.0'
+    //日历
+    compile('cn.qqtheme.framework:WheelPicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
+
     // 权限
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.5'
@@ -66,4 +76,6 @@ dependencies {
     implementation files('libs/alipaySdk-20180403.jar')
     //添加自定义Dialog引入的包  ly
     compile 'com.wang.avi:library:1.0.0'
+
+
 }

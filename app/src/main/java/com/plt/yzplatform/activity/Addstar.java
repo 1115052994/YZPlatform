@@ -57,6 +57,7 @@ public class Addstar extends BaseActivity {
         setContentView(R.layout.activity_add_star);
         ButterKnife.bind(this);
         id = getIntent().getStringExtra("id");
+        Log.d("file_id", "onCreate: "+id);
         additionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +112,7 @@ public class Addstar extends BaseActivity {
         });
         if(id!=null){
             file_id = getIntent().getStringExtra("file_id");
+            Log.d("file_id", "onCreate: "+file_id);
             getBitmap(file_id,additionImage);
             additionEdName.setText(getIntent().getStringExtra("name"));
             additionEdIntroduce.setText(getIntent().getStringExtra("info"));
@@ -153,12 +155,12 @@ public class Addstar extends BaseActivity {
         map.clear();
         map.put("staff_name",additionEdName.getText().toString());
         map.put("staff_photo_file_id",file_id);
-        map.put("staff_reco","2");
         map.put("staff_info",additionEdIntroduce.getText().toString());
         if(file_id!=null){
             OKhttptils.post(Addstar.this, Config.SAVESTAR, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    Log.d("aaaaa", "success: "+response);
                     Intent intent = new Intent();
                     setResult(1, intent);
                     finish();

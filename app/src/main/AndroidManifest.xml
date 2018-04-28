@@ -44,7 +44,6 @@
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
             >
-
         </activity>
         <activity
             android:name=".activity.CityActivity"
@@ -53,7 +52,7 @@
         <!-- 高德权限 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="5c5963867fdf2fb9122e5a9de9dffd04" />
+            android:value="00e6832a02066361698e68d306f1e448" />
 
         <!-- 拍照权限 -->
         <provider
@@ -90,6 +89,10 @@
         <activity
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name=".activity.SearchActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -162,6 +165,14 @@
         </activity>
         <!-- liyan  end -->
 
+        <activity android:name=".activity.Sellcars" />
+        <activity android:name=".activity.BrandChoice" />
+        <activity android:name=".activity.ModelsChoose" />
+        <activity android:name=".activity.CarChoose" />
+        <activity android:name=".activity.CarPhoto" />
+        <activity android:name=".activity.CarDetailsActivity" />
+        <activity android:name=".activity.CarCompDetail" />
+        <activity android:name=".activity.CarDetailsKeyActivity"></activity>
     </application>
 
 </manifest>

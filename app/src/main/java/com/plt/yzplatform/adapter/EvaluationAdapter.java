@@ -2,7 +2,6 @@ package com.plt.yzplatform.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +17,6 @@ import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.QueryEvaluate;
 import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
-import com.plt.yzplatform.utils.PhotoUtils;
-import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.AutoNextLineLinearlayout;
 import com.plt.yzplatform.view.CircleImageView;
 
@@ -78,6 +75,28 @@ public class EvaluationAdapter extends BaseAdapter {
         }else {
             viewHolder= (ViewHolder) convertView.getTag();
         }
+        //TODO  list有卡顿记得优化
+        Log.w("test", viewHolder.evaluation_image.toString());
+        if(result.get(position).getPers_head_file_id()!=null)
+            OKhttptils.getPic(context,result.get(position).getPers_head_file_id(),viewHolder.evaluation_image);
+//        getBitmap(result.get(position).getPers_head_file_id(),viewHolder.evaluation_image);
+        viewHolder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
+        viewHolder.evaluate_layout.removeAllViews();
+        viewHolder.evaluation_list_appraiseTime.setText(result.get(position).getLog_date());
+        viewHolder.evaluation_list_appraise.setText(result.get(position).getLog_4());
+        String[] split = result.get(position).getLog_3().split(",");
+        for (int i = 0; i <split.length ; i++) {
+            getDictionaries(Config.GETVALUE,split[i],viewHolder.evaluate_layout,i);
+        }
+        viewHolder.evaluation_list_phone.setText(result.get(position).getPers_nickname());
+//        FlowLayout viewById = convertView.findViewById(R.id.evaluation_list_flow);
+//        fillAutoSpacingLayout(viewById,split);
+        Log.w("test", result.get(position).getLog_2() + ",");
+        viewHolder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
+        viewHolder.evaluation_list_star4.setImageResource(R.drawable.pj_hstar);
+        viewHolder.evaluation_list_star3.setImageResource(R.drawable.pj_hstar);
+        viewHolder.evaluation_list_star2.setImageResource(R.drawable.pj_hstar);
+        viewHolder.evaluation_list_star1.setImageResource(R.drawable.pj_hstar);
 
         switch (result.get(position).getLog_2()) {
             case "5":
@@ -92,66 +111,57 @@ public class EvaluationAdapter extends BaseAdapter {
                 viewHolder.evaluation_list_star1.setImageResource(R.drawable.pj_pinkstar);
                 break;
         }
-//        getBitmap(result.get(position).getPers_head_file_id(),viewHolder.evaluation_image);
-        viewHolder.evaluation_list_appraiseTime.setText(result.get(position).getLog_date());
-        viewHolder.evaluation_list_appraise.setText(result.get(position).getLog_4());
-        String[] split = result.get(position).getLog_3().split(",");
-        viewHolder.evaluate_layout.removeAllViews();
-        for (int i = 0; i <split.length ; i++) {
-            getDictionaries(Config.GETVALUE,split[i],viewHolder.evaluate_layout,i);
-        }
-        viewHolder.evaluation_list_phone.setText(result.get(position).getPers_nickname());
-//        FlowLayout viewById = convertView.findViewById(R.id.evaluation_list_flow);
-//        fillAutoSpacingLayout(viewById,split);
+
         return convertView;
     }
-    class ViewHolder{
+    static class ViewHolder{
         AutoNextLineLinearlayout evaluate_layout;
         CircleImageView evaluation_image;
         TextView evaluation_list_phone,evaluation_list_appraiseTime,evaluation_list_appraise;
         ImageView evaluation_list_star1,evaluation_list_star2,evaluation_list_star3,evaluation_list_star4,evaluation_list_star5;
     }
-    public void getBitmap(final String file_id, final ImageView circleImageView){
-        //通过ID获得图片
-        if(file_id!=null){
-            if (NetUtil.isNetAvailable(context)) {
-                map.clear();
-                map.put("file_id",file_id);
-                OKhttptils.post((Activity) context, Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
-                    @Override
-                    public void success(String response) {
-                        Log.w("aaa", "onResponse获取base64: " + response );
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString("status").equals("1")) {
-                                String data = jsonObject.getString("data");
-                                JSONObject object = new JSONObject(data);
-                                String file_content = object.getString("file_content");
-                                if (file_content.contains("base64,"))
-                                    file_content = file_content.split("base64,")[1];
-                                Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
-                                Log.d("aaaa", "file_id: "+bitmap);
-                                if (bitmap!=null)
-                                    circleImageView.setImageBitmap(bitmap);
-                                else
-                                    circleImageView.setImageResource(R.drawable.circle_2);
-                            } else {
-                                ToastUtil.noNAR(context);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void fail(String response) {
-                        Toast.makeText(context, "获取失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                ToastUtil.noNetAvailable(context);
-            }
-        }
-    }
+
+//    public void getBitmap(final String file_id, final ImageView circleImageView){
+//        //通过ID获得图片
+//        if(file_id!=null){
+//            if (NetUtil.isNetAvailable(context)) {
+//                map.clear();
+//                map.put("file_id",file_id);
+//                OKhttptils.post((Activity) context, Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
+//                    @Override
+//                    public void success(String response) {
+//                        Log.w("aaa", "onResponse获取base64: " + response );
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            if (jsonObject.getString("status").equals("1")) {
+//                                String data = jsonObject.getString("data");
+//                                JSONObject object = new JSONObject(data);
+//                                String file_content = object.getString("file_content");
+//                                if (file_content.contains("base64,"))
+//                                    file_content = file_content.split("base64,")[1];
+//                                Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
+//                                Log.d("aaaa", "file_id: "+bitmap);
+//                                if (bitmap!=null)
+//                                    circleImageView.setImageBitmap(bitmap);
+//                                else
+//                                    circleImageView.setImageResource(R.drawable.circle_2);
+//                            } else {
+//                                ToastUtil.noNAR(context);
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    @Override
+//                    public void fail(String response) {
+//                        Toast.makeText(context, "获取失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            } else {
+//                ToastUtil.noNetAvailable(context);
+//            }
+//        }
+//    }
     public void getDictionaries(String url, String dict_id, final AutoNextLineLinearlayout evaluate_layout, final int i){
         map.clear();
         map.put("dict_id",dict_id);

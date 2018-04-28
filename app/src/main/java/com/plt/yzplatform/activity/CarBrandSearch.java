@@ -386,6 +386,7 @@ public class CarBrandSearch extends BaseActivity {
 
     // 通过品牌查出车系弹出popwindow
     List<Map<String, String>> carList = new ArrayList<>();
+    //TODO    修改右边popowindow图片
     private void popSearchChexi(final String brandName, final String brandId,final String imageId) {
         carList.clear();
         Map<String, String> brand = new HashMap<>();
@@ -463,7 +464,6 @@ public class CarBrandSearch extends BaseActivity {
                     String url = Config.BASE_URL +  Config.Y +imageId;
                     imageView.setImageBitmap(null);
                     Picasso.with(CarBrandSearch.this).load(url).into(imageView);
-
                     TextView tv_all = holder.getView(R.id.tv_all);
                     tv_all.setOnClickListener(new View.OnClickListener() {
                         @Override
