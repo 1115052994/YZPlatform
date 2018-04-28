@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.jaygoo.widget.RangeSeekbar;
 import com.plt.yzplatform.AppraiseInterface;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.BSXCarMoreAdapter;
@@ -32,9 +33,9 @@ import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.PhotoUtils;
 import com.plt.yzplatform.utils.Prefs;
-import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.ExpandableGridView;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
 
 public class AddCarProduct extends BaseActivity {
-    private static final String TAG =  "添加汽车产品";
+    private static final String TAG = "添加汽车产品";
     @BindView(R.id.gv_bsx)
     ExpandableGridView gvBsx;
     @BindView(R.id.gv_pfbz)
@@ -83,10 +84,9 @@ public class AddCarProduct extends BaseActivity {
     TextView carCx;
     @BindView(R.id.car_sp)
     TextView carSp;
-    private boolean bs=false;
-    private boolean pf=false;
-    private boolean zw=false;
-    private boolean rl=false;
+    @BindView(R.id.seekbar)
+    RangeSeekbar seekbar;
+
 
     private HashMap<String, String> map = new HashMap<>();
     private HashMap<String, Object> map2 = new HashMap<>();
@@ -101,6 +101,12 @@ public class AddCarProduct extends BaseActivity {
     private String car_seating; //座位数   已赋值
     private String car_fuel_type; //燃料类型   已赋值
     private String car_resum;  //车辆简历    已赋值
+    private String car_place_city; //所在城市   已赋值
+    private double car_displacement; //车排量  已赋值
+    private String car_name;  //车辆名称
+
+    private float plStart = 0;
+    private float plEnd = 5.0f;// 不限标记为
 
 
     //变速箱
@@ -115,6 +121,8 @@ public class AddCarProduct extends BaseActivity {
     //燃料类型
     private List<String> carRllxList = new ArrayList<>();
     private BSXCarMoreAdapter rllxAdapter;
+
+    private DecimalFormat df = new DecimalFormat("0.0");
 
 
     // 保留选中position
@@ -154,10 +162,10 @@ public class AddCarProduct extends BaseActivity {
         String series_itim = intent.getStringExtra("series_itim");
         String tv_carbrand = intent.getStringExtra("tv_carbrand");
         //获取车型
-        if(series_itim!=null){
-            Log.d("aaaaa", "aaa: "+series_itim);
-            carCx.setText(series_itim+" "+tv_carbrand);
-            car_models=series_itim;
+        if (series_itim != null) {
+            Log.d("aaaaa", "aaa: " + series_itim);
+            carCx.setText(series_itim + " " + tv_carbrand);
+            car_models = series_itim;
         }
         //得到当前位置
         getLocation();
@@ -165,7 +173,7 @@ public class AddCarProduct extends BaseActivity {
 
     private void getLocation() {
         Log.d("aaaa", "getLocation: ");
-        Log.d(TAG, "getLocation: "+ Prefs.with(getApplicationContext()).read("user_token"));
+        Log.d(TAG, "getLocation: " + Prefs.with(getApplicationContext()).read("user_token"));
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(AddCarProduct.this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
@@ -174,114 +182,34 @@ public class AddCarProduct extends BaseActivity {
                 Gson gson = GsonFactory.create();
                 Enterprise enterprise = gson.fromJson(response, Enterprise.class);
                 Enterprise.DataBean.ResultBean result = enterprise.getData().getResult();
-                String auth_comp_city = result.getAuth_comp_city();          //市
-                String auth_comp_province = result.getAuth_comp_province();  //省
-                Log.d("aaaa", "success: "+auth_comp_city+auth_comp_province);
+                car_place_city = result.getAuth_comp_city();          //市
+//                String auth_comp_province = result.getAuth_comp_province();  //省
+//                Log.d("aaaa", "success: "+car_place_city+auth_comp_province);
 
             }
 
             @Override
             public void fail(String response) {
-                Gson gson = GsonFactory.create();
-                Enterprise enterprise = gson.fromJson(response, Enterprise.class);
-                Log.d("aaaa", "fail: "+response);
-                ToastUtil.show(com.plt.yzplatform.activity.AddCarProduct.this,enterprise.getMessage());
+//                Gson gson = GsonFactory.create();
+//                Enterprise enterprise = gson.fromJson(response, Enterprise.class);
+                Log.d("aaaa", "fail: " + response);
+//                ToastUtil.show(com.plt.yzplatform.activity.AddCarProduct.this, enterprise.getMessage());
             }
         });
-//        if (NetUtil.isNetAvailable(this)) {
-//            OkHttpUtils.get()
-//                    .url(Config.GETCOMP_INFO)
-//                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(EnterpriseActivity.this);
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.d(TAG, "onResponse获取数据: " + response);
-//                            Gson gson = GsonFactory.create();
-//                            Enterprise enterprise = gson.fromJson(response, Enterprise.class);
-//                            if ("1".equals(enterprise.getStatus())) {
-//                                Enterprise.DataBean dataBean = enterprise.getData();
-//                                if (null == dataBean.getResult()) {
-//                                    //如果为空 只加载服务类型
-//                                    getService1();
-//                                    uploading.setOnClickListener(new View.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(View view) {
-//                                            Log.w(TAG, "onClick城市城市！！！: " + shi  );
-//                                            getCityId(shi.substring(0,shi.length()-1));
-//                                            uploading1();
-//                                        }
-//                                    });
-//                                } else {
-//                                    //获取到数据 填充数据
-//                                    Enterprise.DataBean.ResultBean resultBean = enterprise.getData().getResult();
-//                                    //审核状态
-//                                    if ("1".equals(resultBean.getAuth_audit_state())) {
-//                                        setRightText("审核拒绝");
-//                                        setEdit(compAddress, true);
-//                                        setEdit(getLocation, true);
-//                                        setEdit(compAddress, true);
-//                                        setEdit(business, true);
-//                                        setEdit(linkName, true);
-//                                        setEdit(linkPhone, true);
-//                                        setEdit(headPic, true);
-//                                        uploading.setVisibility(View.VISIBLE);
-//                                    } else if ("2".equals(resultBean.getAuth_audit_state())) {
-//                                        setRightText("审核通过");
-//                                        uploading.setVisibility(View.VISIBLE);
-//                                    } else if ("3".equals(resultBean.getAuth_audit_state())) {
-//                                        setRightText("正在审核");
-//                                        setEdit(compAddress, true);
-//                                        setEdit(getLocation, true);
-//                                        setEdit(compAddress, true);
-//                                        setEdit(business, true);
-//                                        setEdit(linkName, true);
-//                                        setEdit(linkPhone, true);
-//                                        setEdit(headPic, true);
-//                                        uploading.setVisibility(View.GONE);
-//                                    }
-//                                    //赋值
-//                                    compName.setText(resultBean.getAuth_comp_name());
-//                                    getLocation.setText(resultBean.getAuth_comp_lon() + "," + resultBean.getAuth_comp_lat());
-//                                    compAddress.setText(resultBean.getAuth_comp_addr());
-//                                    String yingye = resultBean.getAuth_comp_file_id();
-//                                    Prefs.with(getApplicationContext()).write("营业执照",yingye);
-//                                    business.setText("已上传");
-//                                    linkName.setText(resultBean.getAuth_comp_linkman());
-//                                    linkPhone.setText(resultBean.getAuth_comp_phone());
-//                                    String mentou = resultBean.getAuth_comp_img_head_file_id();
-//                                    Prefs.with(getApplicationContext()).write("门头照",mentou);
-//                                    headPic.setText("已上传");
-//                                    updateType = resultBean.getAuth_comp_service_type();
-//                                    lon = String.valueOf(resultBean.getAuth_comp_lon());
-//                                    lat = String.valueOf(resultBean.getAuth_comp_lat());
-//                                    province_id = resultBean.getAuth_comp_province();
-//                                    city_id = resultBean.getAuth_comp_city();
-//
-//                                    String as [] = updateType.split(", ");
-//                                    for (int i = 0; i < as.length ; i++) {
-//                                        type_id.add(as[i]);
-//                                    }
-//
-//                                    getService2();
-//                                    uploading.setOnClickListener(new View.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(View view) {
-//                                            uploading2();
-//                                        }
-//                                    });
-//                                }
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(this);
-//        }
+        seekbar.setValue(1f);
+        seekbar.setOnRangeChangedListener(new RangeSeekbar.OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekbar rangeSeekbar, float min, float max, boolean isFromUser) {
+                if (isFromUser) {
+//                    tv2.setText(""+(float)Math.round(min*10)/10);
+                    car_displacement=(double)Math.round(min*10)/10;
+                    Log.d(TAG, "onRangeChanged: "+(double)Math.round(min*10)/10);
+                    seekbar.setLeftProgress(df.format(min));
+                }
+            }
+        });
+
+
     }
 
 
@@ -315,12 +243,12 @@ public class AddCarProduct extends BaseActivity {
                 picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
                     @Override
                     public void onDatePicked(String year, String month, String day) {
-                        carSp.setText(year+"年"+month+"月"+day+"日");
+                        carSp.setText(year + "年" + month + "月" + day + "日");
 
                         try {
                             SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-                            car_time = bartDateFormat.parse(year+"年"+month+"月"+day+"日");
-                            Log.d("aaaaa", "onDatePicked: "+car_time);
+                            car_time = bartDateFormat.parse(year + "年" + month + "月" + day + "日");
+                            Log.d("aaaaa", "onDatePicked: " + car_time);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -330,27 +258,7 @@ public class AddCarProduct extends BaseActivity {
                 picker.show();
             }
         });
-        //下一步
-        butText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                car_resum = carResume.getText().toString().trim();
-                if(!carLc.getText().toString().trim().isEmpty()){
-                    car_mileage = Double.parseDouble(carLc.getText().toString().trim());
-                }
-                if(!carSj.getText().toString().trim().isEmpty()){
-                    car_price=Double.parseDouble(carSj.getText().toString().trim());
-                }
-                if(bs&&pf&&zw&&rl&&carCjh!=null&&carCx!=null&&carPp!=null&&carLc!=null&&carSj!=null&&carSp!=null&&carResume!=null){
-                    //已选择
-                }
-                Log.d("aaaaa", "onClick: "+"车架号"+car_number+"----品牌id"+car_brand+"----车型"+
-                        car_models+"----车显里程"+car_mileage+"----车辆售价"+car_price+"----上牌时间"+car_time+
-                        "----变速箱"+car_gearbox+"----排放标准"+car_letout+"----座位数"+car_seating+"----燃料类型"+
-                        car_fuel_type+"----车辆简历"+car_resum);
-//              PostMeages(car_number,car_brand,car_models,car_mileage,car_price,car_time,car_gearbox,car_letout,car_seating,car_fuel_type,car_resum);
-            }
-        });
+
         //相机
         AddCarProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -477,11 +385,9 @@ public class AddCarProduct extends BaseActivity {
             String id_carbrand = bundle.getString("id_carbrand");
             car_brand = id_carbrand;
             carPp.setText(tv_carbrand);
+
             Log.d("aaaaa", "onActivityResult: " + "你选择了" + tv_carbrand + id_carbrand);
 
-        } else if (requestCode == 0 && resultCode == 3) {
-            //接收上牌时间数据
-            Log.d("aaaaa", "onActivityResult: "+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
 
 
@@ -489,108 +395,133 @@ public class AddCarProduct extends BaseActivity {
 
     public void initView() {
         bsxAdapter = new BSXCarMoreAdapter(this, carBsxList);
+        Log.w("test", carBsxList.size() + "...........");
         bsxAdapter.setOnItemClickListener(new AppraiseInterface() {
             @Override
             public void onClick(View view, int position) {
-                //设置响应事件
-                if (bsx != null) {
-                    // 取消之前选中
-                    bsx.setSelected(false);
-                    //设置字体颜色
-                    TextView tv = bsx.findViewById(R.id.text_type1);
-                    tv.setTextColor(Color.parseColor("#333333"));
-                }
+                Log.i("BSXCarMoreAdapter","position===="+position);
+                    //设置响应事件
+                    if (bsx != null) {
+                        // 取消之前选中
+                        bsx.setSelected(false);
+                        //设置字体颜色
+                        TextView tv = bsx.findViewById(R.id.tv_type);
+                        tv.setTextColor(Color.parseColor("#333333"));
+                    }
                 view.setSelected(true);
                 //设置字体颜色
-                TextView tv = view.findViewById(R.id.text_type1);
+                TextView tv = view.findViewById(R.id.tv_type);
                 tv.setTextColor(Color.parseColor("#ff9696"));
                 bsx = view;
-                TextView text_type1 = view.findViewById(R.id.text_type1);
+                TextView text_type1 = view.findViewById(R.id.tv_type);
                 car_gearbox = text_type1.getText().toString().trim();
                 bsxPosition = position;
-                bs=true;
+
+
             }
         });
         gvBsx.setAdapter(bsxAdapter);
+//
+//        pfbzAdapter = new BSXCarMoreAdapter(this, carPfbzList);
+//        pfbzAdapter.setOnItemClickListener(new AppraiseInterface() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                //设置响应事件
+//                if (pfbz != null) {
+//                    // 取消之前选中
+//                    pfbz.setSelected(false);
+//                    //设置字体颜色
+//                    TextView tv = pfbz.findViewById(R.id.tv_type);
+//                    tv.setTextColor(Color.parseColor("#333333"));
+//                }
+//                view.setSelected(true);
+//                //设置字体颜色
+//                TextView tv = view.findViewById(R.id.tv_type);
+//                tv.setTextColor(Color.parseColor("#ff9696"));
+//                pfbz = view;
+//                TextView text_type1 = view.findViewById(R.id.tv_type);
+//                car_letout = text_type1.getText().toString().trim();
+//                pfbzPosition = position;
+//            }
+//        });
+//        gvPfbz.setAdapter(pfbzAdapter);
+//
+//        zwsAdapter = new BSXCarMoreAdapter(this, carZwsList);
+//        zwsAdapter.setOnItemClickListener(new AppraiseInterface() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                //设置响应事件
+//                if (zws != null) {
+//                    // 取消之前选中
+//                    zws.setSelected(false);
+//                    //设置字体颜色
+//                    TextView tv = zws.findViewById(R.id.tv_type);
+//                    tv.setTextColor(Color.parseColor("#333333"));
+//                }
+//                view.setSelected(true);
+//                //设置字体颜色
+//                TextView tv = view.findViewById(R.id.tv_type);
+//                tv.setTextColor(Color.parseColor("#ff9696"));
+//                zws = view;
+//                TextView text_type1 = view.findViewById(R.id.tv_type);
+//                car_seating = text_type1.getText().toString().trim();
+//                zwsPosition = position;
+//            }
+//        });
+//        gvZws.setAdapter(zwsAdapter);
+//
+//        rllxAdapter = new BSXCarMoreAdapter(this, carRllxList);
+//        rllxAdapter.setOnItemClickListener(new AppraiseInterface() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                //设置响应事件
+//                if (rllx != null) {
+//                    // 取消之前选中
+//                    rllx.setSelected(false);
+//                    //设置字体颜色
+//                    TextView tv = rllx.findViewById(R.id.tv_type);
+//                    tv.setTextColor(Color.parseColor("#333333"));
+//                }
+//                view.setSelected(true);
+//                //设置字体颜色
+//                TextView tv = view.findViewById(R.id.tv_type);
+//                tv.setTextColor(Color.parseColor("#ff9696"));
+//                rllx = view;
+//                TextView text_type1 = view.findViewById(R.id.tv_type);
+//                car_fuel_type = text_type1.getText().toString().trim();
+//                rllxPosition = position;
+//            }
+//        });
+//        gvRllx.setAdapter(rllxAdapter);
 
-        pfbzAdapter = new BSXCarMoreAdapter(this, carPfbzList);
-        pfbzAdapter.setOnItemClickListener(new AppraiseInterface() {
+
+        //下一步
+        butText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, int position) {
-                //设置响应事件
-                if (pfbz != null) {
-                    // 取消之前选中
-                    pfbz.setSelected(false);
-                    //设置字体颜色
-                    TextView tv = pfbz.findViewById(R.id.text_type1);
-                    tv.setTextColor(Color.parseColor("#333333"));
+            public void onClick(View v) {
+                car_resum = carResume.getText().toString().trim();
+                if (!carLc.getText().toString().trim().isEmpty()) {
+                    car_mileage = Double.parseDouble(carLc.getText().toString().trim());
                 }
-                view.setSelected(true);
-                //设置字体颜色
-                TextView tv = view.findViewById(R.id.text_type1);
-                tv.setTextColor(Color.parseColor("#ff9696"));
-                pfbz = view;
-                TextView text_type1 = view.findViewById(R.id.text_type1);
-                car_letout=text_type1.getText().toString().trim();
-                pfbzPosition = position;
-                pf=true;
+                if (!carSj.getText().toString().trim().isEmpty()) {
+                    car_price = Double.parseDouble(carSj.getText().toString().trim());
+                }
+                //&&
+                if (carCjh != null && carCx != null && carPp != null && carLc != null && carSj != null && carSp != null && carResume != null) {
+                    //已选择
+                    Toast.makeText(AddCarProduct.this, "请选择完整", Toast.LENGTH_SHORT).show();
+                }
+                Log.d("aaaaa", "onClick: " + "车架号" + car_number + "----品牌id" + car_brand + "----车型" +
+                        car_models + "----车显里程" + car_mileage + "----车辆售价" + car_price + "----上牌时间" + car_time +
+                        "----变速箱" + car_gearbox + "----排放标准" + car_letout + "----座位数" + car_seating + "----燃料类型" +
+                        car_fuel_type + "----车辆简历" + car_resum);
+//              PostMeages(car_number,car_brand,car_models,car_mileage,car_price,car_time,car_gearbox,car_letout,car_seating,car_fuel_type,car_resum,,,car_place_city);
             }
         });
-        gvPfbz.setAdapter(pfbzAdapter);
-
-        zwsAdapter = new BSXCarMoreAdapter(this, carZwsList);
-        zwsAdapter.setOnItemClickListener(new AppraiseInterface() {
-            @Override
-            public void onClick(View view, int position) {
-                //设置响应事件
-                if (zws != null) {
-                    // 取消之前选中
-                    zws.setSelected(false);
-                    //设置字体颜色
-                    TextView tv = zws.findViewById(R.id.text_type1);
-                    tv.setTextColor(Color.parseColor("#333333"));
-                }
-                view.setSelected(true);
-                //设置字体颜色
-                TextView tv = view.findViewById(R.id.text_type1);
-                tv.setTextColor(Color.parseColor("#ff9696"));
-                zws = view;
-                TextView text_type1 = view.findViewById(R.id.text_type1);
-                car_seating = text_type1.getText().toString().trim();
-                zwsPosition = position;
-                zw=true;
-            }
-        });
-        gvZws.setAdapter(zwsAdapter);
-
-        rllxAdapter = new BSXCarMoreAdapter(this, carRllxList);
-        rllxAdapter.setOnItemClickListener(new AppraiseInterface() {
-            @Override
-            public void onClick(View view, int position) {
-                //设置响应事件
-                if (rllx != null) {
-                    // 取消之前选中
-                    rllx.setSelected(false);
-                    //设置字体颜色
-                    TextView tv = rllx.findViewById(R.id.text_type1);
-                    tv.setTextColor(Color.parseColor("#333333"));
-                }
-                view.setSelected(true);
-                //设置字体颜色
-                TextView tv = view.findViewById(R.id.text_type1);
-                tv.setTextColor(Color.parseColor("#ff9696"));
-                rllx = view;
-                TextView text_type1 = view.findViewById(R.id.text_type1);
-                car_fuel_type = text_type1.getText().toString().trim();
-                rllxPosition = position;
-                rl=true;
-            }
-        });
-        gvRllx.setAdapter(rllxAdapter);
     }
 
 
-    public void PostMeages(String car_number, String car_brand, String car_model, double car_mileage, double car_price, Date car_time, String car_gearbox,  String car_letout, String car_seating,String car_fuel_type, String car_resum, String car_name,double car_emissions,String car_place_city) {
+    public void postMeages(String car_number, String car_brand, String car_model, double car_mileage, double car_price, Date car_time, String car_gearbox, String car_letout, String car_seating, String car_fuel_type, String car_resum, String car_name, double car_emissions, String car_place_city) {
         map2.clear();
         if (NetUtil.isNetAvailable(this)) {
             map2.put("car_name", car_name);

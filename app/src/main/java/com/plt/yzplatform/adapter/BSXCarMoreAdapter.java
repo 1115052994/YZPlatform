@@ -1,6 +1,7 @@
 package com.plt.yzplatform.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class BSXCarMoreAdapter extends BaseAdapter {
     public BSXCarMoreAdapter(Context context,List<String> list){
         this.context = context;
         this.list = list;
+        Log.w("test", list.size() + "aaaaaaaaa");
     }
     @Override
     public int getCount() {
@@ -42,7 +44,7 @@ public class BSXCarMoreAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.text_type,null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_gv_carsxmoreone,null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         }else{
@@ -50,7 +52,9 @@ public class BSXCarMoreAdapter extends BaseAdapter {
         }
         final ViewGroup viewGroup = convertView.findViewById(R.id.bg);
         if (position == 0){
-            //viewGroup.setSelected(true);
+            Log.w("test", "aaabbb");
+            viewGroup.setSelected(true);
+            Log.w("test", ((TextView)viewGroup.getChildAt(0)).getText().toString());
             if (appraiseInterface!=null){
                 appraiseInterface.onClick(viewGroup,0);
             }
@@ -73,7 +77,7 @@ public class BSXCarMoreAdapter extends BaseAdapter {
     static class ViewHolder{
         TextView tv;
         public ViewHolder(View view){
-            tv = view.findViewById(R.id.text_type1);
+            tv = view.findViewById(R.id.tv_type);
         }
         public TextView getTv() {
             return tv;

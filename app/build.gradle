@@ -38,6 +38,7 @@ android {
     }
     repositories {
         jcenter() // If not already there
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -60,6 +61,8 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.9'
     compile 'com.squareup.picasso:picasso:2.5.1'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //RangeSeekBar
+    compile 'com.github.Jay-Goo:RangeSeekBar:v1.0.0'
     //日历
     compile('cn.qqtheme.framework:WheelPicker:1.5.5') {
         exclude group: 'com.android.support'
