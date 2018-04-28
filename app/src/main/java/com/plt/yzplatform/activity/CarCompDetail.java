@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.CommonRecyclerAdapter;
@@ -125,7 +124,7 @@ public class CarCompDetail extends BaseActivity {
 //                Bundle bundle = new Bundle();
 //                bundle.putString("comp_lon", comp_lon + "");
 //                bundle.putString("comp_lat", comp_lat + "");
-                Navigation(new LatLng(comp_lon,comp_lat));
+                navigation(comp_lon,comp_lat);
 //                JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
                 break;
         }

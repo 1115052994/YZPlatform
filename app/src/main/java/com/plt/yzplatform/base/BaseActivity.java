@@ -99,11 +99,16 @@ public class BaseActivity extends AppCompatActivity{
             });
         }
     }
-    public void Navigation(LatLng latLng){
+
+    /**
+     * 导航
+     */
+    public void navigation(double lat,double lon){
+
         //        Poi start = new Poi("三元桥", new LatLng(39.96087,116.45798), "");
 /**终点传入的是北京站坐标,但是POI的ID "B000A83M61"对应的是北京西站，所以实际算路以北京西站作为终点**/
-//        Poi end = new Poi("北京站", latLng, "");
-        Poi end = new Poi("北京站", new LatLng(39.904556, 116.427231), "");
+        Poi end = new Poi("",new LatLng(lat,lon), "");
+//        Poi end = new Poi("北京站", new LatLng(39.904556, 116.427231), "");
 //        List<Poi> wayList = new ArrayList();//途径点目前最多支持3个。
 //        wayList.add(new Poi("团结湖", new LatLng(39.93413,116.461676), ""));
 //        wayList.add(new Poi("呼家楼", new LatLng(39.923484,116.461327), ""));

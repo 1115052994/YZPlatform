@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -36,6 +35,8 @@ import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.ToastUtil;
+import com.plt.yzplatform.view.JudgeNestedScrollView;
+import com.plt.yzplatform.view.OrdinaryDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -103,7 +104,7 @@ public class CarDetailsActivity extends BaseActivity {
     @BindView(R.id.mRecycler)
     RecyclerView mRecycler;
     @BindView(R.id.mScroll)
-    NestedScrollView mScroll;
+    JudgeNestedScrollView mScroll;
     @BindView(R.id.mRefresh)
     SmartRefreshLayout mRefresh;
     @BindView(R.id.mOrder)
@@ -119,14 +120,14 @@ public class CarDetailsActivity extends BaseActivity {
     private Activity currtActivity = this;
     private String car_id;//二手车id
     private List<String> images = new ArrayList<>();
-    private String comp_lon;
-    private String comp_lat;
+    private double comp_lon;
+    private double comp_lat;
     private String comp_id;
 
     private String carName;
     private String price;
 
-    private int page = 1;
+    private int page = 0;
 
     private CarDetaile.DataBean.ResultBean.CarDetailBean carDetailBean;//各种信息
     private List<CarDetaile.DataBean.ResultBean.CarDetailBean.TopImgListBean> topImgListBeans = new ArrayList<>();//顶部广告图
@@ -153,11 +154,10 @@ public class CarDetailsActivity extends BaseActivity {
                     break;
                 case 004:
                     page = (int) msg.obj;
-                    Log.i(TAG, "handleMessage页数: " + page);
-                    if (page > 5) {
-
+                    if (page > 4) {
                     } else {
-                        for (int i = page * 4; i < page * 4 + 4; i++) {
+                        Log.i(TAG, "handleMessage页数: " + page);
+                        for (int i = page * 8; i < page * 8 + 8; i++) {
                             if (i < carImgInfoListBeans.size()) {
                                 adapter.insert(carImgInfoListBeans.get(i), adapter.getItemCount());
                                 adapter.notifyDataSetChanged();
@@ -189,6 +189,7 @@ public class CarDetailsActivity extends BaseActivity {
         getCollect();
         getSale();
         initView();
+        mScroll.setNeedScroll(true);
     }
 
     /* 查看是否订阅降价通知 */
@@ -208,30 +209,61 @@ public class CarDetailsActivity extends BaseActivity {
                     String data = jsonObject.getString("data");
                     JSONObject object = new JSONObject(data);
                     String result = object.getString("result");
-                    Log.d(TAG, "success降价: " + result);
                     if (result.isEmpty()) {
                         //没有订阅过
                         mSale.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Map<String,String> map = new HashMap<>();
-                                map.put("car_id",car_id);
-                                OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_SALE, map, new OKhttptils.HttpCallBack() {
+                                final OrdinaryDialog dialog = OrdinaryDialog.newInstance(currtActivity).setMessage1("订阅降价通知").setMessage2("确定订阅该车的降价通知吗？").showDialog();
+//                                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                dialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                                     @Override
-                                    public void success(String response) {
-                                        Log.i(TAG, "success订阅: " + response);
-                                    }
-
-                                    @Override
-                                    public void fail(String response) {
-                                        Log.i(TAG, "fail订阅: " + response);
+                                    public void onNoClick() {
+                                        dialog.dismiss();
                                     }
                                 });
+                                dialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+                                    @Override
+                                    public void onYesClick() {
+                                        dialog.dismiss();
+
+                                        Map<String,String> map = new HashMap<>();
+                                        map.put("car_id",car_id);
+                                        OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_SALE, map, new OKhttptils.HttpCallBack() {
+                                            @Override
+                                            public void success(String response) {
+                                                Log.i(TAG, "success添加订阅: " + response);
+                                                /**
+                                                 * {"data":{"result":"1"},"message":"","status":"1"}
+                                                 */
+//                                        try {
+//                                            JSONObject jsonObject1 = new JSONObject(response);
+//                                            String data = jsonObject1.getString("data");
+//                                            JSONObject object1 = new JSONObject(data);
+//                                            String result = object1.getString("result");
+//                                            if (result.isEmpty()){
+//
+//                                            }
+//
+//                                        } catch (JSONException e) {
+//                                            e.printStackTrace();
+//                                        }
+
+                                            }
+
+                                            @Override
+                                            public void fail(String response) {
+                                                Log.i(TAG, "fail添加订阅: " + response);
+                                            }
+                                        });
+                                    }
+                                });
+
                             }
                         });
                     }else {
                         //订阅过 不做任何操作
-                        Log.i(TAG, "success订阅: " + result);
+                        Log.i(TAG, "success订阅过: " + result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -353,7 +385,7 @@ public class CarDetailsActivity extends BaseActivity {
     /* 底部24张图 */
     private void initAdapter() {
         final List<CarDetaile.DataBean.ResultBean.CarDetailBean.CarImgInfoListBean> beanList = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 8; i++) {
             beanList.add(carImgInfoListBeans.get(i));
         }
         adapter = new CarDetailePicAdapter(beanList);
@@ -435,9 +467,10 @@ public class CarDetailsActivity extends BaseActivity {
         mName.setText(comp_name);
         int grade = carDetailBean.getComp_eval_level();
         mGrade.setRating(grade);
-        comp_lat = String.valueOf(carDetailBean.getComp_lat());
-        comp_lon = String.valueOf(carDetailBean.getComp_lon());
-        String km = String.valueOf(carDetailBean.getCar_mileage());
+        comp_lat = carDetailBean.getComp_lat();
+        comp_lon = carDetailBean.getComp_lon();
+        DecimalFormat df2 = new DecimalFormat("#0");
+        String km = String.valueOf(df2.format(carDetailBean.getCar_mileage()/10000));
         mKm.setText(km + "万公里");
         String sign_date = carDetailBean.getCar_sign_date();//上牌时间
         mWhen.setText(sign_date + "上牌");
@@ -474,223 +507,6 @@ public class CarDetailsActivity extends BaseActivity {
             @Override
             public void success(String response) {
                 Log.i(TAG, "success: " + response);
-                /**
-                 * {
-                 "data": {
-                 "result": {
-                 "carDetail": {
-                 "topImgList": [
-                 {
-                 "imgName": "正45度",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "1",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "正面",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "2",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "侧面",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "4",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "背面",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "6",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "中控区",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "11",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 }
-                 ],
-                 "car_emissions": "YZcarscreenpl1.0",
-                 "car_letout": "YZcarscreenpfbzsan",
-                 "car_comp_id": "24",
-                 "comp_visit_count": 714,
-                 "car_id": 5,
-                 "carImgInfoList": [
-                 {
-                 "imgName": "正45度",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "1",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "正面",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "2",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "前大灯",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "3",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "侧面",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "4",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "后车灯",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "5",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "背面",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "6",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "钥匙",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "7",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "左前车门",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "8",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "车门操控区",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "9",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "前座椅",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "10",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "中控区",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "11",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "方向盘",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "12",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "仪表盘",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "13",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "显示屏",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "14",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "档位",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "15",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "内车顶",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "16",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "后座椅",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "17",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "后备箱",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "18",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "发动机舱",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "19",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "底盘",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "20",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "车轮",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "21",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "灯光控制",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "22",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 },
-                 {
-                 "imgName": "雨刷器",
-                 "img": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "detail": "23",
-                 "IconImg": "a9e59108aefc44e6957c0a49a1a2ebda"
-                 }
-                 ],
-                 "car_24_file_id": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "car_vin": "",
-                 "car_audit_state": "2",
-                 "letout": "国三及以上",
-                 "car_name": "这是APP测试数据，别再给我动了！！！！ 速腾 \t\r\n2017款 1.6L 手动舒适型",
-                 "car_brand": "YZescxgescppcxdlxlcnkcxmy_58",
-                 "gearbox": "自动",
-                 "car_desc": "舒服",
-                 "car_oper_date": "2018-04-23 09:30:24",
-                 "car_model": "YZescxgescppcxdlxlcnkcxmy_58_11_2118",
-                 "car_deal_state": "ysj",
-                 "car_24_desc": "24",
-                 "car_place_city": "jinan",
-                 "auth_comp_addr": "缎库胡同15号",
-                 "car_type": "YZcarscreencarstypelxjc",
-                 "sale_count": 0,
-                 "car_gearbox": "YZcarscreenbsxzd",
-                 "auth_comp_name": "山东派乐特网络科技有限公司",
-                 "car_comp_user_id": "24",
-                 "car_sign_date": "2017-02-13",
-                 "car_fuel_type": "YZcarscreenoilqy",
-                 "car_visit_count": 12,
-                 "car_price": 120,
-                 "emissions": "1.0",
-                 "on_sale_count": 6,
-                 "car_seating": "YZcarscreenseatfour",
-                 "car_24_icon_file_id": "a9e59108aefc44e6957c0a49a1a2ebda",
-                 "car_mileage": 6
-                 }
-                 }
-                 },
-                 "message": "",
-                 "status": "1"
-                 }
-                 * */
 
                 Gson gson = GsonFactory.create();
                 CarDetaile carDetaile = gson.fromJson(response, CarDetaile.class);
@@ -769,6 +585,7 @@ public class CarDetailsActivity extends BaseActivity {
                 break;
             case R.id.mGPS:
                 //导航
+                navigation(comp_lat,comp_lon);
                 break;
             case R.id.mDetails:
                 //公司详情
@@ -851,7 +668,7 @@ public class CarDetailsActivity extends BaseActivity {
             public ImageView mPic;
             public TextView mType;
             public TextView mContent;
-            public LinearLayout mDetail;
+            public RelativeLayout mDetail;
 
             public ViewHolder(View rootView, boolean isItem) {
                 super(rootView);
@@ -860,7 +677,7 @@ public class CarDetailsActivity extends BaseActivity {
                     this.mPic = (ImageView) rootView.findViewById(R.id.mPic);
                     this.mType = (TextView) rootView.findViewById(R.id.mType);
                     this.mContent = (TextView) rootView.findViewById(R.id.mContent);
-                    this.mDetail = (LinearLayout) rootView.findViewById(R.id.mDetail);
+                    this.mDetail = (RelativeLayout) rootView.findViewById(R.id.mDetail);
                 }
             }
 

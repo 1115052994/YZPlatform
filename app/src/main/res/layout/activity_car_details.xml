@@ -18,7 +18,7 @@
         android:layout_below="@+id/linear"
         android:layout_weight="1">
 
-        <android.support.v4.widget.NestedScrollView
+        <com.plt.yzplatform.view.JudgeNestedScrollView
             android:id="@+id/mScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -505,7 +505,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </com.plt.yzplatform.view.JudgeNestedScrollView>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:id="@+id/recyclerView_foot_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <RelativeLayout
