@@ -4,6 +4,7 @@
     <!-- 屏幕顶端信息栏颜色 -->
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="cover_color">#66ffffff</color>
 
     <!-- 所有颜色在此处配置，以颜色英文命名 -->
     <!-- 底栏 -->
@@ -50,6 +51,7 @@
     <color name="back_f4">#f4f4f4</color>
     <color name="back_d6">#d6d6d6</color>
     <color name="text_ff96">#ff9696</color>
+    <color name="text_ff29">#ff2929</color>
     <color name="text_ff56">#ff5656</color>
     <color name="text_22">#222222</color>
     <color name="text_a2">#a2a2a2</color>

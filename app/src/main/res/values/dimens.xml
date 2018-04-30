@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="common0dp">0dp</dimen>
     <dimen name="common0.5dp">0.5dp</dimen>
     <dimen name="common1dp">1dp</dimen>
     <dimen name="common2dp">2dp</dimen>
+    <dimen name="common2.5dp">2.5dp</dimen>
     <dimen name="common3dp">3dp</dimen>
     <dimen name="common4dp">4dp</dimen>
     <dimen name="common5dp">5dp</dimen>
@@ -31,6 +34,7 @@
     <dimen name="common28dp">28dp</dimen>
     <dimen name="common30dp">30dp</dimen>
     <dimen name="common31dp">31dp</dimen>
+    <dimen name="common31.5dp">31.5dp</dimen>
     <dimen name="common33dp">33dp</dimen>
     <dimen name="common34dp">34dp</dimen>
     <dimen name="common35dp">35dp</dimen>
@@ -108,6 +112,11 @@
     <dimen name="common275dp">275dp</dimen>
     <dimen name="common300dp">300dp</dimen>
     <dimen name="common320dp">320dp</dimen>
+    <dimen name="common329dp">329</dimen>
+    <dimen name="common329.5dp">329.5</dimen>
+    <dimen name="common330dp">330dp</dimen>
+    <dimen name="common330.5dp">330.5dp</dimen>
+    <dimen name="common331dp">331dp</dimen>
     <dimen name="common333dp">333dp</dimen>
     <dimen name="common345dp">345dp</dimen>
     <dimen name="common350dp">350dp</dimen>

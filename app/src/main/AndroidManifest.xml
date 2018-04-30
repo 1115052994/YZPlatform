@@ -31,6 +31,11 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    //6比4自定義相機
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".YizhongApplication"
@@ -147,7 +152,18 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.AddCarProduct"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".camera.MainActivity" />
+        <activity android:name=".camera.FileActivity" />
+        <activity android:name=".camera.test.TestActivity" />
+        <activity android:name=".camera.PhotographActivity">
+            <intent-filter>
+                <action android:name="com.xqq.second" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.Sellcars" />
         <activity android:name=".activity.BrandChoice" />
         <activity android:name=".activity.ModelsChoose" />
@@ -155,8 +171,13 @@
         <activity android:name=".activity.CarPhoto" />
         <activity android:name=".activity.CarDetailsActivity" />
         <activity android:name=".activity.CarCompDetail" />
-        <activity android:name=".activity.MySubscribe" />
         <activity android:name=".activity.CarDetailsKeyActivity" />
+        <activity
+            android:name=".activity.UpdateCar"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.ProductList" />
+        <activity android:name=".activity.MySubscribe" />
         <activity android:name=".activity.MySubscribeMore" />
         <activity
             android:name=".activity.AccessCar"
