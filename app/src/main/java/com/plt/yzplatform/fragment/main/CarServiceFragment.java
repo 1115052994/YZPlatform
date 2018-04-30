@@ -454,7 +454,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                             mLocationClient.startLocation();
                         } else {
                             // 未获取权限
-                            Toast.makeText(getActivity(), "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "您没有授权定位权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -750,7 +750,12 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void fail(String response) {
-                ToastUtil.noNAR(getContext());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    ToastUtil.show(getContext(),jsonObject.getString("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -765,7 +770,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 JumpUtil.newInstance().jumpRight(getContext(), CityActivity.class, 01, bundle);
                 break;
             case R.id.mSearch:
-                JumpUtil.newInstance().jumpRight(getContext(), SearchActivity.class);
+                JumpUtil.newInstance().jumpRight(getContext(), SearchActivity.class,"comp");
                 break;
         }
     }

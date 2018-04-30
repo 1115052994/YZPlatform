@@ -117,4 +117,9 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     </style>
     <!--ly添加-->
+
+    <!--水印文字旋转90度-->
+    <declare-styleable name="WatermarkTextView">
+        <attr name="degree" format="dimension" />
+    </declare-styleable>
 </resources>

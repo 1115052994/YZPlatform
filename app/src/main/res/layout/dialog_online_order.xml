@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="@dimen/common300dp"
+        android:layout_height="@dimen/common210dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_white_cricle">
+
+        <LinearLayout
+            android:id="@+id/a_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/common19dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_ordinary_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common20dp"
+                android:layout_marginRight="@dimen/common20dp"
+                android:text="提示"
+                android:drawableLeft="@drawable/b_b_c"
+                android:drawableRight="@drawable/b_b_c"
+                android:drawablePadding="@dimen/common6dp"
+                android:textSize="@dimen/text_size_18sp"
+                android:textColor="@color/theme_coloer"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common10dp"
+                android:text="留下号码，方便联系您看车"
+                android:gravity="center"
+                android:textColor="@color/black_33"
+                android:textSize="@dimen/text_size_15sp"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/mPhone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common25dp"
+            android:layout_marginLeft="@dimen/common45dp"
+            android:layout_marginRight="@dimen/common45dp"
+            android:background="@drawable/bg_theme_cricle5"
+            android:drawableLeft="@drawable/b_b_e"
+            android:paddingLeft="@dimen/common9dp"
+            android:layout_marginTop="@dimen/common15dp"
+            android:layout_below="@+id/a_title"
+            android:drawablePadding="@dimen/common9dp"
+            android:textSize="@dimen/text_size_13sp"
+            android:textColorHint="@color/ba"
+            android:inputType="number"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:textColor="@color/black_33"
+            android:hint="请输入手机号"/>
+
+        <TextView
+            android:id="@+id/mTime"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common25dp"
+            android:layout_marginLeft="@dimen/common45dp"
+            android:layout_marginRight="@dimen/common45dp"
+            android:background="@drawable/bg_theme_cricle5"
+            android:drawableLeft="@drawable/b_b_time"
+            android:paddingLeft="@dimen/common9dp"
+            android:layout_below="@+id/mPhone"
+            android:layout_marginTop="@dimen/common15dp"
+            android:drawablePadding="@dimen/common9dp"
+            android:textSize="@dimen/text_size_13sp"
+            android:textColorHint="@color/ba"
+            android:gravity="center_vertical"
+            android:textColor="@color/black_33"
+            android:drawableRight="@drawable/b_b_r"
+            android:paddingRight="@dimen/common9dp"
+            android:hint="点击选择看车时间"/>
+
+        <Button
+            android:id="@+id/mOk"
+            android:text="确定"
+            android:textSize="@dimen/text_size_13sp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/common120dp"
+            android:layout_height="@dimen/common28dp"
+            android:layout_marginBottom="@dimen/common15dp"
+            style="@style/theme_button"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

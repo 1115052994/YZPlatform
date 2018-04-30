@@ -87,6 +87,7 @@ public class ProductServiceActivity extends BaseActivity {
                         }
                         dataset.put(parentList.get(i), childList);
                     }
+                    Log.d(TAG, "handleMessage: " + dataset.toString());
                     initAdapter();
                     break;
             }

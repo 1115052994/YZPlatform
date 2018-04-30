@@ -31,6 +31,11 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    //6比4自定義相機
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".YizhongApplication"
@@ -42,8 +47,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            >
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.CityActivity"
@@ -52,7 +61,7 @@
         <!-- 高德权限 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="00e6832a02066361698e68d306f1e448" />
+            android:value="5c5963867fdf2fb9122e5a9de9dffd04" />
 
         <!-- 拍照权限 -->
         <provider
@@ -146,25 +155,18 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.AddCarProduct"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.CarDetailsActivity"></activity>
-
-        <!-- liyan start -->
-        <activity
-            android:name=".activity.OrdersSubmitActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+        <activity android:name=".camera.MainActivity" />
+        <activity android:name=".camera.FileActivity" />
+        <activity android:name=".camera.test.TestActivity" />
+        <activity android:name=".camera.PhotographActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.xqq.second" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.OrdersPaySuccessActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
-        <!-- liyan  end -->
-
         <activity android:name=".activity.Sellcars" />
         <activity android:name=".activity.BrandChoice" />
         <activity android:name=".activity.ModelsChoose" />
@@ -172,7 +174,22 @@
         <activity android:name=".activity.CarPhoto" />
         <activity android:name=".activity.CarDetailsActivity" />
         <activity android:name=".activity.CarCompDetail" />
-        <activity android:name=".activity.CarDetailsKeyActivity"></activity>
+        <activity android:name=".activity.CarDetailsKeyActivity" />
+        <activity
+            android:name=".activity.UpdateCar"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.ProductList" />
+        <activity android:name=".activity.MySubscribe" />
+        <activity android:name=".activity.MySubscribeMore" />
+        <activity
+            android:name=".activity.AccessCar"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.AccessResult"></activity>
+        <activity android:name=".CarPhotosActivity" />
+        <activity android:name=".activity.PriceWarnActivity" />
+        <activity android:name=".activity.CompOrderListsActivity"/>
     </application>
 
 </manifest>

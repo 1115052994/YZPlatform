@@ -156,6 +156,9 @@ public class Config {
     //添加二手车收藏
     public static final String ACCRETIONCOLLCAR = M + S + "accretionCollCar";
 
+    //添加二手车图片
+    public static final String ACCRETIONPICTURECAR = M + S + "accretionPictureCar";
+
     //添加二手车收藏
     public static final String ACCRETIONCOLLCOMP = M + S + "accretionCollComp ";
 
@@ -272,9 +275,27 @@ public class Config {
     //二手车详情 - 查看是否订阅降价通知
     public static final String CAR_DETAIL_IS_SALE =  URL + S + "whetherSubscription";
 
+    //二手车详情 - 在线预约
+    public static final String CAR_DETAIL_ONLINE_ORDER = URL + S + "accretionSubscribe";
+
+    //二手车详情 - 车辆详参
+    public static final String CAR_DETAIL_KEY = URL + S + "queryCarParameter";
+
     // 二手车详情页查询所在公司信息
     public static final String FINDCOMPBYCOMPID = URL + S +"findCompByCompId";
 
     //查询车商下的二手车信息
     public static final String FINDCOMPCARBYCOMPID = URL + S +"findCompCarByCompId";
+
+    // 订阅添加
+    public static final String SUBSCRIPTIONFILTRATE = URL + S +"subscriptionFiltrate";
+    // 订阅修改
+    public static final String UPDATESUBSCRIPTIONFILTRATE = URL + S +"updateSubscriptionFiltrate";
+    // 订阅查询
+    public static final String SELECTUSERSUBSCRIPTIONFILTRATE = URL + S +"selectUserSubscriptionFiltrate";
+    // 订阅删除
+    public static final String DELETESUBSCRIPTIONFILTRATE = URL + S +"deleteSubscriptionFiltrate";
+
+    //个人中心 - 降价提醒
+    public static final String PERS_PRICE_WARN = URL + S + "QuerySubscription";
 }

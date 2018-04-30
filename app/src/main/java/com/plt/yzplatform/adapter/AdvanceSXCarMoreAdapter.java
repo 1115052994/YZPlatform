@@ -44,6 +44,10 @@ public class AdvanceSXCarMoreAdapter extends BaseAdapter{
         }else{
             viewHolder = (AdvanceSXCarMoreAdapter.ViewHolder) convertView.getTag();
         }
+
+        TextView tv = viewHolder.getTv();
+        tv.setText(list.get(position));
+
         final ViewGroup viewGroup = convertView.findViewById(R.id.bg);
         if (position == 0){
             //viewGroup.setSelected(true);
@@ -59,10 +63,7 @@ public class AdvanceSXCarMoreAdapter extends BaseAdapter{
                         appraiseInterface.onClick(v,position);
                 }
             });
-
         }
-        TextView tv = viewHolder.getTv();
-        tv.setText(list.get(position));
         return convertView;
     }
 

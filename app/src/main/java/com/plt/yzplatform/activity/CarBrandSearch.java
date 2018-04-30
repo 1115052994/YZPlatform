@@ -35,6 +35,7 @@ import com.plt.yzplatform.entity.CarSearchBrandBean;
 import com.plt.yzplatform.utils.CommonUtils;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.OKhttptils;
+import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.view.ExpandableGridView;
 import com.plt.yzplatform.view.LetterSideBar;
 import com.squareup.picasso.Picasso;
@@ -42,10 +43,13 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -122,12 +126,18 @@ public class CarBrandSearch extends BaseActivity {
         });
 
         // 搜索历史
-//        Map<String, String> map = new HashMap<>();
-//        hisList.add(map);
-//        hisList.add(map);
-//        hisList.add(map);
-//        hisList.add(map);
-//        hisList.add(map);
+        String his = Prefs.with(getApplicationContext()).read("historyCarSearch");
+        if (his!=null&&!"".equals(his)) {
+            String[] history = his.split(",");
+            Map<String, String> map = new HashMap<>();
+            if (history[0] != null && !"".equals(history[0])) {
+                map.put("tv_carbrand", history[0]);
+                map.put("id_carbrand", history[1]);
+                map.put("image_carbrand", history[2]);
+                hisList.add(map);
+                Log.i("historyCarSearch","map="+map.toString());
+            }
+        }
         hisAdapter = new BrandGVAdapter(this, hisList);
         hisAdapter.setOnItemClickListener(new AppraiseInterface() {
             @Override
@@ -142,7 +152,7 @@ public class CarBrandSearch extends BaseActivity {
 //                TextView tv = view.findViewById(R.id.tv_carType);
 //                tv.setTextColor(Color.parseColor("#f35454"));
                 // 搜索车系
-                getChexiByBrand(hisList.get(position).get("tv_carbrand"), hisList.get(position).get("id_carbrand"),hisList.get(position).get("image_carbrand"));
+                getChexiByBrand(hisList.get(position).get("tv_carbrand"), hisList.get(position).get("id_carbrand"), hisList.get(position).get("image_carbrand"));
             }
         });
         gvSshis.setAdapter(hisAdapter);
@@ -162,7 +172,7 @@ public class CarBrandSearch extends BaseActivity {
 //                TextView tv = view.findViewById(R.id.tv_carType);
 //                tv.setTextColor(Color.parseColor("#f35454"));
                 // 搜索车系
-                getChexiByBrand(hotList.get(position).get("tv_carbrand"), hotList.get(position).get("id_carbrand"),hotList.get(position).get("image_carbrand"));
+                getChexiByBrand(hotList.get(position).get("tv_carbrand"), hotList.get(position).get("id_carbrand"), hotList.get(position).get("image_carbrand"));
             }
         });
         gvSshot.setAdapter(hotAdapter);
@@ -174,12 +184,12 @@ public class CarBrandSearch extends BaseActivity {
             @Override
             public void touch(CharSequence letter, boolean isTouch) {
                 String s = letter.toString();
-                Map<String,String> map;
+                Map<String, String> map;
                 int index = 0;
-                for (int i= 0;i<recyclerList.size();i++){
+                for (int i = 0; i < recyclerList.size(); i++) {
                     map = recyclerList.get(i);
-                    if (s.equals(map.get("tv_carbrand"))){
-                        index =i;
+                    if (s.equals(map.get("tv_carbrand"))) {
+                        index = i;
                     }
                 }
                 //recyclerViewCarBrand.scrollToPosition(index);
@@ -237,13 +247,15 @@ public class CarBrandSearch extends BaseActivity {
             @Override
             public void onClick(int position) {
                 // 搜索车系
-                Log.i("carbrand", position + "---" + recyclerList.get(position).get("tv_carbrand"));
-                getChexiByBrand(recyclerList.get(position).get("tv_carbrand"), recyclerList.get(position).get("id_carbrand"),recyclerList.get(position).get("image_carbrand"));
+                String letter = recyclerList.get(position).get("id_carbrand");
+                if (!"letter".equals(letter)) {
+                    getChexiByBrand(recyclerList.get(position).get("tv_carbrand"), recyclerList.get(position).get("id_carbrand"), recyclerList.get(position).get("image_carbrand"));
+                }
             }
         });
         recyclerViewCarBrand.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewCarBrand.setAdapter(recyclerAdapter);
-        // 滑动事让字母条滚动
+        // 滑动让字母条滚动
         recyclerViewCarBrand.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -378,7 +390,7 @@ public class CarBrandSearch extends BaseActivity {
             public void onClick(int position) {
                 window.dismiss();
                 //通过品牌搜索车系
-                getChexiByBrand(searchBrandList.get(position).get("tv_carbrand"), searchBrandList.get(position).get("id_carbrand"),searchBrandList.get(position).get("image_carbrand"));
+                getChexiByBrand(searchBrandList.get(position).get("tv_carbrand"), searchBrandList.get(position).get("id_carbrand"), searchBrandList.get(position).get("image_carbrand"));
             }
         });
         recyclerView.setAdapter(adapter);
@@ -386,8 +398,9 @@ public class CarBrandSearch extends BaseActivity {
 
     // 通过品牌查出车系弹出popwindow
     List<Map<String, String>> carList = new ArrayList<>();
+
     //TODO    修改右边popowindow图片
-    private void popSearchChexi(final String brandName, final String brandId,final String imageId) {
+    private void popSearchChexi(final String brandName, final String brandId, final String imageId) {
         carList.clear();
         Map<String, String> brand = new HashMap<>();
         brand.put("tv_carbrand", brandName);
@@ -429,7 +442,7 @@ public class CarBrandSearch extends BaseActivity {
         // 第一个参数是PopupWindow的父View，第二个参数是PopupWindow相对父View的位置，
         // 第三和第四个参数分别是PopupWindow相对父View的x、y偏移
         View parent = (View) search.getParent().getParent();
-        window.showAtLocation(parent, Gravity.TOP|Gravity.RIGHT,0,0);
+        window.showAtLocation(parent, Gravity.TOP | Gravity.RIGHT, 0, 0);
         // 设置背景颜色变暗
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -461,7 +474,8 @@ public class CarBrandSearch extends BaseActivity {
                     TextView tv_carbrand = holder.getView(R.id.tv_carbrand);
                     tv_carbrand.setText(brandName);
                     ImageView imageView = holder.getView(R.id.image_carbrand);
-                    String url = Config.BASE_URL +  Config.Y +imageId;
+                    String url = Config.BASE_URL + Config.Y + imageId;
+                    Log.i("historyCarSearch","imageId="+imageId);
                     imageView.setImageBitmap(null);
                     Picasso.with(CarBrandSearch.this).load(url).into(imageView);
                     TextView tv_all = holder.getView(R.id.tv_all);
@@ -602,11 +616,12 @@ public class CarBrandSearch extends BaseActivity {
     }
 
     // 通过品牌查车系
-    private void getChexiByBrand(final String brandName, final String brandId,final String imageId) {
+    private void getChexiByBrand(final String brandName, final String brandId, final String imageId) {
         // 保存选中的品牌
         selectedBrand.clear();
         selectedBrand.put("tv_carbrand", brandName);
         selectedBrand.put("id_carbrand", brandId);
+        selectedBrand.put("image_carbrand", imageId);
         Map<String, String> map = new HashMap<>();
         map.put("brandId", brandId);
         OKhttptils.post(this, Config.GETCARTRIANBYCARBRAND, map, new OKhttptils.HttpCallBack() {
@@ -624,7 +639,7 @@ public class CarBrandSearch extends BaseActivity {
                         for (CarChexiBean.DataBean.ResultBean.TrainListBean bean : trainList) {
                             searchChexiList.add(bean);
                         }
-                        popSearchChexi(brandName, brandId,imageId);
+                        popSearchChexi(brandName, brandId, imageId);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -649,15 +664,18 @@ public class CarBrandSearch extends BaseActivity {
     private Map<String, String> selectedBrand = new HashMap<>();
     //private Map<String,String> selectedChexi = new HashMap<>();
     private Map<String, String> selectedCarName = new HashMap<>();
+
     private void selected() {
         dataBackListener.backData(selectedBrand, selectedCarName);
         JumpUtil.newInstance().finishLeftTrans(this);
+        Prefs.with(getApplicationContext()).write("historyCarSearch", selectedBrand.get("tv_carbrand") + "," + selectedBrand.get("id_carbrand") + "," + selectedBrand.get("image_carbrand"));
     }
 
 
     // recyclerview滑动到指定位置
     private boolean move = false;
     private int mIndex = 0;
+
     private void moveToPosition(int n) {
         mIndex = n;
         //先从RecyclerView的LayoutManager中获取第一项和最后一项的Position
@@ -686,6 +704,7 @@ public class CarBrandSearch extends BaseActivity {
     }
 
     static DataBackListener dataBackListener;
+
     public interface DataBackListener {
         void backData(Map<String, String> brand, Map<String, String> carName);
     }

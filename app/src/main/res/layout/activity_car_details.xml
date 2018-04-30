@@ -609,6 +609,16 @@
                 android:text="客服" />
         </LinearLayout>
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/mTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/selector_to_top"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/tab_bottom"
+        android:layout_marginRight="@dimen/common15dp"
+        android:layout_marginBottom="@dimen/common30dp"/>
     <!--<RelativeLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:background="@drawable/bg_title_bar"-->

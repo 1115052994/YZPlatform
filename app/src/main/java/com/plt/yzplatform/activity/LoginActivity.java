@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
 
         } else {
             //自动登录
-            JumpUtil.newInstance().jumpRight(this,AddCarProduct.class);
+            JumpUtil.newInstance().jumpRight(this,MainActivity.class);
         }
     }
 

@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/mParent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/common44dp"
         android:text="车身参数"
         android:gravity="center_vertical"
         android:textSize="@dimen/text_size_18sp"/>

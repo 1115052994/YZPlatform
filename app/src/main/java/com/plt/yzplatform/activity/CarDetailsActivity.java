@@ -28,15 +28,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.plt.yzplatform.CarPhotosActivity;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.CarDetaile;
 import com.plt.yzplatform.gson.factory.GsonFactory;
+import com.plt.yzplatform.utils.DateUtil;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.OKhttptils;
+import com.plt.yzplatform.utils.StringUtil;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.plt.yzplatform.view.JudgeNestedScrollView;
+import com.plt.yzplatform.view.OnlineOrderDialog;
 import com.plt.yzplatform.view.OrdinaryDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -59,6 +63,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.picker.DatePicker;
 import io.reactivex.functions.Consumer;
 
 /* 二手车 - 车辆详情 */
@@ -140,8 +145,11 @@ public class CarDetailsActivity extends BaseActivity {
     private double comp_lat;
     private String comp_id;
 
+    private boolean isSale = false;
+
     private String carName;
     private String price;
+    private String order_time;
 
     private int page = 0;
 
@@ -206,34 +214,36 @@ public class CarDetailsActivity extends BaseActivity {
         getAd();
         getCollect();
         getSale();
-        initView();
         mScroll.setNeedScroll(true);
+//        mRecycler.setNestedScrollingEnabled(false);
     }
 
-    /* 查看是否订阅降价通知 */
+    /* 订阅降价通知 */
     private void getSale() {
-        Map<String, String> map = new HashMap<>();
-        map.put("car_id", car_id);
-        OKhttptils.post(currtActivity, Config.CAR_DETAIL_IS_SALE, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                Log.i(TAG, "success降价: " + response);
-                /**
-                 * {"data":{"result":""},"message":"","status":"1"}
-                 */
 
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String data = jsonObject.getString("data");
-                    JSONObject object = new JSONObject(data);
-                    String result = object.getString("result");
-                    if (result.isEmpty()) {
-                        //没有订阅过
-                        mSale.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+        mSale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Map<String, String> map = new HashMap<>();
+                map.put("car_id", car_id);
+                OKhttptils.post(currtActivity, Config.CAR_DETAIL_IS_SALE, map, new OKhttptils.HttpCallBack() {
+                    @Override
+                    public void success(String response) {
+                        Log.e(TAG, "success: " + response);
+                        /**
+                         * {"data":{"result":""},"message":"","status":"1"}
+                         */
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String data = jsonObject.getString("data");
+                            JSONObject object = new JSONObject(data);
+                            final String result = object.getString("result");
+                            Log.i(TAG, "success: " + result);
+                            if (!result.isEmpty()) {
+                                ToastUtil.show(currtActivity, "您已订阅过该车降价通知");
+                            } else {
+                                //未订阅过
                                 final OrdinaryDialog dialog = OrdinaryDialog.newInstance(currtActivity).setMessage1("订阅降价通知").setMessage2("确定订阅该车的降价通知吗？").showDialog();
-//                                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                                 dialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                                     @Override
                                     public void onNoClick() {
@@ -244,7 +254,6 @@ public class CarDetailsActivity extends BaseActivity {
                                     @Override
                                     public void onYesClick() {
                                         dialog.dismiss();
-
                                         Map<String, String> map = new HashMap<>();
                                         map.put("car_id", car_id);
                                         OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_SALE, map, new OKhttptils.HttpCallBack() {
@@ -254,44 +263,51 @@ public class CarDetailsActivity extends BaseActivity {
                                                 /**
                                                  * {"data":{"result":"1"},"message":"","status":"1"}
                                                  */
-//                                        try {
-//                                            JSONObject jsonObject1 = new JSONObject(response);
-//                                            String data = jsonObject1.getString("data");
-//                                            JSONObject object1 = new JSONObject(data);
-//                                            String result = object1.getString("result");
-//                                            if (result.isEmpty()){
-//
-//                                            }
-//
-//                                        } catch (JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
+                                                try {
+                                                    JSONObject jsonObject1 = new JSONObject(response);
+                                                    String data = jsonObject1.getString("data");
+                                                    JSONObject object1 = new JSONObject(data);
+                                                    String result = object1.getString("result");
+                                                    ToastUtil.show(currtActivity, "订阅成功");
 
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
 
                                             @Override
                                             public void fail(String response) {
                                                 Log.i(TAG, "fail添加订阅: " + response);
+                                                try {
+                                                    JSONObject jsonObject1 = new JSONObject(response);
+                                                    ToastUtil.show(currtActivity, jsonObject1.getString("message"));
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         });
                                     }
                                 });
 
                             }
-                        });
-                    } else {
-                        //订阅过 不做任何操作
-                        Log.i(TAG, "success订阅过: " + result);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void fail(String response) {
-                Log.i(TAG, "fail降价: " + response);
+                    @Override
+                    public void fail(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            ToastUtil.show(currtActivity, jsonObject.getString("message"));
 
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -487,8 +503,7 @@ public class CarDetailsActivity extends BaseActivity {
         mGrade.setRating(grade);
         comp_lat = carDetailBean.getComp_lat();
         comp_lon = carDetailBean.getComp_lon();
-        DecimalFormat df2 = new DecimalFormat("#0");
-        String km = String.valueOf(df2.format(carDetailBean.getCar_mileage() / 10000));
+        String km = String.valueOf(carDetailBean.getCar_mileage());
         mKm.setText(km + "万公里");
         String sign_date = carDetailBean.getCar_sign_date();//上牌时间
         mWhen.setText(sign_date + "上牌");
@@ -551,11 +566,8 @@ public class CarDetailsActivity extends BaseActivity {
             @Override
             public void fail(String response) {
                 Log.i(TAG, "fail: " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    ToastUtil.show(currtActivity, jsonObject.getString("message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (response.isEmpty()){
+                    ToastUtil.noNAR(currtActivity);
                 }
             }
         });
@@ -590,26 +602,12 @@ public class CarDetailsActivity extends BaseActivity {
         mBanner.start();
     }
 
-    private void initView() {
-//        //text设置首尾双引号
-//        String s = "11这是一段话话话话话话阿萨德离开静安寺的离开家啊山东iu群文件饿哦IQ物流金额卡萨丁见风使舵风口浪尖阿尔偶皮阿尔欧安尔碘；范加德里克；放假11";
-//        SpannableString spannableString = new SpannableString(s);
-//        Drawable drawable1 = getResources().getDrawable(R.drawable.b_a_e);
-//        Drawable drawable2 = getResources().getDrawable(R.drawable.b_a_f);
-//        drawable1.setBounds(0, 0, 18, 18);
-//        drawable2.setBounds(0, 0, 18, 18);
-//        ImageSpan imageSpan1 = new ImageSpan(drawable1);
-//        ImageSpan imageSpan2 = new ImageSpan(drawable2);
-//        spannableString.setSpan(imageSpan1, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//        spannableString.setSpan(imageSpan2, s.length() - 2, s.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//        mIntroduce.setText(spannableString);
-    }
-
-    @OnClick({R.id.mLoan, R.id.mGPS, R.id.mDetails, R.id.mDeploy, R.id.mKefu})
+    @OnClick({R.id.mLoan, R.id.mGPS, R.id.mDetails, R.id.mDeploy, R.id.mKefu, R.id.mTop,R.id.mOrder, R.id.mEvaluate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mLoan:
                 //车辆贷款
+                /* 未定 */
                 break;
             case R.id.mGPS:
                 //导航
@@ -617,18 +615,98 @@ public class CarDetailsActivity extends BaseActivity {
                 break;
             case R.id.mDetails:
                 //公司详情
+                JumpUtil.newInstance().jumpRight(currtActivity,CarCompDetail.class);
                 break;
             case R.id.mDeploy:
                 //查看详细参数配置
+                Bundle bundle = new Bundle();
+                bundle.putString("car_id",car_id);
+                JumpUtil.newInstance().jumpRight(currtActivity,CarDetailsKeyActivity.class,bundle);
                 break;
             case R.id.mKefu:
                 //拨打客服电话
                 call("4001198698");
                 break;
-//            case R.id.back:
-//                JumpUtil.newInstance().finishRightTrans(currtActivity);
-//                break;
+            case R.id.mTop:
+                //回到顶部
+                mScroll.scrollTo(0, 0);
+                break;
+            case R.id.mOrder:
+                //在线预约
+                showDialog();
+                break;
+            case R.id.mEvaluate:
+                //估价
+                break;
         }
+
+    }
+
+    /* 弹出预约dialog */
+    private void showDialog() {
+        final OnlineOrderDialog dialog = OnlineOrderDialog.newInstance(this).showDialog();
+        dialog.setTimePickerListener(new OnlineOrderDialog.onTimePickerListener() {
+            @Override
+            public void onTimePiker() {
+                DatePicker picker = new DatePicker(currtActivity);
+                picker.setRangeStart(DateUtil.getNextYear(),DateUtil.getNextMonth(),DateUtil.getNextDay());
+                picker.setRangeEnd(2050,12,31);
+                picker.setDividerColor(getResources().getColor(R.color.theme_coloer));
+                picker.setTextColor(getResources().getColor(R.color.theme_coloer));
+                picker.setCancelTextColor(getResources().getColor(R.color.theme_coloer));
+                picker.setSubmitTextColor(getResources().getColor(R.color.theme_coloer));
+                picker.setTopLineColor(getResources().getColor(R.color.theme_coloer));
+                picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                    @Override
+                    public void onDatePicked(String year, String month, String day) {
+                        order_time = year + "-" + month + "-" + day;
+                        dialog.setTime(order_time);
+                    }
+                });
+                picker.show();
+            }
+        });
+
+
+        dialog.setYesOnclickListener(new OnlineOrderDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                if (!dialog.getPhone().isEmpty() && StringUtil.isPhoneNum(dialog.getPhone())){
+                    if (!dialog.getTime().isEmpty()){
+                        Map<String,String> map = new HashMap<>();
+                        map.put("car_id",car_id);
+                        map.put("online_phone",dialog.getPhone());
+                        map.put("online_date",order_time + " 00:00:00");
+                        OKhttptils.post(currtActivity, Config.CAR_DETAIL_ONLINE_ORDER, map, new OKhttptils.HttpCallBack() {
+                            @Override
+                            public void success(String response) {
+                                Log.i(TAG, "success在线预约: " + response);
+                                /**
+                                 * {"data":{},"message":"","status":"1"}
+                                 */
+                                dialog.dismiss();
+                                ToastUtil.show(currtActivity,"预约成功");
+                            }
+
+                            @Override
+                            public void fail(String response) {
+                                Log.d(TAG, "fail在线预约: " + response);
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    ToastUtil.show(currtActivity,jsonObject.getString("message"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }else {
+                        ToastUtil.show(currtActivity,"请选择看车时间");
+                    }
+                }else {
+                    ToastUtil.show(currtActivity,"请填写正确的手机号");
+                }
+            }
+        });
     }
 
 
@@ -643,6 +721,7 @@ public class CarDetailsActivity extends BaseActivity {
             }
         });
     }
+
 
     class CarDetailePicAdapter extends RecyclerView.Adapter<CarDetailePicAdapter.ViewHolder> {
         private List<CarDetaile.DataBean.ResultBean.CarDetailBean.CarImgInfoListBean> carImgInfoListBeans;
@@ -678,8 +757,11 @@ public class CarDetailsActivity extends BaseActivity {
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
                     bundle.putInt("position", position);
-                    bundle.putString("file_id", id);
+                    bundle.putString("car_id", car_id);
+                    bundle.putString("car_name", carName);
+                    bundle.putString("car_price", price);
                     /* 跳转到大图界面 传下标和大图id */
+                    JumpUtil.newInstance().jumpRight(currtActivity, CarPhotosActivity.class, bundle);
                 }
             });
         }
