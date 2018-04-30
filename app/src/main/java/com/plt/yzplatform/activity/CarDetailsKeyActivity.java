@@ -12,9 +12,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
@@ -164,17 +161,7 @@ public class CarDetailsKeyActivity extends BaseActivity {
         });
     }
 
-    /* json转map */
-    public static Map<String, String> json2map(String str_json) {
-        Map<String, String> res = null;
-        try {
-            Gson gson = new Gson();
-            res = gson.fromJson(str_json, new TypeToken<Map<String, Object>>() {
-            }.getType());
-        } catch (JsonSyntaxException e) {
-        }
-        return res;
-    }
+
 
     /* 设置adapter 注：MapList的使用获取下标 */
     class MyExpandableListViewAdapter extends BaseExpandableListAdapter {
