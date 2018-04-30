@@ -1,5 +1,6 @@
 package com.plt.yzplatform.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -87,6 +88,18 @@ public class SearchActivity extends AppCompatActivity {
         Window win = getWindow();
         WindowManager.LayoutParams params = win.getAttributes();
         win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        Intent intent = getIntent();
+        if (intent!=null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle!=null){
+                type = bundle.getString("string","comp");
+                if("car".equals(type))
+                    name.setText("汽车");
+                else
+                    name.setText("商家");
+                Log.i("type","type="+type);
+            }
+        }
         initView();
         initData();
         getData();
@@ -189,7 +202,8 @@ public class SearchActivity extends AppCompatActivity {
             Prefs.with(getApplicationContext()).putStringSet("historyCars", value);
             Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyCars", null);
             for (String s : set) {
-                hisList.add(s);
+                if (hisList.size()<8)
+                    hisList.add(s);
             }
             hisGvAapter.notifyDataSetChanged();
         } else if ("comp".equals(type)) {
@@ -199,6 +213,7 @@ public class SearchActivity extends AppCompatActivity {
             Prefs.with(getApplicationContext()).putStringSet("historyComp", value);
             Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyComp", null);
             for (String s : set) {
+                if (hisList.size()<8)
                 hisList.add(s);
             }
             hisGvAapter.notifyDataSetChanged();

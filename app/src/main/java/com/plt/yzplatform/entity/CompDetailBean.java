@@ -121,6 +121,7 @@ public class CompDetailBean {
                  * comp_id : 24
                  * comp_order_count : 0
                  * auth_comp_img_head_file_id : dc7fcc03883c46babae332ac42ed01d3
+                 * auth_audit_state
                  */
 
                 private String auth_comp_addr;

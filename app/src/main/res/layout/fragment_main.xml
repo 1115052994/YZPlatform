@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:text="二手车详情"/>
 
-
     <Button
         android:id="@+id/test"
         android:layout_width="wrap_content"
@@ -41,4 +40,11 @@
         android:text="个人中心-降价提醒"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+        android:text="二手车商家详情"/>
+
+    <Button
+        android:id="@+id/test1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="订阅"/>
 </LinearLayout>

@@ -66,6 +66,13 @@ public class TrackIndicatorView extends HorizontalScrollView implements ViewPage
      * 1.设置一个适配器
      */
     public void setAdapter(IndicatorAdapter adapter) {
+        //------------------------jiang----add---------------
+//        if (mIndicatorGroup != null){
+//            for (int i=0;i<mIndicatorGroup.getChildCount();i++){
+//                mIndicatorGroup.removeViewAt(i);
+//            }
+//        }
+
         if (adapter == null) {
             throw new NullPointerException("adapter is null!");
         }
@@ -81,7 +88,7 @@ public class TrackIndicatorView extends HorizontalScrollView implements ViewPage
 
             // 6.Indicator与ViewPager一起联动 设置点击事件
 //            if (mViewPager != null) {
-                switchItemClick(itemView, i);//--------------改动
+                switchItemClick(itemView, i);//--------------改动--------
 //            }
         }
         // 4. 指定Item的宽度  getWidth() = 0

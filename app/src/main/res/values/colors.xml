@@ -55,12 +55,15 @@
     <color name="text_a2">#a2a2a2</color>
     <color name="text_33">#333333</color>
     <color name="text_38">#383838</color>
+    <color name="text_c8">#c8c8c8</color>
     <color name="text_66">#666666</color>
     <color name="text_ff2a">#ff2a2a</color>
     <color name="text_ff3c">#ff3c3c</color>
     <color name="text_44">#444444</color>
     <color name="text_99">#999999</color>
     <color name="text_ff35454">#f35454</color>
+    <color name="text_fe0000">#fe0000</color>
+    <color name="text_fe1616">#fe1616</color>
     <color name="colorSeekBarDefault">#c3c3c3</color>
     <!-- 分割线 -->
     <color name="gray_line">#c5c5c5</color>

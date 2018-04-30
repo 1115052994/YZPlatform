@@ -49,6 +49,7 @@
                         android:layout_height="@dimen/common30dp"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
+                        android:layout_marginLeft="@dimen/common15dp"
                         android:layout_marginTop="@dimen/common10dp">
                         <ImageView
                             android:id="@+id/image_rz"
@@ -56,16 +57,16 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/qy_rz"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/common15dp"/>
+                            />
                         <TextView
                             android:id="@+id/comp_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/common40dp"
+                            android:layout_toRightOf="@id/image_rz"
                             android:textSize="@dimen/text_size_16sp"
                             android:textColor="@color/text_33"
-                            android:text="北京目标在线"/>
+                            android:text=""/>
                        <!-- <CheckBox
                             android:layout_marginLeft="@dimen/common5dp"
                             android:id="@+id/star1"
@@ -141,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="@dimen/common40dp"
+                        android:layout_marginLeft="@dimen/common38dp"
                         android:layout_gravity="start">
                         <CheckBox
                             android:id="@+id/star1"
@@ -203,17 +204,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/qy_splace"
-                            android:layout_marginLeft="@dimen/common15dp"
+                            android:layout_marginLeft="@dimen/common17dp"
                             android:layout_marginTop="@dimen/common3dp"/>
                         <TextView
                             android:id="@+id/loc_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/common40dp"
+                            android:layout_marginLeft="@dimen/common38dp"
                             android:layout_marginRight="@dimen/common50dp"
                             android:lines="2"
                             android:layout_centerVertical="true"
-                            android:text="北京市海淀区西三旗北京市海淀区西三旗北京市海淀区西三旗"/>
+                            android:text=""/>
                         <ImageView
                             android:id="@+id/image_dh"
                             android:layout_width="wrap_content"

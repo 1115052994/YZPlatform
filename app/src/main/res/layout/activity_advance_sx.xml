@@ -19,6 +19,64 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <!-- 订阅 -->
+            <LinearLayout
+                android:id="@+id/ly_subscribe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <!-- 城市 -->
+                <RelativeLayout
+                    android:id="@+id/ly_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/common44dp"
+                        android:textColor="@color/text_ff35454"
+                        android:textSize="@dimen/text_size_16sp"
+                        android:layout_marginLeft="@dimen/common25dp"
+                        android:gravity="center_vertical"
+                        android:text="城市"/>
+                    <TextView
+                        android:id="@+id/tv_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/common25dp"
+                        android:textSize="@dimen/text_size_15sp"
+                        android:layout_centerVertical="true"
+                        android:text="不限>"/>
+                </RelativeLayout>
+                <View
+                    style="@style/gray_line"/>
+                <!-- 品牌 -->
+                <RelativeLayout
+                    android:id="@+id/ly_brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/common44dp"
+                        android:textColor="@color/text_ff35454"
+                        android:textSize="@dimen/text_size_16sp"
+                        android:layout_marginLeft="@dimen/common25dp"
+                        android:gravity="center_vertical"
+                        android:text="品牌"/>
+                    <TextView
+                        android:id="@+id/tv_brand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/common25dp"
+                        android:textSize="@dimen/text_size_15sp"
+                        android:layout_centerVertical="true"
+                        android:text="不限>"/>
+                </RelativeLayout>
+                <View
+                    style="@style/gray_line"/>
+            </LinearLayout>
             <!-- 车型 -->
             <TextView
                 android:layout_width="wrap_content"
@@ -233,48 +291,41 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="0" />
 
-                    <!--<TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="1" />-->
-
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="3" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="6" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="9" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="12" />
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"

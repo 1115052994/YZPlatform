@@ -78,7 +78,8 @@ public class CarTagLayout extends ViewGroup {
             childView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    clickListener.onClick(v,position);
+                    if (clickListener!=null)
+                        clickListener.onClick(v,position);
                 }
             });
         }

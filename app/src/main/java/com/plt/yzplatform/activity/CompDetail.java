@@ -3,8 +3,6 @@ package com.plt.yzplatform.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -48,12 +46,9 @@ import com.youth.banner.loader.ImageLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -109,6 +104,8 @@ public class CompDetail extends BaseActivity {
     ImageView imageColl;
     @BindView(R.id.tv_coll)
     TextView tvColl;
+    @BindView(R.id.image_rz)
+    ImageView imageRz;
     private ViewGroup viewGroup;
 
     private Map<String, String> map = new HashMap<>();
@@ -169,7 +166,7 @@ public class CompDetail extends BaseActivity {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 comp_id = bundle.getString("comp_id");
-                map.put("comp_id",comp_id);
+                map.put("comp_id", comp_id);
                 OKhttptils.post(CompDetail.this, Config.BROWSECOMP, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
@@ -183,42 +180,12 @@ public class CompDetail extends BaseActivity {
                 });
             }
         }
-        String s = sHA1(this);
-        Log.d("aaaaa", "onCreate: "+s);
         initView();
         initData();
         getData();
         //设置不加载更多
 //        smartRefreshLayout.setEnableLoadmore(false);
     }
-
-    public static String sHA1(Context context) {
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(
-                    context.getPackageName(), PackageManager.GET_SIGNATURES);
-            byte[] cert = info.signatures[0].toByteArray();
-            MessageDigest md = MessageDigest.getInstance("SHA1");
-            byte[] publicKey = md.digest(cert);
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < publicKey.length; i++) {
-                String appendString = Integer.toHexString(0xFF & publicKey[i])
-                        .toUpperCase(Locale.US);
-                if (appendString.length() == 1)
-                    hexString.append("0");
-                hexString.append(appendString);
-                hexString.append(":");
-            }
-            String result = hexString.toString();
-            return result.substring(0, result.length()-1);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
 
     @Override
     protected void onStart() {
@@ -230,6 +197,11 @@ public class CompDetail extends BaseActivity {
                 JumpUtil.newInstance().finishRightTrans(CompDetail.this);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void initView() {
@@ -282,7 +254,7 @@ public class CompDetail extends BaseActivity {
                 LinearLayout bg = view.findViewById(R.id.bg);
                 bg.setVisibility(View.VISIBLE);
                 // 切换Adapter
-                Log.i("appraise===",position+"");
+                Log.i("appraise===", position + "");
                 if (position == serverList.size()) {
                     recyclerView.setAdapter(appraiseAdapter);
                 } else {
@@ -489,9 +461,9 @@ public class CompDetail extends BaseActivity {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
                 CircleImageView circleImageView = holder.getView(R.id.circle_Name);
-                if(compAppraiseList.get(position).getPers_head_file_id()!=null) {
+                if (compAppraiseList.get(position).getPers_head_file_id() != null) {
                     //getPic(CompDetail.this, compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
-                    OKhttptils.getPic(CompDetail.this,compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
+                    OKhttptils.getPic(CompDetail.this, compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
                 }
                 TextView phone = holder.getView(R.id.tv_phone);
                 phone.setText(compAppraiseList.get(position).getPers_phone());
@@ -525,8 +497,8 @@ public class CompDetail extends BaseActivity {
     }
 
     private void getData() {
-        Map<String,String> map = new HashMap<>();
-        map.put("comp_id",comp_id);
+        Map<String, String> map = new HashMap<>();
+        map.put("comp_id", comp_id);
         OKhttptils.post(this, Config.GETCOMPDETAIL, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
@@ -537,6 +509,7 @@ public class CompDetail extends BaseActivity {
                         CompDetailBean detailBean = gson.fromJson(response, CompDetailBean.class);
                         CompDetailBean.DataBean.ResultBean resultBean = detailBean.getData().getResult();
                         //获取banner
+                        images.clear();
                         List<CompDetailBean.DataBean.ResultBean.BannerListBean> bannerListBeans = resultBean.getBannerList();
                         for (CompDetailBean.DataBean.ResultBean.BannerListBean bannerBean : bannerListBeans) {
                             images.add(bannerBean.getAdve_file_id());
@@ -551,6 +524,11 @@ public class CompDetail extends BaseActivity {
                         comp_phone = infoBean.getPhone_number();
                         comp_lon = infoBean.getAuth_comp_lon();
                         comp_lat = infoBean.getAuth_comp_lat();
+                        if ("2".equals(infoBean.getAuth_audit_state())) {
+                            imageRz.setVisibility(View.VISIBLE);
+                        }else{
+                            imageRz.setVisibility(View.GONE);
+                        }
                         switch (infoBean.getComp_eval_level()) {
                             case 5:
                                 star5.setChecked(true);
@@ -608,10 +586,10 @@ public class CompDetail extends BaseActivity {
     //请求服务项目
     private void getServerItem(final String item, String serverId, final int index) {
         Map<String, String> map = new HashMap<>();
-        map.put("pageSize","100");
-        map.put("pageIndex","1");
-        map.put("comp_id",comp_id);
-        map.put("serverId",serverId);
+        map.put("pageSize", "100");
+        map.put("pageIndex", "1");
+        map.put("comp_id", comp_id);
+        map.put("serverId", serverId);
         OKhttptils.post(this, Config.GETPRODUCTITEMBYSERVERTYPE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
@@ -685,14 +663,14 @@ public class CompDetail extends BaseActivity {
     //请求评价信息
     private void getAppraise() {
         Map<String, String> map = new HashMap<>();
-        map.put("pageSize","100");
-        map.put("pageIndex","1");
-        map.put("type","fws");//(cs 车商，fws 服务商)
-        map.put("comp_id",comp_id);
+        map.put("pageSize", "100");
+        map.put("pageIndex", "1");
+        map.put("type", "fws");//(cs 车商，fws 服务商)
+        map.put("comp_id", comp_id);
         OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.i("appraise===",response);
+                Log.i("appraise===", response);
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
@@ -706,7 +684,7 @@ public class CompDetail extends BaseActivity {
                                 compAppraiseList.add(bean);
                             }
                             appraiseAdapter.notifyDataSetChanged();
-                            Log.i("appraise===",compAppraiseList.toString());
+                            Log.i("appraise===", compAppraiseList.toString());
 //                                recyclerView.setAdapter(appraiseAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -735,11 +713,11 @@ public class CompDetail extends BaseActivity {
         switch (view.getId()) {
             case R.id.image_dh:
                 ToastUtil.show(this, "正在进入导航请稍等...");
-//                Bundle bundle = new Bundle();
-//                bundle.putString("comp_lon", comp_lon + "");
-//                bundle.putString("comp_lat", comp_lat + "");
-               navigation(comp_lon,comp_lat);
-//                JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("comp_lon", comp_lon + "");
+                bundle.putString("comp_lat", comp_lat + "");
+                //JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
+                navigation(comp_lat, comp_lon);
                 break;
             case R.id.phone:
                 call(comp_phone);
@@ -762,7 +740,9 @@ public class CompDetail extends BaseActivity {
         }
     }
 
+
     private RxPermissions rxPermission;
+
     private void call(final String phone) {
         // 申请定位权限
         rxPermission = new RxPermissions(this);
@@ -782,12 +762,12 @@ public class CompDetail extends BaseActivity {
                             Toast.makeText(CompDetail.this, "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            if(Build.VERSION.SDK_INT >= 9){
+                            if (Build.VERSION.SDK_INT >= 9) {
                                 intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
                                 intent.setData(Uri.fromParts("package", getPackageName(), null));
-                            } else if(Build.VERSION.SDK_INT <= 8){
+                            } else if (Build.VERSION.SDK_INT <= 8) {
                                 intent.setAction(Intent.ACTION_VIEW);
-                                intent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+                                intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
                                 intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
                             }
                             startActivity(intent);
@@ -806,7 +786,7 @@ public class CompDetail extends BaseActivity {
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
-                    Log.i("collect",response);
+                    Log.i("collect", response);
                     if ("1".equals(status)) {
                         JSONObject data = object.getJSONObject("data");
                         String result = data.getString("result");
@@ -833,9 +813,10 @@ public class CompDetail extends BaseActivity {
     }
 
     private Boolean isCollected = false;
+
     private void addCollect() {
-        if(isCollected)
-            ToastUtil.show(this,"您已收藏过");
+        if (isCollected)
+            ToastUtil.show(this, "您已收藏过");
         Map<String, String> map = new HashMap<>();
         map.put("coll_content_id", comp_id);
         OKhttptils.post(this, Config.ACCRETIONCOLLCOMP, map, new OKhttptils.HttpCallBack() {

@@ -260,6 +260,15 @@ public class Config {
     //查询车商下的二手车信息
     public static final String FINDCOMPCARBYCOMPID = URL + S +"findCompCarByCompId";
 
+    // 订阅添加
+    public static final String SUBSCRIPTIONFILTRATE = URL + S +"subscriptionFiltrate";
+    // 订阅修改
+    public static final String UPDATESUBSCRIPTIONFILTRATE = URL + S +"updateSubscriptionFiltrate";
+    // 订阅查询
+    public static final String SELECTUSERSUBSCRIPTIONFILTRATE = URL + S +"selectUserSubscriptionFiltrate";
+    // 订阅删除
+    public static final String DELETESUBSCRIPTIONFILTRATE = URL + S +"deleteSubscriptionFiltrate";
+
     //个人中心 - 降价提醒
     public static final String PERS_PRICE_WARN = URL + S + "QuerySubscription";
 }

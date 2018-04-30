@@ -52,13 +52,16 @@ public class AdvanceSXCarAdapter extends BaseAdapter {
         }else{
             viewHolder = (AdvanceSXCarAdapter.ViewHolder) convertView.getTag();
         }
+
+        TextView tv = viewHolder.getTv();
+        tv.setText(list.get(position).get("paramName"));
+        ImageView car =viewHolder.getCar();
+        String url = Config.BASE_URL + Config.Y + list.get(position).get("img");
+        car.setImageBitmap(null);
+        Picasso.with(context).load(Uri.parse(url)).into(car);
+
         final ViewGroup viewGroup = convertView.findViewById(R.id.gv_ly);
-        if (position == 0){
-            //viewGroup.setSelected(true);
-            if(appraiseInterface!=null){
-                appraiseInterface.onClick(viewGroup,0);
-            }
-        }
+
         if (appraiseInterface!=null){
             viewGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,12 +71,15 @@ public class AdvanceSXCarAdapter extends BaseAdapter {
                 }
             });
         }
-        TextView tv = viewHolder.getTv();
-        tv.setText(list.get(position).get("paramName"));
-        ImageView car =viewHolder.getCar();
-        String url = Config.BASE_URL + Config.Y + list.get(position).get("img");
-        car.setImageBitmap(null);
-        Picasso.with(context).load(Uri.parse(url)).into(car);
+        if (parent.getChildCount() == position) {
+            //里面就是正常的position
+            if (position == 0) {
+                //viewGroup.setSelected(true);
+                if (appraiseInterface != null) {
+                    appraiseInterface.onClick(viewGroup, 0);
+                }
+            }
+        }
         return convertView;
     }
 

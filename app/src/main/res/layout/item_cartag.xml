@@ -13,9 +13,9 @@
         android:background="@drawable/car_tag_bg"
         android:paddingLeft="@dimen/common6dp"
         android:paddingRight="@dimen/common6dp"
-        android:paddingTop="@dimen/common3dp"
-        android:paddingBottom="@dimen/common3dp"
-        android:layout_marginTop="@dimen/common15dp"
+        android:paddingTop="@dimen/common2dp"
+        android:paddingBottom="@dimen/common2dp"
+        android:layout_marginTop="@dimen/common10dp"
         android:layout_marginRight="@dimen/common10dp"
         android:text="11122" />
 </LinearLayout>

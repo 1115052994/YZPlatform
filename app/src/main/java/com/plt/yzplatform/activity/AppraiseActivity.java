@@ -68,7 +68,7 @@ public class AppraiseActivity extends BaseActivity {
     private List<String> appraiseListId = new ArrayList<>();
     private String comp_id = "24";
     private String comp_name = "";
-    private String type ="";
+    private String type ="";//car/comp
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,7 +250,6 @@ public class AppraiseActivity extends BaseActivity {
         if(ids.length()>0){
             ids.deleteCharAt(ids.length()-1);
         }
-        Log.i("submit","star="+star+"-----ids="+ids);
         if ("".equals(content.getText().toString().trim())){
             ToastUtil.show(AppraiseActivity.this,"请输入评价内容");
             return;

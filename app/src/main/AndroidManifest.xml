@@ -56,7 +56,7 @@
         <!-- 高德权限 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="00e6832a02066361698e68d306f1e448" />
+            android:value="5c5963867fdf2fb9122e5a9de9dffd04" />
 
         <!-- 拍照权限 -->
         <provider
@@ -155,10 +155,17 @@
         <activity android:name=".activity.CarPhoto" />
         <activity android:name=".activity.CarDetailsActivity" />
         <activity android:name=".activity.CarCompDetail" />
+        <activity android:name=".activity.MySubscribe" />
         <activity android:name=".activity.CarDetailsKeyActivity" />
+        <activity android:name=".activity.MySubscribeMore" />
+        <activity
+            android:name=".activity.AccessCar"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.AccessResult"></activity>
         <activity android:name=".CarPhotosActivity" />
         <activity android:name=".activity.PriceWarnActivity" />
-        <activity android:name=".activity.CompOrderListsActivity"></activity>
+        <activity android:name=".activity.CompOrderListsActivity"/>
     </application>
 
 </manifest>

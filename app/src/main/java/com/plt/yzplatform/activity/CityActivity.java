@@ -85,10 +85,11 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
     @BindView(R.id.clear_history)
     TextView clearHistory;
 
+    private List<String> list = new ArrayList<>();
+
     private String type;
 
     private List<String> hotcity = new ArrayList<>();
-    private List<String> list = new ArrayList<>();
     private List<String> hisCity = new ArrayList<>();
     private List<String> searchCity = new ArrayList<>();
     private GrideViewAdapter hotAdapter;
@@ -499,18 +500,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         recyclerView.setAdapter(adapter);
     }
 
-    private void seleted(String city) {
-        selectedCity = city;
-        Bundle bundle = new Bundle();
-        bundle.putString("selected_city", selectedCity);
-        if (type.equals("车服务")) {
-            JumpUtil.newInstance().finishRightTrans(CityActivity.this, bundle, 01);
-        }
-        Log.i("selected", city);
-        Set<String> value = new HashSet<>();
-        value.add(city);
-        Prefs.with(getApplicationContext()).putStringSet("historyCitys", value);
-    }
 
     @OnClick({R.id.loc_place, R.id.clear_history, R.id.cancle})
     public void onViewClicked(View view) {
@@ -524,9 +513,12 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 hisGvAapter.notifyDataSetChanged();
                 break;
             case R.id.cancle:
+                JumpUtil.newInstance().finishRightTrans(this);
                 break;
         }
     }
+
+
     /* 地图定位 */
     private void initLoc() {
         //初始化定位
@@ -562,7 +554,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                             mLocationClient.startLocation();
                         } else {
                             // 未获取权限
-                            Toast.makeText(CityActivity.this, "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CityActivity.this, "您没有授权定位权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -600,7 +592,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                     StringBuffer buffer = new StringBuffer();
                     buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince() + "" + amapLocation.getCity() + "" + amapLocation.getProvince() + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet() + "" + amapLocation.getStreetNum());
 //                    Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
-                    ToastUtil.show(CityActivity.this, "已定位到当前城市");
+//                    ToastUtil.show(CityActivity.this, "已定位到当前城市");
                     isFirstLoc = false;
                 }
             } else {
@@ -614,7 +606,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
             }
         }
     }
-
 
     // recyclerview滑动到指定位置
     private boolean move = false;
@@ -639,5 +630,29 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
             //这里这个变量是用在RecyclerView滚动监听里面的
             move = true;
         }
+    }
+
+    private void seleted(String city) {
+        selectedCity = city;
+        Bundle bundle = new Bundle();
+        bundle.putString("selected_city", selectedCity);
+        if ("车服务".equals(type)) {
+            JumpUtil.newInstance().finishRightTrans(CityActivity.this, bundle, 01);
+        }else{
+            if (backListener!=null)
+                backListener.backData(selectedCity);
+            JumpUtil.newInstance().finishRightTrans(CityActivity.this);
+        }
+        Set<String> value = new HashSet<>();
+        value.add(city);
+        Prefs.with(getApplicationContext()).putStringSet("historyCitys", value);
+    }
+
+    static BackListener backListener;
+    public static void setOnBackListener( BackListener listener){
+        backListener = listener;
+    }
+    public interface BackListener{
+        void backData(String city);
     }
 }
