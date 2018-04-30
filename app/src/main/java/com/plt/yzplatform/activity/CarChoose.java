@@ -27,6 +27,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class CarChoose extends BaseActivity {
 
@@ -41,6 +42,7 @@ public class CarChoose extends BaseActivity {
 
     private String s;
     private String tv_carbrand;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class CarChoose extends BaseActivity {
         Bundle bundle = intent.getBundleExtra("bundle");
         tv_carbrand = bundle.getString("tv_carbrand");
         String id_carbrand = bundle.getString("id_carbrand");
+        name = intent.getStringExtra("name");
         String[] split = id_carbrand.split("_");
         s = split[split.length-1];
 
@@ -94,13 +97,17 @@ public class CarChoose extends BaseActivity {
         recyclerAdapter.setOnItemClickListener(new BrandRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
+                Intent intent = null;
                 String istrue = recyclerList.get(position).get("istrue");
                 if(istrue==null){
                     // 点击事件
                     Log.i("carbrand", position + "---" + recyclerList.get(position).get("tv_carbrand"));
-                    Intent intent =new Intent(CarChoose.this,AddCarProduct.class);
-                    intent.putExtra("series_itim",recyclerList.get(position).get("tv_carbrand"));
-                    intent.putExtra("tv_carbrand",tv_carbrand);
+                    if(name.equals("1")){
+                        intent =new Intent(CarChoose.this,AddCarProduct.class);
+                    }else {
+                        intent =new Intent(CarChoose.this,UpdateCar.class);
+                    }
+                    EventBus.getDefault().post(recyclerList.get(position).get("tv_carbrand")+"  "+tv_carbrand);
                     startActivity(intent);
                     finish();
                 }

@@ -55,6 +55,7 @@ public class ModelsChoose extends BaseActivity {
     // 字母A-Z
     private List<Map<String, String>> recyclerList = new ArrayList<>();
     private BrandRecyclerAdapter recyclerAdapter;
+    private String name;
 
     //通过品牌搜车系
     private List<CarChexiBean.DataBean.ResultBean.TrainListBean> searchChexiList = new ArrayList<>();
@@ -67,6 +68,8 @@ public class ModelsChoose extends BaseActivity {
         initView();
         // 通过字母获得品牌
         getCarBrandDictByLetter();
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
     }
     private void initView() {
         // A-Z车品牌
@@ -371,8 +374,12 @@ public class ModelsChoose extends BaseActivity {
         bundle.putString("tv_carbrand", tv_carbrand);
         bundle.putString("id_carbrand", id_carbrand);
         Log.d("aaaaa", "selected: "+tv_carbrand+"-----------"+id_carbrand);
+        if(!name.isEmpty()){
+            intent.putExtra("name",name);
+        }
         intent.putExtra("bundle", bundle);
         startActivity(intent);
+        finish();
     }
 
 

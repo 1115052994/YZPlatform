@@ -408,6 +408,7 @@ public class BaseActivity extends AppCompatActivity{
     private static final int CODE_CAMERA_REQUEST = 0xa1;
     private static final int CAMERA_PERMISSIONS_REQUEST_CODE = 0x03;
     private static final int STORAGE_PERMISSIONS_REQUEST_CODE = 0x04;
+
     private File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/photo.jpg");
     private File fileCropUri = new File(Environment.getExternalStorageDirectory().getPath() + "/crop_photo.jpg");
     private Uri imageUri;
@@ -449,6 +450,7 @@ public class BaseActivity extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.d("aaaaaa", "onActivityResult: "+requestCode);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 //直接上传图片 调用相册
@@ -470,7 +472,6 @@ public class BaseActivity extends AppCompatActivity{
                     break;
                 //直接上传图片 返回成功值
                 case CODE_RESULTS_REQUEST:
-
                     final Bitmap bitmap1 = PhotoUtils.getBitmapFromUri(cropImageUri, this);
                     //上传图片 获取图片id返回值
                     if (NetUtil.isNetAvailable(mContext)){
@@ -522,6 +523,9 @@ public class BaseActivity extends AppCompatActivity{
 //            popupWindow.dismiss();
         }
     }
+
+
+
 
     /**
      * 显示图片

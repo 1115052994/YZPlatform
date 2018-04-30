@@ -102,4 +102,9 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_size_18sp</item>
     </style>
+
+    <!--水印文字旋转90度-->
+    <declare-styleable name="WatermarkTextView">
+        <attr name="degree" format="dimension" />
+    </declare-styleable>
 </resources>
