@@ -155,7 +155,10 @@
         <activity android:name=".activity.CarPhoto" />
         <activity android:name=".activity.CarDetailsActivity" />
         <activity android:name=".activity.CarCompDetail" />
-        <activity android:name=".activity.CarDetailsKeyActivity"></activity>
+        <activity android:name=".activity.CarDetailsKeyActivity" />
+        <activity android:name=".CarPhotosActivity" />
+        <activity android:name=".activity.PriceWarnActivity" />
+        <activity android:name=".activity.CompOrderListsActivity"></activity>
     </application>
 
 </manifest>

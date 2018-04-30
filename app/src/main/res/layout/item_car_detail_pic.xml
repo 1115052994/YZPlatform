@@ -39,7 +39,9 @@
         android:textColor="@color/black_66"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/mType"
-        android:gravity="center_horizontal"
+        android:gravity="start"
+        android:paddingLeft="@dimen/common15dp"
+        android:paddingRight="@dimen/common15dp"
         android:layout_marginTop="@dimen/common10dp"
         android:layout_marginBottom="@dimen/common10dp"
         android:text="漆面保持较好，车身结构无修复，无重大事故"/>

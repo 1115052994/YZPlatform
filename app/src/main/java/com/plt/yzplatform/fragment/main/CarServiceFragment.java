@@ -750,7 +750,12 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void fail(String response) {
-                ToastUtil.noNAR(getContext());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    ToastUtil.show(getContext(),jsonObject.getString("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });

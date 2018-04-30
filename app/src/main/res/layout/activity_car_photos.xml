@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    tools:context="com.plt.yzplatform.CarPhotosActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common45dp">
+
+        <ImageView
+            android:id="@+id/mBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/common12dp"
+            android:src="@drawable/white_back"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <TextView
+            android:id="@+id/mTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="图片"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/mCarName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common15dp"
+        android:gravity="start"
+        android:paddingLeft="@dimen/common20dp"
+        android:paddingRight="@dimen/common20dp"
+        android:text="雪佛兰 科鲁兹三厢2015款 1.5 手动 经典版SE"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common15dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/common20dp">
+
+        <TextView
+            android:id="@+id/mPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9.78"
+            android:textColor="#ff4a64"
+            android:textSize="@dimen/text_size_30sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="万"
+            android:textColor="#ff4a64"
+            android:textSize="@dimen/text_size_13sp" />
+
+        <ImageView
+            android:id="@+id/mSale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/common20dp"
+            android:src="@drawable/b_a_b" />
+    </LinearLayout>
+
+    <com.plt.yzplatform.view.HackyViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common5dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common49dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mKefu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableTop="@drawable/b_a_j"
+            android:gravity="center"
+            android:paddingTop="@dimen/common5dp"
+            android:text="客服"
+            android:textColor="@color/black_60"
+            android:textSize="@dimen/text_size_10sp" />
+
+        <TextView
+            android:id="@+id/mCut"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#f1a937"
+            android:gravity="center"
+            android:text="我要砍价"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:id="@+id/mOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ff5353"
+            android:gravity="center"
+            android:text="在线预约"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
