@@ -5,6 +5,9 @@
     <dimen name="common0dp">0dp</dimen>
     <dimen name="common0.5dp">0.5dp</dimen>
     <dimen name="common1dp">1dp</dimen>
+    <!--
+    <dimen name="common1dp">1dp</dimen>
+    -->
     <dimen name="common2dp">2dp</dimen>
     <dimen name="common2.5dp">2.5dp</dimen>
     <dimen name="common3dp">3dp</dimen>

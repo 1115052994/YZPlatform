@@ -71,7 +71,6 @@ public class AlipayUtil {
 
 	private AlipayUtil(Activity context){
 		this.context = context;
-		dialog = MyProgressDialog.createDialog(context);
 	}
 
 	public static AlipayUtil getInstance(Activity context){
@@ -116,6 +115,7 @@ public class AlipayUtil {
 	 * 支付宝支付业务
 	 */
 	public void payV2(Map<String, String> map) {
+		dialog = MyProgressDialog.createDialog(context);
 		dialog.setMessage("正在调起支付，请稍候");
 		dialog.show();
 		if (TextUtils.isEmpty(APPID) || (TextUtils.isEmpty(RSA2_PRIVATE) && TextUtils.isEmpty(RSA_PRIVATE))) {
@@ -146,7 +146,7 @@ public class AlipayUtil {
 							public void run() {
 								PayTask alipay = new PayTask(context);
 								Map<String, String> result = alipay.payV2(signInfo, true);
-								Log.i("msp", result.toString());
+//								Log.i("msp", result.toString());
 
 								Message msg = new Message();
 								msg.what = SDK_PAY_FLAG;

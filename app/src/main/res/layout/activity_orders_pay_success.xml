@@ -68,6 +68,7 @@
         android:layout_below="@id/orders_pay_success_alert_layout"
         >
         <Button
+            android:id="@+id/orders_pay_success_tolist"
             android:layout_width="@dimen/common300dp"
             android:layout_height="@dimen/common40dp"
             android:text="查看订单"
@@ -83,6 +84,7 @@
         android:layout_below="@id/orders_pay_success_btn_layout"
         >
         <Button
+            android:id="@+id/orders_pay_success_tocomp"
             android:layout_width="@dimen/common300dp"
             android:layout_height="@dimen/common40dp"
             android:text="返回商家"

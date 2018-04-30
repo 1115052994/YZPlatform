@@ -26,7 +26,7 @@ public class OKhttptils {
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
                     .url(url)      //Prefs.with(context).read("user_token")
-                    .addHeader("user_token","96730A47BBCD8F345203CFAB9A2CA83A891030AEDE850AA6FCD4BC4EA31CEF7F683985E25542EC9E3A24E0D672EAC48F26631479D298751572586E671EA85266" )
+                    .addHeader("user_token",Prefs.with(context).read("user_token") )
                     //.addParams("car_name", s)
                     .params(params)
                     .build()

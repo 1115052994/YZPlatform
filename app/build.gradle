@@ -8,13 +8,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     signingConfigs {
         release {
-            storeFile file('yizhong.jks')
-            storePassword 'yizhong'
-            keyAlias 'yizhong'
-            keyPassword 'yizhong'
+            storeFile file('D:/appkey/yzplatform.jks')
+            storePassword 'abc123ABC'
+            keyAlias 'yz'
+            keyPassword 'yzplatform'
         }
     }
     buildTypes {
@@ -84,4 +85,7 @@ dependencies {
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
 
 
+    //微信支付所需的包 ly
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    compile 'com.android.support:multidex:1.0.1'
 }

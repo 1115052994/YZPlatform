@@ -8,14 +8,15 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.222/";
+    public static final String BASE_URL = "http://192.168.1.11/";
 
-    public static final String URL = "http://192.168.1.222/";
-
+    public static final String URL = "http://192.168.1.11/";
+    //微信APPID
+    public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
-    public static final String M = "http://192.168.1.222/";
+    public static final String M = "http://192.168.1.11/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -74,9 +75,6 @@ public class Config {
 
     //根据图片id获取base64
     public static final String GET_BASE64 = URL + S + "getFile";
-
-    //根据图片id获取图片(Picasso)
-    public static final String GET_Pic= URL + Y ;
 
     //联想搜索商户
     public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
@@ -227,15 +225,6 @@ public class Config {
     // (热门车辆/模糊搜索品牌)
     public static final String GETCARBRANDDICT = URL + S + "getCarBrandDict";
 
-    /*
-    *getCarTrianByCarBrand  品牌查车系
-    getHotCarBrandDict     获取热门
-    getCarBrandDictByInitials   字母筛选
-     */
-    public static final String GETCARTRIANBYCARBRAND = URL + S + "getCarTrianByCarBrand";
-    public static final String GETHOTCARBRANDDICT = URL + S + "getHotCarBrandDict";
-    public static final String GETCARBRANDDICTBYINITIALS = URL + S + "getCarBrandDictByInitials";
-
     //二手车详情
     public static final String CAR_DETAIL = URL + S + "car_detail";
 
@@ -259,6 +248,14 @@ public class Config {
     public static  final String ORDERS_PAY_SUCCESS = URL + S + "settlementWarrant";
     //支付流水
     public static  final String ORDERS_PAY_LOG = URL + S + "payLog";
+    //查询个人用户订单信息
+    public static  final String ORDERS_GET_LIST = URL + S + "orderListPers";
+    //根据订单号查询订单明细
+    public static  final String ORDERS_GET_BYCODE= URL + S + "checkSingleOrder";
+    //获取微信支付调起支付单
+    public static  final String ORDERS_WECCHAT_CREATE= URL + S + "startWechatPay";
+    //取消订单
+    public static  final String ORDERS_CANCEL= URL + S + "deactivePaymentMethod";
     /**
      * 李岩使用接口end
      */
