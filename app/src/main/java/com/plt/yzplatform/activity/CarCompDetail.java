@@ -26,6 +26,7 @@ import com.plt.yzplatform.adapter.ViewHolder;
 import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.BuyCarBean;
+import com.plt.yzplatform.entity.CarofCompDetail;
 import com.plt.yzplatform.entity.CompAppraise;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.OKhttptils;
@@ -34,6 +35,8 @@ import com.plt.yzplatform.view.CircleImageView;
 import com.plt.yzplatform.view.indicator.IndicatorAdapter;
 import com.plt.yzplatform.view.indicator.TrackIndicatorView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -41,6 +44,7 @@ import com.youth.banner.loader.ImageLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +79,12 @@ public class CarCompDetail extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.tv_onsale)
+    TextView tv_onsale;
+    @BindView(R.id.tv_sale)
+    TextView tv_sale;
+    @BindView(R.id.tv_buyNum)
+    TextView tv_buyNum;
 
     private List<String> images = new ArrayList<>();//banner
 
@@ -87,18 +97,17 @@ public class CarCompDetail extends BaseActivity {
     private CommonRecyclerAdapter appraiseAdapter;
     private List<CompAppraise.DataBean.ResultBean> compAppraiseList = new ArrayList<>();
 
-    private Double comp_lon, comp_lat;
     private String phone = "";//商家phone
     private String comp_id = "24";//商家Id
+    private double lat,lon;
 
+    private int pageIndex = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_comp_detail);
         ButterKnife.bind(this);
         initView();
-        initData();
-        getData();
     }
 
     @Override
@@ -113,7 +122,13 @@ public class CarCompDetail extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.image_dialog, R.id.image_dh})
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
+    @OnClick({R.id.image_dialog, R.id.image_dh, R.id.tv_appraise})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_dialog:
@@ -121,11 +136,17 @@ public class CarCompDetail extends BaseActivity {
                 break;
             case R.id.image_dh:
                 ToastUtil.show(this, "正在进入导航请稍等...");
-//                Bundle bundle = new Bundle();
-//                bundle.putString("comp_lon", comp_lon + "");
-//                bundle.putString("comp_lat", comp_lat + "");
-                navigation(comp_lon,comp_lat);
-//                JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("comp_lon", lon + "");
+                bundle.putString("comp_lat", lat + "");
+                //JumpUtil.newInstance().jumpLeft(this, Map_navigation.class, bundle);
+                navigation(lat,lon);
+                break;
+            case R.id.tv_appraise :
+                Bundle loc = new Bundle();
+                loc.putString("comp_id", comp_id);
+                loc.putString("type", "car");
+                JumpUtil.newInstance().jumpRight(this, AppraiseActivity.class, loc);
                 break;
         }
     }
@@ -169,8 +190,10 @@ public class CarCompDetail extends BaseActivity {
                 bg.setVisibility(View.VISIBLE);
                 if (position == 0){
                     //车辆信息
+                    recyclerView.setAdapter(carAdapter);
                 }else{
                     //评价
+                    recyclerView.setAdapter(appraiseAdapter);
                 }
             }
 
@@ -229,7 +252,10 @@ public class CarCompDetail extends BaseActivity {
                 TextView tvCarsDes = holder.getView(R.id.tv_cardes);
                 tvCarsDes.setText(carList.get(position).getCar_name());
                 TextView tvPrice = holder.getView(R.id.tv_price);
-                tvPrice.setText("￥"+carList.get(position).getCar_price()/10000.0+"万");
+                DecimalFormat df = new DecimalFormat("#.00");
+                double price = carList.get(position).getCar_price()/10000;
+                String strPrice = df.format(price);
+                tvPrice.setText("￥"+price+"万");
                 TextView tvYearAndMiles = holder.getView(R.id.tv_year_miles);
                 tvYearAndMiles.setText(carList.get(position).getCar_sign_date().split("-")[0]+"年/"+carList.get(position).getCar_mileage()+"公里");
                 ImageView carImage = holder.getView(R.id.image_car);
@@ -238,10 +264,16 @@ public class CarCompDetail extends BaseActivity {
                 }
             }
         };
-
+        // 设置点击事件
+        carAdapter.setOnItemClickListener(new CommonRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                JumpUtil.newInstance().jumpLeft(CarCompDetail.this,CarDetailsActivity.class,carList.get(position).getCar_id()+"");
+            }
+        });
         // recyclerView设置manager
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerViewCar.setAdapter(recyclerAdapter);
+        recyclerView.setAdapter(carAdapter);
 
 //        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
 //            @Override
@@ -250,14 +282,14 @@ public class CarCompDetail extends BaseActivity {
 //            }
 //        });
     }
-    private void initData(){
 
-    }
     public void getData() {
         //请求商家信息
         getCompDetail();
         // 请求评价信息
         getAppraise();
+        // 请求二手车信息
+        getCar();
     }
 
     private RxPermissions rxPermission;
@@ -296,9 +328,10 @@ public class CarCompDetail extends BaseActivity {
 
     //请求评价信息
     private void getAppraise() {
+        pageIndex = 1;
         Map<String, String> map = new HashMap<>();
         map.put("pageSize","100");
-        map.put("pageIndex","1");
+        map.put("pageIndex",pageIndex+"");
         map.put("type","cs");//(cs 车商，fws 服务商)
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
@@ -349,7 +382,72 @@ public class CarCompDetail extends BaseActivity {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
                     if ("1".equals(status)) {
+                        Gson gson = new Gson();
+                        CarofCompDetail carofCompDetail = gson.fromJson(response, CarofCompDetail.class);
+                        CarofCompDetail.DataBean.ResultBean resultBean = carofCompDetail.getData().getResult();
+                        compName.setText(resultBean.getAuth_comp_name());
+                        tv_onsale.setText("在售车"+resultBean.getOn_sale_count()+"");
+                        tv_sale.setText("已售车"+resultBean.getSale_count()+"");
+                        tv_buyNum.setText("浏览人数"+resultBean.getComp_visit_count()+"");
+                        locTv.setText(resultBean.getAuth_comp_addr());
+                        lat = resultBean.getComp_lat();
+                        lon = resultBean.getComp_lon();
+                        phone = resultBean.getAuth_comp_tel();
+                        images.clear();
+                        images.add(resultBean.getAuth_comp_img_head_file_id());
+                        banner.setImages(images);
+                        banner.start();
+                        switch (resultBean.getComp_eval_level()) {
+                            case 5:
+                                star5.setChecked(true);
+                            case 4:
+                                star4.setChecked(true);
+                            case 3:
+                                star3.setChecked(true);
+                            case 2:
+                                star2.setChecked(true);
+                            case 1:
+                                star1.setChecked(true);
+                                break;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void fail(String response) {
+
+            }
+        });
+    }
+
+    private void getCar(){
+        Map<String, String> map = new HashMap<>();
+        map.put("pageSize","200");
+        map.put("pageIndex","1");
+        map.put("comp_id",comp_id);
+        OKhttptils.post(this, Config.FINDCOMPCARBYCOMPID, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.i("response=",response);
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String status = object.getString("status");
+                    if ("1".equals(status)) {
+                        Gson gson = new Gson();
+                        BuyCarBean carBean = gson.fromJson(response,BuyCarBean.class);
+                        carList.clear();
+                        List<BuyCarBean.DataBean.ResultBean> list = carBean.getData().getResult();
+                        //if (list.size() == 0){
+                            //ToastUtil.show(getActivity(),"未查询到相关车系");
+                        //}
+                        for (BuyCarBean.DataBean.ResultBean bean : list
+                                ) {
+                            carList.add(bean);
+                        }
+                        carAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

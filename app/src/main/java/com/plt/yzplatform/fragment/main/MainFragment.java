@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.plt.yzplatform.R;
+import com.plt.yzplatform.activity.AccessCar;
+import com.plt.yzplatform.activity.AccessResult;
 import com.plt.yzplatform.activity.AddProductActivity;
 import com.plt.yzplatform.activity.CarCompDetail;
 import com.plt.yzplatform.activity.CarDetailsActivity;
 import com.plt.yzplatform.activity.EnterpriseActivity;
+import com.plt.yzplatform.activity.MySubscribe;
 import com.plt.yzplatform.activity.PersonalSettingActivity;
 import com.plt.yzplatform.utils.JumpUtil;
 
@@ -43,7 +46,7 @@ public class MainFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.renzheng, R.id.setting, R.id.add, R.id.carDetail,R.id.test})
+    @OnClick({R.id.renzheng, R.id.setting, R.id.add, R.id.carDetail,R.id.test,R.id.test1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.renzheng:
@@ -60,6 +63,10 @@ public class MainFragment extends Fragment {
                 break;
             case R.id.test:
                 JumpUtil.newInstance().jumpLeft(getContext(), CarCompDetail.class);
+                break;
+            case R.id.test1:
+                //MySubscribe   AccessCar  AccessResult
+                JumpUtil.newInstance().jumpLeft(getContext(), AccessCar.class);
                 break;
         }
     }

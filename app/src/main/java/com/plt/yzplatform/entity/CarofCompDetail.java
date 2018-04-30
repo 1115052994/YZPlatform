@@ -69,6 +69,7 @@ public class CarofCompDetail {
              * comp_visit_count : 737
              * comp_eval_level : 4
              * auth_comp_img_head_file_id : f17e89777dc64ba899db620d4c3d8420
+             * auth_comp_tel
              */
 
             private double comp_lat;
@@ -80,6 +81,17 @@ public class CarofCompDetail {
             private int comp_visit_count;
             private int comp_eval_level;
             private String auth_comp_img_head_file_id;
+            private String auth_comp_tel;
+
+            public String getAuth_comp_tel() {
+                return auth_comp_tel;
+            }
+
+            public void setAuth_comp_tel(String auth_comp_tel) {
+                this.auth_comp_tel = auth_comp_tel;
+            }
+
+
 
             public double getComp_lat() {
                 return comp_lat;

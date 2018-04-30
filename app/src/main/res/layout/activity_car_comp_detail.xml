@@ -57,7 +57,7 @@
                             android:layout_marginLeft="@dimen/common15dp"
                             android:textSize="@dimen/text_size_16sp"
                             android:textColor="@color/text_33"
-                            android:text="北京目标在线"/>
+                            android:text=""/>
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -139,6 +139,7 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical">
                             <TextView
+                                android:id="@+id/tv_onsale"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="在售车6"
@@ -152,9 +153,10 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical">
                             <TextView
+                                android:id="@+id/tv_sale"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="在售车6"
+                                android:text="已售车6"
                                 android:textColor="@color/text_66"
                                 android:textSize="@dimen/common13dp"
                                 />
@@ -165,9 +167,10 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical">
                             <TextView
+                                android:id="@+id/tv_buyNum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="在售车6"
+                                android:text="浏览人"
                                 android:textColor="@color/text_66"
                                 android:textSize="@dimen/common13dp"
                                 />
@@ -176,8 +179,9 @@
                             android:layout_width="@dimen/common0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="left|center_vertical">
+                            android:gravity="center">
                             <TextView
+                                android:id="@+id/tv_appraise"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="评价"
@@ -206,7 +210,7 @@
                             android:layout_marginRight="@dimen/common50dp"
                             android:lines="2"
                             android:layout_centerVertical="true"
-                            android:text="北京市海淀区西三旗北京市海淀区西三旗北京市海淀区西三旗"/>
+                            android:text=""/>
                         <ImageView
                             android:id="@+id/image_dh"
                             android:layout_width="wrap_content"

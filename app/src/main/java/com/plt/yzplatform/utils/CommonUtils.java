@@ -3,6 +3,7 @@ package com.plt.yzplatform.utils;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.util.TypedValue;
+import android.view.WindowManager;
 
 public class CommonUtils {
     public static int dip2px(Context context, int dip) {
@@ -29,5 +30,15 @@ public class CommonUtils {
             result = context.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    /*
+
+     */
+    private void getWidthAndHeight(Context context){
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        int height = wm.getDefaultDisplay().getHeight();
     }
 }

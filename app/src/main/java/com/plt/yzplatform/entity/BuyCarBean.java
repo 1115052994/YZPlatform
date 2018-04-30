@@ -74,6 +74,14 @@ public class BuyCarBean {
         }
 
         public static class ResultBean {
+            /*
+                "car_name": "斯柯达",
+				"car_1_icon_file_id": "834b3281180f4f7a9ed1405777ced0e1",
+				"car_price": 135288648,
+				"car_sign_date": "2013-04-26",
+				"car_mileage": 160763076,
+				"car_id": 13961
+             */
             /**
              * car_name : 大众
              * his_sort_weight : 0

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ly_tag">
+        <com.plt.yzplatform.view.CarTagLayout
+            android:id="@+id/cartag_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common20dp"
+            android:layout_marginRight="@dimen/common40dp"
+            android:layout_marginBottom="@dimen/common15dp"
+            />
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/common15dp"
+            android:textSize="@dimen/text_size_13sp"
+            android:textColor="@color/text_66"
+            android:text="更多>"/>
+</RelativeLayout>

@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_10sp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/common15dp"
+                android:layout_marginRight="@dimen/common5dp"
                 android:text="2015年/8万公里"/>
         </RelativeLayout>
         <LinearLayout

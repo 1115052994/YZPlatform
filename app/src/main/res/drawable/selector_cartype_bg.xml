@@ -4,7 +4,7 @@
         <shape>
             <corners android:radius="@dimen/common2dp" />
             <stroke android:width="@dimen/common1dp" android:color="@color/ffb5"/>//边框
+            <solid android:color="@color/ffef"/>
         </shape>
-        <!--<color android:color="@color/text_ff35454"/>-->
     </item>
 </selector>

@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginLeft="@dimen/common20dp"
                     android:layout_marginRight="@dimen/common20dp"
-                    android:layout_marginTop="@dimen/common10dp"
+                    android:layout_marginTop="@dimen/common5dp"
                     android:horizontalSpacing="@dimen/common1dp"
                     android:numColumns="5"
                     android:verticalSpacing="@dimen/common1dp"/>
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginLeft="@dimen/common20dp"
                     android:layout_marginRight="@dimen/common20dp"
-                    android:layout_marginTop="@dimen/common10dp"
+                    android:layout_marginTop="@dimen/common5dp"
                     android:horizontalSpacing="@dimen/common1dp"
                     android:numColumns="5"
                     android:verticalSpacing="@dimen/common1dp"/>
