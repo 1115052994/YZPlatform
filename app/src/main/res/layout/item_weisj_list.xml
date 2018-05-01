@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/weisj_image"
+            android:layout_width="@dimen/common137dp"
+            android:layout_height="@dimen/common95dp"
+            android:src="@drawable/personal_collect_img"
+            android:layout_marginTop="@dimen/common15dp"
+            android:layout_marginLeft="@dimen/common15dp"
+            android:layout_marginBottom="@dimen/common15dp"/>
+        <ImageView
+            android:layout_marginTop="@dimen/common9dp"
+            android:layout_marginLeft="@dimen/common9dp"
+            android:src="@drawable/cr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_toRightOf="@id/weisj_image"
+            android:layout_marginLeft="@dimen/common10dp"
+            android:layout_marginTop="@dimen/common14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/weisj_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_15sp"
+                android:text="北京一众服务科技大萨达所的发韩展有限公司"
+                android:textColor="@color/text_33"
+                android:layout_marginRight="@dimen/common37dp"
+                android:singleLine="false"
+                android:ellipsize="none"
+                android:maxLines="2"  />
+            <LinearLayout
+                android:layout_marginTop="@dimen/common6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="@dimen/text_size_12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="上传时间:"
+                    android:textColor="@color/black_66"
+                    android:singleLine="false"
+                    android:ellipsize="none"
+                    android:maxLines="2"
+                    />
+                <TextView
+                    android:id="@+id/weisj_time"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018-03-23"
+                    android:textColor="@color/black_66"
+                    android:singleLine="false"
+                    android:ellipsize="none"
+                    android:maxLines="2"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/common6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="价格: # "
+                    android:textColor="@color/text_ff29"
+                    android:singleLine="false"
+                    android:ellipsize="none"
+                    android:maxLines="2"
+                    />
+                <TextView
+                    android:id="@+id/service_provider_km"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23.9万"
+                    android:textColor="@color/text_ff29"
+                    android:singleLine="false"
+                    android:ellipsize="none"
+                    android:maxLines="2"
+                    />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/weisj_shanchu"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/common15dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="删除"
+                        android:layout_alignBottom="@id/item_iv2"
+                        android:layout_toRightOf="@id/item_iv2"
+                        android:textSize="@dimen/text_size_13sp"
+                        android:textColor="@color/black_66"
+
+                        />
+                    <ImageView
+                        android:id="@+id/item_iv2"
+                        android:src="@drawable/star_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common10dp"/>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_toLeftOf="@id/weisj_shanchu"
+                    android:layout_marginRight="@dimen/common17dp"
+                    android:id="@+id/weisj_bianji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="编辑"
+                        android:layout_alignBottom="@id/item_iv3"
+                        android:layout_toRightOf="@id/item_iv3"
+                        android:textSize="@dimen/text_size_13sp"
+                        android:textColor="@color/black_66"
+                        />
+                    <ImageView
+                        android:layout_marginRight="@dimen/common10dp"
+                        android:id="@+id/item_iv3"
+                        android:src="@drawable/star_editor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:id="@+id/view"
+
+        android:layout_below="@id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color"/>
+    <RelativeLayout
+        android:layout_below="@id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common30dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="车架号:   "
+            android:textColor="@color/text_99"
+            android:textSize="@dimen/text_size_13sp" />
+
+        <TextView
+            android:id="@+id/weisj_cjh"
+            android:layout_toRightOf="@id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12345689"
+            android:textColor="@color/text_99"
+            android:textSize="@dimen/text_size_13sp" />
+
+        <TextView
+            android:id="@+id/weisj_sh"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/common15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="审核中"
+            android:textSize="@dimen/text_size_13sp"
+            android:textColor="@color/text_ff96"/>
+    </RelativeLayout>
+    <View
+        android:layout_below="@id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common5dp"
+        android:background="@color/bg_color"/>
+
+
+</LinearLayout>

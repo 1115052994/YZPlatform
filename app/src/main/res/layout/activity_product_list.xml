@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.plt.yzplatform.activity.ProductList"
+    android:gravity="center_horizontal">
+    <include layout="@layout/header_layout" />
+    <View
+        android:layout_below="@id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <RelativeLayout
+            android:layout_width="@dimen/common330.5dp"
+            android:layout_height="@dimen/common31.5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="@dimen/common8dp"
+            android:background="@color/text_ff96"
+            android:gravity="center">
+
+            <com.plt.yzplatform.view.MyGridView
+                android:id="@+id/gridView"
+                android:layout_width="@dimen/common330dp"
+                android:layout_height="@dimen/common30dp"
+                android:layout_marginLeft="@dimen/common0.5dp"
+                android:background="@drawable/aaa1"
+                android:gravity="center"
+                android:horizontalSpacing="1dp"
+                android:numColumns="5" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_below="@id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common8dp"
+        android:background="@color/bg_color"
+        android:layout_marginTop="@dimen/common8dp"/>
+   <com.plt.yzplatform.view.CustomViewPager
+       android:id="@+id/viewpager"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+   </com.plt.yzplatform.view.CustomViewPager>
+
+
+    <!--<RadioGroup-->
+
+        <!--android:layout_marginTop="@dimen/common10dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_horizontal">-->
+        <!--<RadioButton-->
+            <!--android:gravity="center"-->
+            <!--android:id="@+id/radio_list_button1"-->
+            <!--android:layout_width="@dimen/common65dp"-->
+            <!--android:layout_height="@dimen/common30dp"-->
+            <!--android:button="@null"-->
+            <!--android:text="二手车"-->
+            <!--android:textSize="@dimen/text_size_11sp"/>-->
+        <!--<RadioButton-->
+            <!--android:gravity="center"-->
+            <!--android:id="@+id/radio_list_button2"-->
+            <!--android:layout_width="@dimen/common65dp"-->
+            <!--android:layout_height="@dimen/common30dp"-->
+            <!--android:button="@null"-->
+            <!--android:text="汽车美容"-->
+            <!--android:textSize="@dimen/text_size_11sp"/>-->
+        <!--<RadioButton-->
+            <!--android:gravity="center"-->
+            <!--android:id="@+id/radio_list_button3"-->
+            <!--android:layout_width="@dimen/common65dp"-->
+            <!--android:layout_height="@dimen/common30dp"-->
+            <!--android:button="@null"-->
+            <!--android:text="维修保养"-->
+            <!--android:textSize="@dimen/text_size_11sp"/>-->
+        <!--<RadioButton-->
+            <!--android:gravity="center"-->
+            <!--android:id="@+id/radio_list_button4"-->
+            <!--android:layout_width="@dimen/common65dp"-->
+            <!--android:layout_height="@dimen/common30dp"-->
+            <!--android:button="@null"-->
+            <!--android:text="维修保养"-->
+            <!--android:textSize="@dimen/text_size_11sp"/>-->
+        <!--<RadioButton-->
+            <!--android:gravity="center"-->
+            <!--android:id="@+id/radio_list_button5"-->
+            <!--android:layout_width="@dimen/common65dp"-->
+            <!--android:layout_height="@dimen/common30dp"-->
+            <!--android:button="@null"-->
+            <!--android:text="维修保养"-->
+            <!--android:textSize="@dimen/text_size_11sp"/>-->
+    <!--</RadioGroup>-->
+</LinearLayout>

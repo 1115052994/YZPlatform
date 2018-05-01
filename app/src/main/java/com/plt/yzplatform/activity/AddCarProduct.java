@@ -33,6 +33,10 @@ import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.PhotoUtils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.view.ExpandableGridView;
+import com.plt.yzplatform.view.OrdinaryDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -45,6 +49,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 
 public class AddCarProduct extends BaseActivity {
     private static final String TAG = "添加汽车产品";
@@ -98,12 +105,8 @@ public class AddCarProduct extends BaseActivity {
     private String car_fuel_type; //燃料类型   已赋值
     private String car_resum;  //车辆简历    已赋值
     private String car_place_city; //所在城市   已赋值
-    private String car_displacement; //车排量  已赋值
+    private String car_displacement="1.0"; //车排量  已赋值
     private String car_name;  //车辆名称     已賦值
-
-    private float plStart = 0;
-    private float plEnd = 5.0f;// 不限标记为
-
 
     //变速箱
     private List<String> carBsxList = new ArrayList<>();
@@ -138,6 +141,8 @@ public class AddCarProduct extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car_product);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
+        Log.d(TAG, "onCreate: ");
         carBsxList.add("手动");
         carBsxList.add("自动");
         carPfbzList.add("国三");
@@ -154,21 +159,19 @@ public class AddCarProduct extends BaseActivity {
         carRllxList.add("电动混合");
         initView();
         onCall();
-        Intent intent = getIntent();
-        String series_itim = intent.getStringExtra("series_itim");
-        String tv_carbrand = intent.getStringExtra("tv_carbrand");
+//        Intent intent = getIntent();
+//        String series_itim = intent.getStringExtra("series_itim");
+//        String tv_carbrand = intent.getStringExtra("tv_carbrand");
         //获取车型
-        if (series_itim != null) {
-            Log.d("aaaaa", "aaa: " + series_itim);
-            carCx.setText(series_itim + " " + tv_carbrand);
-            car_models = series_itim;
-        }
+//        if (series_itim != null) {
+//            Log.d("aaaaa", "aaa: " + series_itim);
+//            carCx.setText(series_itim + " " + tv_carbrand);
+//            car_models=series_itim;
+//        }
         //得到当前位置
         getLocation();
     }
-
     private void getLocation() {
-        Log.d("aaaa", "getLocation: ");
         Log.d(TAG, "getLocation: " + Prefs.with(getApplicationContext()).read("user_token"));
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(AddCarProduct.this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
@@ -199,13 +202,27 @@ public class AddCarProduct extends BaseActivity {
                 if (isFromUser) {
 //                    tv2.setText(""+(float)Math.round(min*10)/10);
                     car_displacement=(Math.round(min*10)/10)+"";
-                    Log.d(TAG, "onRangeChanged: "+(double)Math.round(min*10)/10);
                     seekbar.setLeftProgress(df.format(min));
                 }
             }
         });
 
 
+    }
+    //这个会自动接收值
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void qwe(String b){
+        if(b!=null){
+            carCx.setText(b);
+            String[] split = b.split("  ");
+            car_models=split[0];
+            Log.d("qwe", "qwe: "+split.toString());
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -290,6 +307,7 @@ public class AddCarProduct extends BaseActivity {
 
     public void inten(Class clas) {
         Intent intent = new Intent(this, clas);
+        intent.putExtra("name","1");
         startActivityForResult(intent, 0);
     }
 
@@ -312,9 +330,7 @@ public class AddCarProduct extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("bbbbbbbb", "onActivityResult: bbbbbbbbb");
         if (resultCode == RESULT_OK && requestCode == 0) { // 如果返回数据
-            Log.d("bbbbbb", "onActivityResult: aaaaaaaaa");
             Bitmap data1 = (Bitmap) data.getExtras().get("data");
             String base64 = PhotoUtils.bitmapToBase64(data1);
             Log.d("bbbbbb", "onActivityResult: "+base64);
@@ -328,7 +344,6 @@ public class AddCarProduct extends BaseActivity {
                         Gson gson = GsonFactory.create();
                         ChassisNumber chassisNumber = gson.fromJson(response, ChassisNumber.class);
                         String vin = chassisNumber.getData().getResult().getVin();
-                        car_number = vin;
                         carCjh.setText(vin);
 
                     }
@@ -387,9 +402,6 @@ public class AddCarProduct extends BaseActivity {
             String id_carbrand = bundle.getString("id_carbrand");
             car_brand = id_carbrand;
             carPp.setText(tv_carbrand);
-            car_name=tv_carbrand;
-
-
         }
 
 
@@ -414,7 +426,7 @@ public class AddCarProduct extends BaseActivity {
                 tv.setTextColor(Color.parseColor("#ff9696"));
                 bsx = view;
                 TextView text_type1 = view.findViewById(R.id.tv_type);
-                car_gearbox = text_type1.getText().toString().trim();
+                car_gearbox=text_type1.getText().toString().trim();
                 bsxPosition = position;
 
 
@@ -499,24 +511,37 @@ public class AddCarProduct extends BaseActivity {
         butText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                car_number = carCjh.getText().toString().trim();
                 car_resum = carResume.getText().toString().trim();
-                if (!carLc.getText().toString().trim().isEmpty()) {
-                    car_mileage = carLc.getText().toString().trim();
-                }
-                if (!carSj.getText().toString().trim().isEmpty()) {
-                    car_price = carSj.getText().toString().trim();
-                }
+                car_mileage = carLc.getText().toString().trim();
+                car_price = carSj.getText().toString().trim();
+                car_name=carPp.getText().toString().trim();
+                car_models = carCx.getText().toString().trim();
+                if (!carCjh.getText().toString().trim().isEmpty()&&!carSj.getText().toString().trim().isEmpty() && !carCx.getText().toString().trim().isEmpty() && !carPp.getText().toString().trim().isEmpty() && !carLc.getText().toString().trim().isEmpty() &&!carSj.getText().toString().trim().isEmpty() && car_time != null && !carResume.getText().toString().trim().isEmpty()) {
+                    //已完善信息
+                    postMeages(car_number,car_brand,car_models,car_mileage,car_price,car_time,car_gearbox,car_letout,car_seating,car_fuel_type,car_resum,car_name,car_displacement,car_place_city);
+                    Log.d("oneror", "onClick: " + "车架号" + car_number + "----品牌id" + car_brand + "----车型" +car_models + "----车显里程" + car_mileage + "----车辆售价" + car_price + "----上牌时间" + car_time + "----车辆简历" + car_resum);
+                }else {
+                    final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(com.plt.yzplatform.activity.AddCarProduct.this)
+                            .setMessage1("温馨提示").setMessage2(" 请完善信息").setConfirm("确定").showDialog();
+                    ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
+                        @Override
+                        public void onNoClick() {
+                            ordinaryDialog.dismiss();
+                        }
+                    });
+                    ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+                        @Override
+                        public void onYesClick() {
 
-                if (carCjh != null && carCx != null && carPp != null && carLc != null && carSj != null && carSp != null && carResume != null) {
-                    //已选择
-                    Toast.makeText(AddCarProduct.this, "选择完整", Toast.LENGTH_SHORT).show();
-//                    postMeages(car_number,car_brand,car_models,car_mileage,car_price,car_time,car_gearbox,car_letout,car_seating,car_fuel_type,car_resum,car_name,car_displacement,car_place_city);
-
+                            ordinaryDialog.dismiss();
+                        }
+                    });
                 }
-                Log.d("oneror", "onClick: " + "车架号" + car_number + "----品牌id" + car_brand + "----车型" +
-                        car_models + "----车显里程" + car_mileage + "----车辆售价" + car_price + "----上牌时间" + car_time +
-                        "----变速箱" + car_gearbox + "----排放标准" + car_letout + "----座位数" + car_seating + "----燃料类型" +
-                        car_fuel_type + "----车辆简历" + car_resum+"----車排量"+car_displacement+"----車名稱"+car_name+"----所在城市"+car_place_city);
+//                Log.d("oneror", "onClick: " + "车架号" + car_number + "----品牌id" + car_brand + "----车型" +
+//                        car_models + "----车显里程" + car_mileage + "----车辆售价" + car_price + "----上牌时间" + car_time +
+//                        "----变速箱" + car_gearbox + "----排放标准" + car_letout + "----座位数" + car_seating + "----燃料类型" +
+//                        car_fuel_type + "----车辆简历" + car_resum+"----車排量"+car_displacement+"----車名稱"+car_name+"----所在城市"+car_place_city);
                   }
         });
     }
@@ -544,7 +569,17 @@ public class AddCarProduct extends BaseActivity {
                 @Override
                 public void success(String response) {
                     Log.i("oneror", "添加二手车信息: " + response);
-
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String result = data.getString("result");
+                        Intent intent = new Intent(com.plt.yzplatform.activity.AddCarProduct.this, CarPhoto.class);
+                        intent.putExtra("result",result);
+                        startActivity(intent);
+                        finish();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                 }
 
@@ -561,6 +596,7 @@ public class AddCarProduct extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart: ");
         setTitle("添加产品");
         setLeftImageClickListener(new View.OnClickListener() {
             @Override

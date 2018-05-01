@@ -153,6 +153,9 @@ public class Config {
     //添加二手车收藏
     public static final String ACCRETIONCOLLCAR = M + S + "accretionCollCar";
 
+    //添加二手车图片
+    public static final String ACCRETIONPICTURECAR = M + S + "accretionPictureCar";
+
     //添加二手车收藏
     public static final String ACCRETIONCOLLCOMP = M + S + "accretionCollComp ";
 
