@@ -48,11 +48,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.CityActivity"
@@ -129,6 +125,7 @@
             android:name=".activity.ProductServiceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+
         <activity
             android:name=".activity.AdvanceSX"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -154,16 +151,38 @@
             android:name=".activity.AddCarProduct"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".camera.MainActivity" />
-        <activity android:name=".camera.FileActivity" />
-        <activity android:name=".camera.test.TestActivity" />
-        <activity android:name=".camera.PhotographActivity">
-            <intent-filter>
-                <action android:name="com.xqq.second" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+        <!-- liyan start -->
+        <activity
+            android:name=".activity.OrdersSubmitActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.OrdersPaySuccessActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.OrdersPersonalActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity
+            android:name=".activity.OrdersUseActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.OrdersPersonalViewActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- liyan  end -->
+
         <activity android:name=".activity.Sellcars" />
         <activity android:name=".activity.BrandChoice" />
         <activity android:name=".activity.ModelsChoose" />
@@ -190,6 +209,11 @@
         <activity android:name=".activity.CarAccessBrandSearch" />
         <activity android:name=".activity.CarAccessChexiSearch" />
         <activity android:name=".activity.CarAccessModeSearch"></activity>
+        <activity android:name=".activity.CompOrderListsActivity" />
+        <activity android:name=".camera.MainActivity" />
+        <activity android:name=".camera.FileActivity" />
+        <activity android:name=".camera.test.TestActivity" />
+        <activity android:name=".camera.PhotographActivity"></activity>
     </application>
 
 </manifest>

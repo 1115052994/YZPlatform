@@ -22,7 +22,7 @@ import okhttp3.Call;
 
 public class OKhttptils {
     public static void post(final Activity context, String url, Map<String, String> params, final HttpCallBack callBack){
-        Log.i("user_token",Prefs.with(context).read("user_token"));
+//        Log.i("user_token",Prefs.with(context).read("user_token"));
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
                     .url(url)      //Prefs.with(context).read("user_token")
@@ -167,6 +167,7 @@ public class OKhttptils {
 //        }
 
         String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name="+file_id+".jpg";
+        Log.i("url","url==="+url);
         Picasso.with(context).load(Uri.parse(url)).into(icon);
     }
 

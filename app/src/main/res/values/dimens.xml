@@ -5,6 +5,9 @@
     <dimen name="common0dp">0dp</dimen>
     <dimen name="common0.5dp">0.5dp</dimen>
     <dimen name="common1dp">1dp</dimen>
+    <!--
+    <dimen name="common1dp">1dp</dimen>
+    -->
     <dimen name="common2dp">2dp</dimen>
     <dimen name="common2.5dp">2.5dp</dimen>
     <dimen name="common3dp">3dp</dimen>
@@ -104,6 +107,7 @@
     <dimen name="common200dp">200dp</dimen>
     <dimen name="common210dp">210dp</dimen>
     <dimen name="common213dp">213dp</dimen>
+    <dimen name="common217dp">217dp</dimen>
     <dimen name="common220dp">220dp</dimen>
     <dimen name="common231dp">231dp</dimen>
     <dimen name="common240dp">240dp</dimen>
@@ -148,6 +152,8 @@
     <dimen name="text_size_26sp">26sp</dimen>
     <dimen name="text_size_30sp">30sp</dimen>
     <dimen name="text_size_36sp">36sp</dimen>
+    <dimen name="text_size_40sp">40sp</dimen>
+    <dimen name="text_size_55sp">55sp</dimen>
     <dimen name="percent_text_size">50sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
 

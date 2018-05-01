@@ -8,14 +8,15 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.222/";
+    public static final String BASE_URL = "http://192.168.1.11/";
 
-    public static final String URL = "http://192.168.1.222/";
-
+    public static final String URL = "http://192.168.1.11/";
+    //微信APPID
+    public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
-    public static final String M = "http://192.168.1.222/";
+    public static final String M = "http://192.168.1.11/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -75,17 +76,17 @@ public class Config {
     //根据图片id获取base64
     public static final String GET_BASE64 = URL + S + "getFile";
 
+    //联想搜索商户
+    public static final String GETSEARCHCOMP = URL + S +"getSearchComp";
+
     //根据图片id获取图片(Picasso)
     public static final String GET_Pic= URL + Y ;
 
-    //联想搜索商户
-    public static final String GETSEARCHCOMP = URL + S + "getSearchComp";
-
     //联想搜索Car
-    public static final String GETSEARCHCAR = URL + S + "getSearchCar";
+    public static final String GETSEARCHCAR = URL + S +"getSearchCar";
 
     //热搜
-    public static final String GETSEARCHHOTWORD = URL + S + "getSearchHotWord";
+    public static final String GETSEARCHHOTWORD = URL + S +"getSearchHotWord";
 
     //首页车服获取banner和icon
     public static final String GET_SERVICE_IMG = URL + S + "getCompIcon";
@@ -99,7 +100,7 @@ public class Config {
     //查看企业评价
     public static final String QUERYCOMPEVALUATE = URL + S + "queryCompeValuate";
 
-    //评价获取信息
+    //车商评价获取信息
     public static final String COMMENTORCOMPNAME = URL + S + "commentOrCompName";
 
     //车商评价
@@ -224,20 +225,40 @@ public class Config {
     // (热门车辆/模糊搜索品牌)
     public static final String GETCARBRANDDICT = URL + S + "getCarBrandDict";
 
-    /*
-    *getCarTrianByCarBrand  品牌查车系
-    getHotCarBrandDict     获取热门
-    getCarBrandDictByInitials   字母筛选
-     */
-    public static final String GETCARTRIANBYCARBRAND = URL + S + "getCarTrianByCarBrand";
-    public static final String GETHOTCARBRANDDICT = URL + S + "getHotCarBrandDict";
-    public static final String GETCARBRANDDICTBYINITIALS = URL + S + "getCarBrandDictByInitials";
-
     //二手车详情
     public static final String CAR_DETAIL = URL + S + "car_detail";
 
     //二手车详情 - 获取广告
     public static final String CAR_DETAIL_AD = URL + S + "selectAdveToApp";
+    public static final String GETCARTRIANBYCARBRAND = URL + S +"getCarTrianByCarBrand";
+    public static final String GETHOTCARBRANDDICT = URL + S +"getHotCarBrandDict";
+    public static final String GETCARBRANDDICTBYINITIALS = URL + S +"getCarBrandDictByInitials";
+
+
+    /**
+     * 李岩使用接口start
+     */
+    //获取订单中的产品详情
+    public static  final String ORDERS_SHOW_PRODUCT_BYID = URL + S + "examineProduct";
+    //获取支付宝支付时所需的参数加签名的组合
+    public static  final String ORDERS_ALIPAY_SIGNINFO = URL + S + "getAlipaySignInfo";
+    //创建订单
+    public static  final String ORDERS_CREATE = URL + S + "placeAnOrderComp";
+    //确认支付订单
+    public static  final String ORDERS_PAY_SUCCESS = URL + S + "settlementWarrant";
+    //支付流水
+    public static  final String ORDERS_PAY_LOG = URL + S + "payLog";
+    //查询个人用户订单信息
+    public static  final String ORDERS_GET_LIST = URL + S + "orderListPers";
+    //根据订单号查询订单明细
+    public static  final String ORDERS_GET_BYCODE= URL + S + "checkSingleOrder";
+    //获取微信支付调起支付单
+    public static  final String ORDERS_WECCHAT_CREATE= URL + S + "startWechatPay";
+    //取消订单
+    public static  final String ORDERS_CANCEL= URL + S + "deactivePaymentMethod";
+    /**
+     * 李岩使用接口end
+     */
 
     //二手车详情 - 是否收藏   coll_content_id (car_id)
     public static final String CAR_DETAIL_COLLECT = URL + S + "whetherCollCar";

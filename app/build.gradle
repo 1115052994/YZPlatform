@@ -8,13 +8,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     signingConfigs {
         release {
-            storeFile file('yizhong.jks')
-            storePassword 'yizhong'
-            keyAlias 'yizhong'
-            keyPassword 'yizhong'
+            storeFile file('D:/appkey/yzplatform.jks')
+            storePassword 'abc123ABC'
+            keyAlias 'yz'
+            keyPassword 'yzplatform'
         }
     }
     buildTypes {
@@ -75,10 +76,16 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.5'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+    implementation files('libs/alipaySdk-20180403.jar')
+    //添加自定义Dialog引入的包  ly
+    compile 'com.wang.avi:library:1.0.0'
     //EventBas
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     //SwitchButton
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
 
 
+    //微信支付所需的包 ly
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    compile 'com.android.support:multidex:1.0.1'
 }
