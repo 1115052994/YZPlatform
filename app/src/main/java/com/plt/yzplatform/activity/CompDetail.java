@@ -56,6 +56,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
+@SuppressWarnings("all")
 public class CompDetail extends BaseActivity {
 
     @BindView(R.id.staffsView)
@@ -299,7 +300,7 @@ public class CompDetail extends BaseActivity {
         wxAdapter = new CommonRecyclerAdapter(this, weixiuList, R.layout.item_wx) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-                WeixiuBean.DataBean.ResultBean weixiuBean = weixiuList.get(position);
+                final WeixiuBean.DataBean.ResultBean weixiuBean = weixiuList.get(position);
                 TextView wxName = holder.getView(R.id.byName_tv);
                 wxName.setText(weixiuBean.getDict_desc());
                 TextView wxMoney = holder.getView(R.id.money_tv);
@@ -308,6 +309,15 @@ public class CompDetail extends BaseActivity {
                 wxTotalMoney.setText("总价￥" + (int) weixiuBean.getProd_price());
                 TextView wxyhlMoney = holder.getView(R.id.yhPrice_tv);
                 wxyhlMoney.setText("优惠价￥" + (int) weixiuBean.getProd_reduced_price());
+                TextView payBtn = holder.getView(R.id.pay_submit);
+                payBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("pro_id", weixiuBean.getProd_id());
+                        JumpUtil.newInstance().jumpRight(getApplicationContext(), CompDetail.class, bundle);
+                    }
+                });
                 recyclerViewWXChild = holder.getView(R.id.recyclerView_wx_child);
                 // 处理滑动冲突
 //                recyclerViewWXChild.setFocusableInTouchMode(false); //设置不需要焦点

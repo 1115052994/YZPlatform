@@ -47,7 +47,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2018/4/25 0025.
  */
-
+@SuppressWarnings("all")
 public class OrdersSubmitActivity extends BaseActivity {
     @BindView(R.id.orders_submit_paystyle_wechat)
     CheckBox wechat;

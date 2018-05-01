@@ -20,6 +20,10 @@ import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.ShowProductDetaile;
 import com.plt.yzplatform.fragment.orderspersonal.OrdersPersonalAllFragment;
+import com.plt.yzplatform.fragment.orderspersonal.OrdersPersonalCancelFragment;
+import com.plt.yzplatform.fragment.orderspersonal.OrdersPersonalNoPayFragment;
+import com.plt.yzplatform.fragment.orderspersonal.OrdersPersonalPayFragment;
+import com.plt.yzplatform.fragment.orderspersonal.OrdersPersonalUseFragment;
 import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.JumpUtil;
@@ -63,7 +67,15 @@ public class OrdersPersonalActivity extends BaseActivity {
 
     public void initFragment(){
         fragment.add(new OrdersPersonalAllFragment(this));
+        fragment.add(new OrdersPersonalNoPayFragment(this));
+        fragment.add(new OrdersPersonalPayFragment(this));
+        fragment.add(new OrdersPersonalUseFragment(this));
+        fragment.add(new OrdersPersonalCancelFragment(this));
         str.add("全部订单");
+        str.add("未支付");
+        str.add("待使用");
+        str.add("已使用");
+        str.add("已取消");
         ordersPager.setAdapter(new CollectAdapter(getSupportFragmentManager(),fragment,str));
         ordersTab.setupWithViewPager(ordersPager);
         ordersTab.setTabMode(TabLayout.MODE_FIXED);

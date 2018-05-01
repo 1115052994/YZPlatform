@@ -96,7 +96,6 @@ public class OrdersPersonalAdapter extends BaseAdapter {
         }else {
             viewHolder= (OrdersPersonalAdapter.ViewHolder) convertView.getTag();
         }
-
         viewHolder.orders_personal_item_comp_name.setText(orders.getAuth_comp_name());
         viewHolder.orders_personal_item_service_name.setText(orders.getProd_service_name());
         viewHolder.orders_personal_item_createdate.setText("下单时间：" + orders.getOrder_date());

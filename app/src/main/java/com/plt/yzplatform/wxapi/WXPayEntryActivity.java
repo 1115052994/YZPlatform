@@ -44,6 +44,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     private MyProgressDialog dialog;
 
     private IWXAPI api;
+    private int count = 0;
 
     public static WXPayEntryActivity getInstance() {
         if (activity == null) {
@@ -131,8 +132,25 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                     dialog.dismiss();
                     WXPayEntryActivity.this.finish();
                 } else {
-                    JumpUtil.newInstance().jumpRight(getApplicationContext(), OrdersPersonalActivity.class);
-                    WXPayEntryActivity.this.finish();
+                    //如果订单是未支付状态，再次进行查询，最多查询3次
+                    if(count < 3){
+                        count++;
+                        //休眠1.5秒后再次查询
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1500);
+                                    queryOrderStatus();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }.start();
+                    } else {
+                        JumpUtil.newInstance().jumpRight(getApplicationContext(), OrdersPersonalActivity.class);
+                        WXPayEntryActivity.this.finish();
+                    }
                 }
             }
 
@@ -147,5 +165,13 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(null != dialog && dialog.isShowing()){
+            dialog.dismiss();
+        }
     }
 }

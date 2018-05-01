@@ -13,19 +13,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.OrdersPersonalAdapter;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.Orders;
+import com.plt.yzplatform.enums.OrderPersState;
 import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
+import com.plt.yzplatform.utils.Prefs;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +42,7 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class OrdersPersonalAllFragment extends Fragment {
+public class OrdersPersonalNoPayFragment extends Fragment {
     @BindView(R.id.orders_personal_default_image)
     ImageView defaultImage;
     @BindView(R.id.orders_personal_listview)
@@ -55,7 +58,7 @@ public class OrdersPersonalAllFragment extends Fragment {
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
 
-    public OrdersPersonalAllFragment(Context context) {
+    public OrdersPersonalNoPayFragment(Context context) {
         this.context = context;
     }
 
@@ -95,6 +98,7 @@ public class OrdersPersonalAllFragment extends Fragment {
 
     public void getOrders(String url, final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
+        map.put("order_type", OrderPersState.wzf.toString());
         map.put("pageIndex", String.valueOf(pageIndex));
         map.put("pageSize", "");
         if (NetUtil.isNetAvailable(context)) {
@@ -107,7 +111,7 @@ public class OrdersPersonalAllFragment extends Fragment {
                     List<Orders.DataBean.ResultBean> result2 = orders.getData().getResult();
                     result.addAll(result2);
                     //没有信息图片显示
-                    if (OrdersPersonalAllFragment.this.result.size() <= 0) {
+                    if (OrdersPersonalNoPayFragment.this.result.size() <= 0) {
                         defaultImage.setVisibility(View.VISIBLE);
                     } else {
                         if (refreshlayout != null) {
