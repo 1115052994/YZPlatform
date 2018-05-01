@@ -33,11 +33,24 @@
         android:id="@+id/test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="二手车商家详情"/>
+        android:text="test"/>
+
+    <Button
+        android:id="@+id/priceWarn"
+        android:text="个人中心-降价提醒"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/test1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="订阅"/>
+
+    <Button
+        android:id="@+id/updatePic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上传二手车图片"/>
+
 </LinearLayout>

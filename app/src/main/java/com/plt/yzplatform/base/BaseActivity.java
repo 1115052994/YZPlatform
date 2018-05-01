@@ -40,6 +40,9 @@ import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.utils.ActivityUtil;
@@ -56,6 +59,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.Map;
 
 import okhttp3.Call;
 
@@ -177,6 +181,19 @@ public class BaseActivity extends AppCompatActivity{
             DecimalFormat df = new DecimalFormat("#0.00");
             return df.format(d);
         }
+    }
+
+
+    /* json转map */
+    public static Map<String, String> json2map(String str_json) {
+        Map<String, String> res = null;
+        try {
+            Gson gson = new Gson();
+            res = gson.fromJson(str_json, new TypeToken<Map<String, Object>>() {
+            }.getType());
+        } catch (JsonSyntaxException e) {
+        }
+        return res;
     }
 
     /**
