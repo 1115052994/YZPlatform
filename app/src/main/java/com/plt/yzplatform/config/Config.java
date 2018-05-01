@@ -271,4 +271,20 @@ public class Config {
 
     //个人中心 - 降价提醒
     public static final String PERS_PRICE_WARN = URL + S + "QuerySubscription";
+
+    // 估价Brand
+    public static final String GETBRAND = URL + S + "getBrand";
+
+    // 估价chexi
+    public static final String GETJUHECARTRIAN = URL + S + "getJuheCarTrian";
+
+    //估价年款
+    public static final String GETJUHEMODEL = URL + S +"getJuheModel";
+
+    // 估价城市
+    public static final String GETJHCITYID = URL + S +"getJhCityId";
+
+    // 估价
+    public static final String GETCARASSESS = URL + S +"getCarAssess";
+
 }

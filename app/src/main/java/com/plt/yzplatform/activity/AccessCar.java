@@ -2,6 +2,7 @@ package com.plt.yzplatform.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -10,9 +11,17 @@ import android.widget.TextView;
 
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.base.BaseActivity;
+import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.utils.DateUtil;
 import com.plt.yzplatform.utils.JumpUtil;
+import com.plt.yzplatform.utils.OKhttptils;
+import com.plt.yzplatform.utils.ToastUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -31,14 +40,15 @@ public class AccessCar extends BaseActivity {
     @BindView(R.id.tv_editlc)
     EditText tvEditlc;
 
+    private String cityId = "";
+    private String carYear = "",carMonth = "";
+    private String carId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_car);
         ButterKnife.bind(this);
-        Window win = getWindow();
-        WindowManager.LayoutParams params = win.getAttributes();
-        win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
     }
 
     @Override
@@ -63,19 +73,18 @@ public class AccessCar extends BaseActivity {
                     public void backData(String city) {
                         tvEditcity.setText(city);
                         tvEditcity.setTextColor(Color.parseColor("#333333"));
+                        getCityId(city);
                     }
                 });
                 break;
             case R.id.brand:
-                JumpUtil.newInstance().jumpLeft(this,CarBrandSearch.class);
-                CarBrandSearch.setOnDataBackListener(new CarBrandSearch.DataBackListener() {
+                JumpUtil.newInstance().jumpLeft(this,CarAccessBrandSearch.class);
+                CarAccessModeSearch.setDataBackListener(new CarAccessModeSearch.DataBackListener() {
                     @Override
-                    public void backData(Map<String, String> brand, Map<String, String> carName) {
-                        /**
-                         * carMap1.put("tv_carbrand", "A");
-                         * carMap1.put("image_carbrand", "");
-                         * carMap1.put("id_carbrand", "");
-                         */
+                    public void backData(String id, String name) {
+                        carId = id;
+                        tvEditbrand.setText(name);
+                        tvEditbrand.setTextColor(Color.parseColor("#333333"));
                     }
                 });
                 break;
@@ -83,6 +92,7 @@ public class AccessCar extends BaseActivity {
                 onYearMonthDayTimePicker();
                 break;
             case R.id.access:
+                accessCar();
                 break;
         }
     }
@@ -99,12 +109,74 @@ public class AccessCar extends BaseActivity {
             public void onDatePicked(String year, String month, String day) {
                 tvEdittime.setText(year + "年" + month + "月");
                 tvEdittime.setTextColor(Color.parseColor("#333333"));
+                carYear = year;
+                carMonth = month;
             }
         });
         picker.show();
     }
 
-    @OnClick(R.id.tv_editlc)
-    public void onViewClicked() {
+
+    //通过城市名获取城市Id
+    public void getCityId(String cityName) {
+        Map<String, String> map = new HashMap<>();
+        map.put("cityName", cityName);
+        OKhttptils.post(this, Config.GETJHCITYID, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    JSONObject data = object.getJSONObject("data");
+                    JSONArray array = data.getJSONArray("result");
+                    JSONObject object1 = array.getJSONObject(0);
+                    cityId = object1.getString("juheId");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
+    }
+
+
+    private void accessCar(){
+        //Log.i("accessCar",cityId+"---"+carId+"---"+carYear+"---"+carMonth+"---"+tvEditlc.getText().toString().trim());
+        if ("".equals(cityId)||"".equals(carId)||"".equals(carYear)||"".equals(carMonth)||"".equals(tvEditlc.getText().toString().trim())){
+            ToastUtil.show(this,"请填写完整内容");
+            return;
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put("city", cityId);
+        map.put("car", carId);
+        map.put("useddate", carYear);
+        map.put("useddateMonth", carMonth);
+        map.put("mileage", tvEditlc.getText().toString().trim());
+        map.put("price","");
+        OKhttptils.post(this, Config.GETCARASSESS, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    if ("1".equals(object.getString("status"))){
+                        Bundle bundle = new Bundle();
+                        bundle.putString("price",response);
+                        bundle.putString("name",tvEditbrand.getText().toString().trim());
+                        bundle.putString("car","上牌时间:"+tvEdittime.getText().toString().trim()+"   "+tvEditcity.getText().toString().trim()+"   "+tvEditlc.getText().toString().trim()+"万公里");
+                        JumpUtil.newInstance().jumpLeft(AccessCar.this,AccessResult.class,bundle);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 }

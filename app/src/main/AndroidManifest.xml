@@ -162,10 +162,13 @@
             android:name=".activity.AccessCar"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.AccessResult"></activity>
+        <activity android:name=".activity.AccessResult" />
         <activity android:name=".CarPhotosActivity" />
         <activity android:name=".activity.PriceWarnActivity" />
-        <activity android:name=".activity.CompOrderListsActivity"/>
+        <activity android:name=".activity.CompOrderListsActivity" />
+        <activity android:name=".activity.CarAccessBrandSearch" />
+        <activity android:name=".activity.CarAccessChexiSearch" />
+        <activity android:name=".activity.CarAccessModeSearch"></activity>
     </application>
 
 </manifest>
