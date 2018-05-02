@@ -258,16 +258,16 @@ public class UpdateCar extends BaseActivity {
         brandChoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inten(BrandChoice.class);
-            }
-        });
-        //车型选择
-        modelsChoice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 inten(ModelsChoose.class);
             }
         });
+//        //车型选择
+//        modelsChoice.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                inten(ModelsChoose.class);
+//            }
+//        });
         //上牌时间
         timeChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -600,7 +600,7 @@ public class UpdateCar extends BaseActivity {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject data = jsonObject.getJSONObject("data");
                         String result = data.getString("result");
-                        Intent intent = new Intent(UpdateCar.this, CarPhoto.class);
+                        Intent intent = new Intent(UpdateCar.this, CarPhotoActivity.class);
                         intent.putExtra("result", result);
                         startActivity(intent);
                         finish();

@@ -47,6 +47,7 @@ import com.plt.yzplatform.R;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.NetUtil;
+import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.PhotoUtils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
@@ -59,6 +60,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -408,7 +410,6 @@ public class BaseActivity extends AppCompatActivity{
     private static final int CODE_CAMERA_REQUEST = 0xa1;
     private static final int CAMERA_PERMISSIONS_REQUEST_CODE = 0x03;
     private static final int STORAGE_PERMISSIONS_REQUEST_CODE = 0x04;
-
     private File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/photo.jpg");
     private File fileCropUri = new File(Environment.getExternalStorageDirectory().getPath() + "/crop_photo.jpg");
     private Uri imageUri;
@@ -450,7 +451,6 @@ public class BaseActivity extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d("aaaaaa", "onActivityResult: "+requestCode);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 //直接上传图片 调用相册
@@ -472,48 +472,36 @@ public class BaseActivity extends AppCompatActivity{
                     break;
                 //直接上传图片 返回成功值
                 case CODE_RESULTS_REQUEST:
+
                     final Bitmap bitmap1 = PhotoUtils.getBitmapFromUri(cropImageUri, this);
                     //上传图片 获取图片id返回值
-                    if (NetUtil.isNetAvailable(mContext)){
-                        OkHttpUtils.post()
-                                .url(Config.UPLOADFILE)
-                                .addHeader("user_token", Prefs.with(mContext).read("user_token"))
-                                .addParams("file_content",PhotoUtils.bitmapToBase64(bitmap1))
-                                .build()
-                                .execute(new StringCallback() {
+                    Map<String,String> map = new HashMap<>();
+                    map.put("file_content",PhotoUtils.bitmapToBase64(bitmap1));
+                    OKhttptils.post((Activity) mContext, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
+                        @Override
+                        public void success(String response) {
+                            try {
 
-                                    @Override
-                                    public void onError(okhttp3.Call call, Exception e, int id) {
-                                        ToastUtil.noNAR(mContext);
-                                    }
+                                JSONObject jsonObject = new JSONObject(response);
+                                String data = jsonObject.getString("data");
+                                JSONObject object = new JSONObject(data);
+                                Prefs.with(mContext).remove(sType);
+                                String file_id = object.getString("file_id");
+                                Prefs.with(mContext).write(sType,file_id);
+                                if (bitmap1 != null) {
+                                    showImages(bitmap1);
+                                }
 
-                                    @Override
-                                    public void onResponse(String response, int id) {
-                                        Log.d(TAG, "onResponse上传图片: " + response);
-                                        /**
-                                         * {"data":{"file_id":"437033640d6c4812bf9aba35099b9fc1"},"message":"","status":"1"}
-                                         */
-                                        try {
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            if ("1".equals(jsonObject.getString("status"))){
-                                                String data = jsonObject.getString("data");
-                                                JSONObject object = new JSONObject(data);
-                                                Prefs.with(mContext).remove(sType);
-                                                String file_id = object.getString("file_id");
-                                                Prefs.with(mContext).write(sType,file_id);
-                                                if (bitmap1 != null) {
-                                                    showImages(bitmap1);
-                                                }
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                    }else {
-                        ToastUtil.noNetAvailable(mContext);
-                    }
+                        @Override
+                        public void fail(String response) {
+
+                        }
+                    });
                     break;
             }
 
@@ -524,8 +512,33 @@ public class BaseActivity extends AppCompatActivity{
         }
     }
 
+    /* 上传图片base64并获取图片id */
+    public void upDataBase64(final Context context, final Bitmap bitmap, final String sType) {
+        Map<String,String> map = new HashMap<>();
+        map.put("file_content",PhotoUtils.bitmapToBase64(bitmap));
+        OKhttptils.post((Activity) context, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
 
+                    JSONObject jsonObject = new JSONObject(response);
+                    String data = jsonObject.getString("data");
+                    JSONObject object = new JSONObject(data);
+                    Prefs.with(context).remove(sType);
+                    String file_id = object.getString("file_id");
+                    Prefs.with(context).write(sType,file_id);
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
+    }
 
     /**
      * 显示图片

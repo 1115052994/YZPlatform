@@ -1,4 +1,4 @@
-package com.plt.yzplatform;
+package com.plt.yzplatform.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.gson.Gson;
+import com.plt.yzplatform.R;
 import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.CarDetaile;

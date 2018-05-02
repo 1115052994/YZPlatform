@@ -27,22 +27,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.plt.yzplatform.R;
+import com.plt.yzplatform.camera.PhotographActivity;
 import com.plt.yzplatform.config.Config;
-import com.plt.yzplatform.entity.Enterprise;
-import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.PhotoZDY;
-import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.ToastUtil;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,66 +53,62 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 public class CarPhoto extends Fragment {
-    private static final String TAG = "CarPhoto" ;
+    private static final String TAG = "拍照";
 
     @BindView(R.id.imageView)
     ImageView imageView;
     @BindView(R.id.addition_ed_introduce)
     EditText additionEdIntroduce;
-    @BindView(R.id.bc)
-    LinearLayout bc;
-    @BindView(R.id.all_picture)
-    TextView allPicture;
     Unbinder unbinder;
+    private String path;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_car_photo, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            bundle.getString("path");
+            Log.d(TAG, "onCreateView图片路径: " + path);
+        }
+
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //将图片赋值并上传到服务器
-                upDataPicture(getActivity(),imageView,null,"员工头像");
-                //得到fileid
-                String file_id = Prefs.with(getActivity()).read("员工头像");
-
-//                OKhttptils.getPic(getContext(),file_id,imageView);
-                Log.d("aaaaa", "onClick: "+file_id);
+                upDataPicture(getActivity(), imageView, null, "员工头像");
+//                //得到fileid
+//                String file_id = Prefs.with(getActivity()).read("员工头像");
             }
         });
-        bc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "保存", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        bc.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(), "保存", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         return inflate;
 
 
     }
 
-
-
-
     //数据上传
-    private void getData(String car_id,String number,String file_id,String sfile_id,String desc) {
+    private void getData(String car_id, String number, String file_id, String sfile_id, String desc) {
         Map<String, String> map = new HashMap<>();
-        map.put("car_id",car_id);
-        map.put("number",number);
-        map.put("file_id",file_id);
-        map.put("sfile_id",sfile_id);
-        map.put("desc",desc);
+        map.put("car_id", car_id);
+        map.put("number", number);
+        map.put("file_id", file_id);
+        map.put("sfile_id", sfile_id);
+        map.put("desc", desc);
         OKhttptils.post((Activity) getContext(), Config.ACCRETIONPICTURECAR, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
-                Gson gson = GsonFactory.create();
-                Enterprise enterprise = gson.fromJson(response, Enterprise.class);
-                Enterprise.DataBean.ResultBean result = enterprise.getData().getResult();
 
             }
+
             @Override
             public void fail(String response) {
                 Log.d("aaaa", "fail: " + response);
@@ -133,11 +123,6 @@ public class CarPhoto extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
-
-
-
 
 
     ////////////////////////////////头疼的地平线//////////////////////////////////
@@ -212,8 +197,20 @@ public class CarPhoto extends Fragment {
                         imageUri = Uri.fromFile(fileUri);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                             imageUri = FileProvider.getUriForFile(mContext, "com.plt.yzplatform.fileProvider", fileUri);//通过FileProvider创建一个content类型的Uri
-                        Log.d("aaaaa", "imageUri: "+imageUri);
-                        PhotoZDY.takePicture(CarPhoto.this, imageUri, CODE_UPDATA2_REQUEST);
+                        Log.d("aaaaa", "imageUri: " + imageUri);
+
+                        int checkCallPhonePermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 222);
+                        if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 222);
+                            return;
+                        } else {
+                            Intent intent = new Intent(getContext(), PhotographActivity.class);
+                            startActivityForResult(intent, 000);
+                        }
+
+
                     } else {
                         ToastUtil.show(mContext, "设备没有SD卡！");
                     }
@@ -250,7 +247,9 @@ public class CarPhoto extends Fragment {
                         imageUri = Uri.fromFile(fileUri);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                             imageUri = FileProvider.getUriForFile(getActivity(), "com.plt.yzplatform.fileProvider", fileUri);//通过FileProvider创建一个content类型的Uri
-                        PhotoZDY.takePicture(CarPhoto.this, imageUri, CODE_CAMERA_REQUEST);
+//                        PhotoZDY.takePicture(CarPhoto.this, imageUri, CODE_CAMERA_REQUEST);
+                        Intent intent = new Intent(getContext(), PhotographActivity.class);
+                        startActivityForResult(intent, 000);
                     } else {
                         ToastUtil.show(getActivity(), "设备没有SD卡！");
                     }
@@ -263,51 +262,6 @@ public class CarPhoto extends Fragment {
         }
     }
 
-    /**
-     * 裁剪图片，并完成结果返回值
-     */
-    private int output_X = 600;
-    private int output_Y = 400;
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                //直接上传图片 调用相册
-                case CODE_UPDATA_REQUEST:
-                    Log.d("aaaaaa", "onActivityResult11111111: "+CODE_UPDATA_REQUEST);
-                    if (hasSdcard()) {
-                        cropImageUri = Uri.fromFile(fileCropUri);
-                        Uri newUri = Uri.parse(PhotoZDY.getPath(getActivity(), data.getData()));
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            newUri = FileProvider.getUriForFile(getActivity(), "com.plt.yzplatform.fileProvider", new File(newUri.getPath()));
-                            PhotoZDY.cropImageUri(getActivity(), newUri, cropImageUri, 6, 4, output_X, output_Y, CODE_RESULTS_REQUEST);
-                    } else {
-                        ToastUtil.show(getActivity(), "设备没有SD卡！");
-                    }
-                    break;
-                //直接上传图片 调用相机
-                case CODE_UPDATA2_REQUEST:
-                    Log.d("aaaaaa", "onActivityResult22222222: "+CODE_UPDATA2_REQUEST);
-                    cropImageUri = Uri.fromFile(fileCropUri);
-                    Log.d("aaaaa", "cropImageUri: "+cropImageUri);
-                    PhotoZDY.cropImageUri(getActivity(), imageUri, cropImageUri, 6, 4, output_X, output_Y, CODE_RESULTS_REQUEST);
-//                    compress(Bitmap.CompressFormat.JPEG,);
-                    break;
-                //直接上传图片 返回成功值
-                case CODE_RESULTS_REQUEST:
-                    break;
-
-            }
-
-//
-//        } else if (resultCode == RESULT_CANCELED) {
-////            //取消
-////            popupWindow.dismiss();
-//        }
-    }
 
     //图片的质量1-100
     public void compress(Bitmap.CompressFormat format, int quality) {
@@ -320,7 +274,7 @@ public class CarPhoto extends Fragment {
             //得到bitmap
 //            Bitmap bmp = BitmapFactory.decodeFile(uri.toString());
             //开始压缩
-       //   Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_icon);
+            //   Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_icon);
 //            bmp.compress(format, quality, fos);
 
         } catch (FileNotFoundException e) {
@@ -356,19 +310,6 @@ public class CarPhoto extends Fragment {
 
         popupWindow.dismiss();
     }
-
-
-    /**
-     * 通过头像id获取头像
-     **/
-    public void getPic(final Context context, String file_id, final ImageView icon) {
-        mContext = context;
-        String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name="+file_id+".jpg";
-        Log.i("url","url==="+url);
-        Picasso.with(mContext).load(Uri.parse(url)).into(icon);
-    }
-
-
 
 
     /**

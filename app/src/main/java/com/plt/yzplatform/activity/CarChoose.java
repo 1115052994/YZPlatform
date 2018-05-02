@@ -44,6 +44,9 @@ public class CarChoose extends BaseActivity {
     private String tv_carbrand;
     private String name;
 
+    private String car_brand;
+    private String car_brand_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,10 @@ public class CarChoose extends BaseActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
+
+        car_brand = bundle.getString("car_brand");
+        car_brand_id = bundle.getString("car_brand_id");
+
         tv_carbrand = bundle.getString("tv_carbrand");
         String id_carbrand = bundle.getString("id_carbrand");
         name = intent.getStringExtra("name");
@@ -82,11 +89,6 @@ public class CarChoose extends BaseActivity {
                 } else {
                     // 品牌
                     TextView name = holder.getView(R.id.tv_carbrand);
-//                    if (recyclerList.get(position).get("image_carbrand") != null) {
-//                        String url = Config.BASE_URL + Config.Y + recyclerList.get(position).get("image_carbrand");
-//                        brand.setImageBitmap(null);
-//                        Picasso.with(CarChoose.this).load(Uri.parse(url)).into(brand);
-//                    }
                     if (recyclerList.get(position).get("tv_carbrand") != null) {
                         name.setText(recyclerList.get(position).get("tv_carbrand"));
                     }
@@ -101,13 +103,13 @@ public class CarChoose extends BaseActivity {
                 String istrue = recyclerList.get(position).get("istrue");
                 if(istrue==null){
                     // 点击事件
-                    Log.i("carbrand", position + "---" + recyclerList.get(position).get("tv_carbrand"));
+                    Log.i("点击了", position + "---" + recyclerList.get(position).get("tv_carbrand")  +"车型id："+ recyclerList.get(position).get("id_carbrand") + "品牌：" +car_brand + "品牌id：" + car_brand_id);
                     if(name.equals("1")){
                         intent =new Intent(CarChoose.this,AddCarProduct.class);
                     }else {
                         intent =new Intent(CarChoose.this,UpdateCar.class);
                     }
-                    EventBus.getDefault().post(recyclerList.get(position).get("tv_carbrand")+"  "+tv_carbrand);
+                    EventBus.getDefault().post(recyclerList.get(position).get("tv_carbrand")+"," + recyclerList.get(position).get("id_carbrand") + "," + car_brand + "," + car_brand_id );
                     startActivity(intent);
                     finish();
                 }
@@ -148,6 +150,7 @@ public class CarChoose extends BaseActivity {
                             }
                             Map<String, String> carMap1 = new HashMap<>();
                             carMap1.put("tv_carbrand", bean.getDict_desc());
+                            carMap1.put("id_carbrand",bean.getDict_id());
 
 //                            carMap1.put("image_carbrand", bean.getBrandImg());
 //                            carMap1.put("id_carbrand", bean.getBrandId());

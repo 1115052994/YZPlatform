@@ -172,6 +172,7 @@ public class PhotographActivity extends AppCompatActivity implements SurfaceHold
         WindowManager WM = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         WM.getDefaultDisplay().getMetrics(outMetrics);
+
         //初始化模板
         onLoadResources();
         //初始化界面
@@ -818,7 +819,8 @@ public class PhotographActivity extends AppCompatActivity implements SurfaceHold
                 String maximgPath = saveJpeg(aa);
                 Intent intent = new Intent();
                 intent.putExtra("maximgPath", maximgPath);
-                setResult(RESULT_OK, intent);
+                Log.d(TAG, "onPictureTaken图片路径: " + maximgPath);
+                setResult(0, intent);
                 finish();
             }
 

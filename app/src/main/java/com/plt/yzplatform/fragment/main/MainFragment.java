@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.plt.yzplatform.DemoActivity;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.AccessCar;
 import com.plt.yzplatform.activity.AddProductActivity;
 import com.plt.yzplatform.activity.CarCompDetail;
 import com.plt.yzplatform.activity.CarDetailsActivity;
-import com.plt.yzplatform.activity.CarPhoto;
+import com.plt.yzplatform.activity.CarPhotoActivity;
 import com.plt.yzplatform.activity.EnterpriseActivity;
 import com.plt.yzplatform.activity.PersonalSettingActivity;
 import com.plt.yzplatform.activity.PriceWarnActivity;
@@ -46,7 +47,7 @@ public class MainFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.renzheng, R.id.setting, R.id.add, R.id.carDetail,R.id.test,R.id.priceWarn,R.id.test1,R.id.updatePic})
+    @OnClick({R.id.renzheng, R.id.setting, R.id.add, R.id.carDetail,R.id.test,R.id.priceWarn,R.id.test1,R.id.updatePic,R.id.picDemo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.renzheng:
@@ -73,7 +74,11 @@ public class MainFragment extends Fragment {
                 break;
 
             case R.id.updatePic:
-                JumpUtil.newInstance().jumpRight(getContext(), CarPhoto.class);
+                    JumpUtil.newInstance().jumpRight(getContext(), CarPhotoActivity.class);
+                break;
+
+            case R.id.picDemo:
+                JumpUtil.newInstance().jumpRight(getContext(),DemoActivity.class);
                 break;
         }
     }

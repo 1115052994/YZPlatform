@@ -41,7 +41,7 @@ public class OKhttptils {
 
                         @Override
                         public void onResponse(String response, int id) {
-//                            Log.d("onResponse", "onResponse" + response);
+                            Log.d("onResponse", "onResponse" + response);
                             try {
                                 JSONObject object = new JSONObject(response);
                                 String status = object.getString("status");

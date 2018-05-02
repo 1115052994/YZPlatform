@@ -46,7 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -96,7 +96,7 @@
             android:name=".activity.PersonalSettingActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
@@ -226,10 +226,9 @@
 -->
 
         <activity android:name=".activity.Sellcars" />
-        <activity android:name=".activity.BrandChoice" />
         <activity android:name=".activity.ModelsChoose" />
         <activity android:name=".activity.CarChoose" />
-        <activity android:name=".activity.CarPhoto" />
+        <activity android:name=".activity.CarPhotoActivity" />
         <activity android:name=".activity.CarDetailsActivity" />
         <activity android:name=".activity.CarCompDetail" />
         <activity android:name=".activity.CarDetailsKeyActivity" />
@@ -244,10 +243,11 @@
             android:name=".activity.AccessCar"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.AccessResult"></activity>
-        <activity android:name=".CarPhotosActivity" />
+        <activity android:name=".activity.AccessResult" />
+        <activity android:name=".activity.CarPhotosActivity" />
         <activity android:name=".activity.PriceWarnActivity" />
         <activity android:name=".activity.CompOrderListsActivity" />
+        <activity android:name=".DemoActivity"></activity>
         <activity android:name=".camera.MainActivity" />
         <activity android:name=".camera.FileActivity" />
         <activity android:name=".camera.test.TestActivity" />

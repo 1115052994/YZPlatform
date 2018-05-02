@@ -51,6 +51,12 @@
         android:id="@+id/updatePic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="上传二手车图片"/>
+        android:text="上传二手车"/>
+
+    <Button
+        android:id="@+id/picDemo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拍照demo"/>
 
 </LinearLayout>
