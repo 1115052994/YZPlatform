@@ -212,7 +212,6 @@ public class CarPhotoActivity extends BaseActivity {
         photograph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 int checkCallPhonePermission = ContextCompat.checkSelfPermission(CarPhotoActivity.this, Manifest.permission.CAMERA);
                 ActivityCompat.requestPermissions(CarPhotoActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
                 ActivityCompat.requestPermissions(CarPhotoActivity.this, new String[]{Manifest.permission.CAMERA}, 222);
