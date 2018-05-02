@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".zxing.android.CaptureActivity">
+
+    <include
+        android:id="@+id/head_title"
+        layout="@layout/header_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+
+    </LinearLayout>
+    <!-- 整体透明画布 -->
+    <SurfaceView
+        android:id="@+id/preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/head_title"
+        />
+
+    <!-- 扫描取景框 -->
+    <com.plt.yzplatform.zxing.view.ViewfinderView
+        android:id="@+id/viewfinder_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/head_title"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common220dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="或者"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_12sp"
+            android:textColor="@color/theme_coloer"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请输入验证码"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/common5dp"
+            android:textSize="@dimen/text_size_16sp"
+            android:textColor="@color/text_c8"
+            />
+
+        <EditText
+            android:id="@+id/orders_token"
+            android:layout_width="@dimen/common250dp"
+            android:layout_height="@dimen/common40dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:textSize="@dimen/text_size_20sp"
+            android:textColor="@color/text_33"
+            android:layout_marginTop="@dimen/common15dp"
+            android:background="@drawable/bg_theme_cricle5"
+            />
+        <Button
+            android:id="@+id/orders_token_submit"
+            android:layout_width="@dimen/common250dp"
+            android:layout_height="@dimen/common40dp"
+            android:text="提交"
+            android:textSize="@dimen/text_size_18sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/common15dp"
+            android:background="@drawable/sell_button"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

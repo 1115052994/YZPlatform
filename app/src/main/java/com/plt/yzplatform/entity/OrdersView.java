@@ -9,7 +9,7 @@ import java.util.List;
 public class OrdersView {
 
     /**
-     * data : {"result":{"order_comp_prod_id":"58","auth_comp_lon":116.993253,"prod_service_name":"汽车美容","order_state_pers":"wzf","auth_comp_name":"测试服务商名称","prod_reduced_price":655,"prod_price":1254,"comp_eval_level":5,"auth_flag":"1","auth_comp_addr":"山东省济南市天桥区汽车厂东路与济泺路十字路口西南角中凡·鲁鼎广场","order_pers_user_id":"38","auth_comp_lat":36.687885,"auth_comp_phone":"13222222222","order_id":"5b7574aa1b9d4462b5faedfc3205a2dd","items":[{"item_id":"135","item_price":588,"item_oper_date":"2018-04-23 10:45:07","item_name":"更换电瓶","comp_id":"33","prod_id":"58"},{"item_id":"136","item_price":666,"item_oper_date":"2018-04-23 10:45:07","item_name":"局部抛光","comp_id":"33","prod_id":"58"}],"auth_comp_img_head_file_id":"f26fab7ee7c641fbbd87d09f59bb008b"}}
+     * data : {"result":{"order_comp_prod_id":"58","auth_comp_lon":116.993253,"prod_service_name":"汽车美容","order_state_pers":"yzfwsy","auth_comp_name":"测试服务商名称","order_number":"20180430150027877","prod_reduced_price":655,"prod_price":1254,"comp_eval_level":5,"auth_flag":"1","auth_comp_addr":"山东省济南市天桥区汽车厂东路与济泺路十字路口西南角中凡·鲁鼎广场","order_pers_user_id":"38","auth_comp_lat":36.687885,"auth_comp_phone":"13222222222","order_id":"92a00c10a8444bfea1abf5b95b8f9a16","items":[{"item_id":"135","item_price":588,"item_oper_date":"2018-04-23 10:45:07","item_name":"更换电瓶","comp_id":"33","prod_id":"58"},{"item_id":"136","item_price":666,"item_oper_date":"2018-04-23 10:45:07","item_name":"局部抛光","comp_id":"33","prod_id":"58"}],"auth_comp_img_head_file_id":"f26fab7ee7c641fbbd87d09f59bb008b"}}
      * message :
      * status : 1
      */
@@ -44,7 +44,7 @@ public class OrdersView {
 
     public static class DataBean {
         /**
-         * result : {"order_comp_prod_id":"58","auth_comp_lon":116.993253,"prod_service_name":"汽车美容","order_state_pers":"wzf","auth_comp_name":"测试服务商名称","prod_reduced_price":655,"prod_price":1254,"comp_eval_level":5,"auth_flag":"1","auth_comp_addr":"山东省济南市天桥区汽车厂东路与济泺路十字路口西南角中凡·鲁鼎广场","order_pers_user_id":"38","auth_comp_lat":36.687885,"auth_comp_phone":"13222222222","order_id":"5b7574aa1b9d4462b5faedfc3205a2dd","items":[{"item_id":"135","item_price":588,"item_oper_date":"2018-04-23 10:45:07","item_name":"更换电瓶","comp_id":"33","prod_id":"58"},{"item_id":"136","item_price":666,"item_oper_date":"2018-04-23 10:45:07","item_name":"局部抛光","comp_id":"33","prod_id":"58"}],"auth_comp_img_head_file_id":"f26fab7ee7c641fbbd87d09f59bb008b"}
+         * result : {"order_comp_prod_id":"58","auth_comp_lon":116.993253,"prod_service_name":"汽车美容","order_state_pers":"yzfwsy","auth_comp_name":"测试服务商名称","order_number":"20180430150027877","prod_reduced_price":655,"prod_price":1254,"comp_eval_level":5,"auth_flag":"1","auth_comp_addr":"山东省济南市天桥区汽车厂东路与济泺路十字路口西南角中凡·鲁鼎广场","order_pers_user_id":"38","auth_comp_lat":36.687885,"auth_comp_phone":"13222222222","order_id":"92a00c10a8444bfea1abf5b95b8f9a16","items":[{"item_id":"135","item_price":588,"item_oper_date":"2018-04-23 10:45:07","item_name":"更换电瓶","comp_id":"33","prod_id":"58"},{"item_id":"136","item_price":666,"item_oper_date":"2018-04-23 10:45:07","item_name":"局部抛光","comp_id":"33","prod_id":"58"}],"auth_comp_img_head_file_id":"f26fab7ee7c641fbbd87d09f59bb008b"}
          */
 
         private ResultBean result;
@@ -62,8 +62,9 @@ public class OrdersView {
              * order_comp_prod_id : 58
              * auth_comp_lon : 116.993253
              * prod_service_name : 汽车美容
-             * order_state_pers : wzf
+             * order_state_pers : yzfwsy
              * auth_comp_name : 测试服务商名称
+             * order_number : 20180430150027877
              * prod_reduced_price : 655
              * prod_price : 1254
              * comp_eval_level : 5
@@ -72,7 +73,7 @@ public class OrdersView {
              * order_pers_user_id : 38
              * auth_comp_lat : 36.687885
              * auth_comp_phone : 13222222222
-             * order_id : 5b7574aa1b9d4462b5faedfc3205a2dd
+             * order_id : 92a00c10a8444bfea1abf5b95b8f9a16
              * items : [{"item_id":"135","item_price":588,"item_oper_date":"2018-04-23 10:45:07","item_name":"更换电瓶","comp_id":"33","prod_id":"58"},{"item_id":"136","item_price":666,"item_oper_date":"2018-04-23 10:45:07","item_name":"局部抛光","comp_id":"33","prod_id":"58"}]
              * auth_comp_img_head_file_id : f26fab7ee7c641fbbd87d09f59bb008b
              */
@@ -82,6 +83,7 @@ public class OrdersView {
             private String prod_service_name;
             private String order_state_pers;
             private String auth_comp_name;
+            private String order_number;
             private int prod_reduced_price;
             private int prod_price;
             private int comp_eval_level;
@@ -132,6 +134,14 @@ public class OrdersView {
 
             public void setAuth_comp_name(String auth_comp_name) {
                 this.auth_comp_name = auth_comp_name;
+            }
+
+            public String getOrder_number() {
+                return order_number;
+            }
+
+            public void setOrder_number(String order_number) {
+                this.order_number = order_number;
             }
 
             public int getProd_reduced_price() {

@@ -22,6 +22,7 @@ import com.plt.yzplatform.R;
 import com.plt.yzplatform.activity.AddProductActivity;
 import com.plt.yzplatform.activity.OrdersPersonalViewActivity;
 import com.plt.yzplatform.activity.OrdersSubmitActivity;
+import com.plt.yzplatform.activity.OrdersUseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.Orders;
 import com.plt.yzplatform.enums.OrderPersState;
@@ -173,12 +174,15 @@ public class OrdersPersonalAdapter extends BaseAdapter {
                 viewHolder.orders_personal_item_pay.setVisibility(View.GONE);
                 viewHolder.orders_personal_item_cancel.setVisibility(View.GONE);
                 viewHolder.orders_personal_item_use.setVisibility(View.VISIBLE);
-                viewHolder.orders_personal_item_btn_layout.setVisibility(View.VISIBLE);
                 viewHolder.orders_personal_item_use.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("order_id", orders.getOrder_id());
+                        JumpUtil.newInstance().jumpRight(context, OrdersUseActivity.class, bundle);
                     }
                 });
+                viewHolder.orders_personal_item_btn_layout.setVisibility(View.VISIBLE);
                 break;
             case ysy:
                 viewHolder.orders_personal_item_state.setText("已使用");

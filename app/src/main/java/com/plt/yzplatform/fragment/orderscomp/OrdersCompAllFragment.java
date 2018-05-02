@@ -1,4 +1,4 @@
-package com.plt.yzplatform.fragment.orderspersonal;
+package com.plt.yzplatform.fragment.orderscomp;
 
 
 import android.annotation.SuppressLint;
@@ -19,11 +19,9 @@ import com.plt.yzplatform.R;
 import com.plt.yzplatform.adapter.OrdersPersonalAdapter;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.entity.Orders;
-import com.plt.yzplatform.enums.OrderPersState;
 import com.plt.yzplatform.gson.factory.GsonFactory;
 import com.plt.yzplatform.utils.NetUtil;
 import com.plt.yzplatform.utils.OKhttptils;
-import com.plt.yzplatform.utils.Prefs;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -42,10 +40,10 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class OrdersPersonalNoPayFragment extends Fragment {
-    @BindView(R.id.orders_personal_default_image)
+public class OrdersCompAllFragment extends Fragment {
+    @BindView(R.id.orders_comp_default_image)
     ImageView defaultImage;
-    @BindView(R.id.orders_personal_listview)
+    @BindView(R.id.orders_comp_listview)
     ListView ordersListView;
     Unbinder unbinder;
     @BindView(R.id.smartRefreshLayout)
@@ -58,14 +56,14 @@ public class OrdersPersonalNoPayFragment extends Fragment {
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
 
-    public OrdersPersonalNoPayFragment(Context context) {
+    public OrdersCompAllFragment(Context context) {
         this.context = context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_orders_personal_all, container, false);
+        View inflate = inflater.inflate(R.layout.fragment_orders_comp_all, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         result = new ArrayList<>();
         ordersPersonalAdapter = new OrdersPersonalAdapter(context, result);
@@ -78,48 +76,49 @@ public class OrdersPersonalNoPayFragment extends Fragment {
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageIndex = 1;
                 result.clear();
-                getOrders(Config.ORDERS_GET_LIST, 1, refreshlayout);
+                getOrders(Config.ORDERS_GET_COMP_LIST, 1, refreshlayout);
             }
         });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                getOrders(Config.ORDERS_GET_LIST, ++pageIndex, refreshlayout);
+                getOrders(Config.ORDERS_GET_COMP_LIST, ++pageIndex, refreshlayout);
             }
         });
-        getOrders(Config.ORDERS_GET_LIST, 1, null);
+        getOrders(Config.ORDERS_GET_COMP_LIST, 1, null);
         return inflate;
     }
+
     public void getOrders(String url, final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
-        map.put("order_type", OrderPersState.wzf.toString());
         map.put("pageIndex", String.valueOf(pageIndex));
         map.put("pageSize", "");
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    Log.w("test", response);
                     Gson gson = GsonFactory.create();
-                    Orders orders = gson.fromJson(response, Orders.class);
-                    pageCount = orders.getData().getPageCount();
-                    List<Orders.DataBean.ResultBean> result2 = orders.getData().getResult();
-                    result.addAll(result2);
-                    //没有信息图片显示
-                    if (OrdersPersonalNoPayFragment.this.result.size() <= 0) {
-                        defaultImage.setVisibility(View.VISIBLE);
-                    } else {
-                        if (refreshlayout != null) {
-                            if (pageIndex > pageCount) {
-                                refreshlayout.finishLoadmore(2000);
-                            } else {
-                                ordersPersonalAdapter.notifyDataSetChanged();
-                                refreshlayout.finishRefresh(2000);
-                                refreshlayout.finishLoadmore(2000);
-                            }
-                        } else {
-                            ordersPersonalAdapter.notifyDataSetChanged();
-                        }
-                    }
+//                    Orders orders = gson.fromJson(response, Orders.class);
+//                    pageCount = orders.getData().getPageCount();
+//                    List<Orders.DataBean.ResultBean> result2 = orders.getData().getResult();
+//                    result.addAll(result2);
+//                    //没有信息图片显示
+//                    if (OrdersCompAllFragment.this.result.size() <= 0) {
+//                        defaultImage.setVisibility(View.VISIBLE);
+//                    } else {
+//                        if (refreshlayout != null) {
+//                            if (pageIndex > pageCount) {
+//                                refreshlayout.finishLoadmore(2000);
+//                            } else {
+//                                ordersPersonalAdapter.notifyDataSetChanged();
+//                                refreshlayout.finishRefresh(2000);
+//                                refreshlayout.finishLoadmore(2000);
+//                            }
+//                        } else {
+//                            ordersPersonalAdapter.notifyDataSetChanged();
+//                        }
+//                    }
                 }
 
                 @Override

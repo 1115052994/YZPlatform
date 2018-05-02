@@ -256,6 +256,14 @@ public class Config {
     public static  final String ORDERS_WECCHAT_CREATE= URL + S + "startWechatPay";
     //取消订单
     public static  final String ORDERS_CANCEL= URL + S + "deactivePaymentMethod";
+    //获取二维码
+    public static  final String ORDERS_QUERY_QRCODE = URL + S + "queryOrderQRCode";
+    //使用二维码确认消费
+    public static final String ORDERS_QRCODE_OPERATION = URL + S +  "operation";
+    //使用验证码确认消费
+    public static final String ORDERS_TOKEN_OPERATION = URL + S +  "updateOrderConsumption";
+    //查询企业用户订单信息
+    public static  final String ORDERS_GET_COMP_LIST = URL + S + "orderListComp";
     /**
      * 李岩使用接口end
      */
