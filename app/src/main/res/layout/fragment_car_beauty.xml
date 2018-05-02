@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.plt.yzplatform.fragment.productlist.CarBeauty">
+    tools:context="com.xtzhangbinbin.jpq.fragment.productlist.CarBeauty">
 
     <ListView
         android:id="@+id/car_beauty_list"

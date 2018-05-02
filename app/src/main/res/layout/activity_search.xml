@@ -109,7 +109,7 @@
         android:id="@+id/line2"
         android:layout_below="@id/history"
         android:layout_marginTop="@dimen/common10dp"/>
-    <com.plt.yzplatform.view.ExpandableGridView
+    <com.xtzhangbinbin.jpq.view.ExpandableGridView
         android:id="@+id/historyPlace"
         android:layout_below="@id/line2"
         android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
         android:id="@+id/line4"
         android:layout_below="@id/hot"
         android:layout_marginTop="@dimen/common10dp"/>
-    <com.plt.yzplatform.view.ExpandableGridView
+    <com.xtzhangbinbin.jpq.view.ExpandableGridView
         android:id="@+id/hotPlace"
         android:layout_below="@id/line4"
         android:layout_height="wrap_content"

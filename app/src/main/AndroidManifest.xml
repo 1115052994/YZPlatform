@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.plt.yzplatform">
+    package="com.xtzhangbinbin.jpq">
 
     <!-- 常用权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -51,11 +51,6 @@
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -71,13 +66,14 @@
         <!-- 拍照权限 -->
         <provider
             android:name=".utils.MyFileProvider"
-            android:authorities="com.plt.yzplatform.fileProvider"
+            android:authorities="com.xtzhangbinbin.jpq.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
+
         <activity
             android:name=".activity.RegisterActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -161,15 +157,14 @@
         <activity
             android:name=".activity.AddCarProduct"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <!-- liyan start -->
         <activity
             android:name=".activity.OrdersSubmitActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
 
         </activity>
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+        android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.OrdersPaySuccessActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -177,9 +172,6 @@
             android:name=".activity.OrdersPersonalActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden"></activity>
-        <!--
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
         <activity
             android:name=".activity.OrdersCompListActivity"
             android:launchMode="singleTask"
@@ -201,16 +193,13 @@
         <activity
             android:name=".activity.OrdersCompEndActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.OrdersUserEndActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden">
 
         </activity>
-        -->
-
         <activity
             android:name=".activity.OrdersPersonalViewActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />

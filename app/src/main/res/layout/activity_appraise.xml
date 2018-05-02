@@ -77,7 +77,7 @@
         android:text="为商家点个赞吧"
         android:textSize="@dimen/text_size_16sp"
         android:textColor="@color/text_22"/>
-    <com.plt.yzplatform.view.ExpandableGridView
+    <com.xtzhangbinbin.jpq.view.ExpandableGridView
         android:id="@+id/apprase_gv"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.activity.EnterpriseActivity">
+    tools:context="com.xtzhangbinbin.jpq.activity.EnterpriseActivity">
 
     <include layout="@layout/header_layout" />
 
@@ -165,14 +165,14 @@
                     android:padding="@dimen/common15dp"
                     android:text="服务类型" />
 
-                <com.plt.yzplatform.view.AutoNextLineLinearlayout
+                <com.xtzhangbinbin.jpq.view.AutoNextLineLinearlayout
                 android:id="@+id/parent_layout"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/common15dp"
                 android:layout_height="wrap_content">
 
-                </com.plt.yzplatform.view.AutoNextLineLinearlayout>
+                </com.xtzhangbinbin.jpq.view.AutoNextLineLinearlayout>
 
             </LinearLayout>
 

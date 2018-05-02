@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.plt.yzplatform.fragment.productlist.WeiSJ">
+    tools:context="com.xtzhangbinbin.jpq.fragment.productlist.WeiSJ">
 
     <!-- TODO: Update blank fragment layout -->
    <ListView

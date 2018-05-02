@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.plt.yzplatform.activity.MyFavorite"
+    tools:context="com.xtzhangbinbin.jpq.activity.MyFavorite"
     android:background="@color/white">
     <include layout="@layout/header_layout" />
     <View

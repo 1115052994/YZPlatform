@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-    <com.plt.yzplatform.view.ExpandableGridView
+    <com.xtzhangbinbin.jpq.view.ExpandableGridView
         android:id="@+id/price_gv"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
         android:layout_marginLeft="@dimen/common30dp"
         android:layout_marginRight="@dimen/common30dp"
         android:orientation="vertical">
-        <com.plt.yzplatform.view.SeekBarPressure
+        <com.xtzhangbinbin.jpq.view.SeekBarPressure
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

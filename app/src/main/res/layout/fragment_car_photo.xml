@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.fragment.CarPhoto">
+    tools:context="com.xtzhangbinbin.jpq.fragment.CarPhoto">
 
     <ImageView
         android:id="@+id/mPic"

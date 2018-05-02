@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.activity.CarDetailsActivity">
+    tools:context="com.xtzhangbinbin.jpq.activity.CarDetailsActivity">
 
     <include layout="@layout/header_layout" />
 
@@ -18,7 +18,7 @@
         android:layout_below="@+id/linear"
         android:layout_weight="1">
 
-        <com.plt.yzplatform.view.JudgeNestedScrollView
+        <com.xtzhangbinbin.jpq.view.JudgeNestedScrollView
             android:id="@+id/mScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -505,7 +505,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
-        </com.plt.yzplatform.view.JudgeNestedScrollView>
+        </com.xtzhangbinbin.jpq.view.JudgeNestedScrollView>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:id="@+id/recyclerView_foot_more"
             android:layout_width="match_parent"

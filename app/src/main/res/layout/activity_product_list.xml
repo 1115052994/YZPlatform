@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.plt.yzplatform.activity.ProductList"
+    tools:context="com.xtzhangbinbin.jpq.activity.ProductList"
     android:gravity="center_horizontal">
     <include layout="@layout/header_layout" />
     <View
@@ -29,7 +29,7 @@
             android:background="@color/text_ff96"
             android:gravity="center">
 
-            <com.plt.yzplatform.view.MyGridView
+            <com.xtzhangbinbin.jpq.view.MyGridView
                 android:id="@+id/gridView"
                 android:layout_width="@dimen/common330dp"
                 android:layout_height="@dimen/common30dp"
@@ -47,12 +47,12 @@
         android:layout_height="@dimen/common8dp"
         android:background="@color/bg_color"
         android:layout_marginTop="@dimen/common8dp"/>
-   <com.plt.yzplatform.view.CustomViewPager
+   <com.xtzhangbinbin.jpq.view.CustomViewPager
        android:id="@+id/viewpager"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
-   </com.plt.yzplatform.view.CustomViewPager>
+   </com.xtzhangbinbin.jpq.view.CustomViewPager>
 
 
     <!--<RadioGroup-->

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.activity.CarDetailsKeyActivity">
+    tools:context="com.xtzhangbinbin.jpq.activity.CarDetailsKeyActivity">
 
     <include layout="@layout/header_layout" />
 

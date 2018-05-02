@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/staff_corner"
         >
-        <com.plt.yzplatform.view.CircleImageView
+        <com.xtzhangbinbin.jpq.view.CircleImageView
             android:id="@+id/circleImage"
             android:layout_width="@dimen/common85dp"
             android:layout_height="@dimen/common85dp"

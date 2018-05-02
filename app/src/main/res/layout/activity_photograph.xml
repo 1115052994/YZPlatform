@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.plt.yzplatform.camera.WatermarkTextView
+        <com.xtzhangbinbin.jpq.camera.WatermarkTextView
             android:id="@+id/watermarkone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_gravity="center_vertical"
             android:text="点击屏幕可对焦"
             android:textColor="#C0C0C0" />
-        <com.plt.yzplatform.camera.WatermarkTextView
+        <com.xtzhangbinbin.jpq.camera.WatermarkTextView
             android:id="@+id/remark"
             android:layout_width="wrap_content"
             android:layout_height="10dp"
@@ -35,7 +35,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="#C0C0C0" />
 
-        <com.plt.yzplatform.camera.FinderView
+        <com.xtzhangbinbin.jpq.camera.FinderView
             android:id="@+id/finder_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

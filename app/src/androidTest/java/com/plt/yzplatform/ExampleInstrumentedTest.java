@@ -1,4 +1,4 @@
-package com.plt.yzplatform;
+package com.xtzhangbinbin.jpq;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.plt.yzplatform", appContext.getPackageName());
+        assertEquals("com.xtzhangbinbin.jpq", appContext.getPackageName());
     }
 }

@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/ly_tag">
-        <com.plt.yzplatform.view.CarTagLayout
+        <com.xtzhangbinbin.jpq.view.CarTagLayout
             android:id="@+id/cartag_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

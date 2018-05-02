@@ -224,7 +224,7 @@
                             android:layout_marginRight="@dimen/common14dp"
                             android:src="@drawable/qy_dh"/>
                     </RelativeLayout>
-                    <com.plt.yzplatform.view.indicator.TrackIndicatorView
+                    <com.xtzhangbinbin.jpq.view.indicator.TrackIndicatorView
                         android:id="@+id/staffsView"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common110dp"
@@ -233,7 +233,7 @@
                         app:tabVisibleNums="1.5"
                         />
                 </LinearLayout>
-                <com.plt.yzplatform.view.indicator.TrackIndicatorView
+                <com.xtzhangbinbin.jpq.view.indicator.TrackIndicatorView
                     android:id="@+id/tabsView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/common40dp"

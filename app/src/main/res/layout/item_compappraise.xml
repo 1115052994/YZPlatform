@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/common30dp">
-        <com.plt.yzplatform.view.CircleImageView
+        <com.xtzhangbinbin.jpq.view.CircleImageView
             android:id="@+id/circle_Name"
             android:layout_width="@dimen/common60dp"
             android:layout_height="@dimen/common60dp"

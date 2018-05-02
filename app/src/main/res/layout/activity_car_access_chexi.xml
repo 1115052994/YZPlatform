@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.plt.yzplatform.activity.CarAccessChexiSearch"
+    tools:context="com.xtzhangbinbin.jpq.activity.CarAccessChexiSearch"
     android:background="@color/white"
     android:orientation="vertical">
     <include layout="@layout/header_layout"

@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.plt.yzplatform.view.CircleImageView
+    <com.xtzhangbinbin.jpq.view.CircleImageView
         android:layout_marginLeft="@dimen/common15dp"
         android:id="@+id/star_item_head_image"
         android:layout_width="@dimen/common99dp"

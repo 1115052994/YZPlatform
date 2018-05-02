@@ -28,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true">
         <!--android:background="@color/back_d6">-->
-        <com.plt.yzplatform.view.LetterSideBar
+        <com.xtzhangbinbin.jpq.view.LetterSideBar
             android:id="@+id/letter_side_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

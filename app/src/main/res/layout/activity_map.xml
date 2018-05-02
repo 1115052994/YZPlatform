@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.activity.MapActivity">
+    tools:context="com.xtzhangbinbin.jpq.activity.MapActivity">
 
     <include layout="@layout/header_layout" />
 
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common220dp" />
 
-    <com.plt.yzplatform.view.SegmentedGroup
+    <com.xtzhangbinbin.jpq.view.SegmentedGroup
         xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
         android:id="@+id/segmented_group"
         android:layout_width="match_parent"
@@ -101,7 +101,7 @@
             android:layout_weight=".33"
             android:text="商场" />
 
-    </com.plt.yzplatform.view.SegmentedGroup>
+    </com.xtzhangbinbin.jpq.view.SegmentedGroup>
 
 
     <ListView

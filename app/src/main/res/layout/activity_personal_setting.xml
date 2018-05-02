@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.activity.PersonalSettingActivity">
+    tools:context="com.xtzhangbinbin.jpq.activity.PersonalSettingActivity">
 
     <include layout="@layout/header_layout" />
 
@@ -17,7 +17,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <com.plt.yzplatform.view.CircleImageView
+        <com.xtzhangbinbin.jpq.view.CircleImageView
             android:id="@+id/icon"
             android:layout_width="@dimen/common90dp"
             android:layout_height="@dimen/common90dp"

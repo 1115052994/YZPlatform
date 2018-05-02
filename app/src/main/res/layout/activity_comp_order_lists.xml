@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.activity.CompOrderListsActivity">
+    tools:context="com.xtzhangbinbin.jpq.activity.CompOrderListsActivity">
 
     <include layout="@layout/header_layout" />
 

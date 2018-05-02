@@ -88,7 +88,7 @@
                 android:text="车型"/>
             <View
                 style="@style/gray_line"/>
-            <com.plt.yzplatform.view.ExpandableGridView
+            <com.xtzhangbinbin.jpq.view.ExpandableGridView
                 android:id="@+id/gv_cx"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                     android:text="变速箱"/>
                 <View
                     style="@style/gray_line"/>
-                <com.plt.yzplatform.view.ExpandableGridView
+                <com.xtzhangbinbin.jpq.view.ExpandableGridView
                     android:id="@+id/gv_bsx"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
@@ -175,7 +175,7 @@
                 android:layout_marginLeft="@dimen/common30dp"
                 android:layout_marginRight="@dimen/common30dp"
                 android:orientation="vertical">
-                <com.plt.yzplatform.view.SeekBarPressure
+                <com.xtzhangbinbin.jpq.view.SeekBarPressure
                     android:id="@+id/seekBar_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -279,7 +279,7 @@
                 android:layout_marginLeft="@dimen/common30dp"
                 android:layout_marginRight="@dimen/common30dp"
                 android:orientation="vertical">
-                <com.plt.yzplatform.view.SeekBarPressure
+                <com.xtzhangbinbin.jpq.view.SeekBarPressure
                     android:id="@+id/seekBar_lc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -376,7 +376,7 @@
                 android:layout_marginLeft="@dimen/common30dp"
                 android:layout_marginRight="@dimen/common30dp"
                 android:orientation="vertical">
-                <com.plt.yzplatform.view.SeekBarPressure
+                <com.xtzhangbinbin.jpq.view.SeekBarPressure
                     android:id="@+id/seekBar_pl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -459,7 +459,7 @@
                     android:text="排放标准"/>
                 <View
                     style="@style/gray_line"/>
-                <com.plt.yzplatform.view.ExpandableGridView
+                <com.xtzhangbinbin.jpq.view.ExpandableGridView
                     android:id="@+id/gv_pfbz"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
@@ -491,7 +491,7 @@
                     android:text="座位数"/>
                 <View
                     style="@style/gray_line"/>
-                <com.plt.yzplatform.view.ExpandableGridView
+                <com.xtzhangbinbin.jpq.view.ExpandableGridView
                     android:id="@+id/gv_zws"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
@@ -523,7 +523,7 @@
                     android:text="燃料类型"/>
                 <View
                     style="@style/gray_line"/>
-                <com.plt.yzplatform.view.ExpandableGridView
+                <com.xtzhangbinbin.jpq.view.ExpandableGridView
                     android:id="@+id/gv_rllx"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"

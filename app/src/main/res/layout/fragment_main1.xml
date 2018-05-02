@@ -64,7 +64,7 @@
                 app:image_scale_type="fit_xy"
                 app:indicator_margin="@dimen/common5dp" />
 
-            <!--<com.plt.yzplatform.view.ExpandableGridView
+            <!--<com.xtzhangbinbin.jpq.view.ExpandableGridView
                 android:id="@+id/gridView_service"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common185dp"

@@ -27,7 +27,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.plt.yzplatform.camera.ZoomImagView
+            <com.xtzhangbinbin.jpq.camera.ZoomImagView
                 android:id="@+id/photo_previews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

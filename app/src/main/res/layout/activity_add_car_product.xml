@@ -226,7 +226,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="变速箱"/>
-               <com.plt.yzplatform.view.ExpandableGridView
+               <com.xtzhangbinbin.jpq.view.ExpandableGridView
                    android:id="@+id/gv_bsx"
                    android:layout_height="wrap_content"
                    android:layout_width="match_parent"
@@ -259,7 +259,7 @@
                    android:textColor="@color/text_22"
                    android:textSize="@dimen/text_size_16sp" />
 
-               <com.plt.yzplatform.view.ExpandableGridView
+               <com.xtzhangbinbin.jpq.view.ExpandableGridView
                    android:id="@+id/gv_pfbz"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
@@ -327,7 +327,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="座位数"/>
-               <com.plt.yzplatform.view.ExpandableGridView
+               <com.xtzhangbinbin.jpq.view.ExpandableGridView
                    android:id="@+id/gv_zws"
                    android:layout_height="wrap_content"
                    android:layout_width="match_parent"
@@ -357,7 +357,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="燃料类型"/>
-               <com.plt.yzplatform.view.ExpandableGridView
+               <com.xtzhangbinbin.jpq.view.ExpandableGridView
                    android:id="@+id/gv_rllx"
                    android:layout_height="wrap_content"
                    android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.plt.yzplatform.fragment.CollectCardeal"
+    tools:context="com.xtzhangbinbin.jpq.fragment.CollectCardeal"
     android:background="@color/bg_color">
     <ImageView
         android:id="@+id/evaluation_list_image"

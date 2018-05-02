@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.activity.BusinessActivity">
+    tools:context="com.xtzhangbinbin.jpq.activity.BusinessActivity">
 
     <include layout="@layout/header_layout" />
 

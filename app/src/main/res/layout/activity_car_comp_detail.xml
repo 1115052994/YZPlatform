@@ -227,7 +227,7 @@
                         android:background="@color/bg_color"/>
                 </LinearLayout>
 
-                <com.plt.yzplatform.view.indicator.TrackIndicatorView
+                <com.xtzhangbinbin.jpq.view.indicator.TrackIndicatorView
                     android:id="@+id/tabsView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/common40dp"

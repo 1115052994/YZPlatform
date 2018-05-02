@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
-            <!-- app:layout_behavior="com.plt.yzplatform.view.FlingBehavior">-->
+            <!-- app:layout_behavior="com.xtzhangbinbin.jpq.view.FlingBehavior">-->
             <RelativeLayout
                 android:id="@+id/head"
                 android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                         android:textColor="@color/text_66"
                         android:layout_alignParentRight="true"/>
                 </RelativeLayout>
-                <com.plt.yzplatform.view.ExpandableGridView
+                <com.xtzhangbinbin.jpq.view.ExpandableGridView
                     android:id="@+id/historyPlace"
                     android:layout_below="@id/history"
                     android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                         android:textSize="@dimen/text_size_13sp"
                         android:textColor="@color/text_ff96"/>
                 </RelativeLayout>
-                <com.plt.yzplatform.view.ExpandableGridView
+                <com.xtzhangbinbin.jpq.view.ExpandableGridView
                     android:id="@+id/hotPlace"
                     android:layout_below="@id/hot"
                     android:layout_height="wrap_content"
@@ -220,7 +220,7 @@
         android:layout_alignParentRight="true"
         android:background="@color/back_d6">
 
-        <com.plt.yzplatform.view.LetterSideBar
+        <com.xtzhangbinbin.jpq.view.LetterSideBar
             android:id="@+id/letter_side_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

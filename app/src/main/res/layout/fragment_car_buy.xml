@@ -171,7 +171,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/back_f4">
-                        <com.plt.yzplatform.view.CarTagLayout
+                        <com.xtzhangbinbin.jpq.view.CarTagLayout
                             android:id="@+id/cartag_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

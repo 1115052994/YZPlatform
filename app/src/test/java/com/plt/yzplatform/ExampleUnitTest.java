@@ -1,15 +1,15 @@
-package com.plt.yzplatform;
+package com.xtzhangbinbin.jpq;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.plt.yzplatform.config.Config;
-import com.plt.yzplatform.utils.FileUtils;
-import com.plt.yzplatform.utils.NetUtil;
-import com.plt.yzplatform.utils.PhotoUtils;
-import com.plt.yzplatform.utils.Prefs;
-import com.plt.yzplatform.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.utils.FileUtils;
+import com.xtzhangbinbin.jpq.utils.NetUtil;
+import com.xtzhangbinbin.jpq.utils.PhotoUtils;
+import com.xtzhangbinbin.jpq.utils.Prefs;
+import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 

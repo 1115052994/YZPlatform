@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.DemoActivity">
+    tools:context="com.xtzhangbinbin.jpq.DemoActivity">
 
-    <com.plt.yzplatform.view.HackyViewPager
+    <com.xtzhangbinbin.jpq.view.HackyViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
