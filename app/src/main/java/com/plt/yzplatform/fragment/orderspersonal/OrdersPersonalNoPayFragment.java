@@ -87,15 +87,9 @@ public class OrdersPersonalNoPayFragment extends Fragment {
                 getOrders(Config.ORDERS_GET_LIST, ++pageIndex, refreshlayout);
             }
         });
+        getOrders(Config.ORDERS_GET_LIST, 1, null);
         return inflate;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getOrders(Config.ORDERS_GET_LIST, 1, null);
-    }
-
     public void getOrders(String url, final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
         map.put("order_type", OrderPersState.wzf.toString());

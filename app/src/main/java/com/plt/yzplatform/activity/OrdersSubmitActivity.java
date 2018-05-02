@@ -74,7 +74,7 @@ public class OrdersSubmitActivity extends BaseActivity {
 
     String payStyle = PAY_WECHAT;
     //商品ID，添加默认值为58
-    private String pro_id = "58";
+    private String pro_id = "64";
     //订单ID
     private String order_id;
     //产品对象
@@ -121,8 +121,8 @@ public class OrdersSubmitActivity extends BaseActivity {
          */
         if (!StringUtil.isEmpty(getIntent().getStringExtra("pro_id"))) {
             pro_id = getIntent().getStringExtra("pro_id");
-            initDataByProduct();
         }
+        initDataByProduct();
         /**
          * 从订单列表跳转过来的支付
          */
@@ -237,6 +237,7 @@ public class OrdersSubmitActivity extends BaseActivity {
          * 根据商品id获取对应商品信息
          */
         Map<String, String> map = new HashMap<>();
+        Log.w("test", pro_id);
         map.put("prod_id", pro_id);
         OKhttptils.post(this, Config.ORDERS_SHOW_PRODUCT_BYID, map, new OKhttptils.HttpCallBack() {
             @Override

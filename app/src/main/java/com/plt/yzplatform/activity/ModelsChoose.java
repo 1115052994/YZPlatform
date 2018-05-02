@@ -56,6 +56,8 @@ public class ModelsChoose extends BaseActivity {
     private List<Map<String, String>> recyclerList = new ArrayList<>();
     private BrandRecyclerAdapter recyclerAdapter;
     private String name;
+    private String car_brand;//选中的车品牌
+    private String car_brand_id;//选中的车品牌id
 
     //通过品牌搜车系
     private List<CarChexiBean.DataBean.ResultBean.TrainListBean> searchChexiList = new ArrayList<>();
@@ -126,6 +128,9 @@ public class ModelsChoose extends BaseActivity {
         recyclerAdapter.setOnItemClickListener(new BrandRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
+                //选中的车品牌+id
+                car_brand = recyclerList.get(position).get("tv_carbrand");
+                car_brand_id = recyclerList.get(position).get("id_carbrand");
                 // 搜索车系
                 Log.i("carbrand", position + "---" + recyclerList.get(position).get("tv_carbrand"));
                 getChexiByBrand(recyclerList.get(position).get("tv_carbrand"), recyclerList.get(position).get("id_carbrand"),recyclerList.get(position).get("image_carbrand"));
@@ -252,11 +257,9 @@ public class ModelsChoose extends BaseActivity {
                     ImageView imageView = holder.getView(R.id.image_carbrand);
                     tv_carbrand.setText(map.get("tv_carbrand"));
                     tv_num.setText(map.get("tv_num"));
-                    //if(!"".equals(map.get("image_carbrand"))) {
                     String url = Config.BASE_URL + Config.Y + map.get("image_carbrand");
                     imageView.setImageBitmap(null);
                     Picasso.with(ModelsChoose.this).load(url).into(imageView);
-                    //}
                 }
             }
         };
@@ -264,8 +267,11 @@ public class ModelsChoose extends BaseActivity {
             @Override
             public void onClick(int position) {
                 if (position != 0) {
+//                    car_brand;
+//                    car_brand_id;
+                    Log.e("哒哒哒", "onClick: " + "车品牌"+car_brand + "车品牌id"+car_brand_id );
                     Log.d("aaaaa", "onClick: " + carList.get(position).get("tv_carbrand") + "------" + carList.get(position).get("id_carbrand"));
-                    selected(carList.get(position).get("tv_carbrand"), carList.get(position).get("id_carbrand"),CarChoose.class);
+                    selected(carList.get(position).get("tv_carbrand"), carList.get(position).get("id_carbrand"),CarChoose.class,car_brand,car_brand_id);
                     window.dismiss();
                 }
             }
@@ -285,7 +291,6 @@ public class ModelsChoose extends BaseActivity {
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
-                    if ("1".equals(status)) {
                         Gson gson = new Gson();
                         CarSearchBrandBean searchCarBrand = gson.fromJson(response, CarSearchBrandBean.class);
                         List<CarSearchBrandBean.DataBean.ResultBean.BrandListBean> searchCarBrandList = searchCarBrand.getData().getResult().getBrandList();
@@ -308,7 +313,6 @@ public class ModelsChoose extends BaseActivity {
                             recyclerList.add(carMap1);
                         }
                         recyclerAdapter.notifyDataSetChanged();
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -335,8 +339,6 @@ public class ModelsChoose extends BaseActivity {
                 JSONObject object = null;
                 try {
                     object = new JSONObject(response);
-                    String status = object.getString("status");
-                    if ("1".equals(status)) {
                         Gson gson = new Gson();
                         CarChexiBean chexi = gson.fromJson(response, CarChexiBean.class);
                         List<CarChexiBean.DataBean.ResultBean.TrainListBean> trainList = chexi.getData().getResult().getTrainList();
@@ -345,7 +347,6 @@ public class ModelsChoose extends BaseActivity {
                             searchChexiList.add(bean);
                         }
                         popSearchChexi(brandName, brandId,imageId);
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -368,11 +369,13 @@ public class ModelsChoose extends BaseActivity {
     // 选中了品牌返回数据
     private Map<String, String> selectedBrand = new HashMap<>();
 
-    private void selected(String tv_carbrand, String id_carbrand,Class clas) {
+    private void selected(String tv_carbrand, String id_carbrand,Class clas,String car_brand,String car_brand_id) {
         Intent intent = new Intent(this, clas);
         Bundle bundle = new Bundle();
         bundle.putString("tv_carbrand", tv_carbrand);
         bundle.putString("id_carbrand", id_carbrand);
+        bundle.putString("car_brand",car_brand);
+        bundle.putString("car_brand_id",car_brand_id);
         Log.d("aaaaa", "selected: "+tv_carbrand+"-----------"+id_carbrand);
         if(!name.isEmpty()){
             intent.putExtra("name",name);

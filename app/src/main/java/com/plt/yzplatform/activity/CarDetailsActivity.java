@@ -28,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.plt.yzplatform.CarPhotosActivity;
 import com.plt.yzplatform.R;
 import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
@@ -566,7 +565,7 @@ public class CarDetailsActivity extends BaseActivity {
             @Override
             public void fail(String response) {
                 Log.i(TAG, "fail: " + response);
-                if (response.isEmpty()){
+                if (response == null){
                     ToastUtil.noNAR(currtActivity);
                 }
             }

@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:text="漆面保持较好，车身结构无修复，无重大事故"
+        android:maxLines="2"
         android:textColor="@color/white" />
 
     <LinearLayout

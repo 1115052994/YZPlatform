@@ -46,9 +46,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.CityActivity"
@@ -69,10 +72,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
-
         <activity
             android:name=".activity.RegisterActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
         <activity
             android:name=".activity.EnterpriseActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -92,7 +96,7 @@
             android:name=".activity.PersonalSettingActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
@@ -120,7 +124,9 @@
         <activity
             android:name=".activity.AddProductActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
         <activity
             android:name=".activity.ProductServiceActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -150,12 +156,14 @@
         <activity
             android:name=".activity.AddCarProduct"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
         <!-- liyan start -->
         <activity
             android:name=".activity.OrdersSubmitActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
         <activity
             android:name=".activity.OrdersPaySuccessActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"></activity>
@@ -165,29 +173,62 @@
             android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
         <activity
+            android:name=".activity.OrdersCompListActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
+        <activity
             android:name=".activity.OrdersUseActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
+        </activity>
+        <activity
+            android:name=".activity.OrdersScanActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
+        <activity
+            android:name=".activity.OrdersCompEndActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity
+            android:name=".activity.OrdersUserEndActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
         <activity
             android:name=".activity.OrdersPersonalViewActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <!--微信支付所使用的activity-->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
+        <!--zxing使用的activity-->
+        <activity
+            android:name=".zxing.android.CaptureActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
         <!-- liyan  end -->
+        <!--信鸽使用的receiver，这是自定义接收信息的地方。暂时不用，先注释，后面要是用了再打开
+        <receiver android:name=".xinge.MessageReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
+                <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
+-->
 
         <activity android:name=".activity.Sellcars" />
-        <activity android:name=".activity.BrandChoice" />
         <activity android:name=".activity.ModelsChoose" />
         <activity android:name=".activity.CarChoose" />
-        <activity android:name=".activity.CarPhoto" />
+        <activity android:name=".activity.CarPhotoActivity" />
         <activity android:name=".activity.CarDetailsActivity" />
         <activity android:name=".activity.CarCompDetail" />
         <activity android:name=".activity.CarDetailsKeyActivity" />
@@ -203,6 +244,8 @@
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.AccessResult" />
+        <activity android:name=".activity.CarPhotosActivity" />
+        <activity android:name=".activity.AccessResult" />
         <activity android:name=".CarPhotosActivity" />
         <activity android:name=".activity.PriceWarnActivity" />
         <activity android:name=".activity.CompOrderListsActivity" />
@@ -210,6 +253,7 @@
         <activity android:name=".activity.CarAccessChexiSearch" />
         <activity android:name=".activity.CarAccessModeSearch"></activity>
         <activity android:name=".activity.CompOrderListsActivity" />
+        <activity android:name=".DemoActivity"></activity>
         <activity android:name=".camera.MainActivity" />
         <activity android:name=".camera.FileActivity" />
         <activity android:name=".camera.test.TestActivity" />

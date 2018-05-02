@@ -149,6 +149,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     private List<CarServiceList.DataBean.ResultBean> beanList = new ArrayList<>();
 
     private RxPermissions rxPermission;
+    private LinearLayoutManager manager;
 
     private Handler handler = new Handler() {
         @Override
@@ -180,7 +181,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     /* 填充数据 */
     private void setAdapter() {
         adapter = new CarServiceListAdapter(beanList, getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         recyclerView.setAdapter(adapter);
     }
 
@@ -243,11 +244,10 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             view = inflater.inflate(R.layout.fragment_car_service, null);
         }
         unbinder = ButterKnife.bind(this, view);
+        manager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(manager);
         /* 请求定位权限 */
         initLoc();
-        /* 初始化数据源 */
-//        initData();
-//        initView();
         /* 设置下拉刷新、上拉加载 */
         setView();
         return view;
@@ -678,7 +678,12 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void fail(String response) {
-                ToastUtil.noNAR(getContext());
+                try {
+                    JSONObject object = new JSONObject(response);
+                    ToastUtil.show(getContext(),object.getString("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

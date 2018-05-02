@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context="com.plt.yzplatform.CarPhotosActivity">
+    tools:context="com.plt.yzplatform.activity.CarPhotosActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

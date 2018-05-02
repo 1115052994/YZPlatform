@@ -1,73 +1,60 @@
-<RelativeLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.plt.yzplatform.fragment.CarPhoto"
-    android:gravity="center_horizontal">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.plt.yzplatform.fragment.CarPhoto">
 
     <ImageView
-        android:src="@drawable/tc1"
-        android:id="@+id/imageView"
+        android:id="@+id/mPic"
         android:layout_width="match_parent"
-        android:layout_height="224dp" />
+        android:layout_height="@dimen/common224dp"
+        android:src="@drawable/tc1" />
+
     <LinearLayout
-        android:id="@+id/wzjs"
-        android:gravity="center_horizontal"
-        android:layout_below="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/common50dp"
         android:layout_marginLeft="@dimen/common15dp"
-        android:layout_marginRight="@dimen/common15dp">
+        android:layout_marginRight="@dimen/common15dp"
+        android:layout_marginTop="@dimen/common50dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
         <TextView
-            android:text="文字介绍"
-            android:textSize="@dimen/text_size_15sp"
-            android:textColor="@color/text_33"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/addition_ed_introduce"
-            android:layout_marginLeft="@dimen/common18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:textSize="@dimen/text_size_15sp"
-            android:gravity="top"
-            android:hint="示例 精通汽车工作原理以及各种故障排查和解决了。"
-            android:textColor="@color/black_22"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/wzjs"
-        android:id="@+id/bc"
-        android:layout_width="@dimen/common300dp"
-        android:layout_height="@dimen/common40dp"
-        android:layout_marginLeft="@dimen/common25dp"
-        android:layout_marginRight="@dimen/common38dp"
-        android:layout_marginTop="@dimen/common40dp"
-        android:background="@drawable/star_circle"
-        android:gravity="center"
-        >
-        <TextView
-            android:textColor="#ffffff"
-            android:text="保存"
-            android:layout_marginLeft="@dimen/common10dp"
+            android:text="文字介绍："
+            android:textColor="@color/text_33"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <EditText
+            android:id="@+id/mContent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common7dp"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="示例 精通汽车工作原理以及各种故障排查和解决了。"
+            android:textColor="@color/black_22"
+            android:textSize="@dimen/text_size_15sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/mSave"
+        style="@style/theme_button"
+        android:text="保存" />
+
     <TextView
-        android:layout_below="@id/bc"
-        android:id="@+id/all_picture"
-        android:layout_marginTop="@dimen/common17dp"
-        android:textSize="@dimen/text_size_15sp"
+        android:id="@+id/mAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common7dp"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/common10dp"
         android:text="点击查看所有图片"
         android:textColor="@color/text_ff96"
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_height="wrap_content" />
+        android:textSize="@dimen/text_size_15sp" />
 
-
-</RelativeLayout>
+</LinearLayout>

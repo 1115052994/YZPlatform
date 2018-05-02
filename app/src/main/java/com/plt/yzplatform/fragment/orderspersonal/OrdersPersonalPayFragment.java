@@ -85,13 +85,8 @@ public class OrdersPersonalPayFragment extends Fragment {
                 getOrders(Config.ORDERS_GET_LIST, ++pageIndex, refreshlayout);
             }
         });
-        return inflate;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         getOrders(Config.ORDERS_GET_LIST, 1, null);
+        return inflate;
     }
 
     public void getOrders(String url, final int pageIndex, final RefreshLayout refreshlayout) {

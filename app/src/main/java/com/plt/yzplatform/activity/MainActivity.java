@@ -22,7 +22,6 @@ import com.plt.yzplatform.fragment.main.CarServiceFragment;
 import com.plt.yzplatform.fragment.main.LifeFragment;
 import com.plt.yzplatform.fragment.main.MainFragment;
 import com.plt.yzplatform.utils.ActivityUtil;
-import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.ToastUtil;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -182,9 +181,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 transaction.replace(R.id.view_pager, fragment);
                 break;
             case R.id.life:
-//                fragment = fragmentList.get(4);
-//                transaction.replace(R.id.view_pager, fragment);
-                JumpUtil.newInstance().jumpRight(MainActivity.this, ShowProductDetailActivity.class);
+                fragment = fragmentList.get(4);
+                transaction.replace(R.id.view_pager, fragment);
                 break;
         }
         transaction.commit();
