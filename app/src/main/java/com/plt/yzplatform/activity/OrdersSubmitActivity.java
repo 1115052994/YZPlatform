@@ -74,7 +74,7 @@ public class OrdersSubmitActivity extends BaseActivity {
 
     String payStyle = PAY_WECHAT;
     //商品ID，添加默认值为58
-    private String pro_id = "58";
+    private String pro_id = "64";
     //订单ID
     private String order_id;
     //产品对象

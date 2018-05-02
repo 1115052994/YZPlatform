@@ -11,11 +11,16 @@ import com.plt.yzplatform.base.BaseActivity;
 import com.plt.yzplatform.config.Config;
 import com.plt.yzplatform.utils.ActivityUtil;
 import com.plt.yzplatform.utils.JumpUtil;
+import com.plt.yzplatform.utils.LogUtil;
 import com.plt.yzplatform.utils.MyCountDownTimer;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.Prefs;
 import com.plt.yzplatform.utils.StringUtil;
 import com.plt.yzplatform.utils.ToastUtil;
+import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,14 +80,17 @@ public class LoginActivity extends BaseActivity {
         final String phone = loginPhone.getText().toString().trim();
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
+        map.put("token_code", loginCode.getText().toString().trim());
+        map.put("xg_token", Prefs.with(getApplicationContext()).read("xinge_token_code"));
+        map.put("client_type", "android");
         if (!phone.isEmpty() && StringUtil.isPhoneNum(phone)) {
-            OKhttptils.post(this, Config.LOGIN, map, new OKhttptils.HttpCallBack() {
-                @Override
-                public void success(String response) {
-                    Log.i(TAG, "success: " + response);
-                    try {
-
-                        JSONObject object = new JSONObject(response);
+            if(!loginCode.getText().toString().trim().isEmpty()){
+                OKhttptils.post(this, Config.LOGIN, map, new OKhttptils.HttpCallBack() {
+                    @Override
+                    public void success(String response) {
+//                        Log.i(TAG, "success: " + response);
+                        try {
+                            JSONObject object = new JSONObject(response);
                             String data = object.getString("data");
                             JSONObject obj = new JSONObject(data);
                             String user_token = obj.getString("user_token");
@@ -90,22 +98,25 @@ public class LoginActivity extends BaseActivity {
                             Prefs.with(getApplicationContext()).write("user_phone", phone);
                             JumpUtil.newInstance().jumpRight(LoginActivity.this, MainActivity.class);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
 
-                @Override
-                public void fail(String response) {
-                    Log.e(TAG, "fail: " + response );
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        ToastUtil.show(LoginActivity.this,jsonObject.getString("message"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    @Override
+                    public void fail(String response) {
+                        Log.e(TAG, "fail: " + response );
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            ToastUtil.show(LoginActivity.this,jsonObject.getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                ToastUtil.show(LoginActivity.this, "请填写验证码");
+            }
         } else {
             ToastUtil.show(LoginActivity.this, "手机号错误");
         }
@@ -123,28 +134,28 @@ public class LoginActivity extends BaseActivity {
             OKhttptils.post(LoginActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                            String data = jsonObject.getString("data");
-                            JSONObject object = new JSONObject(data);
-                            String result = object.getString("result");
-                            JSONObject o = new JSONObject(result);
-                            code = o.getString("code");
-                            Log.e(TAG, "onResponse验证码: " + code);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(response);
+//                            String data = jsonObject.getString("data");
+//                            JSONObject object = new JSONObject(data);
+//                            String result = object.getString("result");
+//                            JSONObject o = new JSONObject(result);
+//                            code = o.getString("code");
+//                            Log.e(TAG, "onResponse验证码: " + code);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
                 }
 
                 @Override
                 public void fail(String response) {
-                    try {
-
-                        JSONObject jsonObject = new JSONObject(response);
-                        ToastUtil.show(LoginActivity.this,jsonObject.getString("message"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//
+//                        JSONObject jsonObject = new JSONObject(response);
+//                        ToastUtil.show(LoginActivity.this,jsonObject.getString("message"));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             });
 
@@ -171,5 +182,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
 
 }
