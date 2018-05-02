@@ -68,7 +68,6 @@
             android:drawableLeft="@drawable/search_pic"
             android:gravity="center"
             android:background="@drawable/bg_main_search"/>
-
     </RelativeLayout>
     <!--<RelativeLayout
         android:layout_width="match_parent"

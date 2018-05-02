@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,6 +14,7 @@ import com.plt.yzplatform.utils.DateUtil;
 import com.plt.yzplatform.utils.JumpUtil;
 import com.plt.yzplatform.utils.OKhttptils;
 import com.plt.yzplatform.utils.ToastUtil;
+import com.plt.yzplatform.view.MyProgressDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +43,7 @@ public class AccessCar extends BaseActivity {
     private String carYear = "",carMonth = "";
     private String carId = "";
 
+    private MyProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,7 +144,9 @@ public class AccessCar extends BaseActivity {
 
 
     private void accessCar(){
-        //Log.i("accessCar",cityId+"---"+carId+"---"+carYear+"---"+carMonth+"---"+tvEditlc.getText().toString().trim());
+        dialog = MyProgressDialog.createDialog(this);
+        dialog.setMessage("正在加载中,请稍候");
+        dialog.show();
         if ("".equals(cityId)||"".equals(carId)||"".equals(carYear)||"".equals(carMonth)||"".equals(tvEditlc.getText().toString().trim())){
             ToastUtil.show(this,"请填写完整内容");
             return;
@@ -167,6 +169,7 @@ public class AccessCar extends BaseActivity {
                         bundle.putString("name",tvEditbrand.getText().toString().trim());
                         bundle.putString("car","上牌时间:"+tvEdittime.getText().toString().trim()+"   "+tvEditcity.getText().toString().trim()+"   "+tvEditlc.getText().toString().trim()+"万公里");
                         JumpUtil.newInstance().jumpLeft(AccessCar.this,AccessResult.class,bundle);
+                        dialog.dismiss();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

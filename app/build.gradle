@@ -80,7 +80,6 @@ dependencies {
         exclude group: 'com.android.support'
     }
     compile 'com.contrarywind:Android-PickerView:3.2.7'
-
     // 权限
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.5'

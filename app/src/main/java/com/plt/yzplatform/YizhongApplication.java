@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.util.Log;
+
+
 import com.plt.yzplatform.utils.LogUtil;
 import com.plt.yzplatform.utils.Prefs;
 import com.tencent.android.tpush.XGCustomPushNotificationBuilder;

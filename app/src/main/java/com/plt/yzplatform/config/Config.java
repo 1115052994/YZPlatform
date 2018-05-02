@@ -8,15 +8,15 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.11/";
+    public static final String BASE_URL = "http://192.168.1.222/";
 
-    public static final String URL = "http://192.168.1.11/";
+    public static final String URL = "http://192.168.1.222/";
     //微信APPID
     public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
-    public static final String M = "http://192.168.1.11/";
+    public static final String M = "http://192.168.1.222/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -319,4 +319,12 @@ public class Config {
     // 估价
     public static final String GETCARASSESS = URL + S +"getCarAssess";
 
+    // 估价模糊查询品牌
+    public static final String GETBRANDBYBRANDNAME = URL + S +"getBrandByBrandName";
+
+    // 首页banner
+    public static final String SELECTADVEMAIN = URL + S +"selectAdveMain";
+
+    // 京东商品分类
+    public static final String SELECTJDSP = URL + S +"selectJdSp";
 }

@@ -165,7 +165,7 @@ public class OKhttptils {
 //        } else {
 //            ToastUtil.noNetAvailable(context);
 //        }
-
+//            .placeholder(R.drawable.user_placeholder).error(R.drawable.user_placeholder_error)
         String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name="+file_id+".jpg";
         Log.i("url","url==="+url);
         Picasso.with(context).load(Uri.parse(url)).into(icon);

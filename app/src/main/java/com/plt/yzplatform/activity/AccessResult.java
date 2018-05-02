@@ -48,7 +48,6 @@ public class AccessResult extends BaseActivity {
         initView();
         Intent intent = getIntent();
         if(intent!=null){
-            Log.i("AccessResult===","------"+intent.getExtras().getString("price"));
             getData(intent.getExtras().getString("price"));
             tvAccess.setText("评价结果："+intent.getExtras().getString("name"));
             tvCar.setText(intent.getExtras().getString("car"));
@@ -68,9 +67,6 @@ public class AccessResult extends BaseActivity {
     }
 
     private void initView(){
-        Map<String,String> map = new HashMap<>();
-        list.add(map);
-        list.add(map);
         adapter = new CommonRecyclerAdapter(this,list,R.layout.item_access_price) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {

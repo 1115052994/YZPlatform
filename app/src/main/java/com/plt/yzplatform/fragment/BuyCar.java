@@ -169,10 +169,14 @@ public class BuyCar extends Fragment {
     private TextView brandView, carView, priceView;
 
     private MyBroadcast smsBroadCastReceiver;
+
+    private View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_car_buy, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_car_buy, container, false);
+        }
         unbinder = ButterKnife.bind(this, view);
         iniData();
         initView();
@@ -187,11 +191,6 @@ public class BuyCar extends Fragment {
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getContext().unregisterReceiver(smsBroadCastReceiver);
-    }
 
     private void initView() {
         //隐藏筛选tag布局
@@ -277,6 +276,8 @@ public class BuyCar extends Fragment {
                 getCarList();
             }
         });
+
+        // banner
         banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
@@ -360,7 +361,6 @@ public class BuyCar extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-//        banner.stopAutoPlay();
     }
 
     @Override
@@ -952,8 +952,10 @@ public class BuyCar extends Fragment {
                         for (CarParams.DataBean.ResultBean.BannerListBean bean : bannerListBeans) {
                             bannersImage.add(bean.getAdve_file_id());
                         }
-                        banner.setImages(bannersImage);
-                        banner.start();
+                        if (banner !=null) {
+                            banner.setImages(bannersImage);
+                            banner.start();
+                        }
                         //carParams
                     }
                 } catch (JSONException e) {
@@ -1265,5 +1267,11 @@ public class BuyCar extends Fragment {
                 getCityId();
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unregisterReceiver(smsBroadCastReceiver);
     }
 }

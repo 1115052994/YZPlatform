@@ -354,7 +354,9 @@ public class SearchActivity extends AppCompatActivity {
                 window.dismiss();
                 //跳转
                 if ("car".equals(type)) {
-
+                    Bundle bundle = new Bundle();
+                    bundle.putString("String", searchListId.get(position));
+                    JumpUtil.newInstance().jumpLeft(SearchActivity.this, CarDetailsActivity.class, bundle);
                 } else if ("comp".equals(type)) {
                     Bundle bundle = new Bundle();
                     bundle.putString("comp_id", searchListId.get(position));

@@ -84,7 +84,7 @@
                 android:layout_centerVertical="true"
                 android:text="请选择车系"
                 android:layout_marginLeft="@dimen/common31dp"
-                android:layout_marginRight="@dimen/common40dp"
+                android:layout_marginRight="@dimen/common30dp"
                 android:textSize="@dimen/text_size_15sp"
                 android:textColor="@color/text_c8"
                 />

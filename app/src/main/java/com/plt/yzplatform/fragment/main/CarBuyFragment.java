@@ -69,22 +69,26 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
     //标识，用于判断是否只显示一次定位信息和用户重新定位
     private boolean isFirstLoc = true;
     private RxPermissions rxPermission;
+
+    private View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_car, container, false);
-        initView();
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_car, container, false);
+            buyFragment = new BuyCar();
+            sellFragment = new Sellcars();
+        }
         unbinder = ButterKnife.bind(this, view);
+        initView();
         initLoc();
         return view;
     }
 
     private void initView() {
-        buyFragment = new BuyCar();
-        sellFragment = new Sellcars();
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.add(R.id.content, buyFragment);
+        transaction.replace(R.id.content, buyFragment);
         transaction.commit();
     }
 
