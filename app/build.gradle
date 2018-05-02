@@ -21,7 +21,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('D:/appkey/yzplatform.jks')
+            storeFile file('yzplatform.jks')
             storePassword 'abc123ABC'
             keyAlias 'yz'
             keyPassword 'yzplatform'
