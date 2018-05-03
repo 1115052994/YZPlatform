@@ -1,6 +1,9 @@
 package com.xtzhangbinbin.jpq.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.UpdateCar;
 import com.xtzhangbinbin.jpq.entity.WeisjBean;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
@@ -42,7 +46,7 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(WeisjAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(WeisjAdapter.ViewHolder holder, final int position) {
         WeisjBean.DataBean.ResultBean resultBean = result.get(position);
         holder.price.setText(new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) ));
         holder.weisj_name.setText(resultBean.getCar_name());
@@ -62,8 +66,22 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
         holder.weisj_image.setType(ZQImageViewRoundOval.TYPE_ROUND);
         holder.weisj_image.setRoundRadius(5);
         Log.d("aaaaa", "onBindViewHolder: "+resultBean.getCar_price());
-        //通过id得到图片
-        OKhttptils.getPic(context,result.get(position).getCar_1_icon_file_id(),holder.weisj_image);
+
+        if(result.get(position).getCar_1_icon_file_id()!=null){
+            //通过id得到图片
+            OKhttptils.getPic(context,result.get(position).getCar_1_icon_file_id(),holder.weisj_image);
+        }else {
+            holder.weisj_image.setImageResource(R.drawable.aa1);
+        }
+        holder.weisj_bianji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, UpdateCar.class);
+                intent.putExtra("carid",String.valueOf(result.get(position).getCar_id()));
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -75,6 +93,7 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView weisj_name,weisj_time,price,weisj_cjh,weisj_sh;
         private ZQImageViewRoundOval weisj_image;
+        private RelativeLayout weisj_bianji;
         public ViewHolder(View itemView) {
             super(itemView);
             weisj_name=itemView.findViewById(R.id.weisj_name);
@@ -83,6 +102,7 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
             weisj_cjh=itemView.findViewById(R.id.weisj_cjh);
             weisj_sh=itemView.findViewById(R.id.weisj_sh);
             weisj_image=itemView.findViewById(R.id.weisj_image);
+            weisj_bianji=itemView.findViewById(R.id.weisj_bianji);
         }
     }
 }

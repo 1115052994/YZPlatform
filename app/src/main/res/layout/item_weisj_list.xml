@@ -24,9 +24,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <LinearLayout
+            android:layout_alignBottom="@id/weisj_image"
             android:layout_toRightOf="@id/weisj_image"
             android:layout_marginLeft="@dimen/common10dp"
-            android:layout_marginTop="@dimen/common18dp"
+            android:layout_marginTop="@dimen/common16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -99,7 +100,7 @@
 
 
             <RelativeLayout
-
+                android:layout_marginTop="@dimen/common5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RelativeLayout

@@ -153,6 +153,8 @@ public class UpdateCar extends BaseActivity {
         Log.d(TAG, "onCreate: ");
         EventBus.getDefault().register(this);
         Log.d(TAG, "onCreate: ");
+        String carid = getIntent().getStringExtra("carid");
+
         carBsxList.add("手动");
         carBsxList.add("自动");
         carPfbzList.add("国三");
