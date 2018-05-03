@@ -44,9 +44,11 @@ public class ProductList extends BaseActivity {
         mGridView = findViewById(R.id.gridView);
         //添加数据
         mList = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            mList.add("第 " + i + " 个");
-        }
+        mList.add("二手车");
+        mList.add("汽车美容");
+        mList.add("钣金维修");
+        mList.add("维修保养");
+        mList.add("维修保养");
         mAdapter = new GridViewAdapter(this, mList);
         mGridView.setAdapter(mAdapter);
         //gridView的点击事件

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval
             android:id="@+id/weisj_image"
             android:layout_width="@dimen/common137dp"
             android:layout_height="@dimen/common95dp"
@@ -26,7 +26,7 @@
         <LinearLayout
             android:layout_toRightOf="@id/weisj_image"
             android:layout_marginLeft="@dimen/common10dp"
-            android:layout_marginTop="@dimen/common14dp"
+            android:layout_marginTop="@dimen/common18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -43,7 +43,7 @@
                 android:ellipsize="none"
                 android:maxLines="2"  />
             <LinearLayout
-                android:layout_marginTop="@dimen/common6dp"
+                android:layout_marginTop="@dimen/common10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -70,7 +70,7 @@
                     />
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="@dimen/common6dp"
+                android:layout_marginTop="@dimen/common10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -85,7 +85,7 @@
                     android:maxLines="2"
                     />
                 <TextView
-                    android:id="@+id/service_provider_km"
+                    android:id="@+id/price"
                     android:textSize="@dimen/text_size_14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -99,41 +99,15 @@
 
 
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RelativeLayout
-                    android:id="@+id/weisj_shanchu"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/common15dp"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="删除"
-                        android:layout_alignBottom="@id/item_iv2"
-                        android:layout_toRightOf="@id/item_iv2"
-                        android:textSize="@dimen/text_size_13sp"
-                        android:textColor="@color/black_66"
-
-                        />
-                    <ImageView
-                        android:id="@+id/item_iv2"
-                        android:src="@drawable/star_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/common10dp"/>
-
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_toLeftOf="@id/weisj_shanchu"
                     android:layout_marginRight="@dimen/common17dp"
                     android:id="@+id/weisj_bianji"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     >
                     <TextView
                         android:layout_width="wrap_content"

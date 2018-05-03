@@ -6,10 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xtzhangbinbin.jpq.R;
@@ -20,29 +16,26 @@ import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Administrator on 2018/4/30.
  */
 
-public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> {
+public class YiwcAdapter extends RecyclerView.Adapter<YiwcAdapter.ViewHolder> {
     private Context context;
     private List<WeisjBean.DataBean.ResultBean> result;
 
-    public WeisjAdapter(Context context, List<WeisjBean.DataBean.ResultBean> result) {
+    public YiwcAdapter(Context context, List<WeisjBean.DataBean.ResultBean> result) {
         this.context = context;
         this.result = result;
     }
 
     @Override
-    public WeisjAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public YiwcAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weisj_list, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(WeisjAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(YiwcAdapter.ViewHolder holder, int position) {
         WeisjBean.DataBean.ResultBean resultBean = result.get(position);
         holder.price.setText(new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) ));
         holder.weisj_name.setText(resultBean.getCar_name());

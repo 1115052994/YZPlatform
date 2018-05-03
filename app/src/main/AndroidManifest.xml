@@ -37,6 +37,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera" />
 
+
     <application
         android:name=".YizhongApplication"
         android:allowBackup="true"
@@ -222,7 +223,12 @@
             android:name=".activity.UpdateCar"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.ProductList" />
+        <activity android:name=".activity.ProductList" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.MySubscribe" />
         <activity android:name=".activity.MySubscribeMore" />
         <activity

@@ -157,6 +157,21 @@ public class Config {
     //添加二手车图片
     public static final String ACCRETIONPICTURECAR = M + S + "accretionPictureCar";
 
+    //添加二手车图片
+    public static final String COMPCAR = M + S + "compCar";
+
+    //产品列表二手车之后的接口
+    public static final String COMPPRODUCT = M + S + "compProduct";
+
+    //修改产品上架
+    public static final String REVAMPPUBLISH = M + S + "revampPublish";
+
+    //修改产品下架
+    public static final String REVAMPSOLDOUT = M + S + "revampSoldOut";
+
+    //删除产品
+    public static final String CANCELPRODUCT = M + S + "cancelProduct";
+
     //添加二手车收藏
     public static final String ACCRETIONCOLLCOMP = M + S + "accretionCollComp ";
 
