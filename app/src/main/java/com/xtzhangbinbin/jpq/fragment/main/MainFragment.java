@@ -23,6 +23,7 @@ import com.xtzhangbinbin.jpq.activity.AccessCar;
 import com.xtzhangbinbin.jpq.activity.CarProduct;
 import com.xtzhangbinbin.jpq.activity.CompanyCenterActivity;
 import com.xtzhangbinbin.jpq.activity.LoginActivity;
+import com.xtzhangbinbin.jpq.activity.PersonalCenterActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
@@ -177,8 +178,9 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                     JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
                 }else if (user_type.equals("comp")){
                     JumpUtil.newInstance().jumpRight(getContext(), CompanyCenterActivity.class);
-                }else {
+                }else if (user_type.equals("pers")){
                     /* 跳转到个人中心 */
+                    JumpUtil.newInstance().jumpRight(getContext(), PersonalCenterActivity.class);
                 }
                 break;
             case R.id.ly_etc:
