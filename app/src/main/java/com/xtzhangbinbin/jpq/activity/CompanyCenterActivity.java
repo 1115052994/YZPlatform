@@ -15,6 +15,7 @@ import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
+import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
 
 import java.util.HashMap;
@@ -120,9 +121,23 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mBtn:
                 //退出登录
-                Prefs.with(getApplicationContext()).clear();
-//                ActivityUtil.finishAll();
-                JumpUtil.newInstance().jumpRight(this,LoginActivity.class);
+
+                final OrdinaryDialog dialog = OrdinaryDialog.newInstance(this).setMessage1("退出登录").setMessage2("确定退出当前账号吗").showDialog();
+                dialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
+                    @Override
+                    public void onNoClick() {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+                    @Override
+                    public void onYesClick() {
+                        dialog.dismiss();
+                        Prefs.with(getApplicationContext()).clear();
+                        JumpUtil.newInstance().jumpRight(CompanyCenterActivity.this,LoginActivity.class);
+                    }
+                });
                 break;
         }
     }
