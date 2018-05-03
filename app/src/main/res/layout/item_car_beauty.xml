@@ -18,7 +18,6 @@
             android:textSize="@dimen/text_size_15sp"
             android:textColor="@color/text_33"
             android:text="润滑系统维护保养润滑维护保维护"/>
-
         <TextView
             android:id="@+id/type"
             android:layout_marginTop="@dimen/common11dp"
