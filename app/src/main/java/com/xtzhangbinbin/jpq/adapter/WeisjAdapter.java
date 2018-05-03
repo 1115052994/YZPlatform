@@ -64,6 +64,7 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
         Log.d("aaaaa", "onBindViewHolder: "+resultBean.getCar_price());
         //通过id得到图片
         OKhttptils.getPic(context,result.get(position).getCar_1_icon_file_id(),holder.weisj_image);
+
     }
 
     @Override
