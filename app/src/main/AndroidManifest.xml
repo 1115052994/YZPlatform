@@ -76,7 +76,7 @@
 
         <activity
             android:name=".activity.RegisterActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.EnterpriseActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -124,7 +124,7 @@
         <activity
             android:name=".activity.AddProductActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.ProductServiceActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -157,7 +157,7 @@
         <!-- liyan start -->
         <activity
             android:name=".activity.OrdersSubmitActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.OrdersPaySuccessActivity"
@@ -169,15 +169,15 @@
         <activity
             android:name=".activity.OrdersCompListActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.OrdersUseActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.OrdersScanActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.OrdersCompEndActivity"
             android:launchMode="singleTask"
@@ -185,7 +185,7 @@
         <activity
             android:name=".activity.OrdersUserEndActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.OrdersPersonalViewActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -242,7 +242,8 @@
         <activity android:name=".camera.test.TestActivity" />
         <activity android:name=".camera.PhotographActivity" />
         <activity android:name=".activity.CarProduct" />
-        <activity android:name=".activity.CompanyCenterActivity"></activity>
+        <activity android:name=".activity.CompanyCenterActivity" />
+        <activity android:name=".activity.PersonalCenterActivity"></activity>
     </application>
 
 </manifest>
