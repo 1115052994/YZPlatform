@@ -26,6 +26,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,8 +49,7 @@ public class OrdersPersonalPayFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-
-
+    private MyProgressDialog dialog;
     private Context context;
     private List<Orders.DataBean.ResultBean> result = new ArrayList<>();
     private OrdersPersonalAdapter ordersPersonalAdapter;
@@ -85,6 +85,9 @@ public class OrdersPersonalPayFragment extends Fragment {
                 getOrders(Config.ORDERS_GET_LIST, ++pageIndex, refreshlayout);
             }
         });
+        dialog = MyProgressDialog.createDialog(context);
+        dialog.setMessage("正在加载数据，请稍候");
+        dialog.show();
         getOrders(Config.ORDERS_GET_LIST, 1, null);
         return inflate;
     }
@@ -119,11 +122,17 @@ public class OrdersPersonalPayFragment extends Fragment {
                             ordersPersonalAdapter.notifyDataSetChanged();
                         }
                     }
+                    if(null != dialog && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
                 }
 
                 @Override
                 public void fail(String response) {
                     Toast.makeText(context, "查询失败", Toast.LENGTH_SHORT).show();
+                    if(null != dialog && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
                 }
             });
         }
@@ -134,5 +143,8 @@ public class OrdersPersonalPayFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if(null != dialog && dialog.isShowing()){
+            dialog.dismiss();
+        }
     }
 }

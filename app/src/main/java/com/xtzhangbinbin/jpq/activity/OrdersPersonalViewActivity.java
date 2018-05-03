@@ -207,7 +207,6 @@ public class OrdersPersonalViewActivity extends BaseActivity{
                         wxChildAdapter = new CommonRecyclerAdapter(OrdersPersonalViewActivity.this, itemList, R.layout.item_wx_childs) {
                             @Override
                             public void convert(ViewHolder holder, Object item, int position) {
-                                Log.w("test", position + ",");
                                 TextView wxChildName = holder.getView(R.id.wxName1_tv);
                                 wxChildName.setText(itemList.get(position).getItem_name());
                                 TextView childPrice = holder.getView(R.id.price1_tv);

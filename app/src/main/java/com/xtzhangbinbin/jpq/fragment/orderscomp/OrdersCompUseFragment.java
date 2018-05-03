@@ -17,6 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.OrdersPersonalViewActivity;
 import com.xtzhangbinbin.jpq.adapter.CommonRecyclerAdapter;
@@ -27,10 +31,6 @@ import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xtzhangbinbin.jpq.view.CircleImageView;
 import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
@@ -48,7 +48,7 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 @SuppressWarnings("all")
-public class OrdersCompAllFragment extends Fragment {
+public class OrdersCompUseFragment extends Fragment {
     @BindView(R.id.orders_comp_default_image)
     ImageView defaultImage;
 //    @BindView(R.id.orders_comp_listview)
@@ -64,7 +64,7 @@ public class OrdersCompAllFragment extends Fragment {
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
     private MyProgressDialog dialog;
-    public OrdersCompAllFragment(Context context) {
+    public OrdersCompUseFragment(Context context) {
         this.context = context;
     }
 
@@ -99,6 +99,7 @@ public class OrdersCompAllFragment extends Fragment {
 
     public void getOrders(String url, final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
+        map.put("state","yxf");
         map.put("pageIndex", String.valueOf(pageIndex));
         map.put("pageSize", "");
         if (NetUtil.isNetAvailable(context)) {

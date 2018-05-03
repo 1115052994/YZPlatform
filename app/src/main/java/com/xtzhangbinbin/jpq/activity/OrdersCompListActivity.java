@@ -10,6 +10,8 @@ import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.CollectAdapter;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.fragment.orderscomp.OrdersCompAllFragment;
+import com.xtzhangbinbin.jpq.fragment.orderscomp.OrdersCompUnUseFragment;
+import com.xtzhangbinbin.jpq.fragment.orderscomp.OrdersCompUseFragment;
 import com.xtzhangbinbin.jpq.fragment.orderspersonal.OrdersPersonalAllFragment;
 import com.xtzhangbinbin.jpq.fragment.orderspersonal.OrdersPersonalCancelFragment;
 import com.xtzhangbinbin.jpq.fragment.orderspersonal.OrdersPersonalNoPayFragment;
@@ -47,13 +49,15 @@ public class OrdersCompListActivity extends BaseActivity {
 
     public void initFragment(){
         fragment.add(new OrdersCompAllFragment(this));
+        fragment.add(new OrdersCompUseFragment(this));
+        fragment.add(new OrdersCompUnUseFragment(this));
 //        fragment.add(new OrdersPersonalNoPayFragment(this));
 //        fragment.add(new OrdersPersonalPayFragment(this));
 //        fragment.add(new OrdersPersonalUseFragment(this));
 //        fragment.add(new OrdersPersonalCancelFragment(this));
         str.add("全部订单");
-//        str.add("已消费");
-//        str.add("未消费");
+        str.add("已消费");
+        str.add("未消费");
         ordersPager.setAdapter(new CollectAdapter(getSupportFragmentManager(),fragment,str));
         ordersTab.setupWithViewPager(ordersPager);
         ordersTab.setTabMode(TabLayout.MODE_FIXED);
