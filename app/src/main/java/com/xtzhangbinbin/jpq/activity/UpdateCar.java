@@ -176,7 +176,6 @@ public class UpdateCar extends BaseActivity {
 
         gridWai.setAdapter(new Grid_Updata(arrwai, UpdateCar.this));
         gridNei.setAdapter(new Grid_Updata(arrnei, UpdateCar.this));
-
     }
 
     private void getLocation() {
