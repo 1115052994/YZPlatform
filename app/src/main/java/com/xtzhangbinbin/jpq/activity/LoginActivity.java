@@ -11,16 +11,11 @@ import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
-import com.xtzhangbinbin.jpq.utils.LogUtil;
 import com.xtzhangbinbin.jpq.utils.MyCountDownTimer;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
-import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +38,8 @@ public class LoginActivity extends BaseActivity {
     Button loginGetCode;
     private MyCountDownTimer countDownTimer;
     private String code;
+
+    private String user_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +94,8 @@ public class LoginActivity extends BaseActivity {
                             Prefs.with(getApplicationContext()).write("user_token", user_token);
                             Prefs.with(getApplicationContext()).write("user_phone", phone);
                             JumpUtil.newInstance().jumpRight(LoginActivity.this, MainActivity.class);
+                            getUserInfo();
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -105,13 +104,13 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void fail(String response) {
-                        Log.e(TAG, "fail: " + response );
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            ToastUtil.show(LoginActivity.this,jsonObject.getString("message"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        Log.e(TAG, "fail登录: " + response );
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            ToastUtil.show(LoginActivity.this,jsonObject.getString("message"));
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 });
             } else {
@@ -122,6 +121,57 @@ public class LoginActivity extends BaseActivity {
         }
 
     }
+
+    /* 获取用户信息 */
+    private void getUserInfo() {
+        Map<String, String> map = new HashMap<>();
+        OKhttptils.post(LoginActivity.this, Config.GET_USERINFO, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.e("", "onResponse用户信息: " + response);
+                /**
+                 * {"data":
+                 * {"result":
+                 * {"login_name":"17685416552",
+                 * "user_type":"comp",
+                 * "user_id":"15",
+                 * "phone_number":"17685416552",
+                 * "user_token":"96730A47BBCD8F345203CFAB9A2CA83A768A3A7A1150AC667DA0330D0B94B04602AACF19E9AB5C98A977CA377CD73B6F8CBAECEE459C76A0EF20E0615C5498E8",
+                 * "invi_code":"",
+                 * "user_state":"active"}},
+                 * "message":"",
+                 * "status":"1"}
+                 * */
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String data = object.getString("data");
+                    JSONObject jsonObject = new JSONObject(data);
+                    String result = jsonObject.getString("result");
+                    JSONObject obj = new JSONObject(result);
+                    user_type = obj.getString("user_type");
+                    Prefs.with(getApplicationContext()).write("user_type",user_type);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+                Log.d(TAG, "fail用户信息: " + response);
+//                try {
+//                    JSONObject object = new JSONObject(response);
+//                    user_type = "";
+//                    ToastUtil.show(LoginActivity.this, object.getString("message"));
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+            }
+        });
+
+    }
+
 
     /* 获取验证码 */
     private void getCode() {
@@ -134,21 +184,11 @@ public class LoginActivity extends BaseActivity {
             OKhttptils.post(LoginActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
-//                    try {
-//                        JSONObject jsonObject = new JSONObject(response);
-//                            String data = jsonObject.getString("data");
-//                            JSONObject object = new JSONObject(data);
-//                            String result = object.getString("result");
-//                            JSONObject o = new JSONObject(result);
-//                            code = o.getString("code");
-//                            Log.e(TAG, "onResponse验证码: " + code);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
                 }
 
                 @Override
                 public void fail(String response) {
+//                    Log.d(TAG, "fail获取验证码: " + response);
 //                    try {
 //
 //                        JSONObject jsonObject = new JSONObject(response);

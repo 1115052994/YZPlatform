@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.xtzhangbinbin.jpq.activity.CompanyCenterActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/center_bg"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/title_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common45dp">
+
+                    <ImageView
+                        android:id="@+id/mBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/common12dp"
+                        android:src="@drawable/white_back"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_16sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="企业个人中心"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_16sp" />
+
+                </RelativeLayout>
+
+                <com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval
+                    android:id="@+id/mIcon"
+                    android:layout_width="@dimen/common210dp"
+                    android:layout_height="@dimen/common140dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/common45dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/text" />
+
+                <TextView
+                    android:id="@+id/mName"
+                    style="@style/black33_text_16sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/common10dp"
+                    android:text="汽车修理厂"
+                    android:textSize="@dimen/text_size_20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mAuto"
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qy_0101"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:text="企业认证"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_18sp" />
+
+                <TextView
+                    android:id="@+id/mState"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="@dimen/common12dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="end|center_vertical"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="未审核"
+                    android:textColor="@color/gray_99"
+                    android:textSize="@dimen/text_size_13sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/mProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qy_002"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="产品管理"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/mOrders"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qy_003"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="订单管理"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/mWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qy_004"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="我的钱包"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/mBook"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qy_005"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="预约信息"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/mAppraise"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qy_006"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="评价管理"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--style="@style/ll_normal_horizontal"-->
+                <!--android:layout_height="@dimen/common50dp"-->
+                <!--android:layout_marginTop="@dimen/common7dp"-->
+                <!--android:gravity="center_vertical">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/mChangePsw"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:drawableLeft="@drawable/qy_007"-->
+                    <!--android:drawablePadding="@dimen/common18dp"-->
+                    <!--android:drawableRight="@drawable/right_go"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:paddingLeft="@dimen/common15dp"-->
+                    <!--android:paddingRight="@dimen/common15dp"-->
+                    <!--android:text="修改密码"-->
+                    <!--android:textColor="@color/black_33"-->
+                    <!--android:textSize="@dimen/text_size_18sp" />-->
+
+            <!--</LinearLayout>-->
+
+
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/mClean"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qy_008"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="清除缓存"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/mKefu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qy_009"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="联系客服"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/mBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/common30dp"
+                android:layout_marginLeft="@dimen/common38dp"
+                android:layout_marginRight="@dimen/common38dp"
+                android:layout_marginTop="@dimen/common20dp"
+                android:background="@drawable/bg_cricle30_gray"
+                android:text="退出登录"
+                android:textColor="@color/theme_coloer"
+                android:textSize="@dimen/text_size_18sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

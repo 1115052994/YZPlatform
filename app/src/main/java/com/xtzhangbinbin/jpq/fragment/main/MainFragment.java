@@ -2,7 +2,6 @@ package com.xtzhangbinbin.jpq.fragment.main;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,14 +17,16 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AccessCar;
 import com.xtzhangbinbin.jpq.activity.CarProduct;
+import com.xtzhangbinbin.jpq.activity.CompanyCenterActivity;
+import com.xtzhangbinbin.jpq.activity.LoginActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -58,6 +59,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
     @BindView(R.id.mLocation)
     TextView mLocation;
 
+    private String user_type;
+
     // 轮播图
     private List<String> bannersImage = new ArrayList<>();
 
@@ -67,6 +70,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
     //标识，用于判断是否只显示一次定位信息和用户重新定位
     private boolean isFirstLoc = true;
     private RxPermissions rxPermission;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             view = inflater.inflate(R.layout.fragment_main1, container, false);
         }
         unbinder = ButterKnife.bind(this, view);
+        user_type = Prefs.with(getContext()).read("user_type");
         getData();
         initView();
         initLoc();
@@ -106,7 +111,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                         String fileId = object1.getString("adve_file_id");
                         bannersImage.add(fileId);
                     }
-                    if (banner!=null) {
+                    if (banner != null) {
                         banner.setImages(bannersImage);
                         banner.start();
                     }
@@ -167,6 +172,14 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.image_scan:
                 break;
             case R.id.image_man:
+                Log.d("用户类型", "onViewClicked: " + user_type);
+                if (user_type.isEmpty()){
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }else if (user_type.equals("comp")){
+                    JumpUtil.newInstance().jumpRight(getContext(), CompanyCenterActivity.class);
+                }else {
+                    /* 跳转到个人中心 */
+                }
                 break;
             case R.id.ly_etc:
                 break;
@@ -216,16 +229,16 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.image_cmzy:
                 break;
             case R.id.iamge_etzy:
-                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxetzy");
+                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class, "YZcarYPcyplxetzy");
                 break;
             case R.id.iamge_qczd:
-                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxqczd");
+                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class, "YZcarYPcyplxqczd");
                 break;
             case R.id.iamge_xcjly:
-                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxxcjly");
+                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class, "YZcarYPcyplxxcjly");
                 break;
             case R.id.iamge_dcld:
-                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxdcld");
+                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class, "YZcarYPcyplxdcld");
                 break;
         }
     }

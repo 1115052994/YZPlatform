@@ -113,10 +113,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         fragmentList = getFragments();
         fm = getSupportFragmentManager();
         transaction = fm.beginTransaction();
-        fragment = fragmentList.get(2);
-        Bundle bundle = new Bundle();
-        bundle.putString("selected_city",selected_city);
-        fragment.setArguments(bundle);
+        fragment = fragmentList.get(0);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("selected_city",selected_city);
+//        fragment.setArguments(bundle);
         transaction.replace(R.id.view_pager, fragment);
         transaction.commit();
     }

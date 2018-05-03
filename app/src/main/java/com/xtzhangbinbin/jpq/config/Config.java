@@ -62,7 +62,7 @@ public class Config {
     public static final String QUERYCITY = URL + S + "queryCity";
 
     //获取用户信息
-    public static final String GET_USERTOKEN = BASE_URL + S + "getUserInfor";
+    public static final String GET_USERINFO = BASE_URL + S + "getUserInfor";
 
     //通过城市名获取城市id
     public static final String GET_CITY_ID = URL + S + "get_cityIdByCityName";
