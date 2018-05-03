@@ -8,8 +8,9 @@ import java.util.List;
 
 public class CarBeautyBean {
 
+
     /**
-     * data : {"result":[{"prod_oper_date":"2018-04-22 15:31:12","prod_service_name":"水电费水电费","prod_service_type_item":"似懂非懂师德师风","prod_reduced_price":455,"prod_is_publish":"0","prod_price":5555,"comp_id":"31","prod_id":"51"},{"prod_oper_date":"2018-04-23 10:58:53","prod_service_name":"哟哟哟","prod_service_type_item":"汽修保养","prod_reduced_price":699,"prod_is_publish":"0","prod_price":1328.88,"comp_id":"31","prod_id":"60"},{"prod_oper_date":"2018-05-02 14:38:19","prod_service_name":"很方便洗车","prod_service_type_item":"洗车","prod_reduced_price":268,"prod_is_publish":"0","prod_price":735,"comp_id":"31","prod_id":"64"}]}
+     * data : {"result":[{"prod_service_name":"很方便洗车","prod_reduced_price":268,"prod_is_publish":"0","prod_price":735,"unused":1,"consume":0,"prod_id":"64","ordersum":3},{"prod_service_name":"哟哟哟","prod_reduced_price":699,"prod_is_publish":"0","prod_price":1328.88,"unused":0,"consume":0,"prod_id":"60","ordersum":0},{"prod_service_name":"水电费水电费","prod_reduced_price":455,"prod_is_publish":"0","prod_price":5555,"unused":0,"consume":0,"prod_id":"51","ordersum":0}],"pageCount":1,"pageTotal":3}
      * message :
      * status : 1
      */
@@ -43,7 +44,31 @@ public class CarBeautyBean {
     }
 
     public static class DataBean {
+        /**
+         * result : [{"prod_service_name":"很方便洗车","prod_reduced_price":268,"prod_is_publish":"0","prod_price":735,"unused":1,"consume":0,"prod_id":"64","ordersum":3},{"prod_service_name":"哟哟哟","prod_reduced_price":699,"prod_is_publish":"0","prod_price":1328.88,"unused":0,"consume":0,"prod_id":"60","ordersum":0},{"prod_service_name":"水电费水电费","prod_reduced_price":455,"prod_is_publish":"0","prod_price":5555,"unused":0,"consume":0,"prod_id":"51","ordersum":0}]
+         * pageCount : 1
+         * pageTotal : 3
+         */
+
+        private int pageCount;
+        private int pageTotal;
         private List<ResultBean> result;
+
+        public int getPageCount() {
+            return pageCount;
+        }
+
+        public void setPageCount(int pageCount) {
+            this.pageCount = pageCount;
+        }
+
+        public int getPageTotal() {
+            return pageTotal;
+        }
+
+        public void setPageTotal(int pageTotal) {
+            this.pageTotal = pageTotal;
+        }
 
         public List<ResultBean> getResult() {
             return result;
@@ -55,32 +80,24 @@ public class CarBeautyBean {
 
         public static class ResultBean {
             /**
-             * prod_oper_date : 2018-04-22 15:31:12
-             * prod_service_name : 水电费水电费
-             * prod_service_type_item : 似懂非懂师德师风
-             * prod_reduced_price : 455.0
+             * prod_service_name : 很方便洗车
+             * prod_reduced_price : 268.0
              * prod_is_publish : 0
-             * prod_price : 5555.0
-             * comp_id : 31
-             * prod_id : 51
+             * prod_price : 735.0
+             * unused : 1
+             * consume : 0
+             * prod_id : 64
+             * ordersum : 3
              */
 
-            private String prod_oper_date;
             private String prod_service_name;
-            private String prod_service_type_item;
             private double prod_reduced_price;
             private String prod_is_publish;
             private double prod_price;
-            private String comp_id;
+            private int unused;
+            private int consume;
             private String prod_id;
-
-            public String getProd_oper_date() {
-                return prod_oper_date;
-            }
-
-            public void setProd_oper_date(String prod_oper_date) {
-                this.prod_oper_date = prod_oper_date;
-            }
+            private int ordersum;
 
             public String getProd_service_name() {
                 return prod_service_name;
@@ -88,14 +105,6 @@ public class CarBeautyBean {
 
             public void setProd_service_name(String prod_service_name) {
                 this.prod_service_name = prod_service_name;
-            }
-
-            public String getProd_service_type_item() {
-                return prod_service_type_item;
-            }
-
-            public void setProd_service_type_item(String prod_service_type_item) {
-                this.prod_service_type_item = prod_service_type_item;
             }
 
             public double getProd_reduced_price() {
@@ -122,12 +131,20 @@ public class CarBeautyBean {
                 this.prod_price = prod_price;
             }
 
-            public String getComp_id() {
-                return comp_id;
+            public int getUnused() {
+                return unused;
             }
 
-            public void setComp_id(String comp_id) {
-                this.comp_id = comp_id;
+            public void setUnused(int unused) {
+                this.unused = unused;
+            }
+
+            public int getConsume() {
+                return consume;
+            }
+
+            public void setConsume(int consume) {
+                this.consume = consume;
             }
 
             public String getProd_id() {
@@ -136,6 +153,14 @@ public class CarBeautyBean {
 
             public void setProd_id(String prod_id) {
                 this.prod_id = prod_id;
+            }
+
+            public int getOrdersum() {
+                return ordersum;
+            }
+
+            public void setOrdersum(int ordersum) {
+                this.ordersum = ordersum;
             }
         }
     }

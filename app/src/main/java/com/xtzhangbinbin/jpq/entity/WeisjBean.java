@@ -101,7 +101,7 @@ public class WeisjBean {
             private String car_1_icon_file_id;//图片id
             private int car_price;//价格
             private String car_sign_date;//时间
-            private int car_mileage;
+            private double car_mileage;
             private int age;
             private String car_audit_state;//审核状态(1.审核不通过/2.审核通过/3.未审核)
             private String car_vin;//车牌号
@@ -179,11 +179,11 @@ public class WeisjBean {
                 this.car_sign_date = car_sign_date;
             }
 
-            public int getCar_mileage() {
+            public double getCar_mileage() {
                 return car_mileage;
             }
 
-            public void setCar_mileage(int car_mileage) {
+            public void setCar_mileage(double car_mileage) {
                 this.car_mileage = car_mileage;
             }
 

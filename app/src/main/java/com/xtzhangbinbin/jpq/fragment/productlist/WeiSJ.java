@@ -45,8 +45,6 @@ public class WeiSJ extends Fragment {
 
 
     Unbinder unbinder;
-    @BindView(R.id.radio)
-    RadioButton radio;
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsingCardealImage;
     @BindView(R.id.weisj_list)
@@ -66,23 +64,6 @@ public class WeiSJ extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_weisj, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         getData(1, null);
-        radio.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        radio.setChecked(false);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        radio.setChecked(true);
-                        break;
-                }
-                return false;
-            }
-        });
 
 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

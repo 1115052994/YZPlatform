@@ -54,7 +54,7 @@ public class CarBeauty extends Fragment {
     private CarBeautyAdapter carBeautyAdapter;
     private ArrayList<String> arr = new ArrayList<>();
     private int pageIndex = 1;//第几页
-    private int pageCount;//总页数
+    private int pageCount = 1;//总页数  默认
     private List<CarBeautyBean.DataBean.ResultBean>  result = new ArrayList<>();
 
 
@@ -62,8 +62,9 @@ public class CarBeauty extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_car_beauty, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        //设置线性管理器
+        carBeautyList.setLayoutManager(new LinearLayoutManager(getContext()));
         getData(1, null);
-
         radio.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -107,9 +108,7 @@ public class CarBeauty extends Fragment {
 //                getData(1, null);
 //            }
 //        });
-
         initview();
-
         return inflate;
     }
     private void initview() {
@@ -118,20 +117,26 @@ public class CarBeauty extends Fragment {
     //得到数据
     private void getData(final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
-//        map.put("prod_service_type_item", "XCMR");
-//        map.put("pageIndex",String.valueOf(pageIndex));
+        map.put("prod_service_type_item", "XCMR");
+        map.put("pageIndex",String.valueOf(pageIndex));
         OKhttptils.post((Activity) getContext(), Config.COMPPRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
                 Log.d("aaaaa", "onResponse456: " + response);
                 Gson gson = GsonFactory.create();
                 CarBeautyBean carBeauty = gson.fromJson(response, CarBeautyBean.class);
-//                pageCount=carBeauty.getData().getPageCount();
+                pageCount=carBeauty.getData().getPageCount();
                 result = carBeauty.getData().getResult();
-                //设置线性管理器
-                carBeautyList.setLayoutManager(new LinearLayoutManager(getContext()));
                 carBeautyAdapter = new CarBeautyAdapter(getContext(),result);
                 carBeautyList.setAdapter(carBeautyAdapter);
+                carBeautyAdapter.getCall(new CarBeautyAdapter.onCallBack() {
+                    @Override
+                    public void getprodid(View view, String prod_id) {
+                        android.util.Log.d("aaaaa", "getprodid: "+prod_id);
+                        getData(1,null);
+                        carBeautyAdapter.notifyDataSetChanged();
+                    }
+                });
 
                 //没有信息图片显示
                 if (result.size() <= 0) {

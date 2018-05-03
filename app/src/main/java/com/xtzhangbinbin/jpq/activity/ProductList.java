@@ -9,8 +9,11 @@ import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.GridViewAdapter;
 import com.xtzhangbinbin.jpq.adapter.MyFragmentPagerAdapter;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
+import com.xtzhangbinbin.jpq.fragment.main.MainFragment;
 import com.xtzhangbinbin.jpq.fragment.productlist.CarBeauty;
+import com.xtzhangbinbin.jpq.fragment.productlist.Maintenance;
 import com.xtzhangbinbin.jpq.fragment.productlist.SecondCar;
+import com.xtzhangbinbin.jpq.fragment.productlist.SheetMetal;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.view.CustomViewPager;
 import com.xtzhangbinbin.jpq.view.MyGridView;
@@ -36,7 +39,11 @@ public class ProductList extends BaseActivity {
         ButterKnife.bind(this);
         fragments.add(new SecondCar());
         fragments.add(new CarBeauty());
+        fragments.add(new SheetMetal());
+        fragments.add(new Maintenance());
+        fragments.add(new Maintenance());
         viewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments));
+
         initView();
     }
 
@@ -61,6 +68,7 @@ public class ProductList extends BaseActivity {
                 viewpager.setCurrentItem((position));
             }
         });
+        viewpager.setOffscreenPageLimit(mList.size());
 
 
     }

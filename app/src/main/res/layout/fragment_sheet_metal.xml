@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/yiwc_list"
+            android:id="@+id/car_beauty_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>
@@ -35,16 +35,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-    <Button
+    <RadioButton
         android:checked="true"
         android:id="@+id/radio"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/common15dp"
         android:layout_marginBottom="@dimen/common30dp"
         android:button="@null"
-        android:background="@drawable/star_add2"
+        android:background="@drawable/add"
         />
 </RelativeLayout>

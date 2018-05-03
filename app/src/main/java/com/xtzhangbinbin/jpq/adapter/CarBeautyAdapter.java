@@ -50,7 +50,6 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
     @Override
     public void onBindViewHolder(CarBeautyAdapter.ViewHolder holder, final int position) {
         holder.name.setText(result.get(position).getProd_service_name());
-        holder.type.setText(result.get(position).getProd_service_type_item());
         holder.youhui.setText(String.valueOf(result.get(position).getProd_reduced_price())+"元");
         holder.zhongjia.setText(String.valueOf(result.get(position).getProd_price())+"元");
         //设置默认状态
@@ -73,28 +72,31 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
                 }
             }
         });
-        holder.dingdan.setText(result.get(position).getProd_service_name());
-        holder.yishiyong.setText(result.get(position).getProd_service_name());
-        holder.weishiyong.setText(result.get(position).getProd_service_name());
+        holder.dingdan.setText(String.valueOf(result.get(position).getOrdersum()));
+        holder.yishiyong.setText(String.valueOf(result.get(position).getConsume()));
+        holder.weishiyong.setText(String.valueOf(result.get(position).getUnused()));
         //删除
         holder.shanchu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                if(onCallBack!=null){
-                    Map<String, String> map = new HashMap<>();
+                Map<String, String> map = new HashMap<>();
                     map.put("prod_id", result.get(position).getProd_id());
                     OKhttptils.post((Activity) context, Config.CANCELPRODUCT, map, new OKhttptils.HttpCallBack() {
                         @Override
                         public void success(String response) {
+                            Log.d("aaaaaa", "success: "+response);
+                            if(onCallBack!=null){
                            //删除成功回调刷新
                             onCallBack.getprodid(view,result.get(position).getProd_id());
+                            }
                         }
                         @Override
                         public void fail(String response) {
-                            com.tencent.mm.opensdk.utils.Log.d("aaaa", "fail: " + response);
+                            Log.d("aaaaaa", "fail: "+ result.get(position).getProd_id());
+                            com.tencent.mm.opensdk.utils.Log.d("aaaaa", "fail: " + response);
                         }
                     });
-                }
+
             }
         });
         //编辑
@@ -129,9 +131,6 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
             @Override
             public void success(String response) {
                 com.tencent.mm.opensdk.utils.Log.d("aaaaa", "onResponse获取数据: " + response);
-                Gson gson = GsonFactory.create();
-                WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
-
             }
             @Override
             public void fail(String response) {
@@ -141,13 +140,12 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name,type,youhui,zhongjia,dingdan,yishiyong,weishiyong,yishiyong_name,weishiyong_name;
+        TextView name,youhui,zhongjia,dingdan,yishiyong,weishiyong,yishiyong_name,weishiyong_name;
         SwitchButton switch_button;
         RelativeLayout shanchu,bianji;
         public ViewHolder(View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
-            type=itemView.findViewById(R.id.type);
             youhui=itemView.findViewById(R.id.youhui);
             zhongjia=itemView.findViewById(R.id.zhongjia);
             dingdan=itemView.findViewById(R.id.dingdan);

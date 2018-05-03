@@ -20,10 +20,9 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
-import com.xtzhangbinbin.jpq.adapter.JiaoyzAdapter;
-import com.xtzhangbinbin.jpq.adapter.YiwcAdapter;
+import com.xtzhangbinbin.jpq.adapter.CarBeautyAdapter;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.WeisjBean;
+import com.xtzhangbinbin.jpq.entity.CarBeautyBean;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 
@@ -39,29 +38,49 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class YiWC extends Fragment {
+public class SheetMetal extends Fragment {
 
 
-    @BindView(R.id.yiwc_list)
-    RecyclerView yiwcList;
+    @BindView(R.id.car_beauty_list)
+    RecyclerView carBeautyList;
     Unbinder unbinder;
+    @BindView(R.id.radio)
+    RadioButton radio;
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsingCardealImage;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-
-    private List<WeisjBean.DataBean.ResultBean> result = new ArrayList<>();
-    private YiwcAdapter yiwcAdapter;
+    private CarBeautyAdapter carBeautyAdapter;
+    private ArrayList<String> arr = new ArrayList<>();
     private int pageIndex = 1;//第几页
-    private int pageCount;//总页数
+    private int pageCount = 1;//总页数  默认
+    private List<CarBeautyBean.DataBean.ResultBean>  result = new ArrayList<>();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_yiwc, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        View inflate = inflater.inflate(R.layout.fragment_sheet_metal, container, false);
+        unbinder = ButterKnife.bind(this, inflate);
+        //设置线性管理器
+        carBeautyList.setLayoutManager(new LinearLayoutManager(getContext()));
         getData(1, null);
+        radio.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        radio.setChecked(false);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        radio.setChecked(true);
+                        break;
+                }
+                return false;
+            }
+        });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -79,7 +98,8 @@ public class YiWC extends Fragment {
                 refreshlayout.finishLoadmore();
             }
         });
-        //        browsingAdapter.getBrowsingCall(new CallBrowsing() {
+
+//        browsingAdapter.getBrowsingCall(new CallBrowsing() {
 //            @Override
 //            public void getCallBrowsing(View view, String is) {
 //                //删除
@@ -87,30 +107,35 @@ public class YiWC extends Fragment {
 //                getData(1, null);
 //            }
 //        });
-
         initview();
-
-        return view;
+        return inflate;
     }
     private void initview() {
 
     }
+    //得到数据
     private void getData(final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
-        map.put("car_deal_state", "ywc");
+        map.put("prod_service_type_item", "BJWX");
         map.put("pageIndex",String.valueOf(pageIndex));
-        OKhttptils.post((Activity) getContext(), Config.COMPCAR, map, new OKhttptils.HttpCallBack() {
+        OKhttptils.post((Activity) getContext(), Config.COMPPRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.d("aaaaa", "onResponse获取数据: " + response);
+                Log.d("aaaaa", "onResponse456: " + response);
                 Gson gson = GsonFactory.create();
-                WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
-                pageCount=weisjBean.getData().getPageCount();
-                result = weisjBean.getData().getResult();
-                //设置线性管理器
-                yiwcList.setLayoutManager(new LinearLayoutManager(getContext()));
-                yiwcAdapter = new YiwcAdapter(getContext(), result);
-                yiwcList.setAdapter(yiwcAdapter);
+                CarBeautyBean carBeauty = gson.fromJson(response, CarBeautyBean.class);
+                pageCount=carBeauty.getData().getPageCount();
+                result = carBeauty.getData().getResult();
+                carBeautyAdapter = new CarBeautyAdapter(getContext(),result);
+                carBeautyList.setAdapter(carBeautyAdapter);
+                carBeautyAdapter.getCall(new CarBeautyAdapter.onCallBack() {
+                    @Override
+                    public void getprodid(View view, String prod_id) {
+                        android.util.Log.d("aaaaa", "getprodid: "+prod_id);
+                        getData(1,null);
+                        carBeautyAdapter.notifyDataSetChanged();
+                    }
+                });
 
                 //没有信息图片显示
                 if (result.size() <= 0) {
@@ -124,12 +149,12 @@ public class YiWC extends Fragment {
                         if (pageIndex > pageCount) {
                             refreshlayout.finishLoadmore(2000);
                         } else {
-                            yiwcAdapter.notifyDataSetChanged();
+                            carBeautyAdapter.notifyDataSetChanged();
                             refreshlayout.finishRefresh(2000);
                             refreshlayout.finishLoadmore(2000);
                         }
                     } else {
-                        yiwcAdapter.notifyDataSetChanged();
+                        carBeautyAdapter.notifyDataSetChanged();
                     }
                 }
 

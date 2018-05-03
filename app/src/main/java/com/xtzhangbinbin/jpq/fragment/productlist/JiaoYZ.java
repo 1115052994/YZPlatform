@@ -45,8 +45,6 @@ public class JiaoYZ extends Fragment {
     @BindView(R.id.jiaoyz_list)
     RecyclerView jiaoyzList;
     Unbinder unbinder;
-    @BindView(R.id.radio)
-    RadioButton radio;
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsingCardealImage;
     @BindView(R.id.smartRefreshLayout)
@@ -65,23 +63,6 @@ public class JiaoYZ extends Fragment {
         View view = inflater.inflate(R.layout.fragment_jiaoyz, container, false);
         unbinder = ButterKnife.bind(this, view);
         getData(1, null);
-        radio.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        radio.setChecked(false);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        radio.setChecked(true);
-                        break;
-                }
-                return false;
-            }
-        });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {

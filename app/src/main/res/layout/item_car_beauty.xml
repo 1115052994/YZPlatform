@@ -12,22 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:maxEms="9"
+            android:lineSpacingExtra="@dimen/common8dp"
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_15sp"
             android:textColor="@color/text_33"
             android:text="润滑系统维护保养润滑维护保维护"/>
-        <TextView
-            android:id="@+id/type"
-            android:layout_marginTop="@dimen/common11dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_15sp"
-            android:textColor="@color/text_33"
-            android:text="维护保养润滑"/>
+
         <LinearLayout
-            android:layout_marginTop="@dimen/common11dp"
+            android:layout_marginTop="@dimen/common5dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -177,6 +172,7 @@
         android:layout_height="@dimen/common1dp"
         android:background="@color/bg_color"/>
     <RelativeLayout
+        android:layout_marginLeft="@dimen/common15dp"
         android:id="@+id/relat"
         android:layout_below="@id/view"
         android:layout_width="match_parent"
@@ -189,7 +185,6 @@
                 android:id="@+id/tv"
                 android:gravity="center_vertical"
                 android:textSize="@dimen/text_size_13sp"
-                android:layout_marginLeft="@dimen/common15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="是否上架"/>
