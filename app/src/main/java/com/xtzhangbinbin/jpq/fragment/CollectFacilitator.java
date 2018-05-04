@@ -86,7 +86,7 @@ public class CollectFacilitator extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                PostFaci(pageIndex++,refreshlayout);
+                PostFaci(++pageIndex,refreshlayout);
             }
         });
 

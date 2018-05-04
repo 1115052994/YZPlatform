@@ -62,6 +62,11 @@ public class JiaoYZ extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_jiaoyz, container, false);
         unbinder = ButterKnife.bind(this, view);
+        result.clear();
+        //设置线性管理器
+        jiaoyzList.setLayoutManager(new LinearLayoutManager(getContext()));
+        jiaoyzAdapter = new JiaoyzAdapter(getContext(), result);
+        jiaoyzList.setAdapter(jiaoyzAdapter);
         getData(1, null);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -75,7 +80,7 @@ public class JiaoYZ extends Fragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 if(pageCount<pageIndex){
-                    getData(pageIndex++, refreshlayout);
+                    getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
             }
@@ -110,11 +115,8 @@ public class JiaoYZ extends Fragment {
                 Gson gson = GsonFactory.create();
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
                 pageCount=weisjBean.getData().getPageCount();
-                result = weisjBean.getData().getResult();
-                //设置线性管理器
-                jiaoyzList.setLayoutManager(new LinearLayoutManager(getContext()));
-                jiaoyzAdapter = new JiaoyzAdapter(getContext(), result);
-                jiaoyzList.setAdapter(jiaoyzAdapter);
+                result.addAll(weisjBean.getData().getResult());
+                jiaoyzAdapter.notifyDataSetChanged();
 
                 //没有信息图片显示
                 if (result.size() <= 0) {

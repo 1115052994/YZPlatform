@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -45,6 +46,8 @@ public class YiSJ extends Fragment {
     @BindView(R.id.yisj_list)
     RecyclerView yisjList;
     Unbinder unbinder;
+    @BindView(R.id.radio)
+    Button radio;
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsingCardealImage;
     @BindView(R.id.smartRefreshLayout)
@@ -61,7 +64,20 @@ public class YiSJ extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_yisj, container, false);
         unbinder = ButterKnife.bind(this, view);
+        result.clear();
+        //设置线性管理器
+        yisjList.setLayoutManager(new LinearLayoutManager(getContext()));
+        yisjAdapter = new YisjAdapter(getContext(), result);
+        yisjList.setAdapter(yisjAdapter);
         getData(1, null);
+        yisjAdapter.getCall(new YisjAdapter.onCallBack() {
+            @Override
+            public void getprodid(int position) {
+                result.remove(position);
+                yisjAdapter.notifyDataSetChanged();
+            }
+        });
+
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -75,12 +91,13 @@ public class YiSJ extends Fragment {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 android.util.Log.d("aaaaa", "onLoadmore1: "+pageIndex);
                 if(pageCount<pageIndex){
-                    getData(pageIndex++, refreshlayout);
+                    getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
 
             }
         });
+
 
 //        browsingAdapter.getBrowsingCall(new CallBrowsing() {
 //            @Override
@@ -112,11 +129,9 @@ public class YiSJ extends Fragment {
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
                 pageCount=weisjBean.getData().getPageCount();
                 android.util.Log.d("aaaaa", "pageCount: "+pageCount);
-                result = weisjBean.getData().getResult();
-                //设置线性管理器
-                yisjList.setLayoutManager(new LinearLayoutManager(getContext()));
-                yisjAdapter = new YisjAdapter(getContext(), result);
-                yisjList.setAdapter(yisjAdapter);
+                result.addAll(weisjBean.getData().getResult());
+                yisjAdapter.notifyDataSetChanged();
+
 
                 //没有信息图片显示
                 if (result.size() <= 0) {

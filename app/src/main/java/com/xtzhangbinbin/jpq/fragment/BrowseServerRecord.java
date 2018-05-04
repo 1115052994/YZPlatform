@@ -81,7 +81,7 @@ public class BrowseServerRecord extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                PostRecord(Config.BROWSECOMPCOOKIES,pageIndex++,refreshlayout);
+                PostRecord(Config.BROWSECOMPCOOKIES,++pageIndex,refreshlayout);
             }
         });
 

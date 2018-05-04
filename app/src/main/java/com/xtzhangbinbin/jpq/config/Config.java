@@ -8,15 +8,15 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.18/";
+    public static final String BASE_URL = "http://192.168.1.223/";
 
-    public static final String URL = "http://192.168.1.18/";
+    public static final String URL = "http://192.168.1.223/";
     //微信APPID
     public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
-    public static final String M = "http://192.168.1.18/";
+    public static final String M = "http://192.168.1.223/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -157,6 +157,12 @@ public class Config {
     //添加二手车图片
     public static final String ACCRETIONPICTURECAR = M + S + "accretionPictureCar";
 
+    //车金融数据
+    public static final String SELECTJRTOAPP = M + S + "selectJrToApp";
+
+    //查询保险超市所有产品
+    public static final String QUERYALLINSURANCE = M + S + "queryAllInsurance";
+
     //添加二手车图片
     public static final String COMPCAR = M + S + "compCar";
 
@@ -168,6 +174,9 @@ public class Config {
 
     //修改产品下架
     public static final String REVAMPSOLDOUT = M + S + "revampSoldOut";
+
+    //修改二手车状态
+    public static final String CHANGESTATE = M + S + "changeState";
 
     //删除产品
     public static final String CANCELPRODUCT = M + S + "cancelProduct";
@@ -243,6 +252,9 @@ public class Config {
     //二手车详情
     public static final String CAR_DETAIL = URL + S + "car_detail";
 
+    //查询单个二手车信息（二手车编号）
+    public static final String SINGLECAR = URL + S + "singleCar";
+
     //二手车详情 - 获取广告
     public static final String CAR_DETAIL_AD = URL + S + "selectAdveToApp";
     public static final String GETCARTRIANBYCARBRAND = URL + S +"getCarTrianByCarBrand";
@@ -307,6 +319,10 @@ public class Config {
 
     //二手车详情 - 订阅降价通知
     public static final String CAR_DETAIL_ADD_SALE = URL + S + "subscriptionCar";
+
+    //降价提醒  -删除降价订阅
+    public static final String DELETESUBSCRIPTION = URL + S + "deleteSubscription";
+
 
     //二手车详情 - 查看是否订阅降价通知
     public static final String CAR_DETAIL_IS_SALE =  URL + S + "whetherSubscription";

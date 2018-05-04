@@ -137,32 +137,6 @@
                 />
 
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/shanchu"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/common15dp"
-            android:layout_alignParentBottom="true">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="删除"
-                android:layout_alignBottom="@id/item_iv2"
-                android:layout_toRightOf="@id/item_iv2"
-                android:textSize="@dimen/text_size_13sp"
-                android:textColor="@color/black_66"
-
-                />
-            <ImageView
-                android:id="@+id/item_iv2"
-                android:src="@drawable/star_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/common10dp"/>
-
-        </RelativeLayout>
     </LinearLayout>
     <View
         android:id="@+id/view"

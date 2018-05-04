@@ -75,30 +75,6 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
         holder.dingdan.setText(String.valueOf(result.get(position).getOrdersum()));
         holder.yishiyong.setText(String.valueOf(result.get(position).getConsume()));
         holder.weishiyong.setText(String.valueOf(result.get(position).getUnused()));
-        //删除
-        holder.shanchu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                Map<String, String> map = new HashMap<>();
-                    map.put("prod_id", result.get(position).getProd_id());
-                    OKhttptils.post((Activity) context, Config.CANCELPRODUCT, map, new OKhttptils.HttpCallBack() {
-                        @Override
-                        public void success(String response) {
-                            Log.d("aaaaaa", "success: "+response);
-                            if(onCallBack!=null){
-                           //删除成功回调刷新
-                            onCallBack.getprodid(view,result.get(position).getProd_id());
-                            }
-                        }
-                        @Override
-                        public void fail(String response) {
-                            Log.d("aaaaaa", "fail: "+ result.get(position).getProd_id());
-                            com.tencent.mm.opensdk.utils.Log.d("aaaaa", "fail: " + response);
-                        }
-                    });
-
-            }
-        });
         //编辑
         holder.bianji.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +118,7 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name,youhui,zhongjia,dingdan,yishiyong,weishiyong,yishiyong_name,weishiyong_name;
         SwitchButton switch_button;
-        RelativeLayout shanchu,bianji;
+        RelativeLayout bianji;
         public ViewHolder(View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
@@ -154,7 +130,6 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
             weishiyong=itemView.findViewById(R.id.weishiyong);
             weishiyong_name=itemView.findViewById(R.id.weishiyong_name);
             switch_button=itemView.findViewById(R.id.switch_button);
-            shanchu=itemView.findViewById(R.id.shanchu);
             bianji=itemView.findViewById(R.id.bianji);
         }
     }

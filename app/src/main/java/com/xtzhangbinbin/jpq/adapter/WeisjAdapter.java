@@ -42,19 +42,21 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
 
     @Override
     public WeisjAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weisj_list, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weisj_listwei, parent, false));
     }
 
     @Override
     public void onBindViewHolder(WeisjAdapter.ViewHolder holder, final int position) {
         WeisjBean.DataBean.ResultBean resultBean = result.get(position);
-        holder.price.setText(new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) ));
+        holder.price.setText(new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) /10000)+"万");
         holder.weisj_name.setText(resultBean.getCar_name());
         holder.weisj_time.setText(resultBean.getCar_sign_date());
         holder.weisj_cjh.setText(resultBean.getCar_vin());
         switch (resultBean.getCar_audit_state()){
             case "1":
                 holder.weisj_sh.setText("审核不通过");
+                holder.jiekou.setVisibility(View.VISIBLE);
+                holder.jiekou.setText(resultBean.getCar_audit_msg());
                 break;
             case "2":
                 holder.weisj_sh.setText("审核通过");
@@ -68,10 +70,11 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
         Log.d("aaaaa", "onBindViewHolder: "+resultBean.getCar_price());
 
         if(result.get(position).getCar_1_icon_file_id()!=null){
+            Log.d("aaaaa", "onBindViewHolder: 图片id"+result.get(position).getCar_1_icon_file_id());
             //通过id得到图片
             OKhttptils.getPic(context,result.get(position).getCar_1_icon_file_id(),holder.weisj_image);
         }else {
-            holder.weisj_image.setImageResource(R.drawable.aa1);
+            holder.weisj_image.setImageResource(R.drawable.personal_collect_img);
         }
         holder.weisj_bianji.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +84,6 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
                 context.startActivity(intent);
             }
         });
-
-
     }
 
     @Override
@@ -91,7 +92,7 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView weisj_name,weisj_time,price,weisj_cjh,weisj_sh;
+        private TextView weisj_name,weisj_time,price,weisj_cjh,weisj_sh,jiekou;
         private ZQImageViewRoundOval weisj_image;
         private RelativeLayout weisj_bianji;
         public ViewHolder(View itemView) {
@@ -103,6 +104,7 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
             weisj_sh=itemView.findViewById(R.id.weisj_sh);
             weisj_image=itemView.findViewById(R.id.weisj_image);
             weisj_bianji=itemView.findViewById(R.id.weisj_bianji);
+            jiekou=itemView.findViewById(R.id.jiekou);
         }
     }
 }

@@ -35,9 +35,8 @@ public class OKhttptils {
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
                     .url(url)      //Prefs.with(context).read("user_token")
-//                    .addHeader("user_token","96730A47BBCD8F345203CFAB9A2CA83AD3A659123EBC29B32086BADC51AE8B70A798AA55557B5D7025D663C94C2C585467FBFD2FB17CABA765D25BA4E4E69D9C" )
-                    .addHeader("user_token","96730A47BBCD8F345203CFAB9A2CA83AD3A659123EBC29B32086BADC51AE8B70C998E8650962F0C9F6C39DC0A2C687911337D2E0C74B38C5ED97F690642D4585" )
-//                    .addParams("car_name", s)
+                    .addHeader("user_token",Prefs.with(context).read("user_token") )
+                    //.addParams("car_name", s)
                     .params(params)
                     .build()
                     .execute(new StringCallback() {

@@ -1,0 +1,239 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xtzhangbinbin.jpq.fragment.CarFinancialPersonal">
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common44dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_marginLeft="@dimen/common15dp"
+            android:background="@color/text_ffd9"
+            android:layout_width="@dimen/common4dp"
+            android:layout_height="@dimen/common20dp" />
+        <TextView
+            android:text="惠保险"
+            android:layout_marginLeft="@dimen/common30dp"
+            android:textColor="@color/text_ffd9"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/common20dp" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common96dp">
+
+        <LinearLayout
+            android:id="@+id/car_cx"
+            android:layout_width="@dimen/common0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_marginTop="@dimen/common10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cx" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="车险"
+                android:textColor="@color/text_66"
+                android:textSize="@dimen/text_size_16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="@dimen/common1dp"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:layout_width="@dimen/common1dp"
+                android:layout_height="@dimen/common33dp"
+                android:background="@color/bg_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/car_bx"
+            android:layout_width="@dimen/common0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_marginTop="@dimen/common10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bx" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保险"
+                android:textColor="@color/text_66"
+                android:textSize="@dimen/text_size_16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="@dimen/common1dp"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:layout_width="@dimen/common1dp"
+                android:layout_height="@dimen/common33dp"
+                android:background="@color/bg_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bxc"
+            android:layout_width="@dimen/common0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_marginTop="@dimen/common10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bxcs" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保险超市"
+                android:textColor="@color/text_66"
+                android:textSize="@dimen/text_size_16sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color"/>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common44dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_marginLeft="@dimen/common15dp"
+            android:background="@color/text_ffd9"
+            android:layout_width="@dimen/common4dp"
+            android:layout_height="@dimen/common20dp" />
+        <TextView
+            android:text="惠保险"
+            android:layout_marginLeft="@dimen/common30dp"
+            android:textColor="@color/text_ffd9"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/common20dp" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common96dp">
+
+        <LinearLayout
+            android:id="@+id/car_cd"
+            android:layout_width="@dimen/common0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_marginTop="@dimen/common10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cd" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="车贷"
+                android:textColor="@color/text_66"
+                android:textSize="@dimen/text_size_16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="@dimen/common1dp"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:layout_width="@dimen/common1dp"
+                android:layout_height="@dimen/common33dp"
+                android:background="@color/bg_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dkjsq"
+            android:layout_width="@dimen/common0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_marginTop="@dimen/common10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dkjsq" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="贷款计算器"
+                android:textColor="@color/text_66"
+                android:textSize="@dimen/text_size_16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="@dimen/common1dp"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:layout_width="@dimen/common1dp"
+                android:layout_height="@dimen/common33dp"
+                android:background="@color/bg_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/xyd"
+            android:layout_width="@dimen/common0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_marginTop="@dimen/common10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/xyd2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="信用贷"
+                android:textColor="@color/text_66"
+                android:textSize="@dimen/text_size_16sp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common8dp"
+        android:background="@color/bg_color"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

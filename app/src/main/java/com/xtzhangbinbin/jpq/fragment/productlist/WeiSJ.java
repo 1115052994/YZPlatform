@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
@@ -45,6 +46,8 @@ public class WeiSJ extends Fragment {
 
 
     Unbinder unbinder;
+    @BindView(R.id.radio)
+    Button radio;
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsingCardealImage;
     @BindView(R.id.weisj_list)
@@ -63,8 +66,12 @@ public class WeiSJ extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_weisj, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        result.clear();
+        //设置线性管理器
+        weisjList.setLayoutManager(new LinearLayoutManager(getContext()));
+        weisjAdapter = new WeisjAdapter(getContext(), result);
+        weisjList.setAdapter(weisjAdapter);
         getData(1, null);
-
 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -77,10 +84,7 @@ public class WeiSJ extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                if(pageCount<pageIndex){
-                    getData(pageIndex++, refreshlayout);
-                }
-                refreshlayout.finishLoadmore();
+                getData(++pageIndex, refreshlayout);
             }
         });
 
@@ -112,11 +116,8 @@ public class WeiSJ extends Fragment {
                 Gson gson = GsonFactory.create();
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
                 pageCount=weisjBean.getData().getPageCount();
-                result = weisjBean.getData().getResult();
-                //设置线性管理器
-                weisjList.setLayoutManager(new LinearLayoutManager(getContext()));
-                weisjAdapter = new WeisjAdapter(getContext(), result);
-                weisjList.setAdapter(weisjAdapter);
+                result.addAll(weisjBean.getData().getResult());
+                weisjAdapter.notifyDataSetChanged();
 
                 //没有信息图片显示
                 if (result.size() <= 0) {

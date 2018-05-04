@@ -85,7 +85,7 @@ public class CollectCardeal extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                PostCar(pageIndex++, refreshlayout);
+                PostCar(++pageIndex, refreshlayout);
             }
         });
         return inflate;

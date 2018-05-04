@@ -60,7 +60,7 @@
             <com.youth.banner.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common160dp"
+                android:layout_height="match_parent"
                 app:image_scale_type="fit_xy"
                 app:indicator_margin="@dimen/common5dp" />
 
@@ -76,217 +76,247 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common15dp"
                 android:layout_marginLeft="@dimen/common10dp"
-                android:layout_marginRight="@dimen/common10dp">
+                android:layout_marginRight="@dimen/common10dp"
+                android:layout_marginTop="@dimen/common15dp">
+
                 <LinearLayout
                     android:id="@+id/ly_etc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/etc"/>
+                        android:src="@drawable/etc" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ETC"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="ETC"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ly_wby"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/wxby"/>
+                        android:src="@drawable/wxby" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="维修保养"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="维修保养"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ly_jyz"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/jyz"/>
+                        android:src="@drawable/jyz" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="加油站"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="加油站"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ly_jjjy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/jjjy"/>
+                        android:src="@drawable/jjjy" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="紧急救援"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="紧急救援"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ly_wzcx"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/wzcx"/>
+                        android:src="@drawable/wzcx" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="违章查询"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="违章查询"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
             </LinearLayout>
             <!-- 服务项目2-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common15dp"
                 android:layout_marginBottom="@dimen/common15dp"
                 android:layout_marginLeft="@dimen/common10dp"
-                android:layout_marginRight="@dimen/common10dp">
+                android:layout_marginRight="@dimen/common10dp"
+                android:layout_marginTop="@dimen/common15dp">
+
                 <LinearLayout
                     android:id="@+id/ly_yxc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/yxc"/>
+                        android:src="@drawable/yxc" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="优选车"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="优选车"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ly_xydk"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/xydk"/>
+                        android:src="@drawable/xydk" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="信用贷款"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="信用贷款"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ly_cyp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/cyp1"/>
+                        android:src="@drawable/cyp1" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="车用品"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="车用品"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ly_mc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/car1"/>
+                        android:src="@drawable/car1" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="卖车"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="卖车"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ly_gj"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/gj"/>
+                        android:src="@drawable/gj" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="估价"
-                        android:layout_marginTop="@dimen/common5dp"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/text_33"/>
+                        android:layout_marginTop="@dimen/common5dp"
+                        android:text="估价"
+                        android:textColor="@color/text_33"
+                        android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -300,6 +330,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/common10dp">
+
                 <ImageView
                     android:id="@+id/image_czcl"
                     android:layout_width="0dp"
@@ -329,20 +360,24 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/xyd" />
+
                 <LinearLayout
                     android:layout_width="@dimen/common1dp"
                     android:layout_height="match_parent"
                     android:background="@color/bg_color" />
+
                 <ImageView
                     android:id="@+id/image_cyp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/cyp" />
+
                 <LinearLayout
                     android:layout_width="@dimen/common1dp"
                     android:layout_height="match_parent"
                     android:background="@color/bg_color" />
+
                 <ImageView
                     android:id="@+id/image_csh"
                     android:layout_width="0dp"
@@ -425,6 +460,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/common40dp"
@@ -436,10 +472,13 @@
                     android:text="超值车辆"
                     android:textSize="@dimen/text_size_15sp" />
             </RelativeLayout>
+
             <View style="@style/gray_line" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/image_pprm"
                     android:layout_width="0dp"
@@ -451,6 +490,7 @@
                     android:layout_width="@dimen/common1dp"
                     android:layout_height="match_parent"
                     android:background="@color/bg_color" />
+
                 <ImageView
                     android:id="@+id/image_rmsx"
                     android:layout_width="0dp"
@@ -458,20 +498,25 @@
                     android:layout_weight="1"
                     android:src="@drawable/rmsxesc" />
             </LinearLayout>
+
             <View style="@style/gray_line" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/image_zxc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/zxc" />
+
                 <LinearLayout
                     android:layout_width="@dimen/common1dp"
                     android:layout_height="match_parent"
                     android:background="@color/bg_color" />
+
                 <ImageView
                     android:id="@+id/image_cmzy"
                     android:layout_width="0dp"
@@ -501,38 +546,45 @@
                     android:text="品质生活"
                     android:textSize="@dimen/text_size_15sp" />
             </RelativeLayout>
+
             <View style="@style/gray_line" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/common15dp">
+
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginRight="@dimen/common5dp"
-                    android:src="@drawable/mc"/>
+                    android:layout_weight="1"
+                    android:src="@drawable/mc" />
+
                 <LinearLayout
                     android:layout_width="@dimen/common1dp"
                     android:layout_height="match_parent"
                     android:background="@color/bg_color" />
+
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="@dimen/common5dp"
                     android:layout_marginRight="@dimen/common5dp"
-                    android:src="@drawable/xxyl"/>
+                    android:layout_weight="1"
+                    android:src="@drawable/xxyl" />
+
                 <LinearLayout
                     android:layout_width="@dimen/common1dp"
                     android:layout_height="match_parent"
                     android:background="@color/bg_color" />
+
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="@dimen/common5dp"
-                    android:src="@drawable/shfwxx"/>
+                    android:layout_weight="1"
+                    android:src="@drawable/shfwxx" />
             </LinearLayout>
 
 
@@ -557,52 +609,60 @@
                     android:text="精品商城"
                     android:textSize="@dimen/text_size_15sp" />
             </RelativeLayout>
+
             <View style="@style/gray_line" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/common10dp">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/iamge_etzy"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
                         android:layout_marginRight="@dimen/common5dp"
-                        android:src="@drawable/etzyxx"/>
+                        android:layout_weight="1"
+                        android:src="@drawable/etzyxx" />
+
                     <ImageView
                         android:id="@+id/iamge_qczd"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/common10dp"
                         android:layout_marginRight="@dimen/common5dp"
-                        android:src="@drawable/qczd"/>
+                        android:layout_marginTop="@dimen/common10dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/qczd" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/iamge_xcjly"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
                         android:layout_marginLeft="@dimen/common5dp"
-                        android:src="@drawable/xcjly"/>
+                        android:layout_weight="1"
+                        android:src="@drawable/xcjly" />
+
                     <ImageView
                         android:id="@+id/iamge_dcld"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
                         android:layout_marginLeft="@dimen/common5dp"
                         android:layout_marginTop="@dimen/common10dp"
-                        android:src="@drawable/dcld"/>
+                        android:layout_weight="1"
+                        android:src="@drawable/dcld" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

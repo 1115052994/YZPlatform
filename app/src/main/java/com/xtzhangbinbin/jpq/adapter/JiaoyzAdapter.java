@@ -31,13 +31,13 @@ public class JiaoyzAdapter extends RecyclerView.Adapter<JiaoyzAdapter.ViewHolder
 
     @Override
     public JiaoyzAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weisj_list, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weisj_listwei, parent, false));
     }
 
     @Override
     public void onBindViewHolder(JiaoyzAdapter.ViewHolder holder, int position) {
         WeisjBean.DataBean.ResultBean resultBean = result.get(position);
-        holder.price.setText(new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) ));
+        holder.price.setText(new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) /10000)+"万");
         holder.weisj_name.setText(resultBean.getCar_name());
         holder.weisj_time.setText(resultBean.getCar_sign_date());
         holder.weisj_cjh.setText(resultBean.getCar_vin());
@@ -55,8 +55,13 @@ public class JiaoyzAdapter extends RecyclerView.Adapter<JiaoyzAdapter.ViewHolder
         holder.weisj_image.setType(ZQImageViewRoundOval.TYPE_ROUND);
         holder.weisj_image.setRoundRadius(5);
         Log.d("aaaaa", "onBindViewHolder: "+resultBean.getCar_price());
-        //通过id得到图片
-        OKhttptils.getPic(context,result.get(position).getCar_1_icon_file_id(),holder.weisj_image);
+        if(result.get(position).getCar_1_icon_file_id()!=null){
+            Log.d("aaaaa", "onBindViewHolder: 图片id"+result.get(position).getCar_1_icon_file_id());
+            //通过id得到图片
+            OKhttptils.getPic(context,result.get(position).getCar_1_icon_file_id(),holder.weisj_image);
+        }else {
+            holder.weisj_image.setImageResource(R.drawable.personal_collect_img);
+        }
     }
 
     @Override

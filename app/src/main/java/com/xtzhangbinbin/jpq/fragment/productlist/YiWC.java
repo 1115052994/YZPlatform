@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
@@ -45,6 +46,8 @@ public class YiWC extends Fragment {
     @BindView(R.id.yiwc_list)
     RecyclerView yiwcList;
     Unbinder unbinder;
+    @BindView(R.id.radio)
+    Button radio;
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsingCardealImage;
     @BindView(R.id.smartRefreshLayout)
@@ -61,7 +64,13 @@ public class YiWC extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_yiwc, container, false);
         unbinder = ButterKnife.bind(this, view);
+        result.clear();
+        //设置线性管理器
+        yiwcList.setLayoutManager(new LinearLayoutManager(getContext()));
+        yiwcAdapter = new YiwcAdapter(getContext(), result);
+        yiwcList.setAdapter(yiwcAdapter);
         getData(1, null);
+
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -74,7 +83,7 @@ public class YiWC extends Fragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 if(pageCount<pageIndex){
-                    getData(pageIndex++, refreshlayout);
+                    getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
             }
@@ -106,11 +115,8 @@ public class YiWC extends Fragment {
                 Gson gson = GsonFactory.create();
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
                 pageCount=weisjBean.getData().getPageCount();
-                result = weisjBean.getData().getResult();
-                //设置线性管理器
-                yiwcList.setLayoutManager(new LinearLayoutManager(getContext()));
-                yiwcAdapter = new YiwcAdapter(getContext(), result);
-                yiwcList.setAdapter(yiwcAdapter);
+                result.addAll(weisjBean.getData().getResult());
+                yiwcAdapter.notifyDataSetChanged();
 
                 //没有信息图片显示
                 if (result.size() <= 0) {

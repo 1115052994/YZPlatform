@@ -105,6 +105,15 @@ public class WeisjBean {
             private int age;
             private String car_audit_state;//审核状态(1.审核不通过/2.审核通过/3.未审核)
             private String car_vin;//车牌号
+            private String car_audit_msg;
+
+            public String getCar_audit_msg() {
+                return car_audit_msg;
+            }
+
+            public void setCar_audit_msg(String car_audit_msg) {
+                this.car_audit_msg = car_audit_msg;
+            }
 
             public String getCar_vin() {
                 return car_vin;

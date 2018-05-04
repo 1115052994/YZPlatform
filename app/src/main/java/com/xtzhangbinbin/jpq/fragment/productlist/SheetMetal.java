@@ -61,8 +61,19 @@ public class SheetMetal extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_sheet_metal, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        result.clear();
         //设置线性管理器
         carBeautyList.setLayoutManager(new LinearLayoutManager(getContext()));
+        carBeautyAdapter = new CarBeautyAdapter(getContext(),result);
+        carBeautyList.setAdapter(carBeautyAdapter);
+        carBeautyAdapter.getCall(new CarBeautyAdapter.onCallBack() {
+            @Override
+            public void getprodid(View view, String prod_id) {
+                android.util.Log.d("aaaaa", "getprodid: "+prod_id);
+                getData(1,null);
+                carBeautyAdapter.notifyDataSetChanged();
+            }
+        });
         getData(1, null);
         radio.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -93,7 +104,7 @@ public class SheetMetal extends Fragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 if(pageCount<pageIndex){
-                    getData(pageIndex++, refreshlayout);
+                    getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
             }
@@ -125,17 +136,8 @@ public class SheetMetal extends Fragment {
                 Gson gson = GsonFactory.create();
                 CarBeautyBean carBeauty = gson.fromJson(response, CarBeautyBean.class);
                 pageCount=carBeauty.getData().getPageCount();
-                result = carBeauty.getData().getResult();
-                carBeautyAdapter = new CarBeautyAdapter(getContext(),result);
-                carBeautyList.setAdapter(carBeautyAdapter);
-                carBeautyAdapter.getCall(new CarBeautyAdapter.onCallBack() {
-                    @Override
-                    public void getprodid(View view, String prod_id) {
-                        android.util.Log.d("aaaaa", "getprodid: "+prod_id);
-                        getData(1,null);
-                        carBeautyAdapter.notifyDataSetChanged();
-                    }
-                });
+                result.addAll(carBeauty.getData().getResult());
+               carBeautyAdapter.notifyDataSetChanged();
 
                 //没有信息图片显示
                 if (result.size() <= 0) {

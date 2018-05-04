@@ -98,7 +98,7 @@ public class EvaluationFragment extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                PostCar(url,pageIndex++,refreshlayout);
+                PostCar(url,++pageIndex,refreshlayout);
             }
         });
     }

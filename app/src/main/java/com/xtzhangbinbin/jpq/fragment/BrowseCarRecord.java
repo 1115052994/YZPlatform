@@ -79,7 +79,7 @@ public class BrowseCarRecord extends Fragment {
                 smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
                     @Override
                     public void onLoadmore(RefreshLayout refreshlayout) {
-                        PostRecord(Config.BROWSECARCOOKIES,pageIndex++,refreshlayout);
+                        PostRecord(Config.BROWSECARCOOKIES,++pageIndex,refreshlayout);
                     }
                 });
 

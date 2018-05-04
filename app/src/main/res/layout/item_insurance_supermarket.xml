@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common50dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cjr_bx"
+            android:layout_marginLeft="@dimen/common15dp"
+            />
+        <TextView
+            android:id="@+id/tvbxcs"
+            android:layout_toRightOf="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保险超市"
+            android:textSize="@dimen/text_size_16sp"
+            android:textColor="@color/text_22"
+            android:layout_marginLeft="@dimen/common10dp"/>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_marginRight="@dimen/common15dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_go"
+            android:layout_marginLeft="@dimen/common15dp"
+
+            />
+    </RelativeLayout>
+    
+
+
+</LinearLayout>

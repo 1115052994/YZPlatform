@@ -2,6 +2,7 @@ package com.xtzhangbinbin.jpq.fragment.productlist;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.AddProductActivity;
 import com.xtzhangbinbin.jpq.adapter.CarBeautyAdapter;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CarBeautyBean;
@@ -62,8 +64,19 @@ public class CarBeauty extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_car_beauty, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        result.clear();
         //设置线性管理器
         carBeautyList.setLayoutManager(new LinearLayoutManager(getContext()));
+        carBeautyAdapter = new CarBeautyAdapter(getContext(),result);
+        carBeautyList.setAdapter(carBeautyAdapter);
+        carBeautyAdapter.getCall(new CarBeautyAdapter.onCallBack() {
+            @Override
+            public void getprodid(View view, String prod_id) {
+                android.util.Log.d("aaaaa", "getprodid: "+prod_id);
+                getData(1,null);
+                carBeautyAdapter.notifyDataSetChanged();
+            }
+        });
         getData(1, null);
         radio.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -82,6 +95,13 @@ public class CarBeauty extends Fragment {
                 return false;
             }
         });
+        radio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddProductActivity.class);
+                startActivity(intent);
+            }
+        });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -94,7 +114,7 @@ public class CarBeauty extends Fragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 if(pageCount<pageIndex){
-                    getData(pageIndex++, refreshlayout);
+                    getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
             }
@@ -126,17 +146,8 @@ public class CarBeauty extends Fragment {
                 Gson gson = GsonFactory.create();
                 CarBeautyBean carBeauty = gson.fromJson(response, CarBeautyBean.class);
                 pageCount=carBeauty.getData().getPageCount();
-                result = carBeauty.getData().getResult();
-                carBeautyAdapter = new CarBeautyAdapter(getContext(),result);
-                carBeautyList.setAdapter(carBeautyAdapter);
-                carBeautyAdapter.getCall(new CarBeautyAdapter.onCallBack() {
-                    @Override
-                    public void getprodid(View view, String prod_id) {
-                        android.util.Log.d("aaaaa", "getprodid: "+prod_id);
-                        getData(1,null);
-                        carBeautyAdapter.notifyDataSetChanged();
-                    }
-                });
+                result.addAll(carBeauty.getData().getResult());
+                carBeautyAdapter.notifyDataSetChanged();
 
                 //没有信息图片显示
                 if (result.size() <= 0) {

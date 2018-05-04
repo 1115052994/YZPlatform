@@ -51,11 +51,14 @@
     <color name="back_f4">#f4f4f4</color>
     <color name="back_d6">#d6d6d6</color>
     <color name="text_ff96">#ff9696</color>
+    <color name="text_ffe3">#ffe3e3</color>
+
     <color name="text_ff29">#ff2929</color>
     <color name="text_ff56">#ff5656</color>
     <color name="text_22">#222222</color>
     <color name="text_a2">#a2a2a2</color>
     <color name="text_33">#333333</color>
+    <color name="text_ffd9">#ffd92b</color>
     <color name="text_38">#383838</color>
     <color name="text_c8">#c8c8c8</color>
     <color name="text_66">#666666</color>
