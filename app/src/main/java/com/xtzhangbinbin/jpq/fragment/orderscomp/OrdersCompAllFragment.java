@@ -51,8 +51,6 @@ import butterknife.Unbinder;
 public class OrdersCompAllFragment extends Fragment {
     @BindView(R.id.orders_comp_default_image)
     ImageView defaultImage;
-//    @BindView(R.id.orders_comp_listview)
-//    ListView ordersListView;
     Unbinder unbinder;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;

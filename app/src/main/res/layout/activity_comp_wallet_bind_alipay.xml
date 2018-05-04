@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CompWalletBindAlipayActivity"
+    android:orientation="vertical"
+    android:background="@color/bg_color">
+
+    <include layout="@layout/header_layout"
+        android:id="@+id/head_title"/>
+    <View
+        android:layout_below="@id/head_title"
+        android:id="@+id/line1"
+        style="@style/gray_line"
+        />
+    <LinearLayout
+        android:layout_below="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="@dimen/common16dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="@dimen/common80dp"
+                android:layout_height="wrap_content"
+                android:text="支付宝帐号"
+                android:textSize="@dimen/text_size_16sp"
+                android:textColor="@color/text_33"
+                />
+            <EditText
+                android:id="@+id/comp_wallet_bind_alipay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common60dp"
+                android:layout_marginLeft="@dimen/common10dp"
+                android:layout_marginRight="@dimen/common16dp"
+                android:background="@null"
+                android:hint="请输入支付宝帐号"
+                android:textColorHint="@color/gray_c8"
+                android:textSize="@dimen/text_size_16sp" />
+        </LinearLayout>
+        <View
+            style="@style/gray_line"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="@dimen/common16dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="@dimen/common80dp"
+                android:layout_height="wrap_content"
+                android:text="验证码"
+                android:textSize="@dimen/text_size_16sp"
+                android:textColor="@color/text_33"
+                />
+            <EditText
+                android:id="@+id/comp_wallet_bind_token_code"
+                android:layout_width="@dimen/common100dp"
+                android:layout_height="@dimen/common60dp"
+                android:layout_marginRight="@dimen/common15dp"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/common10dp"
+                android:hint="请输入验证码"
+                android:maxLength="6"
+                android:inputType="number"
+                android:textColorHint="@color/gray_c8"
+                android:textSize="@dimen/text_size_16sp" />
+            <View
+                android:layout_width="@dimen/common1dp"
+                android:layout_height="@dimen/common15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/common8dp"
+                android:layout_marginRight="@dimen/common8dp"
+                android:background="@color/bg_color" />
+
+            <Button
+                android:id="@+id/comp_wallet_bind_checkcode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/common15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:outlineProvider="none"
+                android:text="@string/usercenter_hqyzm"
+                android:textColor="@color/black_55"
+                android:textSize="@dimen/text_size_13sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/comp_wallet_bind_submit"
+        style="@style/button_bottom"
+        android:layout_alignParentBottom="true"
+        android:text="确认绑定" />
+</RelativeLayout>

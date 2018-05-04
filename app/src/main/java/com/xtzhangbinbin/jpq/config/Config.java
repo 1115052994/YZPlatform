@@ -8,15 +8,15 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.222/";
+    public static final String BASE_URL = "http://192.168.1.18/";
 
-    public static final String URL = "http://192.168.1.222/";
+    public static final String URL = "http://192.168.1.18/";
     //微信APPID
     public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
-    public static final String M = "http://192.168.1.222/";
+    public static final String M = "http://192.168.1.18/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -279,6 +279,22 @@ public class Config {
     public static final String ORDERS_TOKEN_OPERATION = URL + S +  "updateOrderConsumption";
     //查询企业用户订单信息
     public static  final String ORDERS_GET_COMP_LIST = URL + S + "orderListComp";
+    //钱包消费明细查询
+    public static  final String COMP_WALLET_OPTION_DETAIL = URL + S + "consumptionDetail";
+    //钱包余额查询
+    public static  final String COMP_WALLET_BALANCE= URL + S + "walletBalance";
+    //钱包综合查询
+    public static  final String COMP_WALLET_INTEGRATED_QUERY= URL + S + "integratedQuery";
+    //钱包查询帐户信息
+    public static  final String COMP_WALLET_QUERY_ACCOUNT= URL + S + "balanceOrTransactionAccount";
+    //绑定帐户发送验证码
+    public static  final String COMP_WALLET_SEND_CHECKCODE= URL + S + "sendNoteCodeNoPhone";
+    //绑定微信帐号
+    public static  final String COMP_WALLET_BIND_WECHAT= URL + S + "bindingWechat";
+    //绑定微信帐号
+    public static  final String COMP_WALLET_BIND_ALIPAY= URL + S + "bindingAlipay";
+    //绑定银行卡号
+    public static  final String COMP_WALLET_BIND_BANK= URL + S + "bindingBankcard";
     /**
      * 李岩使用接口end
      */

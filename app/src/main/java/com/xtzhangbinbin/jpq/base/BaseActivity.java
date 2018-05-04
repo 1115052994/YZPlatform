@@ -51,6 +51,7 @@ import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.PhotoUtils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +72,7 @@ public class BaseActivity extends AppCompatActivity{
     private ImageView leftImage;
     private TextView rightText;
 
+    protected MyProgressDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -82,6 +84,7 @@ public class BaseActivity extends AppCompatActivity{
 
     protected void onPause() {
         super.onPause();
+        closeDialog();
     }
 
     @Override
@@ -572,6 +575,11 @@ public class BaseActivity extends AppCompatActivity{
         return bitmap;
     }
 
+    protected void closeDialog(){
+        if(null != dialog && dialog.isShowing()){
+            dialog.dismiss();
+        }
+    }
 }
 
 

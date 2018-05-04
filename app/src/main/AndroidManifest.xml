@@ -154,6 +154,35 @@
             android:name=".activity.AddCarProduct"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.CompWalletActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity android:name=".activity.CompWalletQueryActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity android:name=".activity.CompWalletPresentationActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity android:name=".activity.CompWalletBindAccountActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity android:name=".activity.CompWalletBindWechatActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity android:name=".activity.CompWalletBindAlipayActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity android:name=".activity.CompWalletBindBankActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
         <!-- liyan start -->
         <activity
             android:name=".activity.OrdersSubmitActivity"
@@ -172,13 +201,6 @@
             android:name=".activity.OrdersCompListActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-
         </activity>
         <activity
             android:name=".activity.OrdersUseActivity"

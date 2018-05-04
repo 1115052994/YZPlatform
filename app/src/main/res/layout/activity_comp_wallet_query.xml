@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CompWalletActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/header_layout"
+        android:id="@+id/head_title"/>
+
+    <RelativeLayout
+        android:id="@+id/comp_wallet_query_head_layout"
+        android:layout_below="@id/head_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_f2"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_margin="15dp"
+            >
+            <TextView
+                android:id="@+id/comp_wallet_query_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_15sp"
+                android:textColor="@color/black"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/comp_wallet_query_zc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提现:0.00"
+                    android:textSize="@dimen/text_size_13sp"
+                    android:textColor="@color/text_99"
+                    />
+                <TextView
+                    android:id="@+id/comp_wallet_query_sr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收入:0.00"
+                    android:textSize="@dimen/text_size_13sp"
+                    android:textColor="@color/text_99"
+                    android:layout_marginLeft="10dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/comp_wallet_query_date"
+            android:layout_width="@dimen/common25dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/qb_rl"
+            android:adjustViewBounds="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/common15dp"
+            />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/no_collect_server_image"
+        android:layout_below="@id/comp_wallet_query_head_layout"
+        android:layout_width="@dimen/common180dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:src="@drawable/no_information"
+        />
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_below="@id/comp_wallet_query_head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</RelativeLayout>
