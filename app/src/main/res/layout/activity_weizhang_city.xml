@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xtzhangbinbin.jpq.activity.WeizhangCity"
+    android:background="@color/white">
+    <include layout="@layout/header_layout"
+        android:id="@+id/head_title"/>
+    <View
+        android:id="@+id/line"
+        android:layout_below="@id/head_title"
+        style="@style/gray_line"/>
+    <!-- 城市列表 -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_city"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line"
+        android:layout_marginTop="@dimen/common10dp"
+        />
+    <RelativeLayout
+        android:id="@+id/letter"
+        android:layout_width="@dimen/common20dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line"
+        android:layout_marginBottom="@dimen/common20dp"
+        android:layout_marginRight="@dimen/common1dp"
+        android:layout_marginTop="@dimen/common20dp"
+        android:layout_alignParentRight="true"
+        android:background="@color/back_d6">
+
+        <com.xtzhangbinbin.jpq.view.LetterSideBar
+            android:id="@+id/letter_side_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="@dimen/common10dp"/>
+    </RelativeLayout>
+</RelativeLayout>

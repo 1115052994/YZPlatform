@@ -119,7 +119,7 @@ public class AlipayUtil {
 		 */
 		OKhttptils.post(context, Config.ORDERS_ALIPAY_SIGNINFO, map, new OKhttptils.HttpCallBack() {
 			@Override
-			public String success(String response) {
+			public void success(String response) {
 				dialog.dismiss();
 				try {
 					JSONObject object = new JSONObject(response);
@@ -149,7 +149,7 @@ public class AlipayUtil {
 				} finally{
 					close();
 				}
-                return response;
+
             }
 
 			@Override

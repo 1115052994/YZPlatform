@@ -135,7 +135,7 @@ public class CarPhotosActivity extends BaseActivity {
                 map.put("car_id", car_id);
                 OKhttptils.post(currtActivity, Config.CAR_DETAIL_IS_SALE, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Log.e(TAG, "success: " + response );
                         /**
                          * {"data":{"result":""},"message":"","status":"1"}
@@ -165,7 +165,7 @@ public class CarPhotosActivity extends BaseActivity {
                                         map.put("car_id", car_id);
                                         OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_SALE, map, new OKhttptils.HttpCallBack() {
                                             @Override
-                                            public String success(String response) {
+                                            public void success(String response) {
                                                 Log.i(TAG, "success添加订阅: " + response);
                                                 /**
                                                  * {"data":{"result":"1"},"message":"","status":"1"}
@@ -180,7 +180,7 @@ public class CarPhotosActivity extends BaseActivity {
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
-                                                return response;
+
                                             }
 
                                             @Override
@@ -203,7 +203,7 @@ public class CarPhotosActivity extends BaseActivity {
                             e.printStackTrace();
                         }
 
-                        return response;
+
                     }
 
                     @Override
@@ -295,7 +295,7 @@ public class CarPhotosActivity extends BaseActivity {
         map.put("car_id", car_id);
         OKhttptils.post(currtActivity, Config.CAR_DETAIL, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i(TAG, "success: " + response);
 
                 Gson gson = GsonFactory.create();
@@ -308,7 +308,7 @@ public class CarPhotosActivity extends BaseActivity {
                 message.obj = carImgInfoListBeans;
                 handler.sendMessage(message);
 
-                return response;
+
             }
 
             @Override

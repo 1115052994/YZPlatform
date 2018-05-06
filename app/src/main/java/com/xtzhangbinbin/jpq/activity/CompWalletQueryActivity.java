@@ -144,7 +144,7 @@ public class CompWalletQueryActivity extends BaseActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, Config.COMP_WALLET_INTEGRATED_QUERY, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.w("test", response);
                     Gson gson = GsonFactory.create();
                     CompWalletQuery wallet = gson.fromJson(response, CompWalletQuery.class);
@@ -173,7 +173,7 @@ public class CompWalletQueryActivity extends BaseActivity {
                         no_collect_server_image.setVisibility(View.VISIBLE);
                     }
                     closeDialog();
-                    return response;
+
                 }
 
                 @Override

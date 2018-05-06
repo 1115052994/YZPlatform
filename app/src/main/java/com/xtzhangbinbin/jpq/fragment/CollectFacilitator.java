@@ -111,7 +111,7 @@ public class CollectFacilitator extends Fragment {
 //            map.put("coll_content_id","3");
             OKhttptils.post((Activity) context, Config.CHECKCOMP, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.i("aaaaa", "查询服务商收藏: " + response);
                     Gson gson = GsonFactory.create();
                     QueryCollectServer querystar = gson.fromJson(response, QueryCollectServer.class);
@@ -135,7 +135,7 @@ public class CollectFacilitator extends Fragment {
                         }
                     }
 
-                    return response;
+
                 }
 
                 @Override

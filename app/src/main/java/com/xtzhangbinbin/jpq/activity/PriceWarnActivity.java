@@ -202,7 +202,7 @@ public class PriceWarnActivity extends BaseActivity {
         map.put("pageIndex", String.valueOf(pageIndex));
         OKhttptils.post(currtAcxtivity, Config.PERS_PRICE_WARN, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d(TAG, "success: " + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -290,7 +290,7 @@ public class PriceWarnActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -304,14 +304,14 @@ public class PriceWarnActivity extends BaseActivity {
         map.put("dp_id",dp_id);
         OKhttptils.post(PriceWarnActivity.this, Config.DELETESUBSCRIPTION, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 timearr.clear();
                 dataarr.clear();
                 recyclerList.clear();
                 getData(1,null);
                 recyclerAdapter.notifyDataSetChanged();
-                return response;
+
             }
 
             @Override

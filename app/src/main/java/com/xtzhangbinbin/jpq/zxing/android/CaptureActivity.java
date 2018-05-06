@@ -112,7 +112,7 @@ public final class CaptureActivity extends BaseActivity implements
                 map.put("order_token_code", token.getText().toString());
                 OKhttptils.post(CaptureActivity.this, Config.ORDERS_TOKEN_OPERATION, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         try {
                             JSONObject obj = new JSONObject(response);
                             if(null != obj && "1".equals(obj.getString("status"))){
@@ -121,7 +121,7 @@ public final class CaptureActivity extends BaseActivity implements
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        return response;
+
                     }
 
                     @Override
@@ -248,7 +248,7 @@ public final class CaptureActivity extends BaseActivity implements
 
             OKhttptils.post(this, Config.ORDERS_QRCODE_OPERATION, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.w("test", response);
                     try {
                         JSONObject obj = new JSONObject(response);
@@ -261,7 +261,7 @@ public final class CaptureActivity extends BaseActivity implements
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
 
                 @Override

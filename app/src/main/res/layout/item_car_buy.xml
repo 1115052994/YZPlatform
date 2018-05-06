@@ -16,7 +16,8 @@
             android:layout_marginTop="@dimen/common5dp"
             android:layout_marginLeft="@dimen/common5dp"
             android:layout_marginBottom="@dimen/common5dp"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/b_img2"/>
         <ImageView
             android:id="@+id/image_rz"
             android:layout_width="wrap_content"
@@ -38,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/text_33"
-            android:lines="2"/>
+            android:lines="2"
+            android:text="宝马 五系三箱2014款2.0T自动 经典款"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,14 +50,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_10sp"
-                android:textColor="@color/text_ff3c"/>
+                android:textColor="@color/text_ff3c"
+                android:text="￥25.8万"/>
             <TextView
                 android:id="@+id/tv_year_miles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_10sp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/common5dp"/>
+                android:layout_marginRight="@dimen/common5dp"
+                android:text="2015年/8万公里"/>
         </RelativeLayout>
         <LinearLayout
             android:id="@+id/ly_tags"

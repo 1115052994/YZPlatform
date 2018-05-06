@@ -131,7 +131,7 @@ public class ProductServiceActivity extends BaseActivity {
                     map.put("suppostWord", suppostWord);
                     OKhttptils.post(ProductServiceActivity.this, Config.ADD_COMP_SERVICE_TYPE, map, new OKhttptils.HttpCallBack() {
                         @Override
-                        public String success(String response) {
+                        public void success(String response) {
                             keywords.clear();
                             Log.e(TAG, "success: " + response);
                             Gson gson = GsonFactory.create();
@@ -161,7 +161,7 @@ public class ProductServiceActivity extends BaseActivity {
                             } else {
                                 ToastUtil.show(ProductServiceActivity.this, "未查询到相关信息");
                             }
-                            return response;
+
                         }
 
                         @Override
@@ -232,7 +232,7 @@ public class ProductServiceActivity extends BaseActivity {
         map.put("suppostWord", "");
         OKhttptils.post(this, Config.ADD_COMP_SERVICE_TYPE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.e(TAG, "success: " + response);
                 Gson gson = GsonFactory.create();
                 CompAddServiceType addServiceType = gson.fromJson(response, CompAddServiceType.class);
@@ -241,7 +241,7 @@ public class ProductServiceActivity extends BaseActivity {
                 message.what = 001;
                 message.obj = beanList;
                 handler.sendMessage(message);
-                return response;
+
             }
 
             @Override

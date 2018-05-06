@@ -67,9 +67,9 @@ public class ChangeOldPhoneActivity extends BaseActivity {
         map.put("token_code", code);
         OKhttptils.post(ChangeOldPhoneActivity.this, Config.CHECK_OLD, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 JumpUtil.newInstance().jumpRight(ChangeOldPhoneActivity.this, ChangeNewPhoneActivity.class);
-                return response;
+
             }
 
             @Override
@@ -93,7 +93,7 @@ public class ChangeOldPhoneActivity extends BaseActivity {
             m.put("phone", phone);
             OKhttptils.post(ChangeOldPhoneActivity.this, Config.CHECK_PHONE, m, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
 
                     countDownTimer = new MyCountDownTimer(mGetCode, 60000, 1000);
                     countDownTimer.start();
@@ -102,9 +102,9 @@ public class ChangeOldPhoneActivity extends BaseActivity {
                     map.put("phone", phone);
                     OKhttptils.post(ChangeOldPhoneActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
                         @Override
-                        public String success(String response) {
+                        public void success(String response) {
 
-                            return response;
+
                         }
 
                         @Override
@@ -113,7 +113,7 @@ public class ChangeOldPhoneActivity extends BaseActivity {
                         }
                     });
 
-                    return response;
+
                 }
 
                 @Override

@@ -278,7 +278,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 map.put("auth_comp_city", city_id);
                 OKhttptils.post(getActivity(), Config.GET_CAR_SERVICE, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Log.e(TAG, "onResponse上拉加载更多: " + response);
                         Gson gson = GsonFactory.create();
                         CarServiceList list = gson.fromJson(response, CarServiceList.class);
@@ -296,7 +296,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                                 refreshlayout.finishLoadmore(2000);
                             }
                         }
-                        return response;
+
                     }
 
                     @Override
@@ -315,7 +315,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(getActivity(), Config.GET_SERVICE_IMG, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d(TAG, "onResponse: " + response);
                 Gson gson = GsonFactory.create();
                 CarServiceImage serviceImage = gson.fromJson(response, CarServiceImage.class);
@@ -330,7 +330,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 message1.what = 002;
                 message1.obj = itemListBeans;
                 handler.sendMessage(message1);
-                return response;
+
             }
 
             @Override
@@ -389,7 +389,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
         OKhttptils.post(getActivity(), Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String data = jsonObject.getString("data");
@@ -405,7 +405,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -665,7 +665,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         map.put("auth_comp_city", city_id);
         OKhttptils.post(getActivity(), Config.GET_CAR_SERVICE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d(TAG, "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 CarServiceList serviceList = gson.fromJson(response, CarServiceList.class);
@@ -679,7 +679,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 setAdapter();
 
 
-                return response;
+
             }
 
             @Override
@@ -710,7 +710,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         map.put("auth_comp_city", city_id);
         OKhttptils.post(getActivity(), Config.GET_CAR_SERVICE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.e(TAG, "onResponse上拉加载更多: " + response);
                 Gson gson = GsonFactory.create();
                 CarServiceList list = gson.fromJson(response, CarServiceList.class);
@@ -725,7 +725,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                         adapter.notifyDataSetChanged();
                     }
                 }
-                return response;
+
             }
 
             @Override
@@ -743,7 +743,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         map.put("cityName", s);
         OKhttptils.post(getActivity(), Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String data = jsonObject.getString("data");
@@ -758,7 +758,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

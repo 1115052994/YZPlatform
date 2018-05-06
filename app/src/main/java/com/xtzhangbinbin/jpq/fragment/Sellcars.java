@@ -87,7 +87,7 @@ public class Sellcars extends Fragment {
         if (NetUtil.isNetAvailable(getContext())) {
             OKhttptils.post(getActivity(), Config.SELLCOUNT, null, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.i("aaaaa", "查询卖车申请次数: " + response);
                     try {
                         JSONObject jsonObject = new JSONObject(response);
@@ -96,7 +96,7 @@ public class Sellcars extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
 
                 @Override
@@ -113,7 +113,7 @@ public class Sellcars extends Fragment {
             map.put("sell_phone", phone);
             OKhttptils.post(getActivity(), Config.SAVESELLER, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     try {
                         Log.i("aaaaa", "查询二手车收藏: " + response);
                         JSONObject jsonObject = new JSONObject(response);
@@ -129,7 +129,7 @@ public class Sellcars extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
 
                 @Override

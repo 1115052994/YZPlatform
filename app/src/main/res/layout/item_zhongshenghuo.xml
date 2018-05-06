@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="@dimen/common130dp"
+    android:background="@color/white"
+    android:paddingTop="@dimen/common5dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="@dimen/common10dp"
+            android:paddingTop="@dimen/common15dp"
+            android:paddingBottom="@dimen/common15dp"
+            android:layout_weight="3">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/zsh_img"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:paddingRight="@dimen/common20dp"
+            android:paddingLeft="@dimen/common15dp"
+            android:paddingTop="@dimen/common10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_16sp"
+                android:layout_marginTop="@dimen/common3dp"
+                android:text="麻辣烫123"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textColor="@color/text_33"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/common10dp">
+
+                <ImageView
+                    android:id="@+id/star1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/pj_hstar" />
+                <ImageView
+                    android:id="@+id/star2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pj_hstar"
+                    android:layout_marginLeft="@dimen/common5dp"
+                    />
+                <ImageView
+                    android:id="@+id/star3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pj_hstar"
+                    android:layout_marginLeft="@dimen/common5dp"
+                    />
+                <ImageView
+                    android:id="@+id/star4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pj_hstar"
+                    android:layout_marginLeft="@dimen/common5dp"
+                    />
+                <ImageView
+                    android:id="@+id/star5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pj_hstar"
+                    android:layout_marginLeft="@dimen/common5dp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="人均￥36元"
+                android:layout_marginTop="@dimen/common10dp"
+                android:textSize="@dimen/text_size_13sp"
+                android:textColor="@color/text_33"/>
+            <TextView
+                android:id="@+id/tv_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common7dp"
+                android:text="北京市海淀区111"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/text_size_13sp"
+                android:textColor="@color/text_33"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/gray_line"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

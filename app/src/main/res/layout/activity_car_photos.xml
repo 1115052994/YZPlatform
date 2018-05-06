@@ -42,6 +42,7 @@
         android:gravity="start"
         android:paddingLeft="@dimen/common20dp"
         android:paddingRight="@dimen/common20dp"
+        android:text="雪佛兰 科鲁兹三厢2015款 1.5 手动 经典版SE"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_18sp" />
 
@@ -56,6 +57,7 @@
             android:id="@+id/mPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="9.78"
             android:textColor="#ff4a64"
             android:textSize="@dimen/text_size_30sp" />
 

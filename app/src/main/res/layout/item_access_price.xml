@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/common45dp"
+        android:text="5.53万"
         android:textColor="@color/text_33"
         android:layout_centerVertical="true"
         android:textSize="@dimen/text_size_15sp"/>
@@ -17,6 +18,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_15sp"
         android:textColor="@color/text_33"
+        android:text="北京地区"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/common45dp"/>

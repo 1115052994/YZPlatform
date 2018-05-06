@@ -1,11 +1,13 @@
 package com.xtzhangbinbin.jpq.activity;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -14,6 +16,7 @@ import com.xtzhangbinbin.jpq.adapter.CommonRecyclerAdapter;
 import com.xtzhangbinbin.jpq.adapter.ViewHolder;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.entity.AccessChexiBean;
 import com.xtzhangbinbin.jpq.entity.AccessModeBean;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
@@ -97,7 +100,7 @@ public class CarAccessModeSearch extends BaseActivity {
         map.put("series",chexiId);
         OKhttptils.post(this, Config.GETJUHEMODEL, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("series",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -117,7 +120,6 @@ public class CarAccessModeSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override

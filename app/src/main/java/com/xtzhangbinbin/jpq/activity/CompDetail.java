@@ -170,9 +170,8 @@ public class CompDetail extends BaseActivity {
                 map.put("comp_id", comp_id);
                 OKhttptils.post(CompDetail.this, Config.BROWSECOMP, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Log.i("aaaaa", "添加企业浏览记录: " + response);
-                        return response;
                     }
 
                     @Override
@@ -512,7 +511,7 @@ public class CompDetail extends BaseActivity {
         map.put("comp_id", comp_id);
         OKhttptils.post(this, Config.GETCOMPDETAIL, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("status").equals("1")) {
@@ -559,6 +558,11 @@ public class CompDetail extends BaseActivity {
                             staffList.add(staffListBean);
                         }
                         staffsView.setmTabVisibleNums(1.5f);
+                        if (staffList.size()<=1){
+                            staffsView.setmTabVisibleNums(1);
+                        }else {
+                            staffsView.setmTabVisibleNums(1.5f);
+                        }
                         staffsView.setAdapter(staffAdapter);
                         //tabs服务项目
                         serverList.clear();
@@ -576,7 +580,7 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -604,7 +608,7 @@ public class CompDetail extends BaseActivity {
         map.put("serverId", serverId);
         OKhttptils.post(this, Config.GETPRODUCTITEMBYSERVERTYPE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -663,7 +667,6 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override
@@ -682,7 +685,7 @@ public class CompDetail extends BaseActivity {
         map.put("comp_id", comp_id);
         OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("appraise===", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -706,7 +709,7 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -796,7 +799,7 @@ public class CompDetail extends BaseActivity {
         map.put("coll_content_id", comp_id);
         OKhttptils.post(this, Config.WHETHERCOLLCOMP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
@@ -817,7 +820,7 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -836,7 +839,7 @@ public class CompDetail extends BaseActivity {
         map.put("coll_content_id", comp_id);
         OKhttptils.post(this, Config.ACCRETIONCOLLCOMP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
@@ -853,7 +856,6 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override

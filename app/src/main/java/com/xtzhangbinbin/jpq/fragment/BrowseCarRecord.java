@@ -105,7 +105,7 @@ public class BrowseCarRecord extends Fragment {
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.i("aaaaa", "查询浏览记录: " + response);
                     Gson gson = GsonFactory.create();
                     QueryCarRecord queryRecord = gson.fromJson(response, QueryCarRecord.class);
@@ -130,7 +130,7 @@ public class BrowseCarRecord extends Fragment {
                             browsingAdapter.notifyDataSetChanged();
                         }
                     }
-                    return response;
+
                 }
 
                 @Override

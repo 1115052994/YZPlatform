@@ -108,7 +108,7 @@ public class CompWalletActivity extends BaseActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, Config.COMP_WALLET_BALANCE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     try {
                         JSONObject obj = new JSONObject(response);
                         if(null != obj){
@@ -117,7 +117,7 @@ public class CompWalletActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
 
                 @Override
@@ -141,7 +141,7 @@ public class CompWalletActivity extends BaseActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, Config.COMP_WALLET_OPTION_DETAIL, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Gson gson = GsonFactory.create();
                     CompWalletDetail wallet = gson.fromJson(response, CompWalletDetail.class);
                     List<CompWalletDetail.DataBean.ResultBeanX> result2 = wallet.getData().getResult();
@@ -161,7 +161,7 @@ public class CompWalletActivity extends BaseActivity {
                         cashListAdapter.notifyDataSetChanged();
                     }
 
-                    return response;
+
                 }
 
                 @Override

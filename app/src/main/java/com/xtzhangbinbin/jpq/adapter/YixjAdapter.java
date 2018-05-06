@@ -80,13 +80,13 @@ public class YixjAdapter extends RecyclerView.Adapter<YixjAdapter.ViewHolder> {
                             map.put("state","ysj");
                             OKhttptils.post((Activity) context, Config.CHANGESTATE, map, new OKhttptils.HttpCallBack() {
                                 @Override
-                                public String success(String response) {
+                                public void success(String response) {
                                     com.tencent.mm.opensdk.utils.Log.d("aaaaa", "onResponse获取数据: " + response);
                                     ordinaryDialog.dismiss();
                                     if(onCallBack!=null){
                                         onCallBack.getprodid(position);
                                     }
-                                    return response;
+
                                 }
                                 @Override
                                 public void fail(String response) {

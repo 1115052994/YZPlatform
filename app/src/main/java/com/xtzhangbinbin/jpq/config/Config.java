@@ -63,6 +63,7 @@ public class Config {
 
     //获取用户信息
     public static final String GET_USERINFO = BASE_URL + S + "getUserInfor";
+    public static final String GET_USERTOKEN = BASE_URL + S + "getUserInfor";
 
     //通过城市名获取城市id
     public static final String GET_CITY_ID = URL + S + "get_cityIdByCityName";
@@ -409,4 +410,39 @@ public class Config {
     //更换手机号 - 新手机号
     public static final String CHECK_NEW = URL + S + "modificationpPhone";
 
+    // 订阅查询车
+    public static final String SELECTCARBYITEM = URL + S +"selectCarByItem";
+
+    // 众生活banner
+    public static final String SELECTZSHCENTER = URL + S +"selectZshCenter";
+
+    // 众生活
+    public static final String SELECTTYPE = URL + S +"selectType";
+
+    // 查询美食项目
+    public static final String GETUSUALLY = URL + S +"getUsually";
+
+    // 查询众生活列表
+    public static final String GETPAGEINFO = URL + S +"getPageInfo";
+
+    // 众生活商家xiangqing
+    public static final String GETBUSDETAILS = URL + S +"getBusDetails";
+
+    // 违章查询City
+    public static final String GETCITY = URL + S +"getCity";
+
+    // 违章查询
+    public static final String GETVIOLMSG = URL + S +"getViolMsg";
+
+    // 违章查询图片识别
+    public static final String GETDRIVERINFO = URL + S +"getDriverInfo";
+
+    // 违章是否可以拍照
+    public static final String GETPARA = URL + S +"getPara";
+
+    // 启动页面
+    public static final String SELECTBOOTPAGE = URL + S +"selectBootPage";
+
+    // 启动轮播
+    public static final String SELECTCAROUSEL = URL + S +"selectCarousel";
 }

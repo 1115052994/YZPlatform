@@ -129,9 +129,9 @@ public class RegisterActivity extends BaseActivity {
                 map2.put("client_type", "android");
                 OKhttptils.post(RegisterActivity.this, Config.VERIFY_CODE, map2, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         register2(map2);
-                        return response;
+
                     }
 
                     @Override
@@ -160,7 +160,7 @@ public class RegisterActivity extends BaseActivity {
     private void register2(Map<String, String> m) {
         OKhttptils.post(RegisterActivity.this, Config.REG, m, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if(null != jsonObject){
@@ -183,7 +183,7 @@ public class RegisterActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -217,7 +217,7 @@ public class RegisterActivity extends BaseActivity {
             map.put("phone", phone);
             OKhttptils.post(RegisterActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     //此处由服务器端校验验证码，所以不再返回验证码信息，无任何返回。
                     //如果再加返回，找小梁，请他吃糖
 //                    try {
@@ -232,7 +232,7 @@ public class RegisterActivity extends BaseActivity {
 //                    } catch (JSONException e) {
 //                        e.printStackTrace();
 //                    }
-                    return response;
+
                 }
 
                 @Override
@@ -258,7 +258,7 @@ public class RegisterActivity extends BaseActivity {
             map.put("phone", phone);
             OKhttptils.post(RegisterActivity.this, Config.LOGIN, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     try {
 
                         JSONObject object = new JSONObject(response);
@@ -271,7 +271,7 @@ public class RegisterActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
 
                 @Override

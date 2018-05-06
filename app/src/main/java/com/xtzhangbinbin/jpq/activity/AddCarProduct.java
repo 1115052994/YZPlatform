@@ -168,7 +168,7 @@ public class AddCarProduct extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETCARPARAMDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Gson gson = new Gson();
                 CarParams carParams = gson.fromJson(response, CarParams.class);
                 CarParams.DataBean.ResultBean resultBean = carParams.getData().getResult();
@@ -237,7 +237,7 @@ public class AddCarProduct extends BaseActivity {
                             break;
                     }
                 }
-                return response;
+
             }
 
             @Override
@@ -255,13 +255,13 @@ public class AddCarProduct extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(AddCarProduct.this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 Enterprise enterprise = gson.fromJson(response, Enterprise.class);
                 Enterprise.DataBean.ResultBean result = enterprise.getData().getResult();
                 car_place_city = result.getAuth_comp_city();          //市
-                return response;
+
             }
 
             @Override
@@ -401,12 +401,11 @@ public class AddCarProduct extends BaseActivity {
                 map.put("imgBase64", base64);
                 OKhttptils.post(this, Config.PARSEVIN, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Gson gson = GsonFactory.create();
                         ChassisNumber chassisNumber = gson.fromJson(response, ChassisNumber.class);
                         String vin = chassisNumber.getData().getResult().getVin();
                         mCarNumb.setText(vin);
-                        return vin;
                     }
 
                     @Override
@@ -586,7 +585,7 @@ public class AddCarProduct extends BaseActivity {
             OKhttptils.post(AddCarProduct.this, Config.ACCRETIONCAR, map, new OKhttptils.HttpCallBack() {
                 @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.d(TAG, "success: " + response);
                     /**
                      * {"data":{"result":"17492"},"message":"","status":"1"}
@@ -608,7 +607,7 @@ public class AddCarProduct extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
 
                 @Override

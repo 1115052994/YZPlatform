@@ -93,7 +93,7 @@ public class PersonalSettingActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(PersonalSettingActivity.this, Config.GET_PERS_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d(TAG, "success个人设置: " + response);
                 Gson gson = GsonFactory.create();
                 PersonalSetting setting = gson.fromJson(response, PersonalSetting.class);
@@ -113,7 +113,6 @@ public class PersonalSettingActivity extends BaseActivity {
                 }
 
                 nick.setText(resultBean.getPers_nickname());
-                return sSex;
             }
 
             @Override
@@ -171,14 +170,14 @@ public class PersonalSettingActivity extends BaseActivity {
         map.put("pers_sex", sType);
         OKhttptils.post(PersonalSettingActivity.this, Config.UPDATE_PERS_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     ToastUtil.show(PersonalSettingActivity.this, "保存成功");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

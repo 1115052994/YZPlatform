@@ -104,10 +104,10 @@ public class CarPhoto extends Fragment {
         map.put("desc", desc);
         OKhttptils.post((Activity) getContext(), Config.ACCRETIONPICTURECAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
 
-                return response;
+
             }
 
             @Override

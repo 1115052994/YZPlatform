@@ -68,7 +68,7 @@ public class CompWalletBindAccountActivity extends BaseActivity {
             Map<String ,String> map = new HashMap<>();
             OKhttptils.post(this, Config.COMP_WALLET_QUERY_ACCOUNT, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Gson gson = GsonFactory.create();
                     CompWalletBindInfo bindInfo = gson.fromJson(response, CompWalletBindInfo.class);
                     if(null != bindInfo.getData().getResult().getData()){
@@ -85,7 +85,7 @@ public class CompWalletBindAccountActivity extends BaseActivity {
                             comp_wallet_bind_bank_msg.setVisibility(View.VISIBLE);
                         }
                     }
-                    return response;
+
                 }
 
                 @Override

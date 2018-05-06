@@ -103,7 +103,7 @@ public class CollectCardeal extends Fragment {
 //            map.put("coll_content_id","3");
             OKhttptils.post((Activity) context, Config.CHECKCAR, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.i("aaaaa", "查询二手车收藏: " + response);
                     Gson gson = GsonFactory.create();
                     QueryCarList querystar = gson.fromJson(response, QueryCarList.class);
@@ -126,7 +126,7 @@ public class CollectCardeal extends Fragment {
                             carListAdapter.notifyDataSetChanged();
                         }
                     }
-                    return response;
+
                 }
 
                 @Override

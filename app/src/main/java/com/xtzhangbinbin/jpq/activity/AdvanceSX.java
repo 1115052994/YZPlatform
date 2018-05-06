@@ -17,6 +17,7 @@ import com.xtzhangbinbin.jpq.adapter.AdvanceSXCarMoreAdapter;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CarParams;
+import com.xtzhangbinbin.jpq.entity.SubscribeTag;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.view.ExpandableGridView;
@@ -115,6 +116,7 @@ public class AdvanceSX extends BaseActivity {
 
     private String type = "";
 
+    private SubscribeTag.DataBean.ResultBean requireBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +124,7 @@ public class AdvanceSX extends BaseActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         type = "";
+        requireBean = null;
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
@@ -129,6 +132,29 @@ public class AdvanceSX extends BaseActivity {
                 if (type != null && !"".equals(type)) {
                     lySubscribe.setVisibility(View.VISIBLE);
                     submit.setText("订阅");
+                }
+                if (bundle.get("bean")!=null){
+                    requireBean = (SubscribeTag.DataBean.ResultBean) bundle.get("bean");
+                    lySubscribe.setVisibility(View.VISIBLE);
+                    submit.setText("订阅");
+                    if (!"".equals(requireBean.getCity_name())) {
+                        tvCity.setText(requireBean.getCity_name());
+                        cityName = requireBean.getCity_name();
+                    }
+                    if (!"".equals(requireBean.getBrand_name())) {
+                        if (!"".equals(requireBean.getModel_name())) {
+                            brandName = requireBean.getBrand_name();
+                            brandId = requireBean.getCar_brand();
+                            car = requireBean.getModel_name();
+                            carId = requireBean.getCar_model();
+                        }else {
+                            tvBrand.setText(requireBean.getBrand_name());
+                            brandName = requireBean.getBrand_name();
+                            brandId = requireBean.getCar_brand();
+                            car = "";
+                            carId = "";
+                        }
+                    }
                 }
             }
         }
@@ -390,7 +416,7 @@ public class AdvanceSX extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETCARPARAMDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("response===", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -427,6 +453,12 @@ public class AdvanceSX extends BaseActivity {
                                         map.put("paramId", childBean.getParamId());
                                         map.put("paramName", childBean.getParamName());
                                         cxParamsList.add(map);
+                                        if (requireBean!=null){
+                                            if (childBean.getParamId().equals(requireBean.getCar_type())){
+                                                typeAdapter.setPosition(cxParamsList.size()-1);
+                                                //Log.i("typeAdapter","position="+(cxParamsList.size()-1));
+                                            }
+                                        }
                                     }
                                     typeAdapter.notifyDataSetChanged();
                                     break;
@@ -438,6 +470,11 @@ public class AdvanceSX extends BaseActivity {
                                         map.put("paramName", childBean.getParamName());
                                         bsxParamsList.add(map);
                                         carBsxList.add(childBean.getParamName());
+                                        if (requireBean!=null){
+                                            if (childBean.getParamId().equals(requireBean.getCar_gearbox())){
+                                                bsxAdapter.setPosition(bsxParamsList.size()-1);
+                                            }
+                                        }
                                     }
                                     bsxAdapter.notifyDataSetChanged();
                                     break;
@@ -449,6 +486,11 @@ public class AdvanceSX extends BaseActivity {
                                         map.put("paramName", childBean.getParamName());
                                         carPfbzList.add(childBean.getParamName());
                                         pfbzParamsList.add(map);
+                                        if (requireBean!=null){
+                                            if (childBean.getParamId().equals(requireBean.getCar_letout())){
+                                                pfbzAdapter.setPosition(pfbzParamsList.size()-1);
+                                            }
+                                        }
                                     }
                                     pfbzAdapter.notifyDataSetChanged();
                                     break;
@@ -460,6 +502,11 @@ public class AdvanceSX extends BaseActivity {
                                         map.put("paramName", childBean.getParamName());
                                         rylxParamsList.add(map);
                                         carRllxList.add(childBean.getParamName());
+                                        if (requireBean!=null){
+                                            if (childBean.getParamId().equals(requireBean.getCar_fuel_type())){
+                                                rllxAdapter.setPosition(rylxParamsList.size()-1);
+                                            }
+                                        }
                                     }
                                     rllxAdapter.notifyDataSetChanged();
                                     break;
@@ -471,6 +518,11 @@ public class AdvanceSX extends BaseActivity {
                                         map.put("paramName", childBean.getParamName());
                                         zwsParamsList.add(map);
                                         carzwsList.add(childBean.getParamName());
+                                        if (requireBean!=null){
+                                            if (childBean.getParamId().equals(requireBean.getCar_seating())){
+                                                zwsAdapter.setPosition(zwsParamsList.size()-1);
+                                            }
+                                        }
                                     }
                                     zwsAdapter.notifyDataSetChanged();
                                     break;
@@ -481,7 +533,6 @@ public class AdvanceSX extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override

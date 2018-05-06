@@ -85,7 +85,7 @@ public class OKhttptils {
     }
 
     public interface HttpCallBack{
-        String success(String response);
+        void success(String response);
         void fail(String response);
     }
 

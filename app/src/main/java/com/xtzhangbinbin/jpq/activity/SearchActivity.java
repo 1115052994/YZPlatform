@@ -118,7 +118,7 @@ public class SearchActivity extends AppCompatActivity {
                 if(""!=s.toString()) {
                     if ("car".equals(type)) {
                         getSeachCar(editSearch.getText().toString().trim());
-                    } else if ("comp".equals(type)) {
+                    } else {
                         getSearchComp(editSearch.getText().toString().trim());
                     }
                 }
@@ -145,7 +145,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initData() {
         /* girdview绑定adapter */
-        //gvAdapter = new ArrayAdapter<String>(CityActivity.this, R.layout.item_city, list);
         hotAdapter = new GrideViewAdapter(this, hotList);
         hisGvAapter = new GrideViewAdapter(this, hisList);
         hot.setAdapter(hotAdapter);
@@ -163,7 +162,7 @@ public class SearchActivity extends AppCompatActivity {
         map.put("hotword_type", type);
         OKhttptils.post(SearchActivity.this, Config.GETSEARCHHOTWORD, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -184,7 +183,6 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override
@@ -197,25 +195,29 @@ public class SearchActivity extends AppCompatActivity {
     public void getHis() {
         hisList.clear();
         if ("car".equals(type)) {
-            Set<String> value = new HashSet<>();
-            value.add("大众");
-            value.add("宝马");
-            Prefs.with(getApplicationContext()).putStringSet("historyCars", value);
+//            Set<String> value = new HashSet<>();
+//            value.add("大众");
+//            value.add("宝马");
+//            Prefs.with(getApplicationContext()).putStringSet("historyCars", value);
             Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyCars", null);
-            for (String s : set) {
-                if (hisList.size()<8)
-                    hisList.add(s);
+            if (set!=null) {
+                for (String s : set) {
+                    if (hisList.size() < 8)
+                        hisList.add(s);
+                }
             }
             hisGvAapter.notifyDataSetChanged();
         } else if ("comp".equals(type)) {
-            Set<String> value = new HashSet<>();
-            value.add("山东");
-            value.add("北京");
-            Prefs.with(getApplicationContext()).putStringSet("historyComp", value);
+//            Set<String> value = new HashSet<>();
+//            value.add("山东");
+//            value.add("北京");
+//            Prefs.with(getApplicationContext()).putStringSet("historyComp", value);
             Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyComp", null);
-            for (String s : set) {
-                if (hisList.size()<8)
-                hisList.add(s);
+            if (set!=null) {
+                for (String s : set) {
+                    if (hisList.size() < 8)
+                        hisList.add(s);
+                }
             }
             hisGvAapter.notifyDataSetChanged();
         }
@@ -226,7 +228,8 @@ public class SearchActivity extends AppCompatActivity {
         map.put("comp_name", s);
         OKhttptils.post(this, Config.GETSEARCHCOMP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
+                Log.i("getSearchComp",response);
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -249,7 +252,6 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override
@@ -264,7 +266,7 @@ public class SearchActivity extends AppCompatActivity {
         map.put("car_name", s);
         OKhttptils.post(this, Config.GETSEARCHCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -286,7 +288,6 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override
@@ -357,10 +358,16 @@ public class SearchActivity extends AppCompatActivity {
                 window.dismiss();
                 //跳转
                 if ("car".equals(type)) {
+                    Set<String> value = new HashSet<>();
+                    value.add(searchList.get(position));
+                    Prefs.with(getApplicationContext()).putStringSet("historyCars", value);
                     Bundle bundle = new Bundle();
                     bundle.putString("String", searchListId.get(position));
                     JumpUtil.newInstance().jumpLeft(SearchActivity.this, CarDetailsActivity.class, bundle);
                 } else if ("comp".equals(type)) {
+                    Set<String> value = new HashSet<>();
+                    value.add(searchList.get(position));
+                    Prefs.with(getApplicationContext()).putStringSet("historyComp", value);
                     Bundle bundle = new Bundle();
                     bundle.putString("comp_id", searchListId.get(position));
                     JumpUtil.newInstance().jumpLeft(SearchActivity.this, CompDetail.class, bundle);

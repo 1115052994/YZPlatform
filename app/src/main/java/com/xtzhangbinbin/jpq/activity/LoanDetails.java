@@ -108,7 +108,7 @@ public class LoanDetails extends BaseActivity implements AMapLocationListener{
 
         OKhttptils.post(this, Config.QUERYALLTHIRDAPP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 com.tencent.mm.opensdk.utils.Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 LoanDetailsBean enterprise = gson.fromJson(response, LoanDetailsBean.class);
@@ -131,7 +131,7 @@ public class LoanDetails extends BaseActivity implements AMapLocationListener{
                         carCreditAdapter.notifyDataSetChanged();
                     }
                 }
-                return response;
+
             }
 
             @Override
@@ -224,7 +224,7 @@ public class LoanDetails extends BaseActivity implements AMapLocationListener{
                     OKhttptils.post(LoanDetails.this, Config.GETCITYIDBYCITYNAME, map, new
                             OKhttptils.HttpCallBack() {
                                 @Override
-                                public String success(String response) {
+                                public void success(String response) {
 
                                     try {
                                         JSONObject jsonObject = new JSONObject(response);
@@ -237,7 +237,7 @@ public class LoanDetails extends BaseActivity implements AMapLocationListener{
                                         e.printStackTrace();
                                     }
 
-                                    return response;
+
                                 }
 
                                 @Override

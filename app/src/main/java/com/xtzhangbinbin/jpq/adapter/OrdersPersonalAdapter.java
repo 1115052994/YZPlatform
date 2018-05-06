@@ -121,7 +121,7 @@ public class OrdersPersonalAdapter extends BaseAdapter {
                                     map.put("order_id", orders.getOrder_id());
                                     OKhttptils.post((Activity) context, Config.ORDERS_CANCEL, map, new OKhttptils.HttpCallBack() {
                                         @Override
-                                        public String success(String response) {
+                                        public void success(String response) {
                                             try {
                                                 JSONObject obj = new JSONObject(response);
                                                 if("1".equals(obj.getString("status"))){
@@ -132,7 +132,7 @@ public class OrdersPersonalAdapter extends BaseAdapter {
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
-                                            return response;
+
                                         }
 
                                         @Override

@@ -95,9 +95,9 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
         map.put("prod_id", prod_id);
         OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 com.tencent.mm.opensdk.utils.Log.d("aaaaa", "onResponse获取数据: " + response);
-                return response;
+
             }
             @Override
             public void fail(String response) {

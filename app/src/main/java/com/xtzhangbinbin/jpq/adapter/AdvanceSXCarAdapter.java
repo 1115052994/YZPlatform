@@ -79,6 +79,12 @@ public class AdvanceSXCarAdapter extends BaseAdapter {
                     appraiseInterface.onClick(viewGroup, 0);
                 }
             }
+            // 选中第几个
+            if (this.index!=0&&this.index == position){
+                if (appraiseInterface != null) {
+                    appraiseInterface.onClick(viewGroup, this.index);
+                }
+            }
         }
         return convertView;
     }
@@ -102,5 +108,10 @@ public class AdvanceSXCarAdapter extends BaseAdapter {
     AppraiseInterface appraiseInterface;
     public void setOnItemClickListener(AppraiseInterface appraiseInterface){
         this.appraiseInterface = appraiseInterface;
+    }
+
+    private int index = 0;
+    public void setPosition(int position){
+        this.index = position;
     }
 }

@@ -114,7 +114,7 @@ public class YiXJ extends Fragment {
         map.put("pageIndex",String.valueOf(pageIndex));
         OKhttptils.post((Activity) getContext(), Config.COMPCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
@@ -143,7 +143,7 @@ public class YiXJ extends Fragment {
                     }
                 }
 
-                return response;
+
             }
 
             @Override

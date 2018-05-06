@@ -24,6 +24,7 @@ import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.CarTagLayout;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -121,14 +122,27 @@ public class MySubscribe extends BaseActivity {
                                                 if (startName.equals(name.split("_")[1])) {
                                                     //修改Name对应的Id
                                                     Log.i("carTagClick", name + "---" + f.get(resultBean));
-                                                    f.set(resultBean, "");
-                                                    cartagLayout.removeView(view);
-                                                    Log.i("carTagClick", "remove");
-                                                    // 修改订阅信息
-                                                    updateSubscribe(resultBean);
-                                                    if (cartagLayout.getChildCount() == 0) {
-                                                        // 删除dingyue
-                                                        delSubsrcibe(resultBean);
+                                                    if (cartagLayout.getChildCount() == 1) {
+                                                        final OrdinaryDialog dialog = OrdinaryDialog.newInstance(MySubscribe.this);
+                                                        dialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+                                                            @Override
+                                                            public void onYesClick() {
+                                                                // 删除dingyue
+                                                                delSubsrcibe(resultBean,null);
+                                                                dialog.dismiss();
+                                                            }
+                                                        }).setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
+                                                            @Override
+                                                            public void onNoClick() {
+                                                                dialog.dismiss();
+                                                            }
+                                                        });
+                                                        dialog.setMessage1("删除订阅").setMessage2("确定删除此条订阅吗？").show();
+                                                    }else{
+                                                        f.set(resultBean, "");
+                                                        cartagLayout.removeView(view);
+                                                        // 修改订阅信息
+                                                        updateSubscribe(resultBean);
                                                     }
                                                     return;
                                                 }
@@ -146,6 +160,7 @@ public class MySubscribe extends BaseActivity {
                         }
                     }
                 });
+                // 添加订阅标签
                 for (Field field:fields){
                     field.setAccessible(true);
                     try {
@@ -209,7 +224,7 @@ public class MySubscribe extends BaseActivity {
                         dialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
                             @Override
                             public void onYesClick() {
-                                delSubsrcibe(recyclerList.get(position));
+                                delSubsrcibe(recyclerList.get(position),null);
                                 dialog.dismiss();
                             }
                         }).setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
@@ -221,6 +236,28 @@ public class MySubscribe extends BaseActivity {
                         dialog.setMessage1("删除订阅").setMessage2("确定删除此条订阅吗？").show();
                     }
                 });
+                // 编辑
+                holder.getView(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("bean",resultBean);
+                        bundle.putString("String","subscribe");
+                        JumpUtil.newInstance().jumpLeft(MySubscribe.this,AdvanceSX.class,bundle);
+                        AdvanceSX.setOnDataBackListener(new AdvanceSX.DataBackListener() {
+                            @Override
+                            public void backData(Map<String, String> map) {
+                                if (map == null){
+                                    return;
+                                }
+                                //先删除原来记录
+                                delSubsrcibe(resultBean,map);
+                                //更新(时间先后问题)
+                                //getCityId(map);
+                            }
+                        });
+                    }
+                });
             }
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -229,11 +266,13 @@ public class MySubscribe extends BaseActivity {
 
     @OnClick(R.id.subscribe)
     public void onViewClicked() {
-        if (size>=3) {
-            // 最多添加三条
+        if (size>=5) {
+            // 最多添加5个
             return;
         }
-        JumpUtil.newInstance().jumpLeft(this,AdvanceSX.class,"subscribe");
+        Bundle bundle = new Bundle();
+        bundle.putString("String","subscribe");
+        JumpUtil.newInstance().jumpLeft(this,AdvanceSX.class,bundle);
         AdvanceSX.setOnDataBackListener(new AdvanceSX.DataBackListener() {
             @Override
             public void backData(Map<String, String> map) {
@@ -260,7 +299,7 @@ public class MySubscribe extends BaseActivity {
             map.put("cityName", subscribe.get("city"));
             OKhttptils.post(this, Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     try {
                         JSONObject object = new JSONObject(response);
                         JSONObject data = object.getJSONObject("data");
@@ -271,7 +310,6 @@ public class MySubscribe extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
                 }
                 @Override
                 public void fail(String response) {
@@ -307,7 +345,7 @@ public class MySubscribe extends BaseActivity {
         //Log.i("addSubscribe",map.toString());
         OKhttptils.post(this, Config.SUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 JSONObject object = null;
                 try {
                     object = new JSONObject(response);
@@ -321,7 +359,6 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
             @Override
             public void fail(String response) {
@@ -332,10 +369,10 @@ public class MySubscribe extends BaseActivity {
 
     // 查询订阅
     private void querySubscribe(){
-        Map<String,String> map = new HashMap<>();
+        Map<String,String> map = new HashMap<>();//SELECTUSERSUBSCRIPTIONFILTRATE selectCarByItem
         OKhttptils.post(this, Config.SELECTUSERSUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("Subscribe",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -351,7 +388,6 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override
@@ -362,26 +398,30 @@ public class MySubscribe extends BaseActivity {
     }
 
     // 删除订阅
-    private void delSubsrcibe(final SubscribeTag.DataBean.ResultBean bean){
-        Map<String,String> map = new HashMap<>();
+    private void delSubsrcibe(final SubscribeTag.DataBean.ResultBean bean, final Map<String, String> map1){
+        recyclerList.remove(bean);
+        recyclerAdapter.notifyDataSetChanged();
+
+        final Map<String,String> map = new HashMap<>();
         map.put("car_subs_id",bean.getCar_subs_id());
         OKhttptils.post(this, Config.DELETESUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
                     if ("1".equals(status)){
-                        ToastUtil.show(MySubscribe.this,"删除订阅成功");
-                        // 刷新订阅列表
-                        // getData();
-                        recyclerList.remove(bean);
-                        recyclerAdapter.notifyDataSetChanged();
+                        if (map1 == null) {
+                            ToastUtil.show(MySubscribe.this, "删除订阅成功");
+                        }else {
+                            // 刷新订阅列表
+                            Log.i("delsubscribe",map1.toString());
+                            getCityId(map1);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override
@@ -412,7 +452,7 @@ public class MySubscribe extends BaseActivity {
         Log.i("updateSubscribe---",map.toString());
         OKhttptils.post(MySubscribe.this, Config.UPDATESUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("updateSubscribe",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -424,7 +464,6 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override
@@ -474,11 +513,11 @@ public class MySubscribe extends BaseActivity {
         map.put("car_emissions_start",bean.getCar_emissions_start());
         map.put("car_emissions_end",bean.getCar_emissions_end());
         map.put("histroy_word","");
-        //Log.i("getCarList=======",map.toString());
+        //Log.i("getCarList=======",map.toString());selectCarByItem SEARCHCAR
         //car_brand  car_emissions_start  car_emissions_end  histroy_word
-        OKhttptils.post(MySubscribe.this, Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
+        OKhttptils.post(MySubscribe.this, Config.SELECTCARBYITEM, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("Subscribe",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -501,7 +540,6 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override

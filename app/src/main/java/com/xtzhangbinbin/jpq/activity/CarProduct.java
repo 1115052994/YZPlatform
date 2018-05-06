@@ -116,7 +116,7 @@ public class CarProduct extends BaseActivity {
         map.put("priceSort", "");
         OKhttptils.post(this, Config.SELECTJDSP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Gson gson = new Gson();
                 CheyongpinBean bean = gson.fromJson(response, CheyongpinBean.class);
                 List<CheyongpinBean.DataBean.ResultBean> resultBeanList = bean.getData().getResult();
@@ -125,7 +125,7 @@ public class CarProduct extends BaseActivity {
                     list.add(resultBean);
                 }
                 adapter.notifyDataSetChanged();
-                return response;
+
             }
 
             @Override
@@ -144,7 +144,7 @@ public class CarProduct extends BaseActivity {
         map.put("priceSort", "");
         OKhttptils.post(this, Config.SELECTJDSP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Gson gson = new Gson();
                 CheyongpinBean bean = gson.fromJson(response, CheyongpinBean.class);
                 List<CheyongpinBean.DataBean.ResultBean> resultBeanList = bean.getData().getResult();
@@ -153,7 +153,7 @@ public class CarProduct extends BaseActivity {
                 }
                 adapter.notifyDataSetChanged();
                 refreshlayout.finishLoadmore();
-                return response;
+
             }
 
             @Override

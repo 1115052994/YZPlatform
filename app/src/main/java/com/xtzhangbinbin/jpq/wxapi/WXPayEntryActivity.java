@@ -114,7 +114,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 //        Log.w("test", Prefs.with(getApplicationContext()).read("wechat_order_id"));
         OKhttptils.post(this, Config.ORDERS_GET_BYCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Gson gson = new Gson();
                 OrdersView ordersView = gson.fromJson(response, OrdersView.class);
                 //判断订单状态是否是支付成功
@@ -146,7 +146,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                         WXPayEntryActivity.this.finish();
                     }
                 }
-                return response;
+
             }
 
             @Override

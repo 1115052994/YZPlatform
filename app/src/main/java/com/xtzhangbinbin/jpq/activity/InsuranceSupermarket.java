@@ -73,7 +73,7 @@ public class InsuranceSupermarket extends BaseActivity {
         OKhttptils.post(InsuranceSupermarket.this, Config.QUERYALLINSURANCE, map, new
                 OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Log.d("aaaaa", "onResponse获取数据: " + response);
                         Gson gson = GsonFactory.create();
                         SupermarketBean enterprise = gson.fromJson(response, SupermarketBean.class);
@@ -103,7 +103,7 @@ public class InsuranceSupermarket extends BaseActivity {
                             }
                         }
 
-                        return response;
+
                     }
 
                     @Override

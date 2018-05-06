@@ -131,7 +131,7 @@ public class CarChoose extends BaseActivity {
 //                             QUERYCARSTYLE
         OKhttptils.post(this, Config.QUERYCARSTYLE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                         Gson gson = new Gson();
                         QueryYears queryYears = gson.fromJson(response, QueryYears.class);
                         List<QueryYears.DataBean.ResultBean> result = queryYears.getData().getResult();
@@ -157,7 +157,6 @@ public class CarChoose extends BaseActivity {
                             recyclerList.add(carMap1);
                         }
                         recyclerAdapter.notifyDataSetChanged();
-                return letter;
             }
 
             @Override

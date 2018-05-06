@@ -49,12 +49,22 @@ public class AdvanceSXCarMoreAdapter extends BaseAdapter{
         tv.setText(list.get(position));
 
         final ViewGroup viewGroup = convertView.findViewById(R.id.bg);
-        if (position == 0){
-            //viewGroup.setSelected(true);
-            if (appraiseInterface!=null){
-                appraiseInterface.onClick(viewGroup,0);
+        if (parent.getChildCount() == position) {
+            //里面就是正常的position
+            if (position == 0){
+                //viewGroup.setSelected(true);
+                if (appraiseInterface!=null){
+                    appraiseInterface.onClick(viewGroup,0);
+                }
+            }
+            // 选中第几个
+            if (this.index!=0&&this.index == position){
+                if (appraiseInterface != null) {
+                    appraiseInterface.onClick(viewGroup, this.index);
+                }
             }
         }
+
         if (appraiseInterface!=null){
             viewGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,5 +90,10 @@ public class AdvanceSXCarMoreAdapter extends BaseAdapter{
     AppraiseInterface appraiseInterface;
     public void setOnItemClickListener(AppraiseInterface appraiseInterface){
         this.appraiseInterface = appraiseInterface;
+    }
+
+    private int index = 0;
+    public void setPosition(int position){
+        this.index = position;
     }
 }

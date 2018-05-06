@@ -72,7 +72,7 @@ public class CarDetailsKeyActivity extends BaseActivity {
         map.put("car_id", car_id);
         OKhttptils.post(currtActivity, Config.CAR_DETAIL_KEY, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i(TAG, "success: " + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -134,7 +134,7 @@ public class CarDetailsKeyActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
