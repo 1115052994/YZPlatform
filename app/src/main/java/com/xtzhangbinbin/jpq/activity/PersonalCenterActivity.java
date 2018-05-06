@@ -60,6 +60,7 @@ public class PersonalCenterActivity extends BaseActivity {
                     mPhone.setText(DataConcealUtil.toConceal(phone));
                     if (head_file_id == "") {
 
+
                     } else {
                         OKhttptils.getPic(PersonalCenterActivity.this, head_file_id, mIcon);
                     }
