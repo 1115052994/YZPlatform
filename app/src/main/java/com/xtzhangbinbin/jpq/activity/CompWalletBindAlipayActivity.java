@@ -105,10 +105,11 @@ public class CompWalletBindAlipayActivity extends BaseActivity {
         map.put("token_code", comp_wallet_bind_token_code.getText().toString());
         OKhttptils.post(CompWalletBindAlipayActivity.this, Config.COMP_WALLET_BIND_ALIPAY, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 closeDialog();
                 ToastUtil.show(CompWalletBindAlipayActivity.this, "支付宝帐户绑定成功！");
                 CompWalletBindAlipayActivity.this.finish();
+                return response;
             }
 
             @Override
@@ -131,7 +132,8 @@ public class CompWalletBindAlipayActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(CompWalletBindAlipayActivity.this, Config.COMP_WALLET_SEND_CHECKCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
+                return response;
             }
 
             @Override

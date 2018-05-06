@@ -103,7 +103,7 @@ public class Maintenance extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                if(pageCount<pageIndex){
+                if(pageCount>pageIndex){
                     getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
@@ -131,7 +131,7 @@ public class Maintenance extends Fragment {
         map.put("pageIndex",String.valueOf(pageIndex));
         OKhttptils.post((Activity) getContext(), Config.COMPPRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d("aaaaa", "onResponse456: " + response);
                 Gson gson = GsonFactory.create();
                 CarBeautyBean carBeauty = gson.fromJson(response, CarBeautyBean.class);
@@ -160,6 +160,7 @@ public class Maintenance extends Fragment {
                     }
                 }
 
+                return response;
             }
 
             @Override

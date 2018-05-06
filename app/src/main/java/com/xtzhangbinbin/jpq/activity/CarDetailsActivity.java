@@ -227,7 +227,7 @@ public class CarDetailsActivity extends BaseActivity {
                 map.put("car_id", car_id);
                 OKhttptils.post(currtActivity, Config.CAR_DETAIL_IS_SALE, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public void success(String response) {
+                    public String success(String response) {
                         Log.e(TAG, "success: " + response);
                         /**
                          * {"data":{"result":""},"message":"","status":"1"}
@@ -257,7 +257,7 @@ public class CarDetailsActivity extends BaseActivity {
                                         map.put("car_id", car_id);
                                         OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_SALE, map, new OKhttptils.HttpCallBack() {
                                             @Override
-                                            public void success(String response) {
+                                            public String success(String response) {
                                                 Log.i(TAG, "success添加订阅: " + response);
                                                 /**
                                                  * {"data":{"result":"1"},"message":"","status":"1"}
@@ -272,6 +272,7 @@ public class CarDetailsActivity extends BaseActivity {
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
+                                                return response;
                                             }
 
                                             @Override
@@ -294,6 +295,7 @@ public class CarDetailsActivity extends BaseActivity {
                             e.printStackTrace();
                         }
 
+                        return response;
                     }
 
                     @Override
@@ -317,7 +319,7 @@ public class CarDetailsActivity extends BaseActivity {
         map.put("coll_content_id", car_id);
         OKhttptils.post(currtActivity, Config.CAR_DETAIL_COLLECT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d(TAG, "success是否收藏: " + response);
                 /**
                  * {"data":{"result":""},"message":"","status":"1"}
@@ -337,9 +339,10 @@ public class CarDetailsActivity extends BaseActivity {
                                 map.put("coll_content_id", car_id);
                                 OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_COLLECT, map, new OKhttptils.HttpCallBack() {
                                     @Override
-                                    public void success(String response) {
+                                    public String success(String response) {
                                         Log.d(TAG, "success添加收藏: " + response);
                                         collIcon.setImageResource(R.drawable.qy_yelowstar1);
+                                        return response;
                                     }
 
                                     @Override
@@ -363,6 +366,7 @@ public class CarDetailsActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
+                return response;
             }
 
             @Override
@@ -445,7 +449,7 @@ public class CarDetailsActivity extends BaseActivity {
         map.put("", "");
         OKhttptils.post(currtActivity, Config.CAR_DETAIL_AD, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i(TAG, "success广告: " + response);
                 /**
                  * {
@@ -465,6 +469,7 @@ public class CarDetailsActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -537,7 +542,7 @@ public class CarDetailsActivity extends BaseActivity {
         map.put("car_id", car_id);
         OKhttptils.post(currtActivity, Config.CAR_DETAIL, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i(TAG, "success: " + response);
 
                 Gson gson = GsonFactory.create();
@@ -560,6 +565,7 @@ public class CarDetailsActivity extends BaseActivity {
                 message2.what = 003;
                 message2.obj = carImgInfoListBeans;
                 handler.sendMessage(message2);
+                return response;
             }
 
             @Override
@@ -678,13 +684,14 @@ public class CarDetailsActivity extends BaseActivity {
                         map.put("online_date",order_time + " 00:00:00");
                         OKhttptils.post(currtActivity, Config.CAR_DETAIL_ONLINE_ORDER, map, new OKhttptils.HttpCallBack() {
                             @Override
-                            public void success(String response) {
+                            public String success(String response) {
                                 Log.i(TAG, "success在线预约: " + response);
                                 /**
                                  * {"data":{},"message":"","status":"1"}
                                  */
                                 dialog.dismiss();
                                 ToastUtil.show(currtActivity,"预约成功");
+                                return response;
                             }
 
                             @Override

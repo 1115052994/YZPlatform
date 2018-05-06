@@ -57,7 +57,7 @@ public class CompanyCenterActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Gson gson = GsonFactory.create();
                 Enterprise enterprise = gson.fromJson(response, Enterprise.class);
                 Enterprise.DataBean dataBean = enterprise.getData();
@@ -80,6 +80,7 @@ public class CompanyCenterActivity extends BaseActivity {
                     Prefs.with(getApplicationContext()).write("门头照", mentou);
                     OKhttptils.getPic(CompanyCenterActivity.this, mentou, mIcon);
                 }
+                return response;
             }
 
             @Override

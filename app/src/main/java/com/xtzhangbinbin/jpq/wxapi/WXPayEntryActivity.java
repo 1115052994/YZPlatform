@@ -4,19 +4,13 @@ package com.xtzhangbinbin.jpq.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.activity.OrdersPaySuccessActivity;
 import com.xtzhangbinbin.jpq.activity.OrdersPersonalActivity;
-import com.xtzhangbinbin.jpq.activity.OrdersSubmitActivity;
-import com.xtzhangbinbin.jpq.alipay.AlipayUtil;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.Orders;
 import com.xtzhangbinbin.jpq.entity.OrdersView;
-import com.xtzhangbinbin.jpq.entity.ShowProductDetaile;
 import com.xtzhangbinbin.jpq.enums.OrderPersState;
-import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
@@ -120,7 +114,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 //        Log.w("test", Prefs.with(getApplicationContext()).read("wechat_order_id"));
         OKhttptils.post(this, Config.ORDERS_GET_BYCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Gson gson = new Gson();
                 OrdersView ordersView = gson.fromJson(response, OrdersView.class);
                 //判断订单状态是否是支付成功
@@ -152,6 +146,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                         WXPayEntryActivity.this.finish();
                     }
                 }
+                return response;
             }
 
             @Override

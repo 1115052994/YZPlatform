@@ -6,11 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/common12dp"
-
+    android:background="@drawable/bg_comp_wallet"
     android:layout_marginLeft="@dimen/common15dp"
     android:layout_marginRight="@dimen/common15dp">
-    <ImageView
+    <com.xtzhangbinbin.jpq.utils.RoundedImageView
         android:id="@+id/image"
+        android:layout_marginLeft="@dimen/common2dp"
+        android:layout_marginTop="@dimen/common2dp"
+        android:layout_marginRight="@dimen/common2dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common130dp"
         android:src="@drawable/asdxyd"

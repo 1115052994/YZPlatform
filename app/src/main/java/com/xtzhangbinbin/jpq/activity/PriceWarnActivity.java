@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -22,12 +21,7 @@ import com.xtzhangbinbin.jpq.adapter.PriceWarnAdapter;
 import com.xtzhangbinbin.jpq.adapter.ViewHolder;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.Enterprise;
-import com.xtzhangbinbin.jpq.entity.QueryYears;
-import com.xtzhangbinbin.jpq.fragment.BrowseCarRecord;
-import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
-import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
@@ -103,7 +97,12 @@ public class PriceWarnActivity extends BaseActivity {
         mRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                getData(++pageIndex,refreshlayout);
+                if(pageIndex < pageTotal){
+                    getData(++pageIndex,refreshlayout);
+                }else {
+                    refreshlayout.finishLoadmore();
+                }
+
             }
         });
     }
@@ -203,7 +202,7 @@ public class PriceWarnActivity extends BaseActivity {
         map.put("pageIndex", String.valueOf(pageIndex));
         OKhttptils.post(currtAcxtivity, Config.PERS_PRICE_WARN, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d(TAG, "success: " + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -291,6 +290,7 @@ public class PriceWarnActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -304,13 +304,14 @@ public class PriceWarnActivity extends BaseActivity {
         map.put("dp_id",dp_id);
         OKhttptils.post(PriceWarnActivity.this, Config.DELETESUBSCRIPTION, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 timearr.clear();
                 dataarr.clear();
                 recyclerList.clear();
                 getData(1,null);
                 recyclerAdapter.notifyDataSetChanged();
+                return response;
             }
 
             @Override

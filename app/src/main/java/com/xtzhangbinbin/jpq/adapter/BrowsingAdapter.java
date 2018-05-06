@@ -82,7 +82,7 @@ public class BrowsingAdapter extends BaseAdapter {
             @Override
             public void onClick(final View view) {
                 Toast.makeText(context, position+"删除", Toast.LENGTH_SHORT).show();
-                final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("删除记录").setMessage2("删除后不可恢复，确定清除？").showDialog();
+                final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("温馨提示").setMessage2("  删除后不可恢复，确定清除？").showDialog();
                 ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                     @Override
                     public void onNoClick() {
@@ -98,9 +98,10 @@ public class BrowsingAdapter extends BaseAdapter {
                                 map.put("log_id",result.get(position).getLog_id());  //别忘记改
                                 OKhttptils.post((Activity) context, Config.BROWSEDLOG, map, new OKhttptils.HttpCallBack() {
                                     @Override
-                                    public void success(String response) {
+                                    public String success(String response) {
                                         Log.i("aaaa", "删除: " +result.get(position).getLog_id()+response);
-                                        callBrowsing.getCallBrowsing(view,"");
+                                        callBrowsing.getCallBrowsing(view,"",position);
+                                        return response;
                                     }
                                     @Override
                                     public void fail(String response) {
@@ -132,7 +133,7 @@ public class BrowsingAdapter extends BaseAdapter {
                 map.put("file_id",file_id);
                 OKhttptils.post((Activity) context, Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public void success(String response) {
+                    public String success(String response) {
                         Log.w("aaa", "onResponse获取base64: " + response );
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -154,6 +155,7 @@ public class BrowsingAdapter extends BaseAdapter {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        return response;
                     }
                     @Override
                     public void fail(String response) {

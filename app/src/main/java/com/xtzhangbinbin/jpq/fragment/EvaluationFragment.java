@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +46,7 @@ public class EvaluationFragment extends Fragment {
     @BindView(R.id.evaluation_list_image)
     ImageView evaluationListImage;
     @BindView(R.id.evaluation_list_listview)
-    ListView evaluationListListview;
+    RecyclerView evaluationListListview;
     Unbinder unbinder;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
@@ -55,20 +57,22 @@ public class EvaluationFragment extends Fragment {
     private List<QueryEvaluate.DataBean.ResultBean> result = new ArrayList<>();
     private int pageCount;//总页数
     private int pageIndex = 1;//第几页
-    private String id;
 
-    public EvaluationFragment(Context context, String index,String id) {
+    public EvaluationFragment(Context context, String index) {
         this.context = context;
         this.index = index;
-        this.id=id;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_evaluation_list, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        result.clear();
+        //设置线性管理器
+        evaluationListListview.setLayoutManager(new LinearLayoutManager(getContext()));
         evaluationAdapter = new EvaluationAdapter(context, result);
         evaluationListListview.setAdapter(evaluationAdapter);
+        Log.d("aaaaa", "onCreateView: ");
         switch (index) {
             case "1":
                 loading(Config.ALLCOMPEVALUATE);
@@ -83,6 +87,7 @@ public class EvaluationFragment extends Fragment {
                 loading(Config.POORREVIEWCOMPEVALUATE);
                 break;
         }
+
         return inflate;
     }
     public void loading(final String url){
@@ -98,27 +103,34 @@ public class EvaluationFragment extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                PostCar(url,++pageIndex,refreshlayout);
+                if(pageIndex < pageCount){
+                    PostCar(url,++pageIndex,refreshlayout);
+                }else {
+                    refreshlayout.finishLoadmore();
+                }
+
             }
         });
     }
 
     public void PostCar(String url, final int pageIndex, final RefreshLayout refreshlayout) {
         map.clear();
-        map.put("comp_id", id);
         map.put("pageIndex",String.valueOf(pageIndex));
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.i("aaaaa", "查询评价: " + response);
                     Gson gson = GsonFactory.create();
                     QueryEvaluate queryEvaluate = gson.fromJson(response, QueryEvaluate.class);
                     pageCount=queryEvaluate.getData().getPageCount();
-                    List<QueryEvaluate.DataBean.ResultBean> result2 = queryEvaluate.getData().getResult();
-                    result.addAll(result2);
+                    result.addAll(queryEvaluate.getData().getResult());
+                    if(refreshlayout==null){
+                        evaluationAdapter.notifyDataSetChanged();
+                    }
+
                     //没有信息图片显示
-                    if (EvaluationFragment.this.result.size() <= 0) {
+                    if (result.size() <= 0) {
                         evaluationListImage.setVisibility(View.VISIBLE);
                     }else {
                         if(refreshlayout!=null){
@@ -136,6 +148,7 @@ public class EvaluationFragment extends Fragment {
                             evaluationAdapter.notifyDataSetChanged();
                         }
                     }
+                    return response;
                 }
 
                 @Override

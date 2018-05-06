@@ -43,13 +43,10 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -300,7 +297,7 @@ public class CarBrandSearch extends BaseActivity {
         map.put("brandName", str);
         OKhttptils.post(this, Config.GETCARBRANDDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("response", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -323,6 +320,7 @@ public class CarBrandSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -533,7 +531,7 @@ public class CarBrandSearch extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETHOTCARBRANDDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("getHotBrand", response);
                 JSONObject object = null;
                 try {
@@ -559,6 +557,7 @@ public class CarBrandSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -574,7 +573,7 @@ public class CarBrandSearch extends BaseActivity {
         map.put("brandName", "");
         OKhttptils.post(this, Config.GETCARBRANDDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("response", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -606,6 +605,7 @@ public class CarBrandSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -626,7 +626,7 @@ public class CarBrandSearch extends BaseActivity {
         map.put("brandId", brandId);
         OKhttptils.post(this, Config.GETCARTRIANBYCARBRAND, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 JSONObject object = null;
                 try {
                     object = new JSONObject(response);
@@ -644,6 +644,7 @@ public class CarBrandSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override

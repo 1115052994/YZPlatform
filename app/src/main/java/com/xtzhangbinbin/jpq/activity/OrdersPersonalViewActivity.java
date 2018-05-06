@@ -164,7 +164,7 @@ public class OrdersPersonalViewActivity extends BaseActivity{
         map.put("order_id",order_id);
         OKhttptils.post(this, Config.ORDERS_GET_BYCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("status").equals("1")) {
@@ -220,6 +220,7 @@ public class OrdersPersonalViewActivity extends BaseActivity{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override

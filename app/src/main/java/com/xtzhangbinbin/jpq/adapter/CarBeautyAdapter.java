@@ -3,31 +3,21 @@ package com.xtzhangbinbin.jpq.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.R;
 import com.suke.widget.SwitchButton;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CarBeautyBean;
-import com.xtzhangbinbin.jpq.entity.WeisjBean;
-import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2018/4/30.
@@ -105,8 +95,9 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
         map.put("prod_id", prod_id);
         OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 com.tencent.mm.opensdk.utils.Log.d("aaaaa", "onResponse获取数据: " + response);
+                return response;
             }
             @Override
             public void fail(String response) {

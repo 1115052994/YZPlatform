@@ -2,7 +2,6 @@ package com.xtzhangbinbin.jpq.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -121,10 +120,11 @@ public class CompWalletBindBankActivity extends BaseActivity {
         map.put("token_code", comp_wallet_bind_token_code.getText().toString());
         OKhttptils.post(CompWalletBindBankActivity.this, Config.COMP_WALLET_BIND_BANK, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 closeDialog();
                 ToastUtil.show(CompWalletBindBankActivity.this, "银行帐户绑定成功！");
                 CompWalletBindBankActivity.this.finish();
+                return response;
             }
 
             @Override
@@ -148,7 +148,8 @@ public class CompWalletBindBankActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(CompWalletBindBankActivity.this, Config.COMP_WALLET_SEND_CHECKCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
+                return response;
             }
 
             @Override

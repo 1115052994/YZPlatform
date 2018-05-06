@@ -7,12 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -21,11 +19,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
-import com.xtzhangbinbin.jpq.adapter.BrowsingAdapter;
 import com.xtzhangbinbin.jpq.adapter.WeisjAdapter;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.Enterprise;
-import com.xtzhangbinbin.jpq.entity.QueryCarRecord;
 import com.xtzhangbinbin.jpq.entity.WeisjBean;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
@@ -84,7 +79,12 @@ public class WeiSJ extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                getData(++pageIndex, refreshlayout);
+                if(pageIndex < pageCount){
+                    getData(++pageIndex, refreshlayout);
+                }else {
+                    refreshlayout.finishLoadmore();
+                }
+
             }
         });
 
@@ -111,7 +111,7 @@ public class WeiSJ extends Fragment {
         map.put("pageIndex",String.valueOf(pageIndex));
         OKhttptils.post((Activity) getContext(), Config.COMPCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
@@ -140,6 +140,7 @@ public class WeiSJ extends Fragment {
                     }
                 }
 
+                return response;
             }
 
             @Override

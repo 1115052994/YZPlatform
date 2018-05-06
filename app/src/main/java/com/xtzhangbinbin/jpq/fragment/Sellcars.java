@@ -35,6 +35,7 @@ import butterknife.Unbinder;
  */
 public class Sellcars extends Fragment {
 
+
     @BindView(R.id.Sellcars_tv)
     TextView SellcarsTv;
     @BindView(R.id.Sellcars_ed)
@@ -48,15 +49,12 @@ public class Sellcars extends Fragment {
     Unbinder unbinder;
     private HashMap<String, String> map = new HashMap<>();
 
-    public Sellcars() {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_sellcars, container, false);
-        unbinder = ButterKnife.bind(getActivity());
+        unbinder = ButterKnife.bind(this, inflate);
         PostSellcars();
         SellcarsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +73,12 @@ public class Sellcars extends Fragment {
             @Override
             public void onClick(View v) {
                 //跳转电话
-                Intent intent=new Intent("android.intent.action.CALL", Uri.parse("tel:"+"4001198698"));
+                Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + "4001198698"));
                 getActivity().startActivity(intent);
             }
         });
+
+
 
         return inflate;
     }
@@ -87,7 +87,7 @@ public class Sellcars extends Fragment {
         if (NetUtil.isNetAvailable(getContext())) {
             OKhttptils.post(getActivity(), Config.SELLCOUNT, null, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.i("aaaaa", "查询卖车申请次数: " + response);
                     try {
                         JSONObject jsonObject = new JSONObject(response);
@@ -96,6 +96,7 @@ public class Sellcars extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    return response;
                 }
 
                 @Override
@@ -112,22 +113,23 @@ public class Sellcars extends Fragment {
             map.put("sell_phone", phone);
             OKhttptils.post(getActivity(), Config.SAVESELLER, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     try {
                         Log.i("aaaaa", "查询二手车收藏: " + response);
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject data = jsonObject.getJSONObject("data");
                         int state = data.getInt("state");
-                        Log.d("aaaaa", "是否预约成功: "+state+"--------");
-                        if(state==1){
-                            PostIntent("恭喜您预约成功！",null);
-                        }else if(state==0){
-                            PostIntent("您已经预约了！",null);
+                        Log.d("aaaaa", "是否预约成功: " + state + "--------");
+                        if (state == 1) {
+                            PostIntent("恭喜您预约成功！", null);
+                        } else if (state == 0) {
+                            PostIntent("您已经预约了！", null);
                         }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    return response;
                 }
 
                 @Override
@@ -137,9 +139,10 @@ public class Sellcars extends Fragment {
             });
         }
     }
-    public void PostIntent(String mesage, final Class clas){
+
+    public void PostIntent(String mesage, final Class clas) {
         PostSellcars();
-        final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(getContext()).setMessage1("温馨提示").setMessage2("   "+mesage).setConfirm("知道了").setCancel("返回首页").showDialog();
+        final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(getContext()).setMessage1("温馨提示").setMessage2("   " + mesage).setConfirm("知道了").setCancel("返回首页").showDialog();
         ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
             @Override
             public void onNoClick() {

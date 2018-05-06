@@ -25,7 +25,6 @@ import com.xtzhangbinbin.jpq.activity.AddProductActivity;
 import com.xtzhangbinbin.jpq.adapter.CarBeautyAdapter;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CarBeautyBean;
-import com.xtzhangbinbin.jpq.entity.WeisjBean;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 
@@ -113,7 +112,7 @@ public class CarBeauty extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                if(pageCount<pageIndex){
+                if(pageCount>pageIndex){
                     getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
@@ -141,7 +140,7 @@ public class CarBeauty extends Fragment {
         map.put("pageIndex",String.valueOf(pageIndex));
         OKhttptils.post((Activity) getContext(), Config.COMPPRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d("aaaaa", "onResponse456: " + response);
                 Gson gson = GsonFactory.create();
                 CarBeautyBean carBeauty = gson.fromJson(response, CarBeautyBean.class);
@@ -170,6 +169,7 @@ public class CarBeauty extends Fragment {
                     }
                 }
 
+                return response;
             }
 
             @Override

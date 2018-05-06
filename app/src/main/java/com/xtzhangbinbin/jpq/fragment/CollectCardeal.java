@@ -69,9 +69,9 @@ public class CollectCardeal extends Fragment {
         carDealListview.setAdapter(carListAdapter);
         carListAdapter.getCallCar(new CallCollect() {
             @Override
-            public void getCallcollect(View view, int id) {
-                result.clear();
-                PostCar(1, null);
+            public void getCallcollect(View view, int id,int position) {
+                result.remove(position);
+                carListAdapter.notifyDataSetChanged();
             }
         });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -85,7 +85,12 @@ public class CollectCardeal extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                PostCar(++pageIndex, refreshlayout);
+                if(pageIndex < pageCount){
+                    PostCar(++pageIndex, refreshlayout);
+                }else {
+                    refreshlayout.finishLoadmore();
+                }
+
             }
         });
         return inflate;
@@ -98,13 +103,12 @@ public class CollectCardeal extends Fragment {
 //            map.put("coll_content_id","3");
             OKhttptils.post((Activity) context, Config.CHECKCAR, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.i("aaaaa", "查询二手车收藏: " + response);
                     Gson gson = GsonFactory.create();
                     QueryCarList querystar = gson.fromJson(response, QueryCarList.class);
                     pageCount = querystar.getData().getPageCount();
-                    List<QueryCarList.DataBean.ResultBean> result2 = querystar.getData().getResult();
-                    CollectCardeal.this.result.addAll(result2);
+                    result.addAll(querystar.getData().getResult());
                     carListAdapter.notifyDataSetChanged();
                     // 没有信息图片显示
                     if (CollectCardeal.this.result.size() <= 0) {
@@ -122,6 +126,7 @@ public class CollectCardeal extends Fragment {
                             carListAdapter.notifyDataSetChanged();
                         }
                     }
+                    return response;
                 }
 
                 @Override

@@ -10,6 +10,7 @@
         android:layout_height="@dimen/common1dp"
         android:background="@color/bg_color"/>
     <RelativeLayout
+        android:id="@+id/relayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common50dp"
         android:gravity="center_vertical">

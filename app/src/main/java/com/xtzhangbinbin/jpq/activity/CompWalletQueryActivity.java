@@ -20,7 +20,6 @@ import com.xtzhangbinbin.jpq.adapter.CommonRecyclerAdapter;
 import com.xtzhangbinbin.jpq.adapter.ViewHolder;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.CompWalletDetail;
 import com.xtzhangbinbin.jpq.entity.CompWalletQuery;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
@@ -41,7 +40,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qqtheme.framework.picker.DatePicker;
-import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
 
 /**
@@ -146,7 +144,7 @@ public class CompWalletQueryActivity extends BaseActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, Config.COMP_WALLET_INTEGRATED_QUERY, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.w("test", response);
                     Gson gson = GsonFactory.create();
                     CompWalletQuery wallet = gson.fromJson(response, CompWalletQuery.class);
@@ -175,6 +173,7 @@ public class CompWalletQueryActivity extends BaseActivity {
                         no_collect_server_image.setVisibility(View.VISIBLE);
                     }
                     closeDialog();
+                    return response;
                 }
 
                 @Override

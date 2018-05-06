@@ -13,16 +13,11 @@ import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
-import com.xtzhangbinbin.jpq.utils.LogUtil;
 import com.xtzhangbinbin.jpq.utils.MyCountDownTimer;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
-import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -134,8 +129,9 @@ public class RegisterActivity extends BaseActivity {
                 map2.put("client_type", "android");
                 OKhttptils.post(RegisterActivity.this, Config.VERIFY_CODE, map2, new OKhttptils.HttpCallBack() {
                     @Override
-                    public void success(String response) {
+                    public String success(String response) {
                         register2(map2);
+                        return response;
                     }
 
                     @Override
@@ -164,7 +160,7 @@ public class RegisterActivity extends BaseActivity {
     private void register2(Map<String, String> m) {
         OKhttptils.post(RegisterActivity.this, Config.REG, m, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if(null != jsonObject){
@@ -187,6 +183,7 @@ public class RegisterActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -220,7 +217,7 @@ public class RegisterActivity extends BaseActivity {
             map.put("phone", phone);
             OKhttptils.post(RegisterActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     //此处由服务器端校验验证码，所以不再返回验证码信息，无任何返回。
                     //如果再加返回，找小梁，请他吃糖
 //                    try {
@@ -235,6 +232,7 @@ public class RegisterActivity extends BaseActivity {
 //                    } catch (JSONException e) {
 //                        e.printStackTrace();
 //                    }
+                    return response;
                 }
 
                 @Override
@@ -260,7 +258,7 @@ public class RegisterActivity extends BaseActivity {
             map.put("phone", phone);
             OKhttptils.post(RegisterActivity.this, Config.LOGIN, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     try {
 
                         JSONObject object = new JSONObject(response);
@@ -273,6 +271,7 @@ public class RegisterActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    return response;
                 }
 
                 @Override

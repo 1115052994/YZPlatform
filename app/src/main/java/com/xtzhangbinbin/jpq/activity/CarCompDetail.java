@@ -35,8 +35,6 @@ import com.xtzhangbinbin.jpq.view.CircleImageView;
 import com.xtzhangbinbin.jpq.view.indicator.IndicatorAdapter;
 import com.xtzhangbinbin.jpq.view.indicator.TrackIndicatorView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -336,7 +334,7 @@ public class CarCompDetail extends BaseActivity {
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("appraise===",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -359,6 +357,7 @@ public class CarCompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -376,7 +375,7 @@ public class CarCompDetail extends BaseActivity {
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.FINDCOMPBYCOMPID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("response=",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -414,6 +413,7 @@ public class CarCompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -430,7 +430,7 @@ public class CarCompDetail extends BaseActivity {
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.FINDCOMPCARBYCOMPID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("response=",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -452,6 +452,7 @@ public class CarCompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override

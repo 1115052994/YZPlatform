@@ -116,7 +116,7 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
                 tvBuy.setTextColor(Color.parseColor("#ff9696"));
                 tvSell.setTextColor(Color.parseColor("#ffffff"));
                 transaction = fm.beginTransaction();
-                transaction.replace(R.id.content, new Fragment());
+                transaction.replace(R.id.content, sellFragment);
                 transaction.commit();
                 break;
             case R.id.mSearch:

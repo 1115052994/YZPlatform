@@ -61,9 +61,10 @@ public class ChangeNewPhoneActivity extends BaseActivity {
         map.put("token_code",code);
         OKhttptils.post(ChangeNewPhoneActivity.this, Config.CHECK_NEW, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Prefs.with(getApplicationContext()).clear();
                 JumpUtil.newInstance().jumpRight(ChangeNewPhoneActivity.this,LoginActivity.class);
+                return response;
             }
 
             @Override
@@ -89,8 +90,9 @@ public class ChangeNewPhoneActivity extends BaseActivity {
             map.put("phone", phone);
             OKhttptils.post(ChangeNewPhoneActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
 
+                    return response;
                 }
 
                 @Override

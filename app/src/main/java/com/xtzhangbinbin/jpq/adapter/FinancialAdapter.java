@@ -1,23 +1,20 @@
-package com.xtzhangbinbin.jpq.entity;
+package com.xtzhangbinbin.jpq.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.WebView;
-import com.xtzhangbinbin.jpq.adapter.ViewHolder;
-import com.xtzhangbinbin.jpq.adapter.WeisjAdapter;
+import com.xtzhangbinbin.jpq.entity.FinancialBean;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.RoundedImageView;
 
 import java.util.List;
 
@@ -82,7 +79,7 @@ public class FinancialAdapter extends  RecyclerView.Adapter<FinancialAdapter.Vie
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView ll,message,name;
         private LinearLayout relayout;
-        private ImageView imageView;
+        private RoundedImageView imageView;
         private LinearLayout layout;
         public ViewHolder(View itemView) {
             super(itemView);

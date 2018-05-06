@@ -3,16 +3,19 @@ package com.xtzhangbinbin.jpq.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.base.BaseActivity;
+import com.xtzhangbinbin.jpq.utils.JumpUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WebView extends AppCompatActivity {
+public class WebView extends BaseActivity {
 
     @BindView(R.id.webView)
     android.webkit.WebView webView;
@@ -68,5 +71,16 @@ public class WebView extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         webView.resumeTimers();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setTitle("详情");
+        setLeftImageClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                JumpUtil.newInstance().finishRightTrans(WebView.this);
+            }
+        });
     }
 }

@@ -21,9 +21,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.squareup.picasso.Picasso;
-import com.youth.banner.Banner;
 
-import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -118,7 +116,7 @@ public class CarProduct extends BaseActivity {
         map.put("priceSort", "");
         OKhttptils.post(this, Config.SELECTJDSP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Gson gson = new Gson();
                 CheyongpinBean bean = gson.fromJson(response, CheyongpinBean.class);
                 List<CheyongpinBean.DataBean.ResultBean> resultBeanList = bean.getData().getResult();
@@ -127,6 +125,7 @@ public class CarProduct extends BaseActivity {
                     list.add(resultBean);
                 }
                 adapter.notifyDataSetChanged();
+                return response;
             }
 
             @Override
@@ -145,7 +144,7 @@ public class CarProduct extends BaseActivity {
         map.put("priceSort", "");
         OKhttptils.post(this, Config.SELECTJDSP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Gson gson = new Gson();
                 CheyongpinBean bean = gson.fromJson(response, CheyongpinBean.class);
                 List<CheyongpinBean.DataBean.ResultBean> resultBeanList = bean.getData().getResult();
@@ -154,6 +153,7 @@ public class CarProduct extends BaseActivity {
                 }
                 adapter.notifyDataSetChanged();
                 refreshlayout.finishLoadmore();
+                return response;
             }
 
             @Override

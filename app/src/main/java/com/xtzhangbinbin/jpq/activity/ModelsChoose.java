@@ -286,7 +286,7 @@ public class ModelsChoose extends BaseActivity {
         map.put("brandName", "");
         OKhttptils.post(this, Config.GETCARBRANDDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("response", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -316,6 +316,7 @@ public class ModelsChoose extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -335,7 +336,7 @@ public class ModelsChoose extends BaseActivity {
         map.put("brandId", brandId);
         OKhttptils.post(this, Config.GETCARTRIANBYCARBRAND, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 JSONObject object = null;
                 try {
                     object = new JSONObject(response);
@@ -350,6 +351,7 @@ public class ModelsChoose extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override

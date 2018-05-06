@@ -3,26 +3,14 @@ package com.xtzhangbinbin.jpq.alipay;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.alipay.sdk.app.AuthTask;
 import com.alipay.sdk.app.PayTask;
-import com.google.gson.Gson;
-import com.xtzhangbinbin.jpq.R;
-import com.xtzhangbinbin.jpq.activity.OrdersSubmitActivity;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.ShowProductDetaile;
-import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.MyProgressDialog;
@@ -30,8 +18,6 @@ import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -133,7 +119,7 @@ public class AlipayUtil {
 		 */
 		OKhttptils.post(context, Config.ORDERS_ALIPAY_SIGNINFO, map, new OKhttptils.HttpCallBack() {
 			@Override
-			public void success(String response) {
+			public String success(String response) {
 				dialog.dismiss();
 				try {
 					JSONObject object = new JSONObject(response);
@@ -163,7 +149,8 @@ public class AlipayUtil {
 				} finally{
 					close();
 				}
-			}
+                return response;
+            }
 
 			@Override
 			public void fail(String response) {

@@ -7,13 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RadioButton;
 
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -90,10 +87,11 @@ public class YiSJ extends Fragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 android.util.Log.d("aaaaa", "onLoadmore1: "+pageIndex);
-                if(pageCount<pageIndex){
+                if(pageIndex < pageCount){
                     getData(++pageIndex, refreshlayout);
+                }else {
+                    refreshlayout.finishLoadmore();
                 }
-                refreshlayout.finishLoadmore();
 
             }
         });
@@ -123,7 +121,7 @@ public class YiSJ extends Fragment {
         map.put("pageIndex",String.valueOf(pageIndex));
         OKhttptils.post((Activity) getContext(), Config.COMPCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
@@ -154,6 +152,7 @@ public class YiSJ extends Fragment {
                     }
                 }
 
+                return response;
             }
 
             @Override

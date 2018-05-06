@@ -2,32 +2,24 @@ package com.xtzhangbinbin.jpq.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.R;
-import com.xtzhangbinbin.jpq.activity.AddProductActivity;
 import com.xtzhangbinbin.jpq.activity.OrdersPersonalViewActivity;
 import com.xtzhangbinbin.jpq.activity.OrdersSubmitActivity;
 import com.xtzhangbinbin.jpq.activity.OrdersUseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.Orders;
 import com.xtzhangbinbin.jpq.enums.OrderPersState;
-import com.xtzhangbinbin.jpq.fragment.orderspersonal.OrdersPersonalAllFragment;
-import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
@@ -41,8 +33,6 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
 
 /**
  * Created by Administrator on 2018/4/21.
@@ -131,7 +121,7 @@ public class OrdersPersonalAdapter extends BaseAdapter {
                                     map.put("order_id", orders.getOrder_id());
                                     OKhttptils.post((Activity) context, Config.ORDERS_CANCEL, map, new OKhttptils.HttpCallBack() {
                                         @Override
-                                        public void success(String response) {
+                                        public String success(String response) {
                                             try {
                                                 JSONObject obj = new JSONObject(response);
                                                 if("1".equals(obj.getString("status"))){
@@ -142,6 +132,7 @@ public class OrdersPersonalAdapter extends BaseAdapter {
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
+                                            return response;
                                         }
 
                                         @Override

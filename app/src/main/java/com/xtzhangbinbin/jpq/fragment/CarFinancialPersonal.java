@@ -16,14 +16,14 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.CarCredit;
 import com.xtzhangbinbin.jpq.activity.InsuranceSupermarket;
 import com.xtzhangbinbin.jpq.activity.WebView;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.FinancialAdapter;
+import com.xtzhangbinbin.jpq.adapter.FinancialAdapter;
 import com.xtzhangbinbin.jpq.entity.FinancialBean;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
-import com.xtzhangbinbin.jpq.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +77,6 @@ public class CarFinancialPersonal extends Fragment {
             }
         });
         //跳转到Webview
-
         carCx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +113,12 @@ public class CarFinancialPersonal extends Fragment {
                 }
             }
         });
+        xyd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), CarCredit.class));
+            }
+        });
 
         return inflate;
     }
@@ -125,7 +130,7 @@ public class CarFinancialPersonal extends Fragment {
         OKhttptils.post((Activity) getContext(), Config.SELECTJRTOAPP, map, new
                 OKhttptils.HttpCallBack() {
                     @Override
-                    public void success(String response) {
+                    public String success(String response) {
                         Log.d("aaaaa", "onResponse获取数据: " + response);
                         Gson gson = GsonFactory.create();
                         FinancialBean enterprise = gson.fromJson(response, FinancialBean.class);
@@ -144,6 +149,7 @@ public class CarFinancialPersonal extends Fragment {
                                     break;
                             }
                         }
+                        return response;
                     }
 
                     @Override

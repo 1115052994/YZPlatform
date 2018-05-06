@@ -70,9 +70,9 @@ public class CollectFacilitator extends Fragment {
         serviceProviderListview.setAdapter(serviceListAdapter);
         serviceListAdapter.getServerCall(new CallCollect() {
             @Override
-            public void getCallcollect(View view, int id) {
-                result.clear();
-                PostFaci(1,null);
+            public void getCallcollect(View view, int id,int position) {
+                result.remove(position);
+                serviceListAdapter.notifyDataSetChanged();
             }
         });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -86,7 +86,12 @@ public class CollectFacilitator extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                PostFaci(++pageIndex,refreshlayout);
+                if(pageIndex < pageCount){
+                    PostFaci(++pageIndex,refreshlayout);
+                }else {
+                    refreshlayout.finishLoadmore();
+                }
+
             }
         });
 
@@ -106,7 +111,7 @@ public class CollectFacilitator extends Fragment {
 //            map.put("coll_content_id","3");
             OKhttptils.post((Activity) context, Config.CHECKCOMP, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.i("aaaaa", "查询服务商收藏: " + response);
                     Gson gson = GsonFactory.create();
                     QueryCollectServer querystar = gson.fromJson(response, QueryCollectServer.class);
@@ -130,6 +135,7 @@ public class CollectFacilitator extends Fragment {
                         }
                     }
 
+                    return response;
                 }
 
                 @Override

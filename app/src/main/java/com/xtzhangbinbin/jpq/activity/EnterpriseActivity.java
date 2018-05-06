@@ -91,7 +91,7 @@ public class EnterpriseActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(EnterpriseActivity.this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d(TAG, "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 Enterprise enterprise = gson.fromJson(response, Enterprise.class);
@@ -127,12 +127,13 @@ public class EnterpriseActivity extends BaseActivity {
                                 map.put("auth_comp_city", city_id);
                                 OKhttptils.post(EnterpriseActivity.this, Config.SUBMIT_COMPANY, map, new OKhttptils.HttpCallBack() {
                                     @Override
-                                    public void success(String response) {
+                                    public String success(String response) {
                                         Log.i(TAG, "success: " + response);
                                         ToastUtil.show(EnterpriseActivity.this, "提交成功");
                     /* 提交成功之后 界面不可修改 右上角有一个认证状态 */
                                         setRightText("正在审核");
                                         uploading.setVisibility(View.GONE);
+                                        return response;
                                     }
 
                                     @Override
@@ -212,6 +213,7 @@ public class EnterpriseActivity extends BaseActivity {
                         }
                     });
                 }
+                return response;
             }
 
             @Override
@@ -253,12 +255,13 @@ public class EnterpriseActivity extends BaseActivity {
 
             OKhttptils.post(EnterpriseActivity.this, Config.SUBMIT_COMPANY, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.d(TAG, "success: " + response);
                     ToastUtil.show(EnterpriseActivity.this, "提交成功");
                     /* 提交成功之后 界面不可修改 右上角有一个认证状态 */
                     setRightText("正在审核");
                     uploading.setVisibility(View.GONE);
+                    return response;
                 }
 
                 @Override
@@ -281,7 +284,7 @@ public class EnterpriseActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(EnterpriseActivity.this, Config.GETSERVERTYPE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d(TAG, "success: "+response);
                 try {
 
@@ -299,6 +302,7 @@ public class EnterpriseActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -318,7 +322,7 @@ public class EnterpriseActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(EnterpriseActivity.this, Config.GETSERVERTYPE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String data = jsonObject.getString("data");
@@ -335,6 +339,7 @@ public class EnterpriseActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
+                return response;
             }
 
             @Override
@@ -462,7 +467,7 @@ public class EnterpriseActivity extends BaseActivity {
         map.put("cityName", s);
         OKhttptils.post(EnterpriseActivity.this, Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String data = jsonObject.getString("data");
@@ -476,6 +481,7 @@ public class EnterpriseActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override

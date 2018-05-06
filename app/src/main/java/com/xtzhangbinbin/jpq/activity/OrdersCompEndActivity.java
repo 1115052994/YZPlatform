@@ -1,6 +1,5 @@
 package com.xtzhangbinbin.jpq.activity;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.xtzhangbinbin.jpq.entity.OrdersView;
 import com.xtzhangbinbin.jpq.entity.ShowProductDetaile;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
-import com.xtzhangbinbin.jpq.utils.DateUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
@@ -23,7 +21,6 @@ import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -73,7 +70,7 @@ public class OrdersCompEndActivity extends BaseActivity {
             map.put("order_id", order_id);
             OKhttptils.post(this, Config.ORDERS_GET_BYCODE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Gson gson = GsonFactory.create();
                     orders = gson.fromJson(response, OrdersView.class);
                     //根据订单信息构建出商品对象，以便于信息展示和下一步的支付操作
@@ -83,6 +80,7 @@ public class OrdersCompEndActivity extends BaseActivity {
                         orders_comp_end_order_id.setText("订单号:" + orders.getData().getResult().getOrder_number());
                         orders_comp_end_date.setText("消费时间：" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                     }
+                    return response;
                 }
 
                 @Override

@@ -25,7 +25,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.amap.api.col.sln3.gl;
 import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.AppraiseInterface;
 import com.xtzhangbinbin.jpq.R;
@@ -900,7 +899,7 @@ public class BuyCar extends Fragment {
         map.put("cityName", cityName);
         OKhttptils.post(getActivity(), Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 /**
                  * {
                  "data": {
@@ -923,6 +922,7 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -938,7 +938,7 @@ public class BuyCar extends Fragment {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(getActivity(), Config.GETCARPARAMDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("response===", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -961,6 +961,7 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -1028,7 +1029,7 @@ public class BuyCar extends Fragment {
         //car_brand  car_emissions_start  car_emissions_end  histroy_word
         OKhttptils.post(getActivity(), Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("BuyCarresponse", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -1051,6 +1052,7 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -1121,7 +1123,7 @@ public class BuyCar extends Fragment {
         //car_brand  car_emissions_start  car_emissions_end  histroy_word
         OKhttptils.post(getActivity(), Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("BuyCarresponse", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -1144,6 +1146,7 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -1232,7 +1235,7 @@ public class BuyCar extends Fragment {
         Log.i("addSubscribe", map.toString());
         OKhttptils.post(getActivity(), Config.SUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 JSONObject object = null;
                 try {
                     object = new JSONObject(response);
@@ -1246,6 +1249,7 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override

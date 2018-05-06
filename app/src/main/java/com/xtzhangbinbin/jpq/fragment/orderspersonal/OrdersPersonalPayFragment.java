@@ -100,7 +100,7 @@ public class OrdersPersonalPayFragment extends Fragment {
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Gson gson = GsonFactory.create();
                     Orders orders = gson.fromJson(response, Orders.class);
                     pageCount = orders.getData().getPageCount();
@@ -125,6 +125,7 @@ public class OrdersPersonalPayFragment extends Fragment {
                     if(null != dialog && dialog.isShowing()){
                         dialog.dismiss();
                     }
+                    return response;
                 }
 
                 @Override

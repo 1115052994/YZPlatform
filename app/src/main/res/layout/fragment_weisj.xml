@@ -18,7 +18,9 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/smartRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+
+        >
 
             <com.scwang.smartrefresh.layout.header.ClassicsHeader
                 android:layout_width="match_parent"
@@ -26,6 +28,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/weisj_list"
+                android:paddingBottom="@dimen/common60dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </android.support.v7.widget.RecyclerView>
@@ -43,7 +46,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/common15dp"
-        android:layout_marginBottom="@dimen/common30dp"
+        android:layout_marginBottom="@dimen/common15dp"
         android:button="@null"
         android:background="@drawable/star_add2"
         />

@@ -43,7 +43,6 @@ public class ProductList extends BaseActivity {
         fragments.add(new Maintenance());
         fragments.add(new Maintenance());
         viewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments));
-
         initView();
     }
 

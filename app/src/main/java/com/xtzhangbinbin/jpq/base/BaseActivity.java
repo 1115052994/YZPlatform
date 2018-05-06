@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -172,6 +173,7 @@ public class BaseActivity extends AppCompatActivity{
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public String setNumberText(EditText numberText){
         String s = numberText.getText().toString().trim();
         if (s.isEmpty()){
@@ -250,6 +252,7 @@ public class BaseActivity extends AppCompatActivity{
     /**
      * 隐藏软键
      */
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public void hideInputMethod(final EditText v) {
         InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -260,6 +263,7 @@ public class BaseActivity extends AppCompatActivity{
      *
      * @param v
      */
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public void showInputMethod(final EditText v) {
         v.requestFocus();
         InputMethodManager imm = (InputMethodManager) this
@@ -289,8 +293,9 @@ public class BaseActivity extends AppCompatActivity{
     private PopupWindow popupWindow;
     private ImageView img;
     private ImageView img1;
-    private MyProgressDialog dialog;
+//    private MyProgressDialog dialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public void upDataPicture(Context context, ImageView imageView, ImageView imageView1, String t) {
         img = imageView;
         img1 = imageView1;
@@ -437,7 +442,7 @@ public class BaseActivity extends AppCompatActivity{
                     map.put("file_content",PhotoUtils.bitmapToBase64(bitmap1));
                     OKhttptils.post((Activity) mContext, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
                         @Override
-                        public void success(String response) {
+                        public String success(String response) {
                             try {
 
                                 JSONObject jsonObject = new JSONObject(response);
@@ -454,6 +459,7 @@ public class BaseActivity extends AppCompatActivity{
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            return response;
                         }
 
                         @Override
@@ -472,6 +478,34 @@ public class BaseActivity extends AppCompatActivity{
         }
     }
 
+    /* 上传图片base64并获取图片id */
+    public void upDataBase64(final Context context, final Bitmap bitmap, final String sType) {
+        Map<String,String> map = new HashMap<>();
+        map.put("file_content",PhotoUtils.bitmapToBase64(bitmap));
+        OKhttptils.post((Activity) context, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public String success(String response) {
+                try {
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    String data = jsonObject.getString("data");
+                    JSONObject object = new JSONObject(data);
+                    Prefs.with(context).remove(sType);
+                    String file_id = object.getString("file_id");
+                    Prefs.with(context).write(sType,file_id);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return response;
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
+    }
 
     /**
      * 显示图片

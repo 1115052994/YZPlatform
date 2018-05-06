@@ -154,11 +154,26 @@ public class Config {
     //添加二手车收藏
     public static final String ACCRETIONCOLLCAR = M + S + "accretionCollCar";
 
+    //ETC查询
+    public static final String SELECTETC = M + S + "selectEtc";
+
     //添加二手车图片
     public static final String ACCRETIONPICTURECAR = M + S + "accretionPictureCar";
 
+    //金融信息录入
+    public static final String INSERTINFO = M + S + "insertInfo";
+
     //车金融数据
     public static final String SELECTJRTOAPP = M + S + "selectJrToApp";
+
+    //车信贷
+    public static final String QUERYALLTWO = M + S + "queryAllTwo";
+
+    //贷款明细
+    public static final String QUERYALLTHIRDAPP= M + S + "queryAllThirdApp";
+
+    //通过城市名称得到城市Id
+    public static final String GETCITYIDBYCITYNAME= M + S + "get_cityIdByCityName";
 
     //查询保险超市所有产品
     public static final String QUERYALLINSURANCE = M + S + "queryAllInsurance";
@@ -211,6 +226,7 @@ public class Config {
 
     //全部评价
     public static final String ALLCOMPEVALUATE = M + S + "allCompEvaluate";
+
 
     //好评
     public static final String PRAISECOMPEVALUATE = M + S + "praiseCompEvaluate";

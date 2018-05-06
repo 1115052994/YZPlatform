@@ -99,7 +99,7 @@ public class LoginActivity extends BaseActivity {
             if(!loginCode.getText().toString().trim().isEmpty()){
                 OKhttptils.post(this, Config.LOGIN, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public void success(String response) {
+                    public String success(String response) {
 //                        Log.i(TAG, "success: " + response);
                         try {
                             JSONObject object = new JSONObject(response);
@@ -116,6 +116,7 @@ public class LoginActivity extends BaseActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        return response;
                     }
 
                     @Override
@@ -143,7 +144,7 @@ public class LoginActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(LoginActivity.this, Config.GET_USERINFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.e("", "onResponse用户信息: " + response);
                 /**
                  * {"data":
@@ -170,6 +171,7 @@ public class LoginActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -199,7 +201,8 @@ public class LoginActivity extends BaseActivity {
             map.put("phone", phone);
             OKhttptils.post(LoginActivity.this, Config.GETCODE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
+                    return response;
                 }
 
                 @Override

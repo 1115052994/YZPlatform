@@ -42,11 +42,10 @@ public class EvaluationList extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluation_list);
         ButterKnife.bind(this);
-        String id="24";
-        fragment.add(new EvaluationFragment(this,"1",id));
-        fragment.add(new EvaluationFragment(this,"2",id));
-        fragment.add(new EvaluationFragment(this,"3",id));
-        fragment.add(new EvaluationFragment(this,"4",id));
+        fragment.add(new EvaluationFragment(this,"1"));
+        fragment.add(new EvaluationFragment(this,"2"));
+        fragment.add(new EvaluationFragment(this,"3"));
+        fragment.add(new EvaluationFragment(this,"4"));
         PostCar(Config.SCOREBYCOMPCOUNT);
 
     }
@@ -63,13 +62,11 @@ public class EvaluationList extends BaseActivity {
         });
     }
     public void PostCar(String url){
-
         map.clear();
         if (NetUtil.isNetAvailable(this)) {
-            map.put("comp_id","24");
             OKhttptils.post(this, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.i("aaaaa", "查询评价: " + response);
                     Gson gson = GsonFactory.create();
                     QueryNum queryNum = gson.fromJson(response, QueryNum.class);
@@ -84,6 +81,7 @@ public class EvaluationList extends BaseActivity {
                     evaluationListTab.setupWithViewPager(evaluationListPager);
                     TabUtil.showTabTextAdapteIndicator(evaluationListTab);
                     evaluationListTab.setTabMode(TabLayout.MODE_FIXED);
+                    return response;
                 }
 
                 @Override

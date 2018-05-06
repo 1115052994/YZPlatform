@@ -2,6 +2,7 @@ package com.xtzhangbinbin.jpq.fragment.main;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,8 +21,10 @@ import com.amap.api.location.AMapLocationListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AccessCar;
+import com.xtzhangbinbin.jpq.activity.CarCredit;
 import com.xtzhangbinbin.jpq.activity.CarProduct;
 import com.xtzhangbinbin.jpq.activity.CompanyCenterActivity;
+import com.xtzhangbinbin.jpq.activity.ETC;
 import com.xtzhangbinbin.jpq.activity.LoginActivity;
 import com.xtzhangbinbin.jpq.activity.PersonalCenterActivity;
 import com.xtzhangbinbin.jpq.config.Config;
@@ -100,7 +103,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(getActivity(), Config.SELECTADVEMAIN, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("getData===", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -119,6 +122,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override
@@ -185,6 +189,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 }
                 break;
             case R.id.ly_etc:
+                JumpUtil.newInstance().jumpRight(getContext(), ETC.class);
                 break;
             case R.id.ly_wby:
                 break;
@@ -212,6 +217,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.yzfw:
                 break;
             case R.id.image_xyd:
+                JumpUtil.newInstance().jumpRight(getContext(), CarCredit.class);
                 break;
             case R.id.image_cyp:
                 break;

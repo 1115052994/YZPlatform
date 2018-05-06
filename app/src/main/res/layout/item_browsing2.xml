@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/common123dp">
-    <ImageView
+    <com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval
         android:id="@+id/browsing_image"
         android:layout_width="@dimen/common137dp"
         android:layout_height="@dimen/common95dp"

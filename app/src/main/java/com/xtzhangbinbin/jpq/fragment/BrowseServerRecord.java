@@ -81,15 +81,19 @@ public class BrowseServerRecord extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                PostRecord(Config.BROWSECOMPCOOKIES,++pageIndex,refreshlayout);
+                if(pageIndex < pageCount){
+                    PostRecord(Config.BROWSECOMPCOOKIES,++pageIndex,refreshlayout);
+                }else {
+                    refreshlayout.finishLoadmore();
+                }
             }
         });
 
         browsingAdapter.getBrowsingCall(new CallBrowsing() {
             @Override
-            public void getCallBrowsing(View view, String is) {
-                        result.clear();
-                        PostRecord(Config.BROWSECOMPCOOKIES,1,null);
+            public void getCallBrowsing(View view, String is,int position) {
+                        result.remove(position);
+                        browsingAdapter.notifyDataSetChanged();
             }
         });
 
@@ -98,17 +102,18 @@ public class BrowseServerRecord extends Fragment {
     public void PostRecord(String url, final int pageIndex, final RefreshLayout refreshlayout) {
         map.clear();
         map.put("pageIndex",String.valueOf(pageIndex));
-//        map.put("comp_id","24");
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.i("aaaaa", "查询服务商浏览记录: " + response);
                     Gson gson = GsonFactory.create();
                     QueryServerRecord queryRecord2 = gson.fromJson(response, QueryServerRecord.class);
                     pageCount=queryRecord2.getData().getPageCount();
-                    List<QueryServerRecord.DataBean.ResultBean> result2 = queryRecord2.getData().getResult();
-                    BrowseServerRecord.this.result.addAll(result2);
+                    BrowseServerRecord.this.result.addAll(queryRecord2.getData().getResult());
+                    if(refreshlayout==null){
+                        browsingAdapter.notifyDataSetChanged();
+                    }
                     //没有信息图片显示
                     if (BrowseServerRecord.this.result.size() <= 0) {
                         browsingCardealImage.setVisibility(View.VISIBLE);
@@ -125,6 +130,7 @@ public class BrowseServerRecord extends Fragment {
                             browsingAdapter.notifyDataSetChanged();
                         }
                     }
+                    return response;
                 }
 
                 @Override

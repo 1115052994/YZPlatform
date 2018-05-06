@@ -7,5 +7,5 @@ import android.view.View;
  */
 
 public interface CallCollect {
-    void getCallcollect(View view, int id);
+    void getCallcollect(View view, int id,int position);
 }

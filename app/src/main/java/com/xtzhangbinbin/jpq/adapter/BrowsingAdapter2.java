@@ -21,6 +21,7 @@ import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.PhotoUtils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
+import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,12 +74,15 @@ public class BrowsingAdapter2 extends BaseAdapter {
         }
         viewHolder.browsing_tv.setText(result.get(position).getAuth_comp_name());
         viewHolder.browsing_km.setText("浏览时间: "+result.get(position).getLog_date());
+        viewHolder.browsing_image.setType(ZQImageViewRoundOval.TYPE_ROUND);
+        viewHolder.browsing_image.setRoundRadius(5);
+//        OKhttptils.getPic(context,result.get(position).getAuth_comp_img_head_file_id(),viewHolder.browsing_image);
         getBitmap(result.get(position).getAuth_comp_img_head_file_id(),viewHolder.browsing_image);
         viewHolder.browsing_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 Toast.makeText(context, position+"删除", Toast.LENGTH_SHORT).show();
-                final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("删除记录").setMessage2("删除后不可恢复，确定清除？").showDialog();
+                final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("温馨提示").setMessage2("  删除后不可恢复，确定清除？").showDialog();
                 ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                     @Override
                     public void onNoClick() {
@@ -94,9 +98,10 @@ public class BrowsingAdapter2 extends BaseAdapter {
                                 map.put("log_id",result.get(position).getLog_id());  //别忘记改
                                 OKhttptils.post((Activity) context, Config.BROWSEDLOG, map, new OKhttptils.HttpCallBack() {
                                     @Override
-                                    public void success(String response) {
+                                    public String success(String response) {
                                         Log.i("aaaa", "删除: " +result.get(position).getLog_id()+response);
-                                        callBrowsing.getCallBrowsing(view,"");
+                                        callBrowsing.getCallBrowsing(view,"",position);
+                                        return response;
                                     }
                                     @Override
                                     public void fail(String response) {
@@ -112,15 +117,17 @@ public class BrowsingAdapter2 extends BaseAdapter {
         });
         return convertView;
     }
+
+
     class ViewHolder{
-        ImageView browsing_image;
+        ZQImageViewRoundOval browsing_image;
         TextView browsing_tv,browsing_km;
         LinearLayout browsing_delete;
     }
     public void getBrowsingCall(CallBrowsing callBrowsing){
         this.callBrowsing=callBrowsing;
     }
-    public void getBitmap(final String file_id, final ImageView circleImageView){
+    public void getBitmap(final String file_id, final ZQImageViewRoundOval circleImageView){
         //通过ID获得图片
         if(file_id!=null){
             if (NetUtil.isNetAvailable(context)) {
@@ -128,7 +135,7 @@ public class BrowsingAdapter2 extends BaseAdapter {
                 map.put("file_id",file_id);
                 OKhttptils.post((Activity) context, Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public void success(String response) {
+                    public String success(String response) {
                         Log.w("aaa", "onResponse获取base64: " + response );
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -150,6 +157,7 @@ public class BrowsingAdapter2 extends BaseAdapter {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        return response;
                     }
                     @Override
                     public void fail(String response) {

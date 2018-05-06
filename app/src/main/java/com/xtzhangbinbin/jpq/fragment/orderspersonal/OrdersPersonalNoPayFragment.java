@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.xtzhangbinbin.jpq.enums.OrderPersState;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
-import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -101,7 +99,7 @@ public class OrdersPersonalNoPayFragment extends Fragment {
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Gson gson = GsonFactory.create();
                     Orders orders = gson.fromJson(response, Orders.class);
                     pageCount = orders.getData().getPageCount();
@@ -126,6 +124,7 @@ public class OrdersPersonalNoPayFragment extends Fragment {
                     if(null != dialog && dialog.isShowing()){
                         dialog.dismiss();
                     }
+                    return response;
                 }
 
                 @Override

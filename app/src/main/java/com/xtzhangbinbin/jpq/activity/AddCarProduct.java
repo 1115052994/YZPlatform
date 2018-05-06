@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.method.ReplacementTransformationMethod;
@@ -166,7 +168,7 @@ public class AddCarProduct extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETCARPARAMDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Gson gson = new Gson();
                 CarParams carParams = gson.fromJson(response, CarParams.class);
                 CarParams.DataBean.ResultBean resultBean = carParams.getData().getResult();
@@ -235,6 +237,7 @@ public class AddCarProduct extends BaseActivity {
                             break;
                     }
                 }
+                return response;
             }
 
             @Override
@@ -252,12 +255,13 @@ public class AddCarProduct extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(AddCarProduct.this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 Enterprise enterprise = gson.fromJson(response, Enterprise.class);
                 Enterprise.DataBean.ResultBean result = enterprise.getData().getResult();
                 car_place_city = result.getAuth_comp_city();          //市
+                return response;
             }
 
             @Override
@@ -284,6 +288,7 @@ public class AddCarProduct extends BaseActivity {
     }
 
     /* eventbus获取数据 */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void qwe(String b) {
         if (!b.isEmpty()) {
@@ -396,11 +401,12 @@ public class AddCarProduct extends BaseActivity {
                 map.put("imgBase64", base64);
                 OKhttptils.post(this, Config.PARSEVIN, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public void success(String response) {
+                    public String success(String response) {
                         Gson gson = GsonFactory.create();
                         ChassisNumber chassisNumber = gson.fromJson(response, ChassisNumber.class);
                         String vin = chassisNumber.getData().getResult().getVin();
                         mCarNumb.setText(vin);
+                        return vin;
                     }
 
                     @Override
@@ -527,6 +533,7 @@ public class AddCarProduct extends BaseActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @OnClick(R.id.mNext)
     public void onViewClicked() {
         car_mileage = mKm.getText().toString().trim();
@@ -577,8 +584,9 @@ public class AddCarProduct extends BaseActivity {
         if (!car_name.isEmpty() && !car_brand.isEmpty() && !car_model.isEmpty() && !car_mileage.isEmpty() && !car_price.isEmpty() && !car_time.isEmpty() && !car_gearbox.isEmpty() &&
                 !car_displacement.isEmpty() && !car_letout.isEmpty() && !car_resum.isEmpty() && !car_place_city.isEmpty() && !car_fuel_type.isEmpty() && !car_seating.isEmpty() && !car_vin.isEmpty()){
             OKhttptils.post(AddCarProduct.this, Config.ACCRETIONCAR, map, new OKhttptils.HttpCallBack() {
+                @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.d(TAG, "success: " + response);
                     /**
                      * {"data":{"result":"17492"},"message":"","status":"1"}
@@ -600,6 +608,7 @@ public class AddCarProduct extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    return response;
                 }
 
                 @Override

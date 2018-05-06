@@ -7,5 +7,5 @@ import android.view.View;
  */
 
 public interface CallBrowsing {
-    void getCallBrowsing(View view,String is);
+    void getCallBrowsing(View view,String is,int position);
 }

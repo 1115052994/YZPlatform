@@ -7,10 +7,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
@@ -43,6 +46,7 @@ public class ZQImageViewRoundOval extends android.support.v7.widget.AppCompatIma
     public static final int TYPE_ROUND = 1;//圆角矩形
     public static final int TYPE_OVAL = 2;//椭圆形
     public static final int DEFAUT_ROUND_RADIUS = 10;//默认圆角大小
+    private float[] rids = {15.0f,15.0f,15.0f,15.0f,0.0f,0.0f,0.0f,0.0f,};
 
     public ZQImageViewRoundOval(Context context) {
         this(context, null);
@@ -79,6 +83,7 @@ public class ZQImageViewRoundOval extends android.support.v7.widget.AppCompatIma
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onDraw(Canvas canvas) {
 

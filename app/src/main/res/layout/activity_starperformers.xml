@@ -27,11 +27,26 @@
                 android:visibility="gone"
                 android:src="@drawable/no_information"
                 />
-            <ListView
-                android:id="@+id/star_list"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/smartRefreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            </ListView>
+
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <ListView
+                    android:id="@+id/star_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ListView>
+
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
         </LinearLayout>
         <LinearLayout
             android:id="@+id/layout"

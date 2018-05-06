@@ -1,8 +1,6 @@
 package com.xtzhangbinbin.jpq.activity;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +11,6 @@ import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.alipay.AlipayUtil;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.Orders;
 import com.xtzhangbinbin.jpq.entity.OrdersView;
 import com.xtzhangbinbin.jpq.entity.ShowProductDetaile;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
@@ -24,22 +21,18 @@ import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.MyProgressDialog;
-import com.xtzhangbinbin.jpq.wxapi.WXPayEntryActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import android.widget.Button;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -161,7 +154,7 @@ public class OrdersSubmitActivity extends BaseActivity {
             //设置订单号默认为null
             OKhttptils.post(this, Config.ORDERS_CREATE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     try{
                         JSONObject object = new JSONObject(response);
                         if(null != object && null != object.getJSONObject("data")) {
@@ -174,6 +167,7 @@ public class OrdersSubmitActivity extends BaseActivity {
                         e.printStackTrace();
                         ToastUtil.show(OrdersSubmitActivity.this, "订单创建失败，请稍候重试！！");
                     }
+                    return response;
                 }
 
                 @Override
@@ -241,7 +235,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         map.put("prod_id", pro_id);
         OKhttptils.post(this, Config.ORDERS_SHOW_PRODUCT_BYID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Gson gson = GsonFactory.create();
                 product = gson.fromJson(response, ShowProductDetaile.class);
                 if (null != product) {
@@ -250,6 +244,7 @@ public class OrdersSubmitActivity extends BaseActivity {
                     price.setText(new DecimalFormat("#.#").format(product.getData().getResult().getProd_reduced_price()));
                     marketPrice.setText("原价：" + new DecimalFormat("#.#").format(product.getData().getResult().getProd_price()) + "元");
                 }
+                return response;
             }
 
             @Override
@@ -275,7 +270,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         map.put("order_id", order_id);
         OKhttptils.post(this, Config.ORDERS_GET_BYCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Gson gson = GsonFactory.create();
                 orders = gson.fromJson(response, OrdersView.class);
                 product = gson.fromJson(response, ShowProductDetaile.class);
@@ -288,6 +283,7 @@ public class OrdersSubmitActivity extends BaseActivity {
                     price.setText(new DecimalFormat("#.#").format(product.getData().getResult().getProd_reduced_price()));
                     marketPrice.setText("原价：" + new DecimalFormat("#.#").format(product.getData().getResult().getProd_price()) + "元");
                 }
+                return response;
             }
 
             @Override
@@ -316,8 +312,9 @@ public class OrdersSubmitActivity extends BaseActivity {
 //        map.put("money", money);
         OKhttptils.post(this, Config.ORDERS_PAY_SUCCESS, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.w("test", response);
+                return response;
             }
 
             @Override
@@ -352,8 +349,9 @@ public class OrdersSubmitActivity extends BaseActivity {
         map.put("gmt_payment_date", obj.getString("timestamp"));//支付时间
         OKhttptils.post(this, Config.ORDERS_PAY_LOG, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.w("test", response);
+                return response;
             }
 
             @Override
@@ -383,7 +381,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         //设置订单号默认为null
         OKhttptils.post(this, Config.ORDERS_WECCHAT_CREATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 dialog.dismiss();
                 try{
                     JSONObject object = new JSONObject(response);
@@ -415,6 +413,7 @@ public class OrdersSubmitActivity extends BaseActivity {
                     e.printStackTrace();
                     ToastUtil.show(OrdersSubmitActivity.this, "订单创建失败，请稍候重试！！");
                 }
+                return response;
             }
 
             @Override

@@ -16,7 +16,6 @@ import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -106,10 +105,11 @@ public class CompWalletBindWechatActivity extends BaseActivity {
         map.put("token_code", comp_wallet_bind_token_code.getText().toString());
         OKhttptils.post(CompWalletBindWechatActivity.this, Config.COMP_WALLET_BIND_WECHAT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 closeDialog();
                 ToastUtil.show(CompWalletBindWechatActivity.this, "微信帐户绑定成功！");
                 CompWalletBindWechatActivity.this.finish();
+                return response;
             }
 
             @Override
@@ -133,7 +133,8 @@ public class CompWalletBindWechatActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(CompWalletBindWechatActivity.this, Config.COMP_WALLET_SEND_CHECKCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
+                return response;
             }
 
             @Override

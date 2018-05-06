@@ -13,7 +13,6 @@ import com.suke.widget.SwitchButton;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.WeisjBean;
-import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
@@ -81,12 +80,13 @@ public class YisjAdapter extends RecyclerView.Adapter<YisjAdapter.ViewHolder> {
                             map.put("state","yxj");
                             OKhttptils.post((Activity) context, Config.CHANGESTATE, map, new OKhttptils.HttpCallBack() {
                                 @Override
-                                public void success(String response) {
+                                public String success(String response) {
                                     com.tencent.mm.opensdk.utils.Log.d("aaaaa", "onResponse获取数据: " + response);
                                     ordinaryDialog.dismiss();
                                     if(onCallBack!=null){
                                         onCallBack.getprodid(position);
                                     }
+                                    return response;
                                 }
                                 @Override
                                 public void fail(String response) {

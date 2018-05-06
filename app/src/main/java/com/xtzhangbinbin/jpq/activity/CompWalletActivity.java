@@ -1,15 +1,11 @@
 package com.xtzhangbinbin.jpq.activity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,19 +20,11 @@ import com.xtzhangbinbin.jpq.adapter.ViewHolder;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CompWalletDetail;
-import com.xtzhangbinbin.jpq.entity.CompWalletQuery;
-import com.xtzhangbinbin.jpq.entity.OrdersCompInfo;
-import com.xtzhangbinbin.jpq.entity.OrdersView;
-import com.xtzhangbinbin.jpq.entity.ShowProductDetaile;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
-import com.xtzhangbinbin.jpq.utils.DateUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
-import com.xtzhangbinbin.jpq.utils.ToastUtil;
-import com.xtzhangbinbin.jpq.view.CircleImageView;
-import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,9 +33,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,7 +108,7 @@ public class CompWalletActivity extends BaseActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, Config.COMP_WALLET_BALANCE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     try {
                         JSONObject obj = new JSONObject(response);
                         if(null != obj){
@@ -131,6 +117,7 @@ public class CompWalletActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    return response;
                 }
 
                 @Override
@@ -154,7 +141,7 @@ public class CompWalletActivity extends BaseActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, Config.COMP_WALLET_OPTION_DETAIL, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Gson gson = GsonFactory.create();
                     CompWalletDetail wallet = gson.fromJson(response, CompWalletDetail.class);
                     List<CompWalletDetail.DataBean.ResultBeanX> result2 = wallet.getData().getResult();
@@ -174,6 +161,7 @@ public class CompWalletActivity extends BaseActivity {
                         cashListAdapter.notifyDataSetChanged();
                     }
 
+                    return response;
                 }
 
                 @Override

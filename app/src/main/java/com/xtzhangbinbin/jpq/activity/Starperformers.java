@@ -10,6 +10,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.CallStar;
 import com.xtzhangbinbin.jpq.adapter.StarAdapter;
@@ -36,8 +40,12 @@ public class Starperformers extends BaseActivity {
     LinearLayout layout;
     @BindView(R.id.no_information_image)
     ImageView noInformationImage;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     private List<Querystar.DataBean.ResultBean> result = new ArrayList<>();
     public StarAdapter starAdapter;
+    private int pageIndex = 1;
+    private int pageTotal = 1;//总页数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,20 +81,39 @@ public class Starperformers extends BaseActivity {
         });
         starAdapter.getcall(new CallStar() {
             @Override
-            public void Call(View view, String id, int i, String file_id) {
-                    if (i > -1 && id != null && file_id != null) {
-                        Intent intent = new Intent(Starperformers.this, Addstar.class);
-                        intent.putExtra("id", id);
-                        intent.putExtra("file_id", file_id);
-                        intent.putExtra("name", result.get(i).getStaff_name());
-                        intent.putExtra("info", result.get(i).getStaff_info());
-                        Log.d("Call", "Call: "+id);
-                        startActivityForResult(intent, 3);
-                    }
-                getData();
+            public void Call(View view, String id, int i, String file_id,int position) {
+                if (i > -1 && id != null && file_id != null) {
+                    Intent intent = new Intent(Starperformers.this, Addstar.class);
+                    intent.putExtra("id", id);
+                    intent.putExtra("file_id", file_id);
+                    intent.putExtra("name", result.get(i).getStaff_name());
+                    intent.putExtra("info", result.get(i).getStaff_info());
+                    Log.d("Call", "Call: " + id);
+                    startActivityForResult(intent, 3);
+                }
+                result.remove(position);
                 starAdapter.notifyDataSetChanged();
 
 
+            }
+        });
+
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                pageIndex = 1;
+                result.clear();
+                getData();
+            }
+        });
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+//                if(pageIndex < pageTotal){
+//                    getData(++pageIndex,dict_id,auth_comp_city, refreshlayout);
+//                }else {
+//                    refreshlayout.finishLoadmore();
+//                }
             }
         });
     }
@@ -108,7 +135,6 @@ public class Starperformers extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         getData();
-        starAdapter.notifyDataSetChanged();
     }
 
     //得到数据并且更新数据
@@ -116,20 +142,22 @@ public class Starperformers extends BaseActivity {
         result.clear();
         OKhttptils.post(Starperformers.this, Config.SELECTSTAR, null, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
-                Log.d("aaaaa", "getData1: "+response);
+            public String success(String response) {
+                Log.d("aaaaa", "getData1: " + response);
                 Gson gson = GsonFactory.create();
                 Querystar querystar = gson.fromJson(response, Querystar.class);
-                Log.d("aaaaa", "getData2: "+response);
+                Log.d("aaaaa", "getData2: " + response);
                 if (querystar.getData().getResult() == null) {
                     ToastUtil.show(Starperformers.this, "数据为空");
                 }
                 result.addAll(querystar.getData().getResult());
-                Log.d("aaaaa", "getData3: "+response);
-                if(result.size()<=0){
+                starAdapter.notifyDataSetChanged();
+                Log.d("aaaaa", "getData3: " + response);
+                if (result.size() <= 0) {
                     noInformationImage.setVisibility(View.VISIBLE);
                 }
                 starAdapter.notifyDataSetChanged();
+                return response;
             }
 
             @Override

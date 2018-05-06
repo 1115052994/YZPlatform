@@ -1,11 +1,9 @@
 package com.xtzhangbinbin.jpq.activity;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +13,6 @@ import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CompWalletBindInfo;
-import com.xtzhangbinbin.jpq.entity.CompWalletQuery;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
@@ -23,12 +20,7 @@ import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -76,7 +68,7 @@ public class CompWalletBindAccountActivity extends BaseActivity {
             Map<String ,String> map = new HashMap<>();
             OKhttptils.post(this, Config.COMP_WALLET_QUERY_ACCOUNT, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Gson gson = GsonFactory.create();
                     CompWalletBindInfo bindInfo = gson.fromJson(response, CompWalletBindInfo.class);
                     if(null != bindInfo.getData().getResult().getData()){
@@ -93,6 +85,7 @@ public class CompWalletBindAccountActivity extends BaseActivity {
                             comp_wallet_bind_bank_msg.setVisibility(View.VISIBLE);
                         }
                     }
+                    return response;
                 }
 
                 @Override

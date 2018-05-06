@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
-import android.widget.Button;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +98,7 @@ public class OrdersPersonalAllFragment extends Fragment {
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Gson gson = GsonFactory.create();
                     Orders orders = gson.fromJson(response, Orders.class);
                     pageCount = orders.getData().getPageCount();
@@ -125,6 +123,7 @@ public class OrdersPersonalAllFragment extends Fragment {
                     if(null != dialog && dialog.isShowing()){
                         dialog.dismiss();
                     }
+                    return response;
                 }
 
                 @Override

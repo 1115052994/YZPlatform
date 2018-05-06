@@ -390,7 +390,7 @@ public class AdvanceSX extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETCARPARAMDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("response===", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -481,6 +481,7 @@ public class AdvanceSX extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override

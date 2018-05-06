@@ -266,7 +266,7 @@ public class CarPhotoActivity extends BaseActivity {
                         map.put("desc", content);
                         OKhttptils.post(CarPhotoActivity.this, Config.ACCRETIONPICTURECAR, map, new OKhttptils.HttpCallBack() {
                             @Override
-                            public void success(String response) {
+                            public String success(String response) {
                                 Log.e(TAG, "success上传图片: " + response);
                                 ToastUtil.show(CarPhotoActivity.this, "保存成功");
                                 if (position == 23) {
@@ -275,6 +275,7 @@ public class CarPhotoActivity extends BaseActivity {
                                     JumpUtil.newInstance().jumpRight(CarPhotoActivity.this, UpdateCarActivity.class, bundle);
                                 }
 
+                                return response;
                             }
 
                             @Override
@@ -493,7 +494,7 @@ public class CarPhotoActivity extends BaseActivity {
                     m.put("file_content", PhotoUtils.bitmapToBase64(map));
                     OKhttptils.post(CarPhotoActivity.this, Config.UPLOADFILE, m, new OKhttptils.HttpCallBack() {
                         @Override
-                        public void success(String response) {
+                        public String success(String response) {
                             try {
                                 Prefs.with(getApplicationContext()).remove(car_name);
                                 JSONObject jsonObject = new JSONObject(response);
@@ -507,7 +508,7 @@ public class CarPhotoActivity extends BaseActivity {
                                 m.put("file_content", PhotoUtils.bitmapToBase64(newmap));
                                 OKhttptils.post(CarPhotoActivity.this, Config.UPLOADFILE, m, new OKhttptils.HttpCallBack() {
                                     @Override
-                                    public void success(String response) {
+                                    public String success(String response) {
                                         Prefs.with(getApplicationContext()).remove(car_name + "压缩");
                                         try {
                                             JSONObject jsonObject = new JSONObject(response);
@@ -521,6 +522,7 @@ public class CarPhotoActivity extends BaseActivity {
                                             e.printStackTrace();
                                         }
 
+                                        return response;
                                     }
 
                                     @Override
@@ -534,6 +536,7 @@ public class CarPhotoActivity extends BaseActivity {
                                 e.printStackTrace();
                             }
 
+                            return response;
                         }
 
                         @Override
@@ -573,7 +576,7 @@ public class CarPhotoActivity extends BaseActivity {
                     mm.put("file_content", PhotoUtils.bitmapToBase64(bitmap));
                     OKhttptils.post(CarPhotoActivity.this, Config.UPLOADFILE, mm, new OKhttptils.HttpCallBack() {
                         @Override
-                        public void success(String response) {
+                        public String success(String response) {
                             try {
                                 Prefs.with(getApplicationContext()).remove(car_name);
                                 JSONObject jsonObject = new JSONObject(response);
@@ -587,7 +590,7 @@ public class CarPhotoActivity extends BaseActivity {
                                 mm.put("file_content", PhotoUtils.bitmapToBase64(newmap2));
                                 OKhttptils.post(CarPhotoActivity.this, Config.UPLOADFILE, mm, new OKhttptils.HttpCallBack() {
                                     @Override
-                                    public void success(String response) {
+                                    public String success(String response) {
                                         Prefs.with(getApplicationContext()).remove(car_name + "压缩");
                                         try {
                                             JSONObject jsonObject = new JSONObject(response);
@@ -601,6 +604,7 @@ public class CarPhotoActivity extends BaseActivity {
                                             e.printStackTrace();
                                         }
 
+                                        return response;
                                     }
 
                                     @Override
@@ -614,6 +618,7 @@ public class CarPhotoActivity extends BaseActivity {
                                 e.printStackTrace();
                             }
 
+                            return response;
                         }
 
                         @Override
@@ -635,7 +640,7 @@ public class CarPhotoActivity extends BaseActivity {
         map.put("file_content", PhotoUtils.bitmapToBase64(bitmap));
         OKhttptils.post((Activity) context, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 try {
                     Prefs.with(context).remove(sType);
                     JSONObject jsonObject = new JSONObject(response);
@@ -648,6 +653,7 @@ public class CarPhotoActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
+                return response;
             }
 
             @Override

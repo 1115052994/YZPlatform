@@ -119,15 +119,17 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="@dimen/common22dp"-->
       <!--/>-->
-    <com.xtzhangbinbin.jpq.view.AutoNextLineLinearlayout
+    <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/evaluate_layout"
-        android:layout_width="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/common30dp"
+        android:layout_marginLeft="@dimen/common25dp"
         android:layout_marginTop="@dimen/common8dp"
-        android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:max_select="1"
+        >
 
-    </com.xtzhangbinbin.jpq.view.AutoNextLineLinearlayout>
+    </com.zhy.view.flowlayout.TagFlowLayout>
 
     <View
         style="@style/gray_line"

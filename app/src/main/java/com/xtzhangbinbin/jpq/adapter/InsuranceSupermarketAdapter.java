@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xtzhangbinbin.jpq.R;
@@ -51,8 +52,8 @@ public class InsuranceSupermarketAdapter extends BaseAdapter {
         convertView= LinearLayout.inflate(context,R.layout.item_insurance_supermarket,null);
         TextView tvbxcs = convertView.findViewById(R.id.tvbxcs);
         tvbxcs.setText(result.get(position).getDict_desc());
-        ImageView imageView = convertView.findViewById(R.id.imageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        RelativeLayout relayout = convertView.findViewById(R.id.relayout);
+        relayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WebView.class);

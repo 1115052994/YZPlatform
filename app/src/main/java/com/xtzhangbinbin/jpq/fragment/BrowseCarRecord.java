@@ -79,16 +79,21 @@ public class BrowseCarRecord extends Fragment {
                 smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
                     @Override
                     public void onLoadmore(RefreshLayout refreshlayout) {
-                        PostRecord(Config.BROWSECARCOOKIES,++pageIndex,refreshlayout);
+                        if(pageIndex < pageCount){
+                            PostRecord(Config.BROWSECARCOOKIES,++pageIndex,refreshlayout);
+                        }else {
+                            refreshlayout.finishLoadmore();
+                        }
+
                     }
                 });
 
         browsingAdapter.getBrowsingCall(new CallBrowsing() {
             @Override
-            public void getCallBrowsing(View view, String is) {
+            public void getCallBrowsing(View view, String is,int position) {
                    //浏览记录地址
-                        result.clear();
-                        PostRecord(Config.BROWSECARCOOKIES,1,null);
+                        result.remove(position);
+                        browsingAdapter.notifyDataSetChanged();
             }
         });
         return inflate;
@@ -100,13 +105,15 @@ public class BrowseCarRecord extends Fragment {
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public void success(String response) {
+                public String success(String response) {
                     Log.i("aaaaa", "查询浏览记录: " + response);
                     Gson gson = GsonFactory.create();
                     QueryCarRecord queryRecord = gson.fromJson(response, QueryCarRecord.class);
                     pageCount=queryRecord.getData().getPageCount();
-                    List<QueryCarRecord.DataBean.ResultBean> result2 = queryRecord.getData().getResult();
-                    result.addAll(result2);
+                    result.addAll(queryRecord.getData().getResult());
+                    if(refreshlayout==null){
+                        browsingAdapter.notifyDataSetChanged();
+                    }
                     //没有信息图片显示
                     if (BrowseCarRecord.this.result.size() <= 0) {
                         browsing_Cardeal_image.setVisibility(View.VISIBLE);
@@ -123,11 +130,12 @@ public class BrowseCarRecord extends Fragment {
                             browsingAdapter.notifyDataSetChanged();
                         }
                     }
+                    return response;
                 }
 
                 @Override
                 public void fail(String response) {
-                    Toast.makeText(context, "查询失败", Toast.LENGTH_SHORT).show();
+                    Log.d("aaaaaa", "fail: "+response);
                 }
             });
         }

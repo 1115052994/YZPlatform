@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -98,7 +97,7 @@ public class CarAccessChexiSearch extends BaseActivity {
         map.put("brand",brandId);
         OKhttptils.post(this, Config.GETJUHECARTRIAN, map, new OKhttptils.HttpCallBack() {
             @Override
-            public void success(String response) {
+            public String success(String response) {
                 Log.i("acceschexi",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -118,6 +117,7 @@ public class CarAccessChexiSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return response;
             }
 
             @Override

@@ -1,4 +1,5 @@
 <LinearLayout
+
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +9,7 @@
     android:background="@color/bg_color">
     <ImageView
         android:id="@+id/evaluation_list_image"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/common180dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:visibility="gone"
@@ -21,13 +22,13 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/evaluation_list_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             >
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
