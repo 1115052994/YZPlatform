@@ -119,6 +119,15 @@ public class CarFinancialPersonal extends Fragment {
                 startActivity(new Intent(getContext(), CarCredit.class));
             }
         });
+        //贷款计算器
+        dkjsq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WebView.class);
+                intent.putExtra("Url","http://newhouse.fang.com/jsq/tq.htm");
+                startActivity(intent);
+            }
+        });
 
         return inflate;
     }

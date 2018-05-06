@@ -48,11 +48,11 @@
         <activity
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".activity.CityActivity"
@@ -76,7 +76,7 @@
 
         <activity
             android:name=".activity.RegisterActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.EnterpriseActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -124,9 +124,7 @@
         <activity
             android:name=".activity.AddProductActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.ProductServiceActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -156,40 +154,39 @@
             android:name=".activity.AddCarProduct"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.CompWalletActivity"
+        <activity
+            android:name=".activity.CompWalletActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
-        <activity android:name=".activity.CompWalletQueryActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.CompWalletQueryActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
-        <activity android:name=".activity.CompWalletPresentationActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.CompWalletPresentationActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
-        <activity android:name=".activity.CompWalletBindAccountActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.CompWalletBindAccountActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
-        <activity android:name=".activity.CompWalletBindWechatActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.CompWalletBindWechatActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
-        <activity android:name=".activity.CompWalletBindAlipayActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.CompWalletBindAlipayActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
-        <activity android:name=".activity.CompWalletBindBankActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.CompWalletBindBankActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
-        </activity>
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        android:windowSoftInputMode="adjustPan" />
         <!-- liyan start -->
         <activity
             android:name=".activity.OrdersSubmitActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.OrdersPaySuccessActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -200,8 +197,7 @@
         <activity
             android:name=".activity.OrdersCompListActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.OrdersUseActivity"
             android:launchMode="singleTask"
@@ -322,7 +318,11 @@
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.CarFinancial">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.InsuranceSupermarket" />
         <activity android:name=".camera.MainActivity" />
@@ -341,13 +341,11 @@
             android:name=".activity.PersonalCenterActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.CarCredit"></activity>
-        <activity android:name=".activity.WebView"/>
+        <activity android:name=".activity.CarCredit" />
+        <activity android:name=".activity.WebView" />
         <activity android:name=".activity.LoanDetails" />
         <activity android:name=".activity.MessageEntry" />
-        <activity android:name=".activity.ETC">
-
-        </activity>
+        <activity android:name=".activity.ETC"></activity>
     </application>
 
 </manifest>
