@@ -70,7 +70,7 @@ public class OrdersCompEndActivity extends BaseActivity {
             map.put("order_id", order_id);
             OKhttptils.post(this, Config.ORDERS_GET_BYCODE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Gson gson = GsonFactory.create();
                     orders = gson.fromJson(response, OrdersView.class);
                     //根据订单信息构建出商品对象，以便于信息展示和下一步的支付操作
@@ -80,7 +80,7 @@ public class OrdersCompEndActivity extends BaseActivity {
                         orders_comp_end_order_id.setText("订单号:" + orders.getData().getResult().getOrder_number());
                         orders_comp_end_date.setText("消费时间：" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                     }
-                    return response;
+
                 }
 
                 @Override

@@ -23,8 +23,6 @@ public class WebView extends BaseActivity {
 
     @BindView(R.id.webView)
     android.webkit.WebView webView;
-    @BindView(R.id.progress_Bar)
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

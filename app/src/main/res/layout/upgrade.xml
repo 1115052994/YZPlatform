@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:minHeight="100dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_cricle5_white"
+            android:orientation="vertical"
+            android:padding="25dp"
+            android:gravity="center_horizontal"
+            >
+
+            <TextView
+                style="@style/upgradeMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发现新版本"
+                android:textColor="@color/text_33"
+                android:textSize="18sp"
+                android:layout_marginBottom="13dp"
+                />
+
+            <TextView
+                android:id="@+id/upgrade_versionName"
+                style="@style/upgradeMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="13dp"/>
+
+            <TextView
+                android:id="@+id/upgrade_content"
+                style="@style/upgradeMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="100dp" />
+
+            <Button
+                android:id="@+id/upgrade_up"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common33dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/sell_button"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:text="升级" />
+
+            <com.xtzhangbinbin.jpq.upgrade.CustomProgressBar
+                android:id="@+id/newview_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common33dp"
+                android:layout_margin="1dp"
+                android:visibility="gone"
+                android:progressDrawable="@drawable/progressbar_bg" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/upgrade_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/upgrade_close_bg"
+        android:textSize="@dimen/text_size_18sp"
+        android:text="×" />
+
+</RelativeLayout>

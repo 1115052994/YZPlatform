@@ -442,7 +442,7 @@ public class BaseActivity extends AppCompatActivity{
                     map.put("file_content",PhotoUtils.bitmapToBase64(bitmap1));
                     OKhttptils.post((Activity) mContext, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
                         @Override
-                        public String success(String response) {
+                        public void success(String response) {
                             try {
 
                                 JSONObject jsonObject = new JSONObject(response);
@@ -459,7 +459,6 @@ public class BaseActivity extends AppCompatActivity{
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            return response;
                         }
 
                         @Override
@@ -484,7 +483,7 @@ public class BaseActivity extends AppCompatActivity{
         map.put("file_content",PhotoUtils.bitmapToBase64(bitmap));
         OKhttptils.post((Activity) context, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
 
                     JSONObject jsonObject = new JSONObject(response);
@@ -497,7 +496,6 @@ public class BaseActivity extends AppCompatActivity{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
             }
 
             @Override

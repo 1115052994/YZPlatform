@@ -26,6 +26,7 @@ import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.DateUtil;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import java.text.DecimalFormat;
@@ -65,7 +66,6 @@ public class CompWalletQueryActivity extends BaseActivity {
     TextView comp_wallet_query_zc;
     @BindView(R.id.no_collect_server_image)
     ImageView no_collect_server_image;
-    private MyProgressDialog dialog;
 
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
@@ -80,9 +80,8 @@ public class CompWalletQueryActivity extends BaseActivity {
 
         result = new ArrayList<>();
         init();
-        initData(1, null);
         initAdapter();
-
+        initData(1, null);
     }
 
     @Override
@@ -92,7 +91,6 @@ public class CompWalletQueryActivity extends BaseActivity {
     }
 
     public void init(){
-        dialog = MyProgressDialog.createDialog(this);
         comp_wallet_query_month.setText(new SimpleDateFormat("yyyy-MM").format(new Date()));
         comp_wallet_query_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +107,7 @@ public class CompWalletQueryActivity extends BaseActivity {
                     @Override
                     public void onDatePicked(String year, String month) {
                         year_month = year + "-" + month;
+                        result.clear();
                         initData(1, null);
                     }
                 });
@@ -133,8 +132,6 @@ public class CompWalletQueryActivity extends BaseActivity {
     }
 
     public void initData(final int pageIndex, final RefreshLayout refreshlayout) {
-        dialog.setMessage("正在加载数据，请稍候");
-        dialog.show();
         Map<String, String> map = new HashMap<>();
         if(null != year_month){
             map.put("date", year_month);
@@ -144,7 +141,7 @@ public class CompWalletQueryActivity extends BaseActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, Config.COMP_WALLET_INTEGRATED_QUERY, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.w("test", response);
                     Gson gson = GsonFactory.create();
                     CompWalletQuery wallet = gson.fromJson(response, CompWalletQuery.class);
@@ -154,7 +151,6 @@ public class CompWalletQueryActivity extends BaseActivity {
                     comp_wallet_query_zc.setText("收入:" + new DecimalFormat("#0.00").format(wallet.getData().getResult().getZcmoney()));
                     pageCount = wallet.getData().getResult().getPageCount();
                     result.addAll(result2);
-                    initAdapter();
                     if(result.size() > 0){
                         //没有信息图片隐藏
                         no_collect_server_image.setVisibility(View.GONE);
@@ -173,13 +169,11 @@ public class CompWalletQueryActivity extends BaseActivity {
                         no_collect_server_image.setVisibility(View.VISIBLE);
                     }
                     closeDialog();
-                    return response;
                 }
 
                 @Override
                 public void fail(String response) {
                     Log.w("test", response);
-                    closeDialog();
                     Toast.makeText(CompWalletQueryActivity.this, "查询失败", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -209,22 +203,28 @@ public class CompWalletQueryActivity extends BaseActivity {
                 TextView item_comp_wallet_child_type = holder.getView(R.id.item_comp_wallet_child_type);
                 //帐号，如果是收入，显示消费名称。
                 TextView item_comp_wallet_child_account = holder.getView(R.id.item_comp_wallet_child_account);
-                switch(result.get(position).getCard_type()){
-                    case "alipay":
-                        item_comp_wallet_child_account.setText(result.get(position).getAlipay_id());
-                        item_comp_wallet_child_type.setText("(支付宝)");
-                        break;
-                    case "wechat":
-                        item_comp_wallet_child_account.setText(result.get(position).getWechat_id());
-                        item_comp_wallet_child_type.setText("(微信)");
-                        break;
-                    case "bankcard":
-                        item_comp_wallet_child_account.setText(result.get(position).getCard_bc_no());
-                        item_comp_wallet_child_type.setText("(银行卡)");
-                        break;
-                    default:
-                        item_comp_wallet_child_account.setText(result.get(position).getCard_type());
+                String name = "";
+                String type = "";
+                if(!StringUtil.isEmpty(result.get(position).getCard_type())){
+                    switch(result.get(position).getCard_type()){
+                        case "alipay":
+                            name = result.get(position).getAlipay_id();
+                            type = "(支付宝)";
+                            break;
+                        case "wechat":
+                            name = result.get(position).getWechat_id();
+                            type = "(微信)";
+                            break;
+                        case "bankcard":
+                            name = result.get(position).getCard_bc_no();
+                            type = "(银行卡)";
+                            break;
+                        default:
+                            name = result.get(position).getCard_type();
+                    }
                 }
+                item_comp_wallet_child_account.setText(name);
+                item_comp_wallet_child_type.setText(type);
                 //操作时间
                 TextView item_comp_wallet_date = holder.getView(R.id.item_comp_wallet_date);
                 try {
@@ -242,11 +242,5 @@ public class CompWalletQueryActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         closeDialog();
-    }
-
-    public void closeDialog(){
-        if(null != dialog && dialog.isShowing()){
-            dialog.dismiss();
-        }
     }
 }

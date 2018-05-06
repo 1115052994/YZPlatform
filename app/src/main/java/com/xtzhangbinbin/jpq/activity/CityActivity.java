@@ -271,7 +271,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         map.put("pageIndex", "1");
         OKhttptils.post(this, Config.QUERYHEADCITY, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -360,7 +360,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -376,7 +376,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         map.put("pageIndex", "1");
         OKhttptils.post(this, Config.QUERYHOTCITY, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -399,7 +399,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -416,7 +416,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         map.put("value", s.trim());
         OKhttptils.post(this, Config.QUERYCITY, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -435,7 +435,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

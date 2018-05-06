@@ -66,7 +66,7 @@ public class EvaluationList extends BaseActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.i("aaaaa", "查询评价: " + response);
                     Gson gson = GsonFactory.create();
                     QueryNum queryNum = gson.fromJson(response, QueryNum.class);
@@ -81,7 +81,7 @@ public class EvaluationList extends BaseActivity {
                     evaluationListTab.setupWithViewPager(evaluationListPager);
                     TabUtil.showTabTextAdapteIndicator(evaluationListTab);
                     evaluationListTab.setTabMode(TabLayout.MODE_FIXED);
-                    return response;
+
                 }
 
                 @Override

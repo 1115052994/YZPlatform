@@ -33,6 +33,7 @@ import com.xtzhangbinbin.jpq.entity.CompDetailBean;
 import com.xtzhangbinbin.jpq.entity.WeixiuBean;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.CircleImageView;
 import com.xtzhangbinbin.jpq.view.indicator.IndicatorAdapter;
@@ -170,9 +171,9 @@ public class CompDetail extends BaseActivity {
                 map.put("comp_id", comp_id);
                 OKhttptils.post(CompDetail.this, Config.BROWSECOMP, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Log.i("aaaaa", "添加企业浏览记录: " + response);
-                        return response;
+
                     }
 
                     @Override
@@ -314,9 +315,7 @@ public class CompDetail extends BaseActivity {
                 payBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("pro_id", weixiuBean.getProd_id());
-                        JumpUtil.newInstance().jumpRight(getApplicationContext(), CompDetail.class, bundle);
+                        pay(weixiuBean.getProd_id());
                     }
                 });
                 recyclerViewWXChild = holder.getView(R.id.recyclerView_wx_child);
@@ -342,7 +341,7 @@ public class CompDetail extends BaseActivity {
         pqAdapter = new CommonRecyclerAdapter(this, pqList, R.layout.item_wx) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-                WeixiuBean.DataBean.ResultBean weixiuBean = pqList.get(position);
+                final WeixiuBean.DataBean.ResultBean weixiuBean = pqList.get(position);
                 TextView wxName = holder.getView(R.id.byName_tv);
                 wxName.setText(weixiuBean.getDict_desc());
                 TextView wxMoney = holder.getView(R.id.money_tv);
@@ -351,6 +350,13 @@ public class CompDetail extends BaseActivity {
                 wxTotalMoney.setText("总价￥" + (int) weixiuBean.getProd_price());
                 TextView wxyhlMoney = holder.getView(R.id.yhPrice_tv);
                 wxyhlMoney.setText("优惠价￥" + (int) weixiuBean.getProd_reduced_price());
+                TextView payBtn = holder.getView(R.id.pay_submit);
+                payBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        pay(weixiuBean.getProd_id());
+                    }
+                });
                 recyclerViewPQChild = holder.getView(R.id.recyclerView_wx_child);
                 // 处理滑动冲突
 //                recyclerViewWXChild.setFocusableInTouchMode(false); //设置不需要焦点
@@ -374,7 +380,7 @@ public class CompDetail extends BaseActivity {
         dpAdapter = new CommonRecyclerAdapter(this, dpList, R.layout.item_wx) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-                WeixiuBean.DataBean.ResultBean weixiuBean = dpList.get(position);
+                final WeixiuBean.DataBean.ResultBean weixiuBean = dpList.get(position);
                 TextView wxName = holder.getView(R.id.byName_tv);
                 wxName.setText(weixiuBean.getDict_desc());
                 TextView wxMoney = holder.getView(R.id.money_tv);
@@ -383,6 +389,13 @@ public class CompDetail extends BaseActivity {
                 wxTotalMoney.setText("总价￥" + (int) weixiuBean.getProd_price());
                 TextView wxyhlMoney = holder.getView(R.id.yhPrice_tv);
                 wxyhlMoney.setText("优惠价￥" + (int) weixiuBean.getProd_reduced_price());
+                TextView payBtn = holder.getView(R.id.pay_submit);
+                payBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        pay(weixiuBean.getProd_id());
+                    }
+                });
                 recyclerViewDPChild = holder.getView(R.id.recyclerView_wx_child);
                 // 处理滑动冲突
 //                recyclerViewWXChild.setFocusableInTouchMode(false); //设置不需要焦点
@@ -406,7 +419,7 @@ public class CompDetail extends BaseActivity {
         xcAdapter = new CommonRecyclerAdapter(this, xcList, R.layout.item_wx) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-                WeixiuBean.DataBean.ResultBean weixiuBean = xcList.get(position);
+                final WeixiuBean.DataBean.ResultBean weixiuBean = xcList.get(position);
                 TextView wxName = holder.getView(R.id.byName_tv);
                 wxName.setText(weixiuBean.getDict_desc());
                 TextView wxMoney = holder.getView(R.id.money_tv);
@@ -415,6 +428,13 @@ public class CompDetail extends BaseActivity {
                 wxTotalMoney.setText("总价￥" + (int) weixiuBean.getProd_price());
                 TextView wxyhlMoney = holder.getView(R.id.yhPrice_tv);
                 wxyhlMoney.setText("优惠价￥" + (int) weixiuBean.getProd_reduced_price());
+                TextView payBtn = holder.getView(R.id.pay_submit);
+                payBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        pay(weixiuBean.getProd_id());
+                    }
+                });
                 recyclerViewXCChild = holder.getView(R.id.recyclerView_wx_child);
                 // 处理滑动冲突
 //                recyclerViewWXChild.setFocusableInTouchMode(false); //设置不需要焦点
@@ -438,7 +458,7 @@ public class CompDetail extends BaseActivity {
         mrAdapter = new CommonRecyclerAdapter(this, mrList, R.layout.item_wx) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-                WeixiuBean.DataBean.ResultBean weixiuBean = mrList.get(position);
+                final WeixiuBean.DataBean.ResultBean weixiuBean = mrList.get(position);
                 TextView wxName = holder.getView(R.id.byName_tv);
                 wxName.setText(weixiuBean.getDict_desc());
                 TextView wxMoney = holder.getView(R.id.money_tv);
@@ -447,6 +467,13 @@ public class CompDetail extends BaseActivity {
                 wxTotalMoney.setText("总价￥" + (int) weixiuBean.getProd_price());
                 TextView wxyhlMoney = holder.getView(R.id.yhPrice_tv);
                 wxyhlMoney.setText("优惠价￥" + (int) weixiuBean.getProd_reduced_price());
+                TextView payBtn = holder.getView(R.id.pay_submit);
+                payBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        pay(weixiuBean.getProd_id());
+                    }
+                });
                 recyclerViewMRChild = holder.getView(R.id.recyclerView_wx_child);
                 // 处理滑动冲突
 //                recyclerViewWXChild.setFocusableInTouchMode(false); //设置不需要焦点
@@ -512,7 +539,7 @@ public class CompDetail extends BaseActivity {
         map.put("comp_id", comp_id);
         OKhttptils.post(this, Config.GETCOMPDETAIL, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("status").equals("1")) {
@@ -576,7 +603,7 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -604,7 +631,7 @@ public class CompDetail extends BaseActivity {
         map.put("serverId", serverId);
         OKhttptils.post(this, Config.GETPRODUCTITEMBYSERVERTYPE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -663,7 +690,7 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -682,7 +709,7 @@ public class CompDetail extends BaseActivity {
         map.put("comp_id", comp_id);
         OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("appraise===", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -706,7 +733,7 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -796,7 +823,7 @@ public class CompDetail extends BaseActivity {
         map.put("coll_content_id", comp_id);
         OKhttptils.post(this, Config.WHETHERCOLLCOMP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
@@ -817,7 +844,7 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -836,7 +863,7 @@ public class CompDetail extends BaseActivity {
         map.put("coll_content_id", comp_id);
         OKhttptils.post(this, Config.ACCRETIONCOLLCOMP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
@@ -853,7 +880,7 @@ public class CompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -861,5 +888,20 @@ public class CompDetail extends BaseActivity {
 
             }
         });
+    }
+
+    /**
+     * 支付使用方法
+     */
+    public void pay(String pro_id){
+        //如果已登录，调用支付
+        if(null != Prefs.with(this).read("user_token")){
+            Bundle bundle = new Bundle();
+            bundle.putString("pro_id", pro_id);
+            JumpUtil.newInstance().jumpRight(getApplicationContext(), CompDetail.class, bundle);
+        } else {
+            //如果没有登录，跳转到登录页面
+            JumpUtil.newInstance().jumpRight(getApplicationContext(), LoginActivity.class);
+        }
     }
 }

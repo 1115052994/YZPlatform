@@ -50,7 +50,7 @@ public class PersonalCenterActivity extends BaseActivity {
             Map<String, String> map = new HashMap<>();
             OKhttptils.post(PersonalCenterActivity.this, Config.GET_PERS_INFO, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.d(TAG, "success个人设置: " + response);
                     Gson gson = GsonFactory.create();
                     PersonalSetting setting = gson.fromJson(response, PersonalSetting.class);
@@ -64,7 +64,7 @@ public class PersonalCenterActivity extends BaseActivity {
                     } else {
                         OKhttptils.getPic(PersonalCenterActivity.this, head_file_id, mIcon);
                     }
-                    return response;
+
                 }
 
                 @Override
@@ -91,6 +91,7 @@ public class PersonalCenterActivity extends BaseActivity {
                 break;
             case R.id.mOrders:
                 //我的订单
+                JumpUtil.newInstance().jumpRight(this, OrdersPersonalActivity.class);
                 break;
             case R.id.mCollect:
                 //我的收藏

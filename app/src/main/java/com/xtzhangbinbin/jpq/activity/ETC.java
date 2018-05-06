@@ -82,7 +82,7 @@ public class ETC extends BaseActivity {
 //        map.put("car_id", "15985");
         OKhttptils.post(ETC.this, Config.SELECTETC, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Log.d("aaaaa", "onResponse获取数据: " + response);
                         Gson gson = GsonFactory.create();
                         EtcBean enterprise = gson.fromJson(response, EtcBean.class);
@@ -109,7 +109,7 @@ public class ETC extends BaseActivity {
                                 etcAdapter.notifyDataSetChanged();
                             }
                         }
-                        return response;
+
                     }
 
                     @Override

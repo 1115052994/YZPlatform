@@ -97,7 +97,7 @@ public class CarAccessModeSearch extends BaseActivity {
         map.put("series",chexiId);
         OKhttptils.post(this, Config.GETJUHEMODEL, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("series",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -117,7 +117,7 @@ public class CarAccessModeSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

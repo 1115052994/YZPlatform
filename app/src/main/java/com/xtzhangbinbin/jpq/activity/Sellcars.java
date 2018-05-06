@@ -74,7 +74,7 @@ public class Sellcars extends AppCompatActivity {
         if (NetUtil.isNetAvailable(this)) {
             OKhttptils.post(this, Config.SELLCOUNT, null, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.i("aaaaa", "查询卖车申请次数: " + response);
                     try {
                         JSONObject jsonObject = new JSONObject(response);
@@ -83,7 +83,7 @@ public class Sellcars extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
 
                 @Override
@@ -100,7 +100,7 @@ public class Sellcars extends AppCompatActivity {
             map.put("sell_phone", phone);
             OKhttptils.post(this, Config.SAVESELLER, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     try {
                         Log.i("aaaaa", "查询二手车收藏: " + response);
                         JSONObject jsonObject = new JSONObject(response);
@@ -116,7 +116,7 @@ public class Sellcars extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
 
                 @Override

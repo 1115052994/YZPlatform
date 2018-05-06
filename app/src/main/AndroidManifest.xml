@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -47,13 +48,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.CityActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -157,36 +152,36 @@
         <activity
             android:name=".activity.CompWalletActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.CompWalletQueryActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.CompWalletPresentationActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.CompWalletBindAccountActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.CompWalletBindWechatActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.CompWalletBindAlipayActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.CompWalletBindBankActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         android:windowSoftInputMode="adjustPan" />
         <!-- liyan start -->
         <activity
             android:name=".activity.OrdersSubmitActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.OrdersPaySuccessActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -205,7 +200,7 @@
         <activity
             android:name=".activity.OrdersScanActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.OrdersCompEndActivity"
             android:launchMode="singleTask"
@@ -217,6 +212,23 @@
         <activity
             android:name=".activity.OrdersPersonalViewActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CompWalletBindStyleActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+
+        <activity
+            android:name=".activity.CompWalletPresentationListActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity
+            android:name=".activity.BespeakCompActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- 微信支付所使用的activity -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
@@ -317,30 +329,16 @@
             android:name=".activity.CarAccessModeSearch"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.CarFinancial">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activity.CarFinancial" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".activity.InsuranceSupermarket" />
         <activity android:name=".camera.MainActivity" />
         <activity android:name=".camera.FileActivity" />
         <activity android:name=".camera.test.TestActivity" />
         <activity android:name=".camera.PhotographActivity" />
-        <activity
-            android:name=".activity.CarProduct"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name=".activity.CompanyCenterActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name=".activity.PersonalCenterActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.CarProduct"></activity>
+        <activity android:name=".activity.CompanyCenterActivity" />
+        <activity android:name=".activity.PersonalCenterActivity"></activity>
         <activity android:name=".activity.CarCredit" />
         <activity android:name=".activity.WebView" />
         <activity android:name=".activity.LoanDetails" />

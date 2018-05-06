@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common110dp"
+    android:background="@color/white"
+    android:focusable="false"
+    android:clickable="false"
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common5dp"
+        android:layout_below="@id/linear"
+        android:background="@color/bg_color" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        >
+        <ImageView
+            android:id="@+id/bespeak_comp_icon"
+            android:layout_width="@dimen/common137dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/b_img"
+            android:adjustViewBounds="true"
+            />
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/common10dp"
+            >
+            <TextView
+                android:id="@+id/item_bespeak_car_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_14sp"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/text_33"
+                />
+            <Button
+                android:id="@+id/item_bespeak_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/common30dp"
+                android:text="拨打电话"
+                android:background="@drawable/sell_button"
+                android:textSize="@dimen/text_size_13sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentBottom="true"
+                />
+            <TextView
+                android:id="@+id/bespeak_comp_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_15sp"
+                android:textColor="@color/text_66"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/item_bespeak_car_name"
+                android:layout_above="@id/item_bespeak_phone"
+                />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

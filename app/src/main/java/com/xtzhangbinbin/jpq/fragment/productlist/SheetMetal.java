@@ -131,7 +131,7 @@ public class SheetMetal extends Fragment {
         map.put("pageIndex",String.valueOf(pageIndex));
         OKhttptils.post((Activity) getContext(), Config.COMPPRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "onResponse456: " + response);
                 Gson gson = GsonFactory.create();
                 CarBeautyBean carBeauty = gson.fromJson(response, CarBeautyBean.class);
@@ -160,7 +160,7 @@ public class SheetMetal extends Fragment {
                     }
                 }
 
-                return response;
+
             }
 
             @Override

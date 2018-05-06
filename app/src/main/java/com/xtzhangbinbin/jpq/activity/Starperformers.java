@@ -142,7 +142,7 @@ public class Starperformers extends BaseActivity {
         result.clear();
         OKhttptils.post(Starperformers.this, Config.SELECTSTAR, null, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "getData1: " + response);
                 Gson gson = GsonFactory.create();
                 Querystar querystar = gson.fromJson(response, Querystar.class);
@@ -157,7 +157,7 @@ public class Starperformers extends BaseActivity {
                     noInformationImage.setVisibility(View.VISIBLE);
                 }
                 starAdapter.notifyDataSetChanged();
-                return response;
+
             }
 
             @Override

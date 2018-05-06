@@ -154,7 +154,7 @@ public class OrdersSubmitActivity extends BaseActivity {
             //设置订单号默认为null
             OKhttptils.post(this, Config.ORDERS_CREATE, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     try{
                         JSONObject object = new JSONObject(response);
                         if(null != object && null != object.getJSONObject("data")) {
@@ -167,7 +167,7 @@ public class OrdersSubmitActivity extends BaseActivity {
                         e.printStackTrace();
                         ToastUtil.show(OrdersSubmitActivity.this, "订单创建失败，请稍候重试！！");
                     }
-                    return response;
+
                 }
 
                 @Override
@@ -235,7 +235,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         map.put("prod_id", pro_id);
         OKhttptils.post(this, Config.ORDERS_SHOW_PRODUCT_BYID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Gson gson = GsonFactory.create();
                 product = gson.fromJson(response, ShowProductDetaile.class);
                 if (null != product) {
@@ -244,7 +244,7 @@ public class OrdersSubmitActivity extends BaseActivity {
                     price.setText(new DecimalFormat("#.#").format(product.getData().getResult().getProd_reduced_price()));
                     marketPrice.setText("原价：" + new DecimalFormat("#.#").format(product.getData().getResult().getProd_price()) + "元");
                 }
-                return response;
+
             }
 
             @Override
@@ -270,7 +270,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         map.put("order_id", order_id);
         OKhttptils.post(this, Config.ORDERS_GET_BYCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Gson gson = GsonFactory.create();
                 orders = gson.fromJson(response, OrdersView.class);
                 product = gson.fromJson(response, ShowProductDetaile.class);
@@ -283,7 +283,7 @@ public class OrdersSubmitActivity extends BaseActivity {
                     price.setText(new DecimalFormat("#.#").format(product.getData().getResult().getProd_reduced_price()));
                     marketPrice.setText("原价：" + new DecimalFormat("#.#").format(product.getData().getResult().getProd_price()) + "元");
                 }
-                return response;
+
             }
 
             @Override
@@ -312,9 +312,9 @@ public class OrdersSubmitActivity extends BaseActivity {
 //        map.put("money", money);
         OKhttptils.post(this, Config.ORDERS_PAY_SUCCESS, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.w("test", response);
-                return response;
+
             }
 
             @Override
@@ -349,9 +349,9 @@ public class OrdersSubmitActivity extends BaseActivity {
         map.put("gmt_payment_date", obj.getString("timestamp"));//支付时间
         OKhttptils.post(this, Config.ORDERS_PAY_LOG, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.w("test", response);
-                return response;
+
             }
 
             @Override
@@ -381,7 +381,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         //设置订单号默认为null
         OKhttptils.post(this, Config.ORDERS_WECCHAT_CREATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 dialog.dismiss();
                 try{
                     JSONObject object = new JSONObject(response);
@@ -413,7 +413,7 @@ public class OrdersSubmitActivity extends BaseActivity {
                     e.printStackTrace();
                     ToastUtil.show(OrdersSubmitActivity.this, "订单创建失败，请稍候重试！！");
                 }
-                return response;
+
             }
 
             @Override

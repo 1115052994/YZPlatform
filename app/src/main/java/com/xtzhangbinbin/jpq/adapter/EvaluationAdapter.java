@@ -109,7 +109,7 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
             if (NetUtil.isNetAvailable(context)) {
                 OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONObject data = jsonObject.getJSONObject("data");
@@ -136,7 +136,7 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        return response;
+
                     }
 
                     @Override

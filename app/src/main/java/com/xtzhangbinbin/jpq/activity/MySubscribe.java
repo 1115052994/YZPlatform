@@ -260,7 +260,7 @@ public class MySubscribe extends BaseActivity {
             map.put("cityName", subscribe.get("city"));
             OKhttptils.post(this, Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     try {
                         JSONObject object = new JSONObject(response);
                         JSONObject data = object.getJSONObject("data");
@@ -271,7 +271,7 @@ public class MySubscribe extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return response;
+
                 }
                 @Override
                 public void fail(String response) {
@@ -307,7 +307,7 @@ public class MySubscribe extends BaseActivity {
         //Log.i("addSubscribe",map.toString());
         OKhttptils.post(this, Config.SUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 JSONObject object = null;
                 try {
                     object = new JSONObject(response);
@@ -321,7 +321,7 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
             @Override
             public void fail(String response) {
@@ -335,7 +335,7 @@ public class MySubscribe extends BaseActivity {
         Map<String,String> map = new HashMap<>();
         OKhttptils.post(this, Config.SELECTUSERSUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("Subscribe",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -351,7 +351,7 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -367,7 +367,7 @@ public class MySubscribe extends BaseActivity {
         map.put("car_subs_id",bean.getCar_subs_id());
         OKhttptils.post(this, Config.DELETESUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
@@ -381,7 +381,7 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -412,7 +412,7 @@ public class MySubscribe extends BaseActivity {
         Log.i("updateSubscribe---",map.toString());
         OKhttptils.post(MySubscribe.this, Config.UPDATESUBSCRIPTIONFILTRATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("updateSubscribe",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -424,7 +424,7 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -478,7 +478,7 @@ public class MySubscribe extends BaseActivity {
         //car_brand  car_emissions_start  car_emissions_end  histroy_word
         OKhttptils.post(MySubscribe.this, Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("Subscribe",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -501,7 +501,7 @@ public class MySubscribe extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

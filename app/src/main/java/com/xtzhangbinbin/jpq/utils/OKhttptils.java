@@ -14,6 +14,7 @@ import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.LoginActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
@@ -25,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.Response;
 
 public class OKhttptils {
     public static void post(final Activity context, String url, Map<String, String> params, final HttpCallBack callBack) {
@@ -85,7 +87,7 @@ public class OKhttptils {
     }
 
     public interface HttpCallBack{
-        String success(String response);
+        void success(String response);
         void fail(String response);
     }
 
@@ -212,7 +214,6 @@ public class OKhttptils {
                     .execute(new StringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int id) {
-                            ToastUtil.noNAR(context);
                         }
                         @Override
                         public void onResponse(String response, int id) {
@@ -235,7 +236,6 @@ public class OKhttptils {
                                         icon.setImageResource(R.drawable.circle_2);
 
                                 } else {
-                                    ToastUtil.noNAR(context);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

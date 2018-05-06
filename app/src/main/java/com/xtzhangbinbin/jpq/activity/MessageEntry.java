@@ -142,7 +142,7 @@ public class MessageEntry extends BaseActivity implements AMapLocationListener {
         map.put("zx_create_date", zx_create_date);
         OKhttptils.post(MessageEntry.this, Config.INSERTINFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(MessageEntry.this).setMessage1("温馨提示").setMessage2("  您的信息已经提交成功!").showDialog();
                 ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
@@ -158,7 +158,7 @@ public class MessageEntry extends BaseActivity implements AMapLocationListener {
                         ordinaryDialog.dismiss();
                     }
                 });
-                return response;
+
             }
 
             @Override
@@ -252,7 +252,7 @@ public class MessageEntry extends BaseActivity implements AMapLocationListener {
                     OKhttptils.post(MessageEntry.this, Config.GETCITYIDBYCITYNAME, map, new
                             OKhttptils.HttpCallBack() {
                                 @Override
-                                public String success(String response) {
+                                public void success(String response) {
 
                                     try {
                                         JSONObject jsonObject = new JSONObject(response);
@@ -264,7 +264,7 @@ public class MessageEntry extends BaseActivity implements AMapLocationListener {
                                         e.printStackTrace();
                                     }
 
-                                    return response;
+
                                 }
 
                                 @Override

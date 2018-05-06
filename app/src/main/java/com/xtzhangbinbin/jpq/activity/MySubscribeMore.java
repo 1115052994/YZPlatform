@@ -146,7 +146,7 @@ public class MySubscribeMore extends BaseActivity {
         //car_brand  car_emissions_start  car_emissions_end  histroy_word
         OKhttptils.post(MySubscribeMore.this, Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("Subscribe",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -170,7 +170,7 @@ public class MySubscribeMore extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

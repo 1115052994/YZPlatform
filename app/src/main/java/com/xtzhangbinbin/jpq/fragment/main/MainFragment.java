@@ -31,6 +31,7 @@ import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
+import com.xtzhangbinbin.jpq.zxing.android.CaptureActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -103,7 +104,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(getActivity(), Config.SELECTADVEMAIN, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("getData===", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -122,7 +123,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -175,6 +176,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
         //ToastUtil.show(getContext(),view.getId());
         switch (view.getId()) {
             case R.id.image_scan:
+                JumpUtil.newInstance().jumpRight(getContext(), CaptureActivity.class);
                 break;
             case R.id.image_man:
                 user_type = Prefs.with(getContext()).read("user_type");

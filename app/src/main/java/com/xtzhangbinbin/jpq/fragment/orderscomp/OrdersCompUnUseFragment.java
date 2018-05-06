@@ -92,7 +92,7 @@ public class OrdersCompUnUseFragment extends Fragment {
         dialog = MyProgressDialog.createDialog(context);
         dialog.setMessage("正在加载数据，请稍候");
         dialog.show();
-        initData();
+        initAdapter();
         getOrders(Config.ORDERS_GET_COMP_LIST, 1, null);
         return inflate;
     }
@@ -105,13 +105,12 @@ public class OrdersCompUnUseFragment extends Fragment {
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Gson gson = GsonFactory.create();
                     OrdersCompInfo carCompInfo = gson.fromJson(response, OrdersCompInfo.class);
                     List<OrdersCompInfo.DataBean.ResultBean> result2 = carCompInfo.getData().getResult();
                     pageCount = carCompInfo.getData().getPageCount();
                     result.addAll(result2);
-                    initData();
 
                     //没有信息图片显示
                     if (result.size() <= 0) {
@@ -133,7 +132,7 @@ public class OrdersCompUnUseFragment extends Fragment {
                     if(null != dialog && dialog.isShowing()){
                         dialog.dismiss();
                     }
-                    return response;
+
                 }
 
                 @Override
@@ -149,7 +148,7 @@ public class OrdersCompUnUseFragment extends Fragment {
         }
     }
 
-    public void initData(){
+    public void initAdapter(){
         ordersCompAdapter = new CommonRecyclerAdapter(context, result, R.layout.item_orderscomp_list) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {

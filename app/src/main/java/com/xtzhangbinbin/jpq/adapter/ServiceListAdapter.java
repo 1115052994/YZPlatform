@@ -100,10 +100,10 @@ public class ServiceListAdapter extends BaseAdapter {
                                     map.put("coll_id",result.get(position).getColl_id());
                                     OKhttptils.post((Activity) context, Config.REMOVECOLL, map, new OKhttptils.HttpCallBack() {
                                         @Override
-                                        public String success(String response) {
+                                        public void success(String response) {
                                             Log.i("aaaa", "删除: " + response);
                                             callCollect.getCallcollect(view,1,position);
-                                            return response;
+
                                         }
                                         @Override
                                         public void fail(String response) {
@@ -143,7 +143,7 @@ public class ServiceListAdapter extends BaseAdapter {
                 map.put("file_id",file_id);
                 OKhttptils.post((Activity) context, Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
                         @Override
-                        public String success(String response) {
+                        public void success(String response) {
                             Log.w("aaa", "onResponse获取base64: " + response );
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
@@ -165,7 +165,7 @@ public class ServiceListAdapter extends BaseAdapter {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            return response;
+
                         }
                         @Override
                         public void fail(String response) {

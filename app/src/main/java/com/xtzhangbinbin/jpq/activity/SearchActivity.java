@@ -163,7 +163,7 @@ public class SearchActivity extends AppCompatActivity {
         map.put("hotword_type", type);
         OKhttptils.post(SearchActivity.this, Config.GETSEARCHHOTWORD, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -184,7 +184,7 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -226,7 +226,7 @@ public class SearchActivity extends AppCompatActivity {
         map.put("comp_name", s);
         OKhttptils.post(this, Config.GETSEARCHCOMP, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -249,7 +249,7 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -264,7 +264,7 @@ public class SearchActivity extends AppCompatActivity {
         map.put("car_name", s);
         OKhttptils.post(this, Config.GETSEARCHCAR, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -286,7 +286,7 @@ public class SearchActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

@@ -122,7 +122,7 @@ public class AccessCar extends BaseActivity {
         map.put("cityName", cityName);
         OKhttptils.post(this, Config.GETJHCITYID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     JSONObject data = object.getJSONObject("data");
@@ -132,7 +132,7 @@ public class AccessCar extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -160,7 +160,7 @@ public class AccessCar extends BaseActivity {
         map.put("price","");
         OKhttptils.post(this, Config.GETCARASSESS, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     if ("1".equals(object.getString("status"))){
@@ -174,7 +174,7 @@ public class AccessCar extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

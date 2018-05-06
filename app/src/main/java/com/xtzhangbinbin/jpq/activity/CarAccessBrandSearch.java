@@ -232,7 +232,7 @@ public class CarAccessBrandSearch extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETBRAND, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     JSONObject data = object.getJSONObject("data");
@@ -261,7 +261,7 @@ public class CarAccessBrandSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -277,7 +277,7 @@ public class CarAccessBrandSearch extends BaseActivity {
         map.put("brandName", str);
         OKhttptils.post(this, Config.GETBRANDBYBRANDNAME, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("getSearchBrand", response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -297,7 +297,7 @@ public class CarAccessBrandSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

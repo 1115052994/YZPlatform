@@ -60,7 +60,7 @@ public class OrdersUseActivity extends BaseActivity {
         //设置订单号默认为null
         OKhttptils.post(this, Config.ORDERS_QUERY_QRCODE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 try{
                     JSONObject object = new JSONObject(response);
                     Gson gson = new Gson();
@@ -81,7 +81,7 @@ public class OrdersUseActivity extends BaseActivity {
                 } catch(JSONException e){
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

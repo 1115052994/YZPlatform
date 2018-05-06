@@ -438,7 +438,7 @@ public class UpdateCarActivity extends BaseActivity {
         map.put("car_id", car_id);
         OKhttptils.post(UpdateCarActivity.this, Config.SHOW_CAR_PRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.e(TAG, "success查看数据: " + response);
                 Gson gson = GsonFactory.create();
                 CarProductDetail productDetail = gson.fromJson(response, CarProductDetail.class);
@@ -600,7 +600,7 @@ public class UpdateCarActivity extends BaseActivity {
                 message.what = 002;
                 message.obj = resultBean;
                 handler.sendMessage(message);
-                return response;
+
             }
 
             @Override
@@ -648,7 +648,7 @@ public class UpdateCarActivity extends BaseActivity {
         final Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETCARPARAMDICT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Gson gson = new Gson();
                 CarParams carParams = gson.fromJson(response, CarParams.class);
                 CarParams.DataBean.ResultBean resultBean = carParams.getData().getResult();
@@ -669,7 +669,7 @@ public class UpdateCarActivity extends BaseActivity {
                 message.what = 001;
                 message.obj = dictList;
                 handler.sendMessage(message);
-                return response;
+
             }
 
             @Override
@@ -687,14 +687,14 @@ public class UpdateCarActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(UpdateCarActivity.this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 Enterprise enterprise = gson.fromJson(response, Enterprise.class);
                 Enterprise.DataBean.ResultBean result = enterprise.getData().getResult();
                 car_place_city = result.getAuth_comp_city();          //市
 
-                return response;
+
             }
 
             @Override
@@ -830,13 +830,11 @@ public class UpdateCarActivity extends BaseActivity {
                 Log.d("bbbbbb", "onActivityResult: ");
                 OKhttptils.post(this, Config.PARSEVIN, map, new OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Gson gson = GsonFactory.create();
                         ChassisNumber chassisNumber = gson.fromJson(response, ChassisNumber.class);
                         String vin = chassisNumber.getData().getResult().getVin();
                         mCarNumb.setText(vin);
-
-                        return vin;
                     }
 
                     @Override
@@ -983,7 +981,7 @@ public class UpdateCarActivity extends BaseActivity {
             map2.put("car_vin", car_number);
             OKhttptils.post(this, Config.ACCRETIONCAR, map2, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.i("oneror", "添加二手车信息: " + response);
                     try {
                         JSONObject jsonObject = new JSONObject(response);
@@ -996,7 +994,7 @@ public class UpdateCarActivity extends BaseActivity {
                         e.printStackTrace();
                     }
 
-                    return response;
+
                 }
 
                 @Override
@@ -1148,10 +1146,10 @@ public class UpdateCarActivity extends BaseActivity {
 
         OKhttptils.post(UpdateCarActivity.this, Config.UPDATE_CAR_PRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d(TAG, "success修改: " + response);
                 JumpUtil.newInstance().finishRightTrans(UpdateCarActivity.this);
-                return response;
+
             }
 
             @Override

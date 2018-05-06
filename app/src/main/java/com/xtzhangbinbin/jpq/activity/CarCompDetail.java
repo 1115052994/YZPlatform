@@ -334,7 +334,7 @@ public class CarCompDetail extends BaseActivity {
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("appraise===",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -357,7 +357,7 @@ public class CarCompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -375,7 +375,7 @@ public class CarCompDetail extends BaseActivity {
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.FINDCOMPBYCOMPID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("response=",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -413,7 +413,7 @@ public class CarCompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override
@@ -430,7 +430,7 @@ public class CarCompDetail extends BaseActivity {
         map.put("comp_id",comp_id);
         OKhttptils.post(this, Config.FINDCOMPCARBYCOMPID, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i("response=",response);
                 try {
                     JSONObject object = new JSONObject(response);
@@ -452,7 +452,7 @@ public class CarCompDetail extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return response;
+
             }
 
             @Override

@@ -51,10 +51,6 @@ public class OrdersCompListActivity extends BaseActivity {
         fragment.add(new OrdersCompAllFragment(this));
         fragment.add(new OrdersCompUseFragment(this));
         fragment.add(new OrdersCompUnUseFragment(this));
-//        fragment.add(new OrdersPersonalNoPayFragment(this));
-//        fragment.add(new OrdersPersonalPayFragment(this));
-//        fragment.add(new OrdersPersonalUseFragment(this));
-//        fragment.add(new OrdersPersonalCancelFragment(this));
         str.add("全部订单");
         str.add("已消费");
         str.add("未消费");

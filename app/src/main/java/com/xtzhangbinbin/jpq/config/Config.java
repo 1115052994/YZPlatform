@@ -8,15 +8,15 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.223/";
+    public static final String BASE_URL = "http://192.168.1.5/";
 
-    public static final String URL = "http://192.168.1.223/";
+    public static final String URL = "http://192.168.1.5/";
     //微信APPID
     public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
-    public static final String M = "http://192.168.1.223/";
+    public static final String M = "http://192.168.1.5/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -332,6 +332,17 @@ public class Config {
     public static  final String COMP_WALLET_BIND_ALIPAY= URL + S + "bindingAlipay";
     //绑定银行卡号
     public static  final String COMP_WALLET_BIND_BANK= URL + S + "bindingBankcard";
+    //申请提现
+    public static  final String COMP_WALLET_GET_CASH_SUBMIT = URL + S + "destoonFinanCecash";
+    //提现列表
+    public static  final String COMP_WALLET_DEPOST_LOG = URL + S + "withdrawDepositLog";
+    //判断是否需要升级
+    public static  final String UPTRADE_CHECK_VERSION = URL + S + "judgeVersion";
+    //获取版本最新信息
+    public static  final String UPTRADE_GET_VERSIONINFO = URL + S + "singleNewestVersion";
+    //商家预约列表
+    public static  final String COMP_BESPEAK_LIST = URL + S + "subscribeList";
+
     /**
      * 李岩使用接口end
      */

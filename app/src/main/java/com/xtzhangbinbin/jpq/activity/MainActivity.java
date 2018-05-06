@@ -21,6 +21,7 @@ import com.xtzhangbinbin.jpq.fragment.main.CarMoneyFragment;
 import com.xtzhangbinbin.jpq.fragment.main.CarServiceFragment;
 import com.xtzhangbinbin.jpq.fragment.main.LifeFragment;
 import com.xtzhangbinbin.jpq.fragment.main.MainFragment;
+import com.xtzhangbinbin.jpq.upgrade.UpgradeUtil;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.tbruyelle.rxpermissions2.Permission;
@@ -77,6 +78,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         requestPermission();
         initView();
         // initLoc();
+        //应用升级
+        upgrade();
     }
 
 
@@ -209,4 +212,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         }
     }
 
+    /**
+     * 应用升级
+     */
+    public void upgrade(){
+        UpgradeUtil.getInstance(this).upgrade(main);
+    }
 }

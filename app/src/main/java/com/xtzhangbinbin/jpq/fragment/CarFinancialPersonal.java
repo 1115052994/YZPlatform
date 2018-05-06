@@ -139,7 +139,7 @@ public class CarFinancialPersonal extends Fragment {
         OKhttptils.post((Activity) getContext(), Config.SELECTJRTOAPP, map, new
                 OKhttptils.HttpCallBack() {
                     @Override
-                    public String success(String response) {
+                    public void success(String response) {
                         Log.d("aaaaa", "onResponse获取数据: " + response);
                         Gson gson = GsonFactory.create();
                         FinancialBean enterprise = gson.fromJson(response, FinancialBean.class);
@@ -158,7 +158,7 @@ public class CarFinancialPersonal extends Fragment {
                                     break;
                             }
                         }
-                        return response;
+
                     }
 
                     @Override

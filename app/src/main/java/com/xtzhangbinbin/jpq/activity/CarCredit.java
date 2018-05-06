@@ -81,7 +81,7 @@ public class CarCredit extends BaseActivity {
         map.put("pageIndex", String.valueOf(pageIndex));
         OKhttptils.post(this, Config.QUERYALLTWO, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 CreditBean enterprise = gson.fromJson(response, CreditBean.class);
@@ -104,7 +104,7 @@ public class CarCredit extends BaseActivity {
                         carCreditAdapter.notifyDataSetChanged();
                     }
                 }
-                return response;
+
             }
 
             @Override
