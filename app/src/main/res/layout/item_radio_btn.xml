@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:button="@null"
+    android:background="@drawable/selector_carsx"
+    android:text="啦啦啦"
+    android:paddingLeft="@dimen/common15dp"
+    android:paddingRight="@dimen/common15dp"
+    android:paddingTop="@dimen/common8dp"
+    android:checked="true"
+    android:paddingBottom="@dimen/common8dp"
+    android:textColor="@color/selector_text_service_type">
+
+</RadioButton>

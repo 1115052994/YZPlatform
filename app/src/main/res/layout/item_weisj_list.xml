@@ -176,7 +176,6 @@
             android:layout_toRightOf="@id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12345689"
             android:textColor="@color/text_99"
             android:textSize="@dimen/text_size_13sp" />
 

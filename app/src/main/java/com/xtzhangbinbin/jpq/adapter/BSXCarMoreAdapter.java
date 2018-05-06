@@ -22,11 +22,15 @@ public class BSXCarMoreAdapter extends BaseAdapter {
     private List<String> list;
     private Context context;
     private Map<Integer, View> map;
-    public BSXCarMoreAdapter(Context context,List<String> list){
-        this.context = context;
+    private int index;
+
+    public BSXCarMoreAdapter(Context context,List<String> list,  int index) {
         this.list = list;
+        this.context = context;
+        this.index = index;
         map = new HashMap<>();
     }
+
     @Override
     public int getCount() {
         return list==null?0:list.size();
@@ -53,10 +57,10 @@ public class BSXCarMoreAdapter extends BaseAdapter {
         }
 
         final ViewGroup viewGroup = convertView.findViewById(R.id.bg);
-        if (position == 0){
+        if (position == index){
 //            viewGroup.setSelected(true);
             if (appraiseInterface!=null){
-                appraiseInterface.onClick(viewGroup,0);
+                appraiseInterface.onClick(viewGroup,index);
             }
         }
         if (appraiseInterface!=null){

@@ -9,6 +9,5 @@
     android:layout_height="@dimen/common44dp"
     android:background="@color/white"
     android:drawablePadding="@dimen/common13dp"
-    android:paddingLeft="@dimen/common15dp"
-    android:text="维修保养" />
+    android:paddingLeft="@dimen/common15dp" />
 </LinearLayout>

@@ -107,7 +107,7 @@ public class CarChoose extends BaseActivity {
                     if(name.equals("1")){
                         intent =new Intent(CarChoose.this,AddCarProduct.class);
                     }else {
-                        intent =new Intent(CarChoose.this,UpdateCar.class);
+                        intent =new Intent(CarChoose.this,UpdateCarActivity.class);
                     }
                     EventBus.getDefault().post(recyclerList.get(position).get("tv_carbrand")+"," + recyclerList.get(position).get("id_carbrand") + "," + car_brand + "," + car_brand_id );
                     startActivity(intent);

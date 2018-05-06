@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/common44dp"
         android:gravity="center_vertical"
-        android:text="新能源补助"
         android:textColor="@color/black_66"
         android:textSize="@dimen/text_size_16sp" />
 
@@ -25,7 +24,6 @@
 
     <TextView
         android:id="@+id/mTip"
-        android:text="未知"
         android:textSize="@dimen/text_size_13sp"
         android:textColor="@color/black_33"
         android:layout_width="wrap_content"

@@ -6,14 +6,15 @@ package com.xtzhangbinbin.jpq.camera.test;
 
 public enum ModelEnums {
 
-	/**
-	 * 正前方
-	 */
-	MODEL_ZHENGQIANFANG("zhengqianfang", "正前方"),
+
 	/**
 	 * 前方45度
 	 */
-	MODEL_QIANFANG45DU("qianfang45", "前方45度"),
+	MODEL_QIANFANG45DU("qianfang45", "正45度"),
+	/**
+	 * 正前方
+	 */
+	MODEL_ZHENGQIANFANG("zhengqianfang", "正面"),
 	/**
 	 * 前大灯
 	 */
@@ -29,11 +30,11 @@ public enum ModelEnums {
 	/**
 	 * 正后方
 	 */
-	MODEL_ZHENGHOUFANG("zhenghoufang", "正后方"),
+	MODEL_ZHENGHOUFANG("zhenghoufang", "背面"),
 	/**
 	 * 车钥匙
 	 */
-	MODEL_CHEYAOSHI("cheyaoshi", "车钥匙"),
+	MODEL_CHEYAOSHI("cheyaoshi", "钥匙"),
 	/**
 	 * 左前车门
 	 */
@@ -69,7 +70,7 @@ public enum ModelEnums {
 	/**
 	 * 内车顶（天窗）
 	 */
-	MODEL_TIANCHUANG("tianchuang", "内车顶（天窗）"),
+	MODEL_TIANCHUANG("tianchuang", "内车顶"),
 	/**
 	 * 后座椅
 	 */
@@ -81,7 +82,7 @@ public enum ModelEnums {
 	/**
 	 * 发动机舱整体
 	 */
-	MODEL_FADONGJI("fadongjicangzhengti", "发动机舱整体"),
+	MODEL_FADONGJI("fadongjicangzhengti", "发动机舱"),
 	/**
 	 * 底盘
 	 */

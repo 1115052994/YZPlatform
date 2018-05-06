@@ -4,9 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.xtzhangbinbin.jpq.activity.ChangeNewPhoneActivity">
 
+    <include layout="@layout/header_layout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:background="@color/bg_color" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/common75dp"
+        android:paddingTop="@dimen/common58dp"
+        android:text="输入新手机号"
+        android:textColor="@color/theme_coloer"
+        android:textSize="@dimen/text_size_22sp" />
+
+    <EditText
+        android:id="@+id/mPhone"
+        style="@style/black33_edit_16sp"
+        android:layout_height="wrap_content"
+        android:height="@dimen/common60dp"
+        android:gravity="center_vertical"
+        android:hint="请输入新手机号"
+        android:paddingBottom="@dimen/common20dp"
+        android:paddingLeft="@dimen/common38dp"
+        android:paddingTop="@dimen/common20dp"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:imeOptions="actionNext"
+        android:textColorHint="@color/gray_d8" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:layout_marginLeft="@dimen/common38dp"
+        android:layout_marginRight="@dimen/common38dp"
+        android:background="@color/bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/mCode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/common38dp"
+            android:layout_weight="2"
+            android:background="@null"
+            android:hint="请填写验证码"
+            android:inputType="number"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:textColorHint="@color/gray_d8"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <View
+            android:layout_width="@dimen/common1dp"
+            android:layout_height="@dimen/common15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/bg_color" />
+
+        <Button
+            android:id="@+id/mGetCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/common38dp"
+            android:layout_weight="1.2"
+            android:background="@null"
+            android:outlineProvider="none"
+            android:text="@string/usercenter_hqyzm"
+            android:textColor="@color/black_55"
+            android:textSize="@dimen/text_size_15sp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common1dp"
+        android:layout_marginLeft="@dimen/common38dp"
+        android:layout_marginRight="@dimen/common38dp"
+        android:background="@color/bg_color" />
+
+    <Button
+        android:id="@+id/mLogin"
+        android:text="登录"
+        style="@style/theme_button"
+        android:layout_marginTop="@dimen/common62dp" />
 
 </LinearLayout>

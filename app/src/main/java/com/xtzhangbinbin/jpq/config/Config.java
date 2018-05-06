@@ -166,6 +166,12 @@ public class Config {
     //添加二手车图片
     public static final String COMPCAR = M + S + "compCar";
 
+    //商家查看二手车产品信息
+    public static final String SHOW_CAR_PRODUCT = URL + S +"singleCar";
+
+    //商家修改二手车产品信息
+    public static final String UPDATE_CAR_PRODUCT = URL + S + "revampCar";
+
     //产品列表二手车之后的接口
     public static final String COMPPRODUCT = M + S + "compProduct";
 
@@ -238,6 +244,9 @@ public class Config {
 
     //商家产品 - 查看产品信息
     public static final String SHOW_PRODUCT = URL + S + "showProductDetail";
+
+    //商家产品 - 查看车品牌
+    public static final String SHOW_CAR_BRAND = URL + S + "getBrandNode";
 
 
     //模糊查询car
@@ -374,4 +383,14 @@ public class Config {
 
     // 京东商品分类
     public static final String SELECTJDSP = URL + S +"selectJdSp";
+
+    //更换手机号 - 检验手机号是否是当前登录的手机号
+    public static final String CHECK_PHONE = URL + S + "checkoutPhone";
+
+    //更换手机号 - 校验旧手机号和验证码
+    public static final String CHECK_OLD = URL + S + "checkoutToken_code";
+
+    //更换手机号 - 新手机号
+    public static final String CHECK_NEW = URL + S + "modificationpPhone";
+
 }

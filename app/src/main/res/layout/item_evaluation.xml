@@ -15,8 +15,7 @@
         <com.xtzhangbinbin.jpq.view.CircleImageView
             android:id="@+id/evaluation_image"
             android:layout_width="@dimen/common80dp"
-            android:layout_height="@dimen/common80dp"
-            android:src="@drawable/qy_heat"/>
+            android:layout_height="@dimen/common80dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,8 +28,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/evaluation_list_phone"
                 android:textColor="@color/text_33"
-                android:textSize="@dimen/text_size_15sp"
-                android:text="1234567543"/>
+                android:textSize="@dimen/text_size_15sp"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,8 +93,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/common30dp"
             android:textSize="@dimen/text_size_13sp"
-            android:textColor="@color/text_99"
-            android:text="2018/4/19"/>
+            android:textColor="@color/text_99"/>
 
     </RelativeLayout>
     <LinearLayout
@@ -112,7 +109,6 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lineSpacingExtra="5dp"
-            android:text="方法都好哈达西村傲视偶像找不错看见爱上不出现在家啊帮唱嘉宾家族性传播发生安卓"
             />
     </LinearLayout>
     <!--<com.nex3z.flowlayout.FlowLayout-->

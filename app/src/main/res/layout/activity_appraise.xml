@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/text_22"
         android:textSize="@dimen/common16dp"
-        android:text="北京中天科技有限公司"
         android:layout_marginTop="@dimen/common15dp"
         android:layout_gravity="center_horizontal"/>
     <LinearLayout

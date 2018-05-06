@@ -125,8 +125,8 @@ public class CarDetailsActivity extends BaseActivity {
     ImageView mSale;
     //    @BindView(R.id.ll_banner)
 //    LinearLayout llBanner;
-    @BindView(R.id.mLoan)
-    ImageView mLoan;
+//    @BindView(R.id.mLoan)
+//    ImageView mLoan;
     @BindView(R.id.mDeploy)
     LinearLayout mDeploy;
     @BindView(R.id.recyclerView_foot_more)
@@ -601,13 +601,13 @@ public class CarDetailsActivity extends BaseActivity {
         mBanner.start();
     }
 
-    @OnClick({R.id.mLoan, R.id.mGPS, R.id.mDetails, R.id.mDeploy, R.id.mKefu, R.id.mTop,R.id.mOrder, R.id.mEvaluate})
+    @OnClick({ R.id.mGPS, R.id.mDetails, R.id.mDeploy, R.id.mKefu, R.id.mTop,R.id.mOrder, R.id.mEvaluate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.mLoan:
-                //车辆贷款
-                /* 未定 */
-                break;
+//            case R.id.mLoan:
+//                //车辆贷款
+//                /* 未定 */
+//                break;
             case R.id.mGPS:
                 //导航
                 navigation(comp_lat, comp_lon);

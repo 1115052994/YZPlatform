@@ -123,7 +123,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@id/buy"
-                            android:text="5人"
+                            android:text="0人"
                             android:textSize="@dimen/text_size_13sp"
                             android:textColor="@color/text_ff96"
                             />

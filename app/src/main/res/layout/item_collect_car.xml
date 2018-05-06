@@ -9,7 +9,6 @@
         android:id="@+id/car_deal_image"
         android:layout_width="@dimen/common137dp"
         android:layout_height="@dimen/common99dp"
-        android:src="@drawable/personal_collect_img"
         android:layout_marginTop="@dimen/common15dp"
         android:layout_marginLeft="@dimen/common15dp"
         android:layout_marginBottom="@dimen/common15dp"/>
@@ -33,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_14sp"
-            android:text="宝马 五系桑响声大框架下注册表中阿萨德"
             android:textColor="@color/text_33"
             android:layout_marginRight="@dimen/common37dp"
             android:singleLine="false"
@@ -45,7 +43,6 @@
             android:textSize="@dimen/text_size_10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2015年/4.8万公里"
             android:textColor="@color/black_66"
             />
         <TextView
@@ -55,7 +52,6 @@
             android:layout_marginTop="@dimen/common5dp"
             android:textColor="@color/text_33"
             android:textSize="@dimen/text_size_10sp"
-            android:text="28.5万"
             />
         <RelativeLayout
             android:layout_marginTop="@dimen/common5dp"

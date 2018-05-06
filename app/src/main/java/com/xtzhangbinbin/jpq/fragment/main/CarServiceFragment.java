@@ -2,7 +2,6 @@ package com.xtzhangbinbin.jpq.fragment.main;
 
 import android.Manifest;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +34,12 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
 import com.xtzhangbinbin.jpq.activity.SearchActivity;
@@ -47,14 +52,7 @@ import com.xtzhangbinbin.jpq.entity.CarServiceList;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
-import com.xtzhangbinbin.jpq.utils.PhotoUtils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -170,10 +168,10 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     itemListBeans = (List<CarServiceImage.DataBean.ResultBean.ItemListBean>) msg.obj;
                     initMenu();
                     break;
-                case 003:
-                    beanList = (List<CarServiceList.DataBean.ResultBean>) msg.obj;
-                    setAdapter();
-                    break;
+//                case 003:
+//                    beanList = (List<CarServiceList.DataBean.ResultBean>) msg.obj;
+//                    setAdapter();
+//                    break;
             }
         }
     };
@@ -346,7 +344,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             public void displayImage(Context context, Object path, ImageView imageView) {
                 Log.i("banner", "path=" + (String) path);
                 //根据图片id获取图片
-                getPic(getContext(), (String) path, imageView);
+                OKhttptils.getPic(getContext(), (String) path, imageView);
             }
         });
     }
@@ -376,44 +374,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             }
 
             public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-    }
-
-    /* 通过头像id获取头像 */
-    public void getPic(final Context context, String file_id, final ImageView icon) {
-        Map<String, String> map = new HashMap<>();
-        map.put("file_id", file_id);
-
-        OKhttptils.post(getActivity(), Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String data = jsonObject.getString("data");
-                    JSONObject object = new JSONObject(data);
-                    String file_content = object.getString("file_content");
-                    if (file_content.contains("base64,"))
-                        file_content = file_content.split("base64,")[1];
-                    Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
-                    if (bitmap != null)
-                        icon.setImageBitmap(bitmap);
-                    else
-                        icon.setImageResource(R.drawable.qy_heat);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void fail(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    ToastUtil.show(context, jsonObject.getString("message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
             }
         });
     }
@@ -488,14 +448,13 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     StringBuffer buffer = new StringBuffer();
                     buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince() + "" + amapLocation.getCity() + "" + amapLocation.getProvince() + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet() + "" + amapLocation.getStreetNum());
                     isFirstLoc = false;
-//                    city = amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1);
-//                    lon = String.valueOf(amapLocation.getLongitude());
-//                    lat = String.valueOf(amapLocation.getLatitude());
-                    city = "济南";
+                    city = amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1);
+                    lon = String.valueOf(amapLocation.getLongitude());
+                    lat = String.valueOf(amapLocation.getLatitude());
+//                    city = "济南";
                     mLocation.setText(city);
-                    lon = "116.988";
-                    lat = "36.6883";
-                    //
+//                    lon = "116.988";
+//                    lat = "36.6883";
                     getCityId(city);
                 }
                 Log.i("Location", "log=" + lon);
@@ -667,12 +626,15 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 Log.d(TAG, "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 CarServiceList serviceList = gson.fromJson(response, CarServiceList.class);
-                List<CarServiceList.DataBean.ResultBean> beanList = serviceList.getData().getResult();
+//                List<CarServiceList.DataBean.ResultBean> beanList = serviceList.getData().getResult();
+                beanList = serviceList.getData().getResult();
                 pageTotal = serviceList.getData().getPageCount();
-                Message message = new Message();
-                message.what = 003;
-                message.obj = beanList;
-                handler.sendMessage(message);
+//                Message message = new Message();
+//                message.what = 003;
+//                message.obj = beanList;
+//                handler.sendMessage(message);
+                setAdapter();
+
             }
 
             @Override
@@ -788,7 +750,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         if (null != city) {
             mLocation.setText(city);
             getCityId(city);
-//            getData(dict_id,"apart","ASC",city_id,1);
         }
         Log.i(TAG, "onResume: " + bundle.getString("selected_city"));
     }

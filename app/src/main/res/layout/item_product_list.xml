@@ -19,7 +19,6 @@
         android:drawablePadding="@dimen/common15dp"
         android:gravity="center_vertical"
         android:hint="输入产品名称"
-        android:text="刹车系统保养"
         android:textColor="@color/black_33"
         android:textColorHint="@color/gray_99"
         android:textSize="@dimen/text_size_15sp" />
@@ -29,7 +28,6 @@
         android:layout_width="@dimen/common0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:text="¥36.00"
         android:inputType="numberDecimal"
         android:gravity="center_vertical"
         android:textColor="@color/theme_coloer"

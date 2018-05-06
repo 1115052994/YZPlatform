@@ -7,21 +7,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.LoginActivity;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,12 +27,13 @@ import java.util.Map;
 import okhttp3.Call;
 
 public class OKhttptils {
-    public static void post(final Activity context, String url, Map<String, String> params, final HttpCallBack callBack){
+    public static void post(final Activity context, String url, Map<String, String> params, final HttpCallBack callBack) {
 //        Log.i("user_token",Prefs.with(context).read("user_token"));
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
                     .url(url)      //Prefs.with(context).read("user_token")
-                    .addHeader("user_token",Prefs.with(context).read("user_token") )
+                    .addHeader("user_token", Prefs.with(context).read("user_token"))
+//                    .addHeader("user_token","96730A47BBCD8F345203CFAB9A2CA83A35C12AA36192A0292D244D3311544008C3C9F18DF39244D818CDA2A73778DEB0CC426DF62D9797A2A6258912FF12AD67" )
                     //.addParams("car_name", s)
                     .params(params)
                     .build()
@@ -45,7 +43,7 @@ public class OKhttptils {
                         public void onError(Call call, Exception e, int id) {
                             //失败
                             callBack.fail(e.getMessage());
-                            Log.i("oneror","onError");
+                            Log.i("oneror", "onError");
                         }
 
                         @Override
@@ -57,7 +55,7 @@ public class OKhttptils {
                                 switch (status) {
                                     case "9999":
                                         //登陆token过期
-                                        ToastUtil.show(context,"Token过期请重新登陆");
+                                        ToastUtil.show(context, "Token过期请重新登陆");
                                         JumpUtil.newInstance().jumpLeft(context, LoginActivity.class);
                                         break;
                                     case "1":
@@ -175,9 +173,13 @@ public class OKhttptils {
 //            ToastUtil.noNetAvailable(context);
 //        }
 //            .placeholder(R.drawable.user_placeholder).error(R.drawable.user_placeholder_error)
-        String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name="+file_id+".jpg";
-        Log.i("url","url==="+url);
-        Picasso.with(context).load(Uri.parse(url)).into(icon);
+        String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name=" + file_id + ".jpg";
+        Log.i("url", "url===" + url);
+        if (url == null) {
+            icon.setImageResource(R.drawable.no_pic);
+        } else {
+            Picasso.with(context).load(Uri.parse(url)).into(icon);
+        }
     }
 
     /**
@@ -186,10 +188,10 @@ public class OKhttptils {
     public static void getPicByHttp(final Context context, final String file_id, final ImageView icon) {
         int write = context.checkCallingOrSelfPermission("android.permission.WRITE_EXTERNAL_STORAGE");
         int read = context.checkCallingOrSelfPermission("android.permission.READ_EXTERNAL_STORAGE");
-        if(read == PackageManager.PERMISSION_GRANTED&&write==PackageManager.PERMISSION_GRANTED){
-            if(FileUtils.getInstance(context).isFileExits(file_id)){
+        if (read == PackageManager.PERMISSION_GRANTED && write == PackageManager.PERMISSION_GRANTED) {
+            if (FileUtils.getInstance(context).isFileExits(file_id)) {
                 File file = FileUtils.getInstance(context).getFile(file_id);
-                if(file!=null) {
+                if (file != null) {
                     try {
                         FileInputStream fileInputStream = new FileInputStream(file);
                         Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
@@ -226,11 +228,10 @@ public class OKhttptils {
                                     if (file_content.contains("base64,"))
                                         file_content = file_content.split("base64,")[1];
                                     Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
-                                    if (bitmap!=null) {
+                                    if (bitmap != null) {
                                         icon.setImageBitmap(bitmap);
-                                        FileUtils.getInstance(context).saveFile(file_id,bitmap);
-                                    }
-                                    else
+                                        FileUtils.getInstance(context).saveFile(file_id, bitmap);
+                                    } else
                                         icon.setImageResource(R.drawable.circle_2);
 
                                 } else {

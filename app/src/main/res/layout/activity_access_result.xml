@@ -24,8 +24,7 @@
         android:textColor="@color/text_33"
         android:textSize="@dimen/text_size_15sp"
         android:lines="2"
-        android:lineSpacingExtra="@dimen/common5dp"
-        android:text="评价结果：速腾设计时尚大气,纷繁卓尔不群,帅气帅气!!!"/>
+        android:lineSpacingExtra="@dimen/common5dp"/>
     <TextView
         android:id="@+id/tv_car"
         android:layout_width="match_parent"
@@ -33,7 +32,6 @@
         android:layout_marginTop="@dimen/common15dp"
         android:layout_marginLeft="@dimen/common21dp"
         android:textColor="@color/text_66"
-        android:text="上牌时间:2018-04   北京朝阳   6.78万公里"
         android:layout_marginRight="@dimen/common21dp"
         android:layout_marginBottom="@dimen/common15dp"
         android:textSize="@dimen/text_size_13sp"/>
@@ -59,8 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_fe0000"
-            android:textSize="@dimen/text_size_30sp"
-            android:text="5.23万"/>
+            android:textSize="@dimen/text_size_30sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,8 +82,7 @@
             android:textColor="@color/text_fe0000"
             android:textSize="@dimen/text_size_30sp"
             android:layout_above="@id/tv_per"
-            android:layout_toLeftOf="@id/tv_cankao"
-            android:text="5.23万"/>
+            android:layout_toLeftOf="@id/tv_cankao"/>
         <TextView
             android:id="@+id/tv_cankao"
             android:layout_width="wrap_content"

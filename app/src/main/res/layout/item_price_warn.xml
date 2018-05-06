@@ -19,8 +19,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/common10dp"
             android:layout_marginTop="@dimen/common10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/text" />
+            android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/isR"
@@ -41,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:text="宝马 五系三厢2014款2.0T自动 520i典雅型"
             android:textColor="@color/black_33"
             android:textSize="@dimen/text_size_15sp" />
 
@@ -55,7 +53,6 @@
                 android:id="@+id/mYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2015年"
                 android:textColor="@color/black_66"
                 android:textSize="@dimen/text_size_13sp" />
 
@@ -63,7 +60,6 @@
                 android:id="@+id/mKm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="/4.8万公里"
                 android:textColor="@color/black_66"
                 android:textSize="@dimen/text_size_13sp" />
 
@@ -88,7 +84,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/common50dp"
-                android:text="原价：25.8万"
                 android:textColor="@color/black_66"
                 android:textSize="@dimen/text_size_11sp" />
 
@@ -115,7 +110,6 @@
                     android:id="@+id/mNewPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23.9万"
                     android:textColor="#ff2929"
                     android:textSize="@dimen/text_size_15sp" />
 

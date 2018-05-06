@@ -31,7 +31,6 @@
                     android:text="公司名称" />
 
                 <EditText
-                    android:text="测试测试"
                     android:id="@+id/compName"
                     style="@style/black33_edit_16sp"
                     android:hint="请输入公司名称"
@@ -106,7 +105,6 @@
                     android:text="联系人姓名" />
 
                 <EditText
-                    android:text="测试测试"
                     android:id="@+id/linkName"
                     style="@style/black33_edit_16sp"
                     android:hint="请输入联系人姓名"
@@ -124,7 +122,6 @@
                     android:text="联系人电话" />
 
                 <EditText
-                    android:text="13222222222"
                     android:id="@+id/linkPhone"
                     style="@style/black33_edit_16sp"
                     android:hint="请输入联系人电话"

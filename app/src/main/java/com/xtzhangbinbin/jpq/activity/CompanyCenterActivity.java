@@ -27,7 +27,7 @@ import butterknife.OnClick;
 
 public class CompanyCenterActivity extends BaseActivity {
 
-    private static final String TAG = "企业中心" ;
+    private static final String TAG = "企业中心";
     @BindView(R.id.mAuto)
     LinearLayout mAuto;
     @BindView(R.id.mIcon)
@@ -63,7 +63,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 Enterprise.DataBean dataBean = enterprise.getData();
                 if (null == dataBean.getResult()) {
                     mState.setText("未审核");
-                }else {
+                } else {
                     Enterprise.DataBean.ResultBean resultBean = enterprise.getData().getResult();
                     //审核状态
                     if ("1".equals(resultBean.getAuth_audit_state())) {
@@ -78,7 +78,7 @@ public class CompanyCenterActivity extends BaseActivity {
                     String mentou = resultBean.getAuth_comp_img_head_file_id();
                     Log.d(TAG, "success: " + mentou);
                     Prefs.with(getApplicationContext()).write("门头照", mentou);
-                    OKhttptils.getPic(CompanyCenterActivity.this,mentou,mIcon);
+                    OKhttptils.getPic(CompanyCenterActivity.this, mentou, mIcon);
                 }
             }
 
@@ -89,7 +89,7 @@ public class CompanyCenterActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.mBack, R.id.mAuto, R.id.mProduct, R.id.mOrders, R.id.mWallet, R.id.mBook, R.id.mAppraise, R.id.mClean, R.id.mKefu, R.id.mBtn})
+    @OnClick({R.id.mBack, R.id.mAuto, R.id.mProduct, R.id.mOrders, R.id.mWallet, R.id.mBook, R.id.mAppraise, R.id.mClean, R.id.mKefu, R.id.mBtn, R.id.mNewPhone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mBack:
@@ -100,6 +100,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mProduct:
                 //产品管理
+                JumpUtil.newInstance().jumpRight(this, ProductList.class);
                 break;
             case R.id.mOrders:
                 //订单管理
@@ -115,6 +116,10 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mClean:
                 //清除缓存
+                break;
+            case R.id.mNewPhone:
+                //换绑手机号
+                JumpUtil.newInstance().jumpRight(CompanyCenterActivity.this,ChangeOldPhoneActivity.class);
                 break;
             case R.id.mKefu:
                 //联系客服
@@ -135,7 +140,7 @@ public class CompanyCenterActivity extends BaseActivity {
                     public void onYesClick() {
                         dialog.dismiss();
                         Prefs.with(getApplicationContext()).clear();
-                        JumpUtil.newInstance().jumpRight(CompanyCenterActivity.this,LoginActivity.class);
+                        JumpUtil.newInstance().jumpRight(CompanyCenterActivity.this, LoginActivity.class);
                     }
                 });
                 break;

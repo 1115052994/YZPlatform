@@ -36,8 +36,7 @@
             android:paddingRight="@dimen/common1dp"
             android:textSize="@dimen/text_size_13sp"
             android:background="@drawable/weixiu"
-            android:textColor="@color/bg_ff"
-            android:text="￥36"/>
+            android:textColor="@color/bg_ff"/>
     </RelativeLayout>
 
     <!--<RelativeLayout
@@ -253,8 +252,7 @@
             android:layout_marginRight="@dimen/common10dp"
             android:layout_toLeftOf="@id/pay"
             android:textColor="@color/text_ff2a"
-            android:textSize="@dimen/text_size_16sp"
-            android:text="优惠价￥36"/>
+            android:textSize="@dimen/text_size_16sp"/>
         <ImageView
             android:id="@+id/image_bag"
             android:layout_toLeftOf="@id/yhPrice_tv"
@@ -270,8 +268,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_13sp"
             android:layout_marginRight="@dimen/common10dp"
-            android:layout_centerVertical="true"
-            android:text="总价￥50"/>
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
     <View
     style="@style/gray_line"

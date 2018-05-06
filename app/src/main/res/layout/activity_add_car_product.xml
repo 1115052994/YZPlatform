@@ -41,11 +41,7 @@
                    android:textColor="@color/gray_00"
                    android:textSize="@dimen/text_size_18sp" />
            </LinearLayout>
-           <View
-               android:layout_below="@id/linear"
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/common1dp"
-               android:background="@color/bg_color"/>
+
            <LinearLayout
                android:paddingLeft="@dimen/common15dp"
                style="@style/ll_normal_horizontal">
@@ -65,6 +61,7 @@
                    android:layout_weight="1"
                    android:background="@color/white"
                    android:textSize="@dimen/text_size_16sp"
+                   android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                    android:textColorHint="@color/gray_c8"
                    android:textColor="@color/black_22" />
 
@@ -209,6 +206,46 @@
                    android:textSize="@dimen/text_size_16sp"
                    android:textColorHint="@color/gray_c8"
                    android:textColor="@color/black_22"/>
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:background="@color/white"
+               android:paddingBottom="@dimen/common15dp"
+               android:paddingLeft="@dimen/common15dp">
+               <TextView
+                   android:textColor="@color/text_22"
+                   android:textSize="@dimen/text_size_16sp"
+                   android:layout_marginTop="@dimen/common15dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="车辆简历"/>
+               <LinearLayout
+                   android:layout_marginLeft="@dimen/common10dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/common85dp"
+                   android:orientation="vertical"
+                   android:layout_marginTop="@dimen/common15dp"
+                   android:background="@drawable/bg_edit_cricle5"
+                   android:layout_marginRight="@dimen/common25dp">
+                   <EditText
+                       android:id="@+id/car_resume"
+                       android:layout_marginLeft="@dimen/common10dp"
+                       android:layout_marginTop="@dimen/common10dp"
+                       android:layout_marginRight="@dimen/common10dp"
+                       android:textColorHint="@color/gray_c8"
+                       android:textColor="@color/text_33"
+                       android:textSize="@dimen/text_size_16sp"
+                       android:gravity="top"
+                       android:maxLength="500"
+                       android:hint="请对车辆描述"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:background="@null"/>
+               </LinearLayout>
+
            </LinearLayout>
 
 
@@ -374,54 +411,12 @@
                android:layout_width="match_parent"
                android:layout_height="@dimen/common1dp"
                android:background="@color/bg_color"/>
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="vertical"
-               android:background="@color/white"
-               android:paddingBottom="@dimen/common15dp"
-               android:paddingLeft="@dimen/common15dp">
-               <TextView
-                   android:textColor="@color/text_22"
-                   android:textSize="@dimen/text_size_16sp"
-                   android:layout_marginTop="@dimen/common15dp"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="车辆简历"/>
-               <LinearLayout
-                   android:layout_marginLeft="@dimen/common10dp"
-                   android:layout_width="match_parent"
-                   android:layout_height="@dimen/common85dp"
-                   android:orientation="vertical"
-                   android:layout_marginTop="@dimen/common15dp"
-                   android:background="@drawable/bg_edit_cricle5"
-                   android:layout_marginRight="@dimen/common25dp">
-                   <EditText
-                       android:id="@+id/car_resume"
-                       android:layout_marginLeft="@dimen/common10dp"
-                       android:layout_marginTop="@dimen/common10dp"
-                       android:layout_marginRight="@dimen/common10dp"
-                       android:textColorHint="@color/gray_c8"
-                       android:textColor="@color/text_33"
-                       android:textSize="@dimen/text_size_16sp"
-                       android:gravity="top"
-                       android:maxLength="500"
-                       android:hint="请对车辆描述"
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"
-                       android:background="@null"/>
-               </LinearLayout>
 
-           </LinearLayout>
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/common50dp">
+
                <TextView
                    android:id="@+id/mNext"
                    android:text="下一步"
                    style="@style/button_bottom" />
-           </LinearLayout>
-
        </LinearLayout>
    </ScrollView>
 

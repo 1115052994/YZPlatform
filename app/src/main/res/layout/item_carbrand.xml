@@ -12,7 +12,6 @@
         android:layout_height="@dimen/common38dp"
         android:layout_marginLeft="@dimen/common15dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/benchi"
         />
     <TextView
         android:id="@+id/tv_carbrand"
@@ -21,7 +20,6 @@
         android:layout_marginLeft="@dimen/common35dp"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/image_carbrand"
-        android:text="奔驰"
         android:textColor="@color/text_33"
         android:textSize="@dimen/text_size_14sp"/>
     <View

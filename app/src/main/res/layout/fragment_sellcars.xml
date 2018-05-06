@@ -30,7 +30,6 @@
                     android:layout_marginTop="@dimen/common5dp"
                     android:gravity="bottom"
                     android:id="@+id/Sellcars_tv"
-                    android:text="168956"
                     android:textSize="@dimen/text_size_30sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

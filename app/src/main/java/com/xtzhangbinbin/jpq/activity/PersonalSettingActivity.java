@@ -94,6 +94,7 @@ public class PersonalSettingActivity extends BaseActivity {
         OKhttptils.post(PersonalSettingActivity.this, Config.GET_PERS_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                Log.d(TAG, "success个人设置: " + response);
                 Gson gson = GsonFactory.create();
                 PersonalSetting setting = gson.fromJson(response, PersonalSetting.class);
                 PersonalSetting.DataBean.ResultBean resultBean = setting.getData().getResult();
@@ -102,7 +103,7 @@ public class PersonalSettingActivity extends BaseActivity {
                 if (head_file_id == "") {
 
                 } else {
-                    getPic(PersonalSettingActivity.this, head_file_id, icon);
+                    OKhttptils.getPicByHttp(PersonalSettingActivity.this, head_file_id, icon);
                 }
                 String sSex = resultBean.getPers_sex();
                 if (sSex.equals(boy.getText().toString())) {
@@ -119,51 +120,6 @@ public class PersonalSettingActivity extends BaseActivity {
                 ToastUtil.noNAR(PersonalSettingActivity.this);
             }
         });
-//        if (NetUtil.isNetAvailable(this)) {
-//            OkHttpUtils.post()
-//                    .url(Config.GET_PERS_INFO)
-//                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(PersonalSettingActivity.this);
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.e(TAG, "onResponse: " + response);
-//                            /**
-//                             * {"data":{"result":{"user_id":"27","pers_id":"27"}},"message":"","status":"1"}
-//                             */
-//                            Gson gson = GsonFactory.create();
-//                            PersonalSetting setting = gson.fromJson(response,PersonalSetting.class);
-//                            if ("1".equals(setting.getStatus())){
-//                                PersonalSetting.DataBean.ResultBean resultBean = setting.getData().getResult();
-//                                pers_id = resultBean.getPers_id();
-//                                head_file_id = resultBean.getPers_head_file_id();
-//                                if (head_file_id == ""){
-//
-//                                }else {
-//                                    getPic(PersonalSettingActivity.this,head_file_id,icon);
-//                                }
-//                                String sSex = resultBean.getPers_sex();
-//                                if (sSex.equals(boy.getText().toString())){
-//                                    boy.setChecked(true);
-//                                }else {
-//                                    girl.setChecked(true);
-//                                }
-//
-//                                nick.setText(resultBean.getPers_nickname());
-//
-//                            }else {
-//                                ToastUtil.show(PersonalSettingActivity.this,setting.getMessage());
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(this);
-//        }
     }
 
     @OnClick({R.id.icon, R.id.clean, R.id.save})
@@ -228,43 +184,6 @@ public class PersonalSettingActivity extends BaseActivity {
                 ToastUtil.noNAR(PersonalSettingActivity.this);
             }
         });
-//        if (NetUtil.isNetAvailable(this)) {
-//            OkHttpUtils.post()
-//                    .url(Config.UPDATE_PERS_INFO)
-//                    .addHeader("user_token", Prefs.with(getApplicationContext()).read("user_token"))
-//                    .addParams("pers_id", pers_id)
-//                    .addParams("pers_head_file_id", head_file_id)
-//                    .addParams("pers_nickname", nick.getText().toString().trim())
-//                    .addParams("pers_sex", sType)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int id) {
-//                            ToastUtil.noNAR(PersonalSettingActivity.this);
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String response, int id) {
-//                            Log.i(TAG, "onResponse: " + response);
-//                            /**
-//                             * {"data":{},"message":"","status":"1"}
-//                             */
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(response);
-//                                if ("1".equals(jsonObject.getString("status"))){
-//                                    ToastUtil.show(PersonalSettingActivity.this,"保存成功");
-//                                }else {
-//                                    ToastUtil.show(PersonalSettingActivity.this,jsonObject.getString("message"));
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        }
-//                    });
-//        } else {
-//            ToastUtil.noNetAvailable(this);
-//        }
     }
 
     @Override

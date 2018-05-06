@@ -9,14 +9,12 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common35dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/logo" />
+        android:layout_gravity="center_horizontal" />
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_12sp"
         android:gravity="center"
-        android:text="汽车美容"
         android:textColor="@color/black"/>
 </LinearLayout>

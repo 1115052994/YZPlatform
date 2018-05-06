@@ -18,8 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_15sp"
-            android:textColor="@color/text_33"
-            android:text="润滑系统维护保养润滑维护保维护"/>
+            android:textColor="@color/text_33"/>
 
         <LinearLayout
             android:layout_marginTop="@dimen/common5dp"
@@ -37,8 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_15sp"
-                android:textColor="@color/text_ff96"
-                android:text="219元"/>
+                android:textColor="@color/text_ff96"/>
             <TextView
                 android:layout_marginLeft="@dimen/common15dp"
                 android:layout_width="wrap_content"
@@ -51,8 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_11sp"
-                android:textColor="@color/text_33"
-                android:text="258元"/>
+                android:textColor="@color/text_33"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="@dimen/common9dp"
@@ -101,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_12sp"
                 android:textColor="@color/text_99"
-                android:text="3"/>
+                android:text="0"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

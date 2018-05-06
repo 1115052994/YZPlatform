@@ -79,7 +79,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             view = inflater.inflate(R.layout.fragment_main1, container, false);
         }
         unbinder = ButterKnife.bind(this, view);
-        user_type = Prefs.with(getContext()).read("user_type");
+
         getData();
         initView();
         initLoc();
@@ -173,6 +173,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.image_scan:
                 break;
             case R.id.image_man:
+                user_type = Prefs.with(getContext()).read("user_type");
                 Log.d("用户类型", "onViewClicked: " + user_type);
                 if (user_type.isEmpty()){
                     JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);

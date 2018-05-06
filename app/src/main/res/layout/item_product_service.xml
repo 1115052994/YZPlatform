@@ -15,7 +15,6 @@
         android:textColor="@color/selector_service_menu_text"
         android:drawablePadding="@dimen/common18dp"
         android:drawableLeft="@drawable/selector_menu_drawable_left"
-        android:background="@drawable/selector_service_menu_bg"
-        android:text="刹车系统保养"/>
+        android:background="@drawable/selector_service_menu_bg"/>
 
 </LinearLayout>

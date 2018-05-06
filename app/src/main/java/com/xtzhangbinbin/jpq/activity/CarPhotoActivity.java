@@ -1,6 +1,7 @@
 package com.xtzhangbinbin.jpq.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.EdgeEffectCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -32,26 +35,36 @@ import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.camera.ImageTools;
 import com.xtzhangbinbin.jpq.camera.PhotographActivity;
+import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.entity.CarPhotos;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
+import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.PhotoUtils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.HackyViewPager;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CarPhotoActivity extends BaseActivity {
     private static final int STORAGE_PERMISSIONS_REQUEST_CODE = 0x04;
-    private static final String TAG = "添加图片" ;
+    private static final String TAG = "添加图片";
 
     @BindView(R.id.mCarName)
     TextView mCarName;
@@ -66,18 +79,27 @@ public class CarPhotoActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     HackyViewPager viewpager;
 
+
     private List<View> viewList = new ArrayList<>();
     private MyAdapter adapter;
     private int position = 0;//点击的哪一个item
 
 
+    private List<CarPhotos> carPhotos = new ArrayList<>();
+    private List<String> photo_ids = new ArrayList<>();
+    private List<String> photo_names = new ArrayList<>();
     private ArrayList<String> arr = new ArrayList<>();//24个名称
     private List<String> string_id = new ArrayList<>();
     private String path = "";
     private String car_id = "";
     private String car_name = "";
 
+
     private PopupWindow popupWindow;
+
+    private MyProgressDialog dialog;
+
+    private String type;
 
 
     @Override
@@ -85,18 +107,73 @@ public class CarPhotoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_photo);
         ButterKnife.bind(this);
-//        Intent intent = getIntent();
-//        car_id = intent.getStringExtra("car_id");
-        car_id = "17495";
+        Bundle bundle = getIntent().getExtras();
+        type = bundle.getString("type");
+        if (type.equals("新增")) {
+            car_id = bundle.getString("car_id");
+
+        } else if (type.equals("修改")) {
+            carPhotos = (List<CarPhotos>) getIntent().getSerializableExtra("photo_ids");
+            car_id = carPhotos.get(0).getCar_id();
+            position = bundle.getInt("position", 0);
+            for (int i = 0; i < carPhotos.size(); i++) {
+                photo_ids.add(carPhotos.get(i).getCar_1_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_2_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_3_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_4_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_5_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_6_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_7_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_8_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_9_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_10_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_11_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_12_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_13_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_14_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_15_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_16_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_17_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_18_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_19_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_20_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_21_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_22_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_23_file_id());
+                photo_ids.add(carPhotos.get(i).getCar_24_file_id());
+                photo_names.add(carPhotos.get(i).getCar_1_desc());
+                photo_names.add(carPhotos.get(i).getCar_2_desc());
+                photo_names.add(carPhotos.get(i).getCar_3_desc());
+                photo_names.add(carPhotos.get(i).getCar_4_desc());
+                photo_names.add(carPhotos.get(i).getCar_5_desc());
+                photo_names.add(carPhotos.get(i).getCar_6_desc());
+                photo_names.add(carPhotos.get(i).getCar_7_desc());
+                photo_names.add(carPhotos.get(i).getCar_8_desc());
+                photo_names.add(carPhotos.get(i).getCar_9_desc());
+                photo_names.add(carPhotos.get(i).getCar_10_desc());
+                photo_names.add(carPhotos.get(i).getCar_11_desc());
+                photo_names.add(carPhotos.get(i).getCar_12_desc());
+                photo_names.add(carPhotos.get(i).getCar_13_desc());
+                photo_names.add(carPhotos.get(i).getCar_14_desc());
+                photo_names.add(carPhotos.get(i).getCar_15_desc());
+                photo_names.add(carPhotos.get(i).getCar_16_desc());
+                photo_names.add(carPhotos.get(i).getCar_17_desc());
+                photo_names.add(carPhotos.get(i).getCar_18_desc());
+                photo_names.add(carPhotos.get(i).getCar_19_desc());
+                photo_names.add(carPhotos.get(i).getCar_20_desc());
+                photo_names.add(carPhotos.get(i).getCar_21_desc());
+                photo_names.add(carPhotos.get(i).getCar_22_desc());
+                photo_names.add(carPhotos.get(i).getCar_23_desc());
+                photo_names.add(carPhotos.get(i).getCar_24_desc());
+            }
+
+        }
+//        car_id = "17495";
         initData();
+        initView();
         initView1();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initView();
-    }
 
     /* 准备数据 */
     private void initData() {
@@ -136,6 +213,7 @@ public class CarPhotoActivity extends BaseActivity {
             View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.fragment_car_photo, null);
             final ImageView iv = view.findViewById(R.id.mPic);
             Button mSave = view.findViewById(R.id.mSave);
+            final EditText mContent = view.findViewById(R.id.mContent);
             WindowManager wm = (WindowManager) this
                     .getSystemService(Context.WINDOW_SERVICE);
             int width = wm.getDefaultDisplay().getWidth();
@@ -151,12 +229,68 @@ public class CarPhotoActivity extends BaseActivity {
                 }
             });
 
+            if (type.equals("新增")) {
+
+            } else if (type.equals("修改")) {
+                if (photo_ids.get(i) == null) {
+
+                } else {
+                    mContent.setText(photo_names.get(i));
+                    OKhttptils.getPic(this, photo_ids.get(i), iv);
+                }
+            }
+
             mSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     String file_id = Prefs.with(getApplicationContext()).read(car_name);
+                    String sfile_id = Prefs.with(getApplicationContext()).read(car_name + "压缩");
+                    String content = mContent.getText().toString().trim();
+
+                    if (file_id.isEmpty() || sfile_id.isEmpty()) {
+                        ToastUtil.show(CarPhotoActivity.this, "图片上传中，请稍后保存");
+
+                    } else if (!file_id.isEmpty() && !sfile_id.isEmpty() && !content.isEmpty()) {
+                        /* 上传 */
+                        Log.d(TAG, "onClick车id: " + car_id);
+                        Log.e(TAG, "onClick: " + string_id.get(position));
+                        Log.w(TAG, "onClick: " + file_id);
+                        Log.i(TAG, "onClick: " + sfile_id);
+                        Log.d(TAG, "onClick: " + content);
+                        Map<String, String> map = new HashMap<>();
+                        map.put("car_id", car_id);
+                        map.put("number", string_id.get(position));
+                        map.put("file_id", file_id);
+                        map.put("sfile_id", sfile_id);
+                        map.put("desc", content);
+                        OKhttptils.post(CarPhotoActivity.this, Config.ACCRETIONPICTURECAR, map, new OKhttptils.HttpCallBack() {
+                            @Override
+                            public void success(String response) {
+                                Log.e(TAG, "success上传图片: " + response);
+                                ToastUtil.show(CarPhotoActivity.this, "保存成功");
+                                if (position == 23) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("car_id", car_id);
+                                    JumpUtil.newInstance().jumpRight(CarPhotoActivity.this, UpdateCarActivity.class, bundle);
+                                }
+
+                            }
+
+                            @Override
+                            public void fail(String response) {
+
+                            }
+                        });
+                    } else {
+                        ToastUtil.show(CarPhotoActivity.this, "请完善信息后保存");
+                    }
+
                     Log.d(TAG, "onClick图片名: " + car_name);
-                    Log.i(TAG, "onClick图片名: " + file_id);
+                    Log.i(TAG, "onClick图片名: " + Prefs.with(getApplicationContext()).read(car_name));
+                    Log.w(TAG, "onClick压缩id: " + Prefs.with(getApplicationContext()).read(car_name + "压缩"));
+
+
                 }
             });
 
@@ -219,7 +353,10 @@ public class CarPhotoActivity extends BaseActivity {
                     ActivityCompat.requestPermissions(CarPhotoActivity.this, new String[]{Manifest.permission.CAMERA}, 222);
                     return;
                 } else {
+                    String s = arr.get(position);
                     Intent intent = new Intent(CarPhotoActivity.this, PhotographActivity.class);
+                    intent.putExtra("index",position);
+                    intent.putExtra("s",s);
                     startActivityForResult(intent, 0);
                 }
             }
@@ -227,23 +364,53 @@ public class CarPhotoActivity extends BaseActivity {
 
     }
 
+    private EdgeEffectCompat leftEdge;
+
+    private EdgeEffectCompat rightEdge;
+
     /* viewpager滑动监听 */
     private void initView1() {
+
         viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                car_name = arr.get(position);
-                mCarName.setText(car_name);
-                numberText.setText(string_id.get(position));
-                if (position == 0) {
-                    radioButton1.setBackground(null);
-                    radioButton2.setBackground(getResources().getDrawable(R.drawable.radio_type_2));
-                } else if (position == 23) {
-                    radioButton1.setBackground(getResources().getDrawable(R.drawable.radio_type));
-                    radioButton2.setBackground(null);
+
+                try {
+                    Field leftEdgeField = viewpager.getClass().getDeclaredField("mLeftEdge");
+                    Field rightEdgeField = viewpager.getClass().getDeclaredField("mRightEdge");
+                    if (leftEdgeField != null && rightEdgeField != null) {
+                        leftEdgeField.setAccessible(true);
+                        rightEdgeField.setAccessible(true);
+                        leftEdge = (EdgeEffectCompat) leftEdgeField.get(viewpager);
+                        rightEdge = (EdgeEffectCompat) rightEdgeField.get(viewpager);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (leftEdge != null && rightEdge != null) {
+                    leftEdge.finish();
+                    rightEdge.finish();
+                    leftEdge.setSize(0, 0);
+                    rightEdge.setSize(0, 0);
+                }
+
+                if (position < 24 && position >= 0) {
+                    car_name = arr.get(position);
+                    mCarName.setText(car_name);
+                    numberText.setText(string_id.get(position));
+                    if (position == 0) {
+                        radioButton1.setBackground(null);
+                        radioButton2.setBackground(getResources().getDrawable(R.drawable.radio_type_2));
+                    } else if (position == 23) {
+                        radioButton1.setBackground(getResources().getDrawable(R.drawable.radio_type));
+                        radioButton2.setBackground(null);
+                    } else {
+                        radioButton1.setBackground(getResources().getDrawable(R.drawable.radio_type));
+                        radioButton2.setBackground(getResources().getDrawable(R.drawable.radio_type_2));
+                    }
                 } else {
-                    radioButton1.setBackground(getResources().getDrawable(R.drawable.radio_type));
-                    radioButton2.setBackground(getResources().getDrawable(R.drawable.radio_type_2));
+                    viewpager.setHorizontalScrollBarEnabled(false);
                 }
             }
 
@@ -306,20 +473,76 @@ public class CarPhotoActivity extends BaseActivity {
         if (data != null) {
             Bundle bundle = data.getExtras();
             View view = viewList.get(position);
-            ImageView iv = view.findViewById(R.id.mPic);
+            final ImageView iv = view.findViewById(R.id.mPic);
             car_name = mCarName.getText().toString().trim();
             switch (requestCode) {
                 case 0:
                     //拍照
+                    popupWindow.dismiss();
                     path = bundle.getString("maximgPath");
                     File file = new File(path);
                     byte[] byimag = getBytes(file);
-                    Bitmap map = ImageTools.byteToBitmap(byimag);
-                    //上传base64
-                    upDataBase64(CarPhotoActivity.this,map,car_name);
+                    final Bitmap map = ImageTools.byteToBitmap(byimag);
+                    /* 压缩原图 */
+                    final Bitmap newmap = PhotoUtils.imageCompressL(map);
 
-                    iv.setImageBitmap(map);
-                    popupWindow.dismiss();
+                    dialog = MyProgressDialog.createDialog(CarPhotoActivity.this);
+                    dialog.setMessage("正在上传图片");
+                    dialog.show();
+                    final Map<String, String> m = new HashMap<>();
+                    m.put("file_content", PhotoUtils.bitmapToBase64(map));
+                    OKhttptils.post(CarPhotoActivity.this, Config.UPLOADFILE, m, new OKhttptils.HttpCallBack() {
+                        @Override
+                        public void success(String response) {
+                            try {
+                                Prefs.with(getApplicationContext()).remove(car_name);
+                                JSONObject jsonObject = new JSONObject(response);
+                                String data = jsonObject.getString("data");
+                                JSONObject object = new JSONObject(data);
+                                String file_id = object.getString("file_id");
+                                Prefs.with(getApplicationContext()).write(car_name, file_id);
+
+                                /* 上传压缩图片 */
+                                m.clear();
+                                m.put("file_content", PhotoUtils.bitmapToBase64(newmap));
+                                OKhttptils.post(CarPhotoActivity.this, Config.UPLOADFILE, m, new OKhttptils.HttpCallBack() {
+                                    @Override
+                                    public void success(String response) {
+                                        Prefs.with(getApplicationContext()).remove(car_name + "压缩");
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            String data = jsonObject.getString("data");
+                                            JSONObject object = new JSONObject(data);
+                                            String sfile_id = object.getString("file_id");
+                                            Prefs.with(getApplicationContext()).write(car_name + "压缩", sfile_id);
+                                            dialog.dismiss();
+                                            iv.setImageBitmap(map);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void fail(String response) {
+
+                                    }
+                                });
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        @Override
+                        public void fail(String response) {
+
+                        }
+                    });
+
+
                     break;
                 case 666:
                     //相册选择
@@ -330,21 +553,110 @@ public class CarPhotoActivity extends BaseActivity {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             newUri = FileProvider.getUriForFile(this, "com.xtzhangbinbin.jpq.fileProvider", new File(newUri.getPath()));
                         }
-                            PhotoUtils.cropImageUri(this, newUri, cropImageUri, 3, 2, 900, 600, 888);
+                        PhotoUtils.cropImageUri(this, newUri, cropImageUri, 3, 2, 900, 600, 888);
                     } else {
                         ToastUtil.show(this, "设备没有SD卡！");
                     }
                     break;
                 case 888:
-                        Bitmap bitmap = PhotoUtils.getBitmapFromUri(cropImageUri, this);
+                    final Bitmap bitmap = PhotoUtils.getBitmapFromUri(cropImageUri, this);
                     //上传base64
-                    upDataBase64(CarPhotoActivity.this,bitmap,car_name);
-                        iv.setImageBitmap(bitmap);
-                        popupWindow.dismiss();
+                    popupWindow.dismiss();
+
+                    /* 压缩原图 */
+                    final Bitmap newmap2 = PhotoUtils.imageCompressL(bitmap);
+
+                    dialog = MyProgressDialog.createDialog(CarPhotoActivity.this);
+                    dialog.setMessage("正在上传图片");
+                    dialog.show();
+                    final Map<String, String> mm = new HashMap<>();
+                    mm.put("file_content", PhotoUtils.bitmapToBase64(bitmap));
+                    OKhttptils.post(CarPhotoActivity.this, Config.UPLOADFILE, mm, new OKhttptils.HttpCallBack() {
+                        @Override
+                        public void success(String response) {
+                            try {
+                                Prefs.with(getApplicationContext()).remove(car_name);
+                                JSONObject jsonObject = new JSONObject(response);
+                                String data = jsonObject.getString("data");
+                                JSONObject object = new JSONObject(data);
+                                String file_id = object.getString("file_id");
+                                Prefs.with(getApplicationContext()).write(car_name, file_id);
+
+                                /* 上传压缩图片 */
+                                mm.clear();
+                                mm.put("file_content", PhotoUtils.bitmapToBase64(newmap2));
+                                OKhttptils.post(CarPhotoActivity.this, Config.UPLOADFILE, mm, new OKhttptils.HttpCallBack() {
+                                    @Override
+                                    public void success(String response) {
+                                        Prefs.with(getApplicationContext()).remove(car_name + "压缩");
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            String data = jsonObject.getString("data");
+                                            JSONObject object = new JSONObject(data);
+                                            String sfile_id = object.getString("file_id");
+                                            Prefs.with(getApplicationContext()).write(car_name + "压缩", sfile_id);
+                                            dialog.dismiss();
+                                            iv.setImageBitmap(bitmap);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void fail(String response) {
+
+                                    }
+                                });
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        @Override
+                        public void fail(String response) {
+
+                        }
+                    });
                     break;
             }
         }
     }
+
+
+    /* 上传图片base64并获取图片id */
+
+
+    public void upDataBase64(final Context context, final Bitmap bitmap, final String sType) {
+        Map<String, String> map = new HashMap<>();
+        map.put("file_content", PhotoUtils.bitmapToBase64(bitmap));
+        OKhttptils.post((Activity) context, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    Prefs.with(context).remove(sType);
+                    JSONObject jsonObject = new JSONObject(response);
+                    String data = jsonObject.getString("data");
+                    JSONObject object = new JSONObject(data);
+                    String file_id = object.getString("file_id");
+                    Prefs.with(context).write(sType, file_id);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
+    }
+
 
     /* 将文件转换为byte[] */
     private byte[] getBytes(File file) {

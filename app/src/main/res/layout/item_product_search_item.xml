@@ -9,7 +9,6 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingLeft="@dimen/common45dp"
-    android:text="刹车系统保养"
     android:paddingTop="@dimen/common15dp"
     android:paddingBottom="@dimen/common15dp"
     android:textColor="@color/selector_service_menu_text">

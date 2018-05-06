@@ -22,7 +22,7 @@
             android:paddingBottom="@dimen/common8dp"
             android:text="手动"
             android:textSize="@dimen/text_size_13sp"
-            android:textColor="@color/text_33"
+            android:textColor="@color/selector_text_service_type"
             />
         <!-- android:paddingLeft="@dimen/common15dp"
             android:paddingRight="@dimen/common15dp"-->

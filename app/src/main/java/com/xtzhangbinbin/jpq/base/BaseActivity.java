@@ -289,6 +289,7 @@ public class BaseActivity extends AppCompatActivity{
     private PopupWindow popupWindow;
     private ImageView img;
     private ImageView img1;
+    private MyProgressDialog dialog;
 
     public void upDataPicture(Context context, ImageView imageView, ImageView imageView1, String t) {
         img = imageView;
@@ -428,7 +429,8 @@ public class BaseActivity extends AppCompatActivity{
                     break;
                 //直接上传图片 返回成功值
                 case CODE_RESULTS_REQUEST:
-
+                    dialog = MyProgressDialog.createDialog(mContext);
+                    dialog.show();
                     final Bitmap bitmap1 = PhotoUtils.getBitmapFromUri(cropImageUri, this);
                     //上传图片 获取图片id返回值
                     Map<String,String> map = new HashMap<>();
@@ -446,6 +448,7 @@ public class BaseActivity extends AppCompatActivity{
                                 Prefs.with(mContext).write(sType,file_id);
                                 if (bitmap1 != null) {
                                     showImages(bitmap1);
+                                    dialog.dismiss();
                                 }
 
                             } catch (JSONException e) {
@@ -455,7 +458,8 @@ public class BaseActivity extends AppCompatActivity{
 
                         @Override
                         public void fail(String response) {
-
+                            dialog.dismiss();
+                            ToastUtil.noNAR(mContext);
                         }
                     });
                     break;
@@ -468,33 +472,6 @@ public class BaseActivity extends AppCompatActivity{
         }
     }
 
-    /* 上传图片base64并获取图片id */
-    public void upDataBase64(final Context context, final Bitmap bitmap, final String sType) {
-        Map<String,String> map = new HashMap<>();
-        map.put("file_content",PhotoUtils.bitmapToBase64(bitmap));
-        OKhttptils.post((Activity) context, Config.UPLOADFILE, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                try {
-
-                    JSONObject jsonObject = new JSONObject(response);
-                    String data = jsonObject.getString("data");
-                    JSONObject object = new JSONObject(data);
-                    Prefs.with(context).remove(sType);
-                    String file_id = object.getString("file_id");
-                    Prefs.with(context).write(sType,file_id);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void fail(String response) {
-
-            }
-        });
-    }
 
     /**
      * 显示图片

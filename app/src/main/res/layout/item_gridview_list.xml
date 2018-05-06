@@ -14,7 +14,6 @@
             android:layout_height="@dimen/common30dp"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="英超"
             android:textColor="@color/text_33"
             android:textSize="13sp"/>
     </RelativeLayout>

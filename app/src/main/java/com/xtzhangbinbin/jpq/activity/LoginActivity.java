@@ -1,6 +1,8 @@
 package com.xtzhangbinbin.jpq.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +42,19 @@ public class LoginActivity extends BaseActivity {
     private String code;
 
     private String user_type;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 001:
+                    getUserInfo();
+                    JumpUtil.newInstance().jumpRight(LoginActivity.this, MainActivity.class);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +108,9 @@ public class LoginActivity extends BaseActivity {
                             String user_token = obj.getString("user_token");
                             Prefs.with(getApplicationContext()).write("user_token", user_token);
                             Prefs.with(getApplicationContext()).write("user_phone", phone);
-                            JumpUtil.newInstance().jumpRight(LoginActivity.this, MainActivity.class);
-                            getUserInfo();
+                            Message message = new Message();
+                            message.what = 001;
+                            handler.sendMessage(message);
 
 
                         } catch (JSONException e) {

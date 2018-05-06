@@ -23,7 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/* 商家 - 产品列表 */
 public class ProductList extends BaseActivity {
     @BindView(R.id.viewpager)
     CustomViewPager viewpager;

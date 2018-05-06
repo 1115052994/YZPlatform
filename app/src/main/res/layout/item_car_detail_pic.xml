@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
-        android:layout_marginTop="@dimen/common10dp"
-        android:src="@drawable/b_b_b"/>
+        android:layout_marginTop="@dimen/common10dp"/>
 
     <TextView
         android:id="@+id/mType"

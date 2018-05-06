@@ -2,30 +2,22 @@ package com.xtzhangbinbin.jpq.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xtzhangbinbin.jpq.R;
-import com.xtzhangbinbin.jpq.activity.UpdateCar;
+import com.xtzhangbinbin.jpq.activity.UpdateCarActivity;
 import com.xtzhangbinbin.jpq.entity.WeisjBean;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
 
 import java.text.DecimalFormat;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2018/4/30.
@@ -79,8 +71,8 @@ public class WeisjAdapter extends RecyclerView.Adapter<WeisjAdapter.ViewHolder> 
         holder.weisj_bianji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, UpdateCar.class);
-                intent.putExtra("carid",String.valueOf(result.get(position).getCar_id()));
+                Intent intent = new Intent(context, UpdateCarActivity.class);
+                intent.putExtra("car_id",String.valueOf(result.get(position).getCar_id()));
                 context.startActivity(intent);
             }
         });

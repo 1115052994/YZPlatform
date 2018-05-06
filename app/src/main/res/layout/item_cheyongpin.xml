@@ -15,8 +15,7 @@
                 android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/bbrtaqy"/>
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -32,7 +31,6 @@
                 android:layout_marginTop="@dimen/common5dp"
                 android:lines="2"
                 android:ellipsize="end"
-                android:text="儿童座椅儿童座椅儿童座椅儿童座椅儿童座椅"
                 android:textColor="@color/text_66"
                 android:textSize="@dimen/text_size_15sp"/>
             <TextView
@@ -40,7 +38,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
-                android:text="评分 100%好评"
                 android:textColor="@color/text_a2"
                 android:layout_marginTop="@dimen/common12dp"
                 android:textSize="@dimen/text_size_12sp"/>
@@ -54,14 +51,12 @@
                     android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥859.00"
                     android:textColor="@color/text_ff2a"
                     android:textSize="@dimen/text_size_16sp"/>
                 <TextView
                     android:id="@+id/tv_marketPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥1859.00"
                     android:textColor="@color/text_a2"
                     android:layout_marginLeft="@dimen/common15dp"
                     android:textSize="@dimen/text_size_10sp"/>

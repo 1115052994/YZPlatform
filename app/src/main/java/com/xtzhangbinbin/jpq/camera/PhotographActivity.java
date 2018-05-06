@@ -106,6 +106,8 @@ import static com.xtzhangbinbin.jpq.camera.test.ModelEnums.MODEL_ZHUOQIANCHEMENG
 @SuppressWarnings("all")
 public class PhotographActivity extends AppCompatActivity implements SurfaceHolder.Callback, SensorEventListener {
     protected static final String TAG = "PhotographActivity";
+    private String s;
+    private int position;
     private Camera mCamera;
     private SurfaceHolder mHolder;
     private SurfaceView surface_view;
@@ -172,7 +174,8 @@ public class PhotographActivity extends AppCompatActivity implements SurfaceHold
         WindowManager WM = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         WM.getDefaultDisplay().getMetrics(outMetrics);
-
+        s = getIntent().getStringExtra("s");
+        position = getIntent().getIntExtra("index", 0);
         //初始化模板
         onLoadResources();
         //初始化界面
@@ -294,7 +297,13 @@ public class PhotographActivity extends AppCompatActivity implements SurfaceHold
         try {
             //获取所以车辆模板的枚举对象
             //获取指定车辆的模板
-            ModelEnums model = ModelEnums.getByName(MODEL_YAOSHIKONG.name);
+//            ModelEnums model = ModelEnums.getByName(MODEL_YAOSHIKONG.name);
+            ModelEnums enums[] = ModelEnums.values();
+            for (int i = 0; i < enums.length ; i++) {
+                Log.e(TAG, "initModel看看名字: " + enums[i].name);
+            }
+            ModelEnums model = ModelEnums.getByName(enums[position].name);
+            Log.d(TAG, "initModel看看名字: " + model.remark);
             switch (model) {
                 case MODEL_ZHENGQIANFANG:
                     setModel(MODEL_ZHENGQIANFANG, 800, 800);
@@ -591,6 +600,7 @@ public class PhotographActivity extends AppCompatActivity implements SurfaceHold
         // 判断是否开启传感器监听并注销监听
         SensorCancellation();
     }
+
     /**
      * 传感器精度改变事件
      */
@@ -598,6 +608,7 @@ public class PhotographActivity extends AppCompatActivity implements SurfaceHold
     public void onAccuracyChanged(Sensor arg0, int arg1) {
 
     }
+
     /**
      * 传感器改变事件
      */
@@ -871,7 +882,7 @@ public class PhotographActivity extends AppCompatActivity implements SurfaceHold
         WindowManager manager = getWindowManager();
         DisplayMetrics metrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(metrics);
-        return (int) (metrics.widthPixels * 0.85);
+        return (int) (metrics.widthPixels * 0.80);
     }
 
     /**

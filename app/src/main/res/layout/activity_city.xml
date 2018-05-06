@@ -109,7 +109,6 @@
                     android:layout_marginLeft="@dimen/common30dp"
                     android:textColor="@color/text_33"
                     android:textSize="@dimen/text_size_16sp"
-                    android:text="北京"
                     />
                 <View
                     android:id="@+id/line2"

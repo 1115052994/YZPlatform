@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.method.ReplacementTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -84,25 +85,21 @@ public class AddCarProduct extends BaseActivity {
     @BindView(R.id.mNext)
     TextView mNext;
 
-
     private HashMap<String, String> map = new HashMap<>();
-    private HashMap<String, String> map2 = new HashMap<>();
-    private String car_vin;  //车架号     已赋值
-    private String car_brand;  //品牌id      已赋值
-    private String car_model; //车型        已赋值
-    private String car_mileage;  //车显里程   已赋值
-    private String car_price;  //车辆售价     已赋值
-    private String car_time;  //上牌时间    已赋值
-    private String car_gearbox; //变速箱     已赋值
-    private String car_letout;  //排放标准   已赋值
-    private String car_seating; //座位数   已赋值
-    private String car_fuel_type; //燃料类型   已赋值
-    private String car_resum;  //车辆简历    已赋值
-    private String car_place_city; //所在城市   已赋值
+    private String car_vin = "";  //车架号     已赋值
+    private String car_brand = "";  //品牌id      已赋值
+    private String car_model = ""; //车型        已赋值
+    private String car_mileage = "";  //车显里程   已赋值
+    private String car_price = "";  //车辆售价     已赋值
+    private String car_time = "";  //上牌时间    已赋值
+    private String car_gearbox = ""; //变速箱     已赋值
+    private String car_letout = "";  //排放标准   已赋值
+    private String car_seating = ""; //座位数   已赋值
+    private String car_fuel_type = ""; //燃料类型   已赋值
+    private String car_resum = "";  //车辆简历    已赋值
+    private String car_place_city = ""; //所在城市   已赋值
     private String car_displacement = "1.0"; //车排量  已赋值
-    private String car_name;  //车辆名称     已賦值
-
-    private List<String> car_brand_list = new ArrayList<>();//品牌id
+    private String car_name = "";  //车辆名称     已賦值
 
     //变速箱
     private List<String> carBsxList = new ArrayList<>();
@@ -146,6 +143,22 @@ public class AddCarProduct extends BaseActivity {
         getData();
         onCall();
         getLocation();
+        mCarNumb.setTransformationMethod(new UpperCaseTransform());
+    }
+
+    /* 首先是小写转大写的方法 */
+    public class UpperCaseTransform extends ReplacementTransformationMethod {
+        @Override
+        protected char[] getOriginal() {
+            char[] aa = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+            return aa;
+        }
+
+        @Override
+        protected char[] getReplacement() {
+            char[] cc = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+            return cc;
+        }
     }
 
     /* 获取数据 -变速箱、排放标准、座位数、燃料类型、 */
@@ -393,9 +406,13 @@ public class AddCarProduct extends BaseActivity {
                     @Override
                     public void fail(String response) {
                         Log.d("bbbbbb", "fail: " + response);
-                        Gson gson = GsonFactory.create();
-                        ChassisNumber chassisNumber = gson.fromJson(response, ChassisNumber.class);
-                        ToastUtil.show(AddCarProduct.this, chassisNumber.getMessage());
+                        if (response != null) {
+                            Gson gson = GsonFactory.create();
+                            ChassisNumber chassisNumber = gson.fromJson(response, ChassisNumber.class);
+                            ToastUtil.show(AddCarProduct.this, chassisNumber.getMessage());
+                        }else {
+                            ToastUtil.noNAR(AddCarProduct.this);
+                        }
                     }
                 });
             }
@@ -406,7 +423,7 @@ public class AddCarProduct extends BaseActivity {
     }
 
     public void initView() {
-        bsxAdapter = new BSXCarMoreAdapter(this, carBsxList);
+        bsxAdapter = new BSXCarMoreAdapter(this, carBsxList,0);
         bsxAdapter.setOnItemClickListener(new AppraiseInterface() {
             @Override
             public void onClick(View view, int position) {
@@ -423,15 +440,13 @@ public class AddCarProduct extends BaseActivity {
                 TextView tv = view.findViewById(R.id.tv_type);
                 tv.setTextColor(Color.parseColor("#ff9696"));
                 bsx = view;
-                TextView text_type1 = view.findViewById(R.id.tv_type);
-//                car_gearbox = text_type1.getText().toString().trim();
                 car_gearbox = carBsxIds.get(position);
                 bsxPosition = position;
             }
         });
         gvBsx.setAdapter(bsxAdapter);
 
-        pfbzAdapter = new BSXCarMoreAdapter(this, carPfbzList);
+        pfbzAdapter = new BSXCarMoreAdapter(this, carPfbzList,1);
         pfbzAdapter.setOnItemClickListener(new AppraiseInterface() {
             @Override
             public void onClick(View view, int position) {
@@ -448,15 +463,13 @@ public class AddCarProduct extends BaseActivity {
                 TextView tv = view.findViewById(R.id.tv_type);
                 tv.setTextColor(Color.parseColor("#ff9696"));
                 pfbz = view;
-                TextView text_type1 = view.findViewById(R.id.tv_type);
-//                car_letout = text_type1.getText().toString().trim();
                 car_letout = carPfbzIds.get(position);
                 pfbzPosition = position;
             }
         });
         gvPfbz.setAdapter(pfbzAdapter);
 
-        zwsAdapter = new BSXCarMoreAdapter(this, carZwsList);
+        zwsAdapter = new BSXCarMoreAdapter(this, carZwsList,2);
         zwsAdapter.setOnItemClickListener(new AppraiseInterface() {
             @Override
             public void onClick(View view, int position) {
@@ -473,15 +486,13 @@ public class AddCarProduct extends BaseActivity {
                 TextView tv = view.findViewById(R.id.tv_type);
                 tv.setTextColor(Color.parseColor("#ff9696"));
                 zws = view;
-                TextView text_type1 = view.findViewById(R.id.tv_type);
-//                car_seating = text_type1.getText().toString().trim();
                 car_seating = carZwsIds.get(position);
                 zwsPosition = position;
             }
         });
         gvZws.setAdapter(zwsAdapter);
 
-        rllxAdapter = new BSXCarMoreAdapter(this, carRllxList);
+        rllxAdapter = new BSXCarMoreAdapter(this, carRllxList,0);
         rllxAdapter.setOnItemClickListener(new AppraiseInterface() {
             @Override
             public void onClick(View view, int position) {
@@ -498,98 +509,12 @@ public class AddCarProduct extends BaseActivity {
                 TextView tv = view.findViewById(R.id.tv_type);
                 tv.setTextColor(Color.parseColor("#ff9696"));
                 rllx = view;
-                TextView text_type1 = view.findViewById(R.id.tv_type);
-//                car_fuel_type = text_type1.getText().toString().trim();
                 car_fuel_type = carRllxIds.get(position);
                 rllxPosition = position;
             }
         });
         gvRllx.setAdapter(rllxAdapter);
-//        //下一步
-//        mNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                car_number = mCarNumb.getText().toString().trim();
-//                car_resum = carResume.getText().toString().trim();
-//                car_mileage = mKm.getText().toString().trim();
-//                car_price = mPrice.getText().toString().trim();
-//                car_name = mBrand.getText().toString().trim();
-////                car_model = mCarType.getText().toString().trim();
-//                Log.d("oneror", "onClick: " + "车架号" + car_number + "----品牌" + car_brand + "----车型" + car_model + "----车显里程" + car_mileage + "----车辆售价" + car_price + "----上牌时间" + car_time + "----车辆简历" + car_resum);
-//                if (!car_number.isEmpty() && !car_resum.isEmpty() && !car_mileage.isEmpty() && !car_price.isEmpty() && !car_name.isEmpty() && !car_model.isEmpty()) {
-//                    //已完善信息
-////                    postMeages(car_number, car_brand, car_model, car_mileage, car_price, car_time, car_gearbox, car_letout, car_seating, car_fuel_type, car_resum, car_name, car_displacement, car_place_city);
-//                } else {
-//                    final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(AddCarProduct.this)
-//                            .setMessage1("温馨提示").setMessage2(" 请完善信息").setConfirm("确定").showDialog();
-//                    ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
-//                        @Override
-//                        public void onNoClick() {
-//                            ordinaryDialog.dismiss();
-//                        }
-//                    });
-//                    ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
-//                        @Override
-//                        public void onYesClick() {
-//
-//                            ordinaryDialog.dismiss();
-//                        }
-//                    });
-//                }
-//            }
-//        });
     }
-
-
-//    public void postMeages(String car_number, String car_brand, String car_model, String car_mileage, String car_price, String car_time, String car_gearbox, String car_letout, String car_seating, String car_fuel_type, String car_resum, String car_name, String car_emissions, String car_place_city) {
-//        map2.clear();
-//        if (NetUtil.isNetAvailable(this)) {
-//            map2.put("car_name", car_name);
-//            map2.put("car_brand", car_brand);
-//            map2.put("car_model", car_model);
-//            map2.put("car_mileage", car_mileage);
-//            map2.put("car_price", car_price);
-//            map2.put("car_sign_date", car_time);
-//            map2.put("car_gearbox", car_gearbox);
-//            map2.put("car_emissions", car_emissions);
-//            map2.put("car_letout", car_letout);
-//            map2.put("car_desc", car_resum);
-//            map2.put("car_place_city", car_place_city);
-//            map2.put("car_fuel_type", car_fuel_type);
-//            map2.put("car_seating", car_seating);
-//            map2.put("car_vin", car_number);
-////            post(AddCarProduct.this,Config.QUERYCARSTYLE,map2);
-//            OKhttptils.post(this, Config.ACCRETIONCAR, map2, new OKhttptils.HttpCallBack() {
-//                @Override
-//                public void success(String response) {
-//                    Log.i("oneror", "添加二手车信息: " + response);
-//                    try {
-//                        JSONObject jsonObject = new JSONObject(response);
-//                        JSONObject data = jsonObject.getJSONObject("data");
-//                        String result = data.getString("result");
-//                        Intent intent = new Intent(AddCarProduct.this, CarPhotoActivity.class);
-//                        intent.putExtra("result", result);
-//                        startActivity(intent);
-//                        finish();
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void fail(String response) {
-//                    try {
-//                        JSONObject object = new JSONObject(response);
-//                        ToastUtil.show(AddCarProduct.this, object.getString("message"));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//        }
-//    }\\
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -609,6 +534,15 @@ public class AddCarProduct extends BaseActivity {
         car_time = mTime.getText().toString().trim();
         car_resum = carResume.getText().toString().trim();
         car_vin = mCarNumb.getText().toString().trim();
+
+//        car_seating = zwsAdapter.getItem(zwsPosition);
+//        car_fuel_type = rllxAdapter.getItem(rllxPosition);
+//        car_gearbox = bsxAdapter.getItem(bsxPosition);
+//        car_letout = pfbzAdapter.getItem(pfbzPosition);
+        car_seating = carZwsIds.get(zwsPosition);
+        car_fuel_type = carRllxIds.get(rllxPosition);
+        car_gearbox = carBsxIds.get(bsxPosition);
+        car_letout = carPfbzIds.get(pfbzPosition);
 
         Log.d(TAG, "onViewClicked车辆名称: " + car_name);
         Log.e(TAG, "onViewClicked车品牌id: " + car_brand);
@@ -640,40 +574,46 @@ public class AddCarProduct extends BaseActivity {
         map.put("car_fuel_type", car_fuel_type);
         map.put("car_seating", car_seating);
         map.put("car_vin", car_vin);
-        OKhttptils.post(AddCarProduct.this, Config.ACCRETIONCAR, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                Log.d(TAG, "success: " + response);
-                /**
-                 * {"data":{"result":"17492"},"message":"","status":"1"}
-                 * */
-                try {
+        if (!car_name.isEmpty() && !car_brand.isEmpty() && !car_model.isEmpty() && !car_mileage.isEmpty() && !car_price.isEmpty() && !car_time.isEmpty() && !car_gearbox.isEmpty() &&
+                !car_displacement.isEmpty() && !car_letout.isEmpty() && !car_resum.isEmpty() && !car_place_city.isEmpty() && !car_fuel_type.isEmpty() && !car_seating.isEmpty() && !car_vin.isEmpty()){
+            OKhttptils.post(AddCarProduct.this, Config.ACCRETIONCAR, map, new OKhttptils.HttpCallBack() {
+                @Override
+                public void success(String response) {
+                    Log.d(TAG, "success: " + response);
+                    /**
+                     * {"data":{"result":"17492"},"message":"","status":"1"}
+                     * */
+                    try {
 
-                    JSONObject jsonObject = new JSONObject(response);
-                    String data = jsonObject.getString("data");
-                    JSONObject object = new JSONObject(data);
-                    String result = object.getString("result");
-                    if (result.isEmpty()) {
-                    } else {
-                        //上传成功  result为car_id;
-                        Bundle bundle = new Bundle();
-                        bundle.putString("car_id",result);
-                        JumpUtil.newInstance().jumpRight(AddCarProduct.this,CarPhotoActivity.class,bundle);
+                        JSONObject jsonObject = new JSONObject(response);
+                        String data = jsonObject.getString("data");
+                        JSONObject object = new JSONObject(data);
+                        String result = object.getString("result");
+                        if (result.isEmpty()) {
+                        } else {
+                            //上传成功  result为car_id;
+                            Bundle bundle = new Bundle();
+                            bundle.putString("car_id",result);
+                            bundle.putString("type","新增");
+                            JumpUtil.newInstance().jumpRight(AddCarProduct.this,CarPhotoActivity.class,bundle);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
 
-            @Override
-            public void fail(String response) {
-                try {
-                    JSONObject object = new JSONObject(response);
-                    ToastUtil.show(AddCarProduct.this, object.getString("message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                @Override
+                public void fail(String response) {
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        ToastUtil.show(AddCarProduct.this, object.getString("message"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        }else {
+            ToastUtil.show(AddCarProduct.this,"请完善信息");
+        }
     }
 }

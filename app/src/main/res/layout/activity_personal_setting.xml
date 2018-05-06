@@ -46,6 +46,7 @@
                 style="@style/black33_text_16sp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/common15dp"
+                android:layout_centerVertical="true"
                 android:text="性别" />
 
             <RadioGroup

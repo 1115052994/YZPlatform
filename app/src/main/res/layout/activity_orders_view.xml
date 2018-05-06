@@ -47,7 +47,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/common40dp"
-                android:text="北京目标在线"
                 android:textColor="@color/text_33"
                 android:textSize="@dimen/text_size_17sp" />
 
@@ -150,8 +149,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/common40dp"
                 android:layout_marginRight="@dimen/common50dp"
-                android:lines="2"
-                android:text="北京市海淀区西三旗北京市海淀区西三旗北京市海淀区西三旗" />
+                android:lines="2"/>
 
             <ImageView
                 android:id="@+id/orders_view_image_dh"
@@ -203,8 +201,7 @@
             android:textSize="@dimen/text_size_13sp"
             android:paddingLeft="3dp"
             android:background="@drawable/weixiu"
-            android:textColor="@color/bg_ff"
-            android:text="￥36"/>
+            android:textColor="@color/bg_ff"/>
     </RelativeLayout>
 
 
@@ -231,8 +228,7 @@
             android:layout_marginRight="@dimen/common15dp"
             android:layout_alignParentRight="true"
             android:textColor="@color/text_ff2a"
-            android:textSize="@dimen/text_size_16sp"
-            android:text="优惠价￥36"/>
+            android:textSize="@dimen/text_size_16sp"/>
         <ImageView
             android:id="@+id/image_bag"
             android:layout_toLeftOf="@id/yhPrice_tv"
@@ -248,8 +244,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_13sp"
             android:layout_marginRight="@dimen/common10dp"
-            android:layout_centerVertical="true"
-            android:text="总价￥50"/>
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
 

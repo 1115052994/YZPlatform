@@ -16,7 +16,6 @@
             android:layout_marginLeft="@dimen/common16dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/image_carbrand"
-            android:text="奔驰"
             android:textColor="@color/text_66"
             android:textSize="@dimen/text_size_15sp"
             />

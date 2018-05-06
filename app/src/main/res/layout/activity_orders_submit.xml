@@ -139,7 +139,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/common40dp"
-                android:text="100"
                 android:textColor="@color/red_66"
                 android:textSize="@dimen/percent_text_size"
                 android:textStyle="bold" />

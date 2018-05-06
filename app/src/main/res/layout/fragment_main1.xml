@@ -32,18 +32,20 @@
         <ImageView
             android:id="@+id/image_scan"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/common15dp"
+            android:paddingRight="@dimen/common15dp"
+            android:paddingLeft="@dimen/common7dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/scan"/>
 
         <ImageView
             android:id="@+id/image_man"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/common15dp"
+            android:paddingRight="@dimen/common8dp"
+            android:paddingLeft="@dimen/common8dp"
             android:layout_toLeftOf="@id/image_scan"
             android:src="@drawable/grzx1"/>
     </RelativeLayout>

@@ -18,8 +18,7 @@
             android:id="@+id/image_car"
             android:layout_width="@dimen/common87dp"
             android:layout_height="@dimen/common62dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/car"/>
+            android:layout_centerHorizontal="true"/>
         <TextView
             android:id="@+id/tv_carType"
             android:layout_width="wrap_content"
@@ -29,7 +28,6 @@
             android:layout_below="@id/image_car"
             android:layout_marginTop="@dimen/common5dp"
             android:textColor="@color/text_33"
-            android:lines="1"
-            android:text="三箱跑车"/>
+            android:lines="1"/>
     </RelativeLayout>
 </RelativeLayout>

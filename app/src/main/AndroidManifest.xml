@@ -37,7 +37,6 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera" />
 
-
     <application
         android:name=".YizhongApplication"
         android:allowBackup="true"
@@ -71,9 +70,7 @@
 
         <activity
             android:name=".activity.RegisterActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.EnterpriseActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -121,9 +118,7 @@
         <activity
             android:name=".activity.AddProductActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.ProductServiceActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -182,13 +177,11 @@
             android:windowSoftInputMode="adjustPan|stateHidden">
 
         </activity>
+            android:windowSoftInputMode="adjustPan" />
         <!-- liyan start -->
         <activity
             android:name=".activity.OrdersSubmitActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
-        </activity>
-        android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.OrdersPaySuccessActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -225,13 +218,16 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-        <!--zxing使用的activity-->
+        <!-- zxing使用的activity -->
         <activity
             android:name=".zxing.android.CaptureActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:exported="true"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- liyan  end -->
-        <!--信鸽使用的receiver，这是自定义接收信息的地方。暂时不用，先注释，后面要是用了再打开
+        <!--
+        信鸽使用的receiver，这是自定义接收信息的地方。暂时不用，先注释，后面要是用了再打开
         <receiver android:name=".xinge.MessageReceiver"
             android:exported="true" >
             <intent-filter>
@@ -239,41 +235,100 @@
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
             </intent-filter>
         </receiver>
--->
+        -->
 
-        <activity android:name=".activity.Sellcars" />
-        <activity android:name=".activity.ModelsChoose" />
-        <activity android:name=".activity.CarChoose" />
-        <activity android:name=".activity.CarPhotoActivity" />
-        <activity android:name=".activity.CarDetailsActivity" />
-        <activity android:name=".activity.CarCompDetail" />
-        <activity android:name=".activity.CarDetailsKeyActivity" />
         <activity
-            android:name=".activity.UpdateCar"
-            android:launchMode="singleTask"
+            android:name=".activity.Sellcars"
+            android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.ProductList" />
-        <activity android:name=".activity.MySubscribe" />
-        <activity android:name=".activity.MySubscribeMore" />
+        <activity
+            android:name=".activity.ModelsChoose"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarChoose"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarPhotoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarDetailsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarCompDetail"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarDetailsKeyActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.UpdateCarActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.ProductList"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.MySubscribe"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.MySubscribeMore"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.AccessCar"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.AccessResult" />
-        <activity android:name=".activity.CarPhotosActivity" />
-        <activity android:name=".activity.PriceWarnActivity" />
-        <activity android:name=".activity.CompOrderListsActivity" />
-        <activity android:name=".activity.CarAccessBrandSearch" />
-        <activity android:name=".activity.CarAccessChexiSearch" />
-        <activity android:name=".activity.CarAccessModeSearch" />
-        <activity android:name=".DemoActivity"></activity>
+        <activity
+            android:name=".activity.AccessResult"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarPhotosActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.PriceWarnActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CompOrderListsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarAccessBrandSearch"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarAccessChexiSearch"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarAccessModeSearch"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".camera.MainActivity" />
         <activity android:name=".camera.FileActivity" />
         <activity android:name=".camera.test.TestActivity" />
         <activity android:name=".camera.PhotographActivity" />
-        <activity android:name=".activity.CarProduct"></activity>
-    <activity android:name=".activity.CompanyCenterActivity" />
-    <activity android:name=".activity.PersonalCenterActivity"></activity>
-</application>
+        <activity
+            android:name=".activity.CarProduct"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CompanyCenterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.PersonalCenterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+    </application>
 
 </manifest>
