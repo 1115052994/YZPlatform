@@ -50,6 +50,7 @@ android {
         jcenter() // If not already there
         maven { url 'https://jitpack.io' }
     }
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {

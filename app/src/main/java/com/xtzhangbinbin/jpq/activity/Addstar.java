@@ -147,7 +147,7 @@ public class Addstar extends BaseActivity {
     //将相机图片上传到服务器 并且生成图片id
     @OnClick(R.id.addition_image)
     public void onViewClicked() {
-        upDataPicture(this,additionImage,null,"员工头像");
+        upDataPicture(this,additionImage,null,"员工头像",1,1,480,480);
         Log.d("aaaaa", "图片1:"+file_id);
     }
     //将数据上传到服务器
