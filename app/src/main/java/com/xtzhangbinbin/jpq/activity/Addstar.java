@@ -165,7 +165,6 @@ public class Addstar extends BaseActivity {
                     Intent intent = new Intent();
                     setResult(1, intent);
                     finish();
-
                 }
                 @Override
                 public void fail(String response) {
