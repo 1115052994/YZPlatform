@@ -586,11 +586,6 @@ public class CompDetail extends BaseActivity {
                             staffList.add(staffListBean);
                         }
                         staffsView.setmTabVisibleNums(1.5f);
-                        if (staffList.size()<=1){
-                            staffsView.setmTabVisibleNums(1);
-                        }else {
-                            staffsView.setmTabVisibleNums(1.5f);
-                        }
                         staffsView.setAdapter(staffAdapter);
                         //tabs服务项目
                         serverList.clear();
@@ -893,5 +888,20 @@ public class CompDetail extends BaseActivity {
 
             }
         });
+    }
+
+    /**
+     * 支付使用方法
+     */
+    public void pay(String pro_id){
+        //如果已登录，调用支付
+        if(null != Prefs.with(this).read("user_token")){
+            Bundle bundle = new Bundle();
+            bundle.putString("pro_id", pro_id);
+            JumpUtil.newInstance().jumpRight(getApplicationContext(), CompDetail.class, bundle);
+        } else {
+            //如果没有登录，跳转到登录页面
+            JumpUtil.newInstance().jumpRight(getApplicationContext(), LoginActivity.class);
+        }
     }
 }

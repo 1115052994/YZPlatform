@@ -34,7 +34,7 @@ public class HeadPictureActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.pic:
-                upDataPicture(this,pic,null,"门头照");
+                upDataPicture(this,pic,null,"门头照",3,2,900,600);
                 head_file_id = Prefs.with(getApplicationContext()).read("门头照");
                 break;
             case R.id.uploading:

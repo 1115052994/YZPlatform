@@ -45,20 +45,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        android:roundIcon="@mipmap/icon"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
             android:windowSoftInputMode="adjustPan|stateHidden" />
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+
+
         <activity
             android:name=".activity.CityActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -237,10 +234,7 @@
         <activity
             android:name=".activity.BespeakCompActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <!-- 微信支付所使用的activity -->
         <activity
@@ -346,7 +340,6 @@
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.CarFinancial"/>
-        <activity android:name=".activity.CarFinancial" />
 
         <activity android:name=".activity.InsuranceSupermarket" />
         <activity android:name=".DemoActivity" />
@@ -369,10 +362,10 @@
         <!-- 欢迎页 -->
         <activity android:name=".activity.Welcome"
             android:theme="@style/FullScreen">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".activity.Guide"
             android:theme="@style/FullScreen"/>
@@ -385,9 +378,7 @@
             android:name=".activity.PersonalCenterActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.CarProduct"></activity>
-        <activity android:name=".activity.CompanyCenterActivity" />
-        <activity android:name=".activity.PersonalCenterActivity"></activity>
+
         <activity android:name=".activity.CarCredit" />
         <activity android:name=".activity.WebView" />
         <activity android:name=".activity.LoanDetails" />
