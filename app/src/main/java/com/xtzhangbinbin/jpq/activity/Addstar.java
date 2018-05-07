@@ -3,15 +3,10 @@ package com.xtzhangbinbin.jpq.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
@@ -25,17 +20,15 @@ import com.xtzhangbinbin.jpq.view.CircleImageView;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
+import android.widget.Button;
 
 public class Addstar extends BaseActivity {
     @BindView(R.id.addition_image)
@@ -45,11 +38,10 @@ public class Addstar extends BaseActivity {
     @BindView(R.id.addition_ed_introduce)
     EditText additionEdIntroduce;
     @BindView(R.id.addition_layout)
-    LinearLayout additionLayout;
+    Button additionLayout;
     private String file_id;
     private Map<String, String> map = new HashMap<>();
     private String id;
-    private String text = "示例 精通汽车工作原理以及各种故障排查和解决，有较强的... （最多输入150个字）";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +49,6 @@ public class Addstar extends BaseActivity {
         setContentView(R.layout.activity_add_star);
         ButterKnife.bind(this);
         id = getIntent().getStringExtra("id");
-        Log.d("file_id", "onCreate: "+id);
         additionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,17 +104,9 @@ public class Addstar extends BaseActivity {
         });
         if(id!=null){
             file_id = getIntent().getStringExtra("file_id");
-            Log.d("file_id", "onCreate: "+file_id);
             getBitmap(file_id,additionImage);
             additionEdName.setText(getIntent().getStringExtra("name"));
             additionEdIntroduce.setText(getIntent().getStringExtra("info"));
-        }else {
-            //给字体设置大小
-            int end = text.length();
-            SpannableString textSpan = new SpannableString(text);
-            textSpan.setSpan(new AbsoluteSizeSpan(22), 0, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-            textSpan.setSpan(new AbsoluteSizeSpan(20), 2, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-            additionEdIntroduce.setHint(textSpan);
         }
 
     }
@@ -148,7 +131,6 @@ public class Addstar extends BaseActivity {
     @OnClick(R.id.addition_image)
     public void onViewClicked() {
         upDataPicture(this,additionImage,null,"员工头像",1,1,480,480);
-        Log.d("aaaaa", "图片1:"+file_id);
     }
     //将数据上传到服务器
     private void PostData() {
@@ -161,7 +143,6 @@ public class Addstar extends BaseActivity {
             OKhttptils.post(Addstar.this, Config.SAVESTAR, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
-                    Log.d("aaaaa", "success: "+response);
                     Intent intent = new Intent();
                     setResult(1, intent);
                     finish();

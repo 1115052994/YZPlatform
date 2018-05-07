@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YZPlatform</string>
+    <string name="app_name">一众汽车服务</string>
     <string name="alert_dialog_ok">OK</string>
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="storage_description_title">你能允许存储权限吗?</string>

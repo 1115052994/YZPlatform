@@ -92,7 +92,7 @@
                     android:paddingRight="@dimen/common15dp"
                     android:text="降价提醒"
                     android:textColor="@color/black_33"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 
@@ -113,7 +113,7 @@
                     android:paddingRight="@dimen/common15dp"
                     android:text="订阅车源"
                     android:textColor="@color/black_33"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 
@@ -134,7 +134,7 @@
                     android:paddingRight="@dimen/common15dp"
                     android:text="我的订单"
                     android:textColor="@color/black_33"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 
@@ -155,7 +155,7 @@
                     android:paddingRight="@dimen/common15dp"
                     android:text="我的收藏"
                     android:textColor="@color/black_33"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 
@@ -176,7 +176,7 @@
                     android:paddingRight="@dimen/common15dp"
                     android:text="我的足迹"
                     android:textColor="@color/black_33"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 
@@ -197,7 +197,7 @@
                     android:paddingRight="@dimen/common15dp"
                     android:text="换绑手机"
                     android:textColor="@color/black_33"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 
@@ -219,7 +219,7 @@
                     android:paddingRight="@dimen/common15dp"
                     android:text="联系客服"
                     android:textColor="@color/black_33"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 
@@ -241,7 +241,7 @@
                     android:background="@drawable/bg_cricle30_gray"
                     android:text="退出登录"
                     android:textColor="@color/theme_coloer"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 

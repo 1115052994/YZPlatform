@@ -322,6 +322,12 @@ public final class CaptureActivity extends BaseActivity implements
         builder.show();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setTitle("订单扫描");
+    }
+
     public void restartCamera() {
         onPause();
         onResume();

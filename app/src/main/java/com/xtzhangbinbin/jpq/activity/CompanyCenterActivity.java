@@ -23,6 +23,7 @@ import com.xtzhangbinbin.jpq.utils.DataCleanManager;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
+import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
 
@@ -45,6 +46,8 @@ public class CompanyCenterActivity extends BaseActivity {
     TextView mName;
     @BindView(R.id.mState)
     TextView mState;
+
+    private Enterprise.DataBean.ResultBean resultBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 if (null == dataBean.getResult()) {
                     mState.setText("未审核");
                 } else {
-                    Enterprise.DataBean.ResultBean resultBean = enterprise.getData().getResult();
+                    resultBean = enterprise.getData().getResult();
                     //审核状态
                     if ("1".equals(resultBean.getAuth_audit_state())) {
                         mState.setText("审核拒绝");
@@ -98,7 +101,7 @@ public class CompanyCenterActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.mBack, R.id.mAuto, R.id.mProduct, R.id.mOrders, R.id.mWallet, R.id.mBook, R.id.mAppraise, R.id.mClean, R.id.mKefu, R.id.mBtn, R.id.mNewPhone})
+    @OnClick({R.id.mBack, R.id.mAuto, R.id.mProduct, R.id.mOrders, R.id.mWallet, R.id.mBook, R.id.mAppraise, R.id.mClean, R.id.mKefu, R.id.mBtn, R.id.mNewPhone, R.id.mSuperEmp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mBack:
@@ -108,23 +111,58 @@ public class CompanyCenterActivity extends BaseActivity {
                 JumpUtil.newInstance().jumpRight(this, EnterpriseActivity.class);
                 break;
             case R.id.mProduct:
+                //审核通过才能使用此功能
+                if ("2".equals(resultBean.getAuth_audit_state())){
                 //产品管理
-                JumpUtil.newInstance().jumpRight(this, ProductList.class);
+                    JumpUtil.newInstance().jumpRight(this, ProductList.class);
+                } else {
+                    ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
+                }
                 break;
             case R.id.mOrders:
-                //订单管理
-                JumpUtil.newInstance().jumpRight(this, CompOrderListsActivity.class);
+                //审核通过才能使用此功能
+                if ("2".equals(resultBean.getAuth_audit_state())){
+                    //订单管理
+                    JumpUtil.newInstance().jumpRight(this, OrdersCompListActivity.class);
+                }else {
+                    ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
+                }
                 break;
             case R.id.mWallet:
-                //钱包
-                JumpUtil.newInstance().jumpRight(this, CompWalletActivity.class);
+                //审核通过才能使用此功能
+                if ("2".equals(resultBean.getAuth_audit_state())){
+                    //钱包
+                    JumpUtil.newInstance().jumpRight(this, CompWalletActivity.class);
+                }else {
+                    ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
+                }
                 break;
             case R.id.mBook:
-                //预约信息
-                JumpUtil.newInstance().jumpRight(this, BespeakComp.class);
+                //审核通过才能使用此功能
+                if ("2".equals(resultBean.getAuth_audit_state())) {
+                    //预约信息
+                    JumpUtil.newInstance().jumpRight(this, BespeakCompActivity.class);
+                }else {
+                    ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
+                }
                 break;
             case R.id.mAppraise:
-                //评价管理
+                //审核通过才能使用此功能
+                if ("2".equals(resultBean.getAuth_audit_state())) {
+                    //评价管理
+                    JumpUtil.newInstance().jumpRight(this, EvaluationList.class);
+                }else {
+                    ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
+                }
+                break;
+            case R.id.mSuperEmp:
+                //审核通过才能使用此功能
+                if ("2".equals(resultBean.getAuth_audit_state())) {
+                    //明星员工
+                    JumpUtil.newInstance().jumpRight(this, Starperformers.class);
+                }else {
+                    ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
+                }
                 break;
             case R.id.mClean:
                 //清除缓存
@@ -151,7 +189,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mNewPhone:
                 //换绑手机号
-                JumpUtil.newInstance().jumpRight(CompanyCenterActivity.this,ChangeOldPhoneActivity.class);
+                JumpUtil.newInstance().jumpRight(CompanyCenterActivity.this, ChangeOldPhoneActivity.class);
                 break;
             case R.id.mKefu:
                 //联系客服
@@ -173,6 +211,7 @@ public class CompanyCenterActivity extends BaseActivity {
                     public void onYesClick() {
                         dialog.dismiss();
                         Prefs.with(getApplicationContext()).clear();
+                        CompanyCenterActivity.this.finish();
                         JumpUtil.newInstance().jumpRight(CompanyCenterActivity.this, LoginActivity.class);
                     }
                 });

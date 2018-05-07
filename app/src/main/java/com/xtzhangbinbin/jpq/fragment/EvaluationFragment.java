@@ -127,7 +127,7 @@ public class EvaluationFragment extends Fragment {
                     if(refreshlayout==null){
                         evaluationAdapter.notifyDataSetChanged();
                     }
-
+                    Log.w("test", result.size() + "aaaaa");
                     //没有信息图片显示
                     if (result.size() <= 0) {
                         evaluationListImage.setVisibility(View.VISIBLE);

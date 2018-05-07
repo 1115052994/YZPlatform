@@ -151,7 +151,11 @@ public class MainFragment extends Fragment implements AMapLocationListener {
         //YZcompcfwlxwxbyghdc更换电瓶
         switch (view.getId()) {
             case R.id.image_scan:
-                JumpUtil.newInstance().jumpRight(getContext(), CaptureActivity.class);
+                if(null != Prefs.with(getContext()).read("user_token")){
+                    JumpUtil.newInstance().jumpRight(getContext(), CaptureActivity.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }
                 break;
             case R.id.image_man:
                 user_type = Prefs.with(getContext()).read("user_type");
@@ -179,8 +183,12 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.ly_jjjy:
                 break;
             case R.id.ly_wzcx:
-                // 违章查询
-                JumpUtil.newInstance().jumpLeft(getActivity(), WeizhangQuery.class);
+                if(null != Prefs.with(getContext()).read("user_token")){
+                    // 违章查询
+                    JumpUtil.newInstance().jumpLeft(getActivity(), WeizhangQuery.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }
                 break;
             case R.id.ly_yxc:
                 break;
@@ -194,8 +202,12 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 //卖车
                 break;
             case R.id.ly_gj:
-                // 估价
-                JumpUtil.newInstance().jumpRight(getContext(), AccessCar.class);
+                if(null != Prefs.with(getContext()).read("user_token")){
+                    // 估价
+                    JumpUtil.newInstance().jumpRight(getContext(), AccessCar.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }
                 break;
             case R.id.image_czcl:
                 break;
