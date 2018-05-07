@@ -585,7 +585,11 @@ public class CompDetail extends BaseActivity {
                         for (CompDetailBean.DataBean.ResultBean.StaffListBean staffListBean : resultBean.getStaffList()) {
                             staffList.add(staffListBean);
                         }
-                        staffsView.setmTabVisibleNums(1.5f);
+                        if(staffList.size()<=1){
+                            staffsView.setmTabVisibleNums(1);
+                        }else{
+                            staffsView.setmTabVisibleNums(1.5f);
+                        }
                         staffsView.setAdapter(staffAdapter);
                         //tabs服务项目
                         serverList.clear();
