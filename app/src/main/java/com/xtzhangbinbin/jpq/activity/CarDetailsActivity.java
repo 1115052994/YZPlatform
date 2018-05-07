@@ -29,6 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
@@ -37,16 +42,11 @@ import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.DateUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
-import com.xtzhangbinbin.jpq.view.JudgeNestedScrollView;
 import com.xtzhangbinbin.jpq.view.OnlineOrderDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.view.ScrollLinearLayoutManager;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -552,6 +552,7 @@ public class CarDetailsActivity extends BaseActivity {
                 Gson gson = GsonFactory.create();
                 CarDetaile carDetaile = gson.fromJson(response, CarDetaile.class);
                 CarDetaile.DataBean.ResultBean.CarDetailBean carDetailBean = carDetaile.getData().getResult().getCarDetail();
+                comp_id = carDetailBean.getCar_comp_id();
                 Message message = new Message();
                 message.what = 001;
                 message.obj = carDetailBean;
@@ -624,7 +625,9 @@ public class CarDetailsActivity extends BaseActivity {
                 break;
             case R.id.mDetails:
                 //公司详情
-                JumpUtil.newInstance().jumpRight(currtActivity,CarCompDetail.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("comp_id",comp_id);
+                JumpUtil.newInstance().jumpRight(currtActivity,CarCompDetail.class,bundle1);
                 break;
             case R.id.mDeploy:
                 //查看详细参数配置
@@ -646,6 +649,12 @@ public class CarDetailsActivity extends BaseActivity {
                 break;
             case R.id.mEvaluate:
                 //估价
+                if(null != Prefs.with(getApplicationContext()).read("user_token")){
+                    // 估价
+                    JumpUtil.newInstance().jumpRight(CarDetailsActivity.this, AccessCar.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(CarDetailsActivity.this, LoginActivity.class);
+                }
                 break;
         }
 

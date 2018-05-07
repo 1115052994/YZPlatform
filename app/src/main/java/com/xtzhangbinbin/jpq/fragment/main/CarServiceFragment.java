@@ -44,7 +44,11 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
 import com.xtzhangbinbin.jpq.activity.ETC;
+import com.xtzhangbinbin.jpq.activity.LoginActivity;
+import com.xtzhangbinbin.jpq.activity.PoiAroundSearchActivity;
+import com.xtzhangbinbin.jpq.activity.SOS;
 import com.xtzhangbinbin.jpq.activity.SearchActivity;
+import com.xtzhangbinbin.jpq.activity.WeizhangQuery;
 import com.xtzhangbinbin.jpq.adapter.CarServiceListAdapter;
 import com.xtzhangbinbin.jpq.adapter.MainGridViewAdapter;
 import com.xtzhangbinbin.jpq.adapter.MainViewPagerAdapter;
@@ -55,6 +59,7 @@ import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.PhotoUtils;
+import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -212,14 +217,24 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     } else {
                         switch (itemListBeans.get(pos).getServerDesc()){
                             case "紧急救援":
-
+                                JumpUtil.newInstance().jumpRight(getContext(), SOS.class);
                                 break;
                             case "ETC":
                                 JumpUtil.newInstance().jumpRight(getContext(), ETC.class);
                                 break;
                             case "加油站":
+                                Bundle bundle = new Bundle();
+                                bundle.putDouble("lat", Double.parseDouble(lat));
+                                bundle.putDouble("lon", Double.parseDouble(lon));
+                                JumpUtil.newInstance().jumpLeft(getActivity(), PoiAroundSearchActivity.class,bundle);
                                 break;
                             case "违章查询":
+                                if(null != Prefs.with(getContext()).read("user_token")){
+                                    // 违章查询
+                                    JumpUtil.newInstance().jumpLeft(getActivity(), WeizhangQuery.class);
+                                } else {
+                                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                                }
                                 break;
                         }
                     }
@@ -510,9 +525,9 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     lon = String.valueOf(amapLocation.getLongitude());
                     lat = String.valueOf(amapLocation.getLatitude());
 //                    city = "济南";
-                    mLocation.setText(city);
-//                    lon = "116.988";
 //                    lat = "36.6883";
+//                    lon = "116.988";
+                    mLocation.setText(city);
                     getCityId(city);
                 }
                 Log.i("Location", "log=" + lon);

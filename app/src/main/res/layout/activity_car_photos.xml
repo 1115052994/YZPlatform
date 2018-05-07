@@ -109,7 +109,7 @@
             android:layout_weight="1"
             android:background="#f1a937"
             android:gravity="center"
-            android:text="我要砍价"
+            android:text="我要估价"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16sp" />
 

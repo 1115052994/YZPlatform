@@ -22,17 +22,21 @@ import android.widget.Toast;
 
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.gson.Gson;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CarDetaile;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
+import com.xtzhangbinbin.jpq.utils.DateUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.Prefs;
+import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.HackyViewPager;
+import com.xtzhangbinbin.jpq.view.OnlineOrderDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +49,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.picker.DatePicker;
 import io.reactivex.functions.Consumer;
 
 public class CarPhotosActivity extends BaseActivity {
@@ -62,6 +67,7 @@ public class CarPhotosActivity extends BaseActivity {
     private int posi;
     private String car_id;
     private String file_id;
+    private String order_time;
 
     //图片id
     private List<String> files = new ArrayList<>();
@@ -118,12 +124,87 @@ public class CarPhotosActivity extends BaseActivity {
                 call("4001198698");
                 break;
             case R.id.mCut:
+                //估价
+                if(null != Prefs.with(getApplicationContext()).read("user_token")){
+                    // 估价
+                    JumpUtil.newInstance().jumpRight(CarPhotosActivity.this, AccessCar.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(CarPhotosActivity.this, LoginActivity.class);
+                }
                 break;
             case R.id.mOrder:
+                showDialog();
                 break;
         }
     }
 
+    /* 弹出预约dialog */
+    private void showDialog() {
+        final OnlineOrderDialog dialog = OnlineOrderDialog.newInstance(this).showDialog();
+        dialog.setTimePickerListener(new OnlineOrderDialog.onTimePickerListener() {
+            @Override
+            public void onTimePiker() {
+                DatePicker picker = new DatePicker(currtActivity);
+                picker.setRangeStart(DateUtil.getNextYear(),DateUtil.getNextMonth(),DateUtil.getNextDay());
+                picker.setRangeEnd(2050,12,31);
+                picker.setDividerColor(getResources().getColor(R.color.theme_coloer));
+                picker.setTextColor(getResources().getColor(R.color.theme_coloer));
+                picker.setCancelTextColor(getResources().getColor(R.color.theme_coloer));
+                picker.setSubmitTextColor(getResources().getColor(R.color.theme_coloer));
+                picker.setTopLineColor(getResources().getColor(R.color.theme_coloer));
+                picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                    @Override
+                    public void onDatePicked(String year, String month, String day) {
+                        order_time = year + "-" + month + "-" + day;
+                        dialog.setTime(order_time);
+                    }
+                });
+                picker.show();
+            }
+        });
+
+
+        dialog.setYesOnclickListener(new OnlineOrderDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                if (!dialog.getPhone().isEmpty() && StringUtil.isPhoneNum(dialog.getPhone())){
+                    if (!dialog.getTime().isEmpty()){
+                        Map<String,String> map = new HashMap<>();
+                        map.put("car_id",car_id);
+                        map.put("online_phone",dialog.getPhone());
+                        map.put("online_date",order_time + " 00:00:00");
+                        OKhttptils.post(currtActivity, Config.CAR_DETAIL_ONLINE_ORDER, map, new OKhttptils.HttpCallBack() {
+                            @Override
+                            public void success(String response) {
+                                Log.i(TAG, "success在线预约: " + response);
+                                /**
+                                 * {"data":{},"message":"","status":"1"}
+                                 */
+                                dialog.dismiss();
+                                ToastUtil.show(currtActivity,"预约成功");
+
+                            }
+
+                            @Override
+                            public void fail(String response) {
+                                Log.d(TAG, "fail在线预约: " + response);
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    ToastUtil.show(currtActivity,jsonObject.getString("message"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }else {
+                        ToastUtil.show(currtActivity,"请选择看车时间");
+                    }
+                }else {
+                    ToastUtil.show(currtActivity,"请填写正确的手机号");
+                }
+            }
+        });
+    }
 
     /* 订阅降价通知 */
     private void getSale() {

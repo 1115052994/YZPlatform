@@ -471,6 +471,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.ETC"
             android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SOS"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
