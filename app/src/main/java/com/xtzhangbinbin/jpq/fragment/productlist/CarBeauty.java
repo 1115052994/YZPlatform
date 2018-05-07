@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
@@ -47,7 +48,7 @@ public class CarBeauty extends Fragment {
     RecyclerView carBeautyList;
     Unbinder unbinder;
     @BindView(R.id.radio)
-    RadioButton radio;
+    Button radio;
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsingCardealImage;
     @BindView(R.id.smartRefreshLayout)
@@ -77,23 +78,6 @@ public class CarBeauty extends Fragment {
             }
         });
         getData(1, null);
-        radio.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        radio.setChecked(false);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        radio.setChecked(true);
-                        break;
-                }
-                return false;
-            }
-        });
         radio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,6 +2,7 @@ package com.xtzhangbinbin.jpq.fragment.productlist;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
@@ -20,6 +22,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.AddProductActivity;
 import com.xtzhangbinbin.jpq.adapter.CarBeautyAdapter;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CarBeautyBean;
@@ -45,7 +48,7 @@ public class Maintenance extends Fragment {
     RecyclerView carBeautyList;
     Unbinder unbinder;
     @BindView(R.id.radio)
-    RadioButton radio;
+    Button radio;
     @BindView(R.id.browsing_Cardeal_image)
     ImageView browsingCardealImage;
     @BindView(R.id.smartRefreshLayout)
@@ -75,21 +78,11 @@ public class Maintenance extends Fragment {
             }
         });
         getData(1, null);
-        radio.setOnTouchListener(new View.OnTouchListener() {
+        radio.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        radio.setChecked(false);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        radio.setChecked(true);
-                        break;
-                }
-                return false;
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddProductActivity.class);
+                startActivity(intent);
             }
         });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

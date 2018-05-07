@@ -2,6 +2,7 @@ package com.xtzhangbinbin.jpq.fragment.productlist;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.AddCarProduct;
+import com.xtzhangbinbin.jpq.activity.AddProductActivity;
 import com.xtzhangbinbin.jpq.adapter.WeisjAdapter;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.WeisjBean;
@@ -57,8 +60,7 @@ public class WeiSJ extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_weisj, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         result.clear();
@@ -85,6 +87,13 @@ public class WeiSJ extends Fragment {
                     refreshlayout.finishLoadmore();
                 }
 
+            }
+        });
+        radio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddCarProduct.class);
+                startActivity(intent);
             }
         });
 

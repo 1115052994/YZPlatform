@@ -2,6 +2,7 @@ package com.xtzhangbinbin.jpq.fragment.productlist;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.AddCarProduct;
 import com.xtzhangbinbin.jpq.adapter.YiwcAdapter;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.WeisjBean;
@@ -83,6 +85,13 @@ public class YiWC extends Fragment {
                     getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
+            }
+        });
+        radio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddCarProduct.class);
+                startActivity(intent);
             }
         });
         //        browsingAdapter.getBrowsingCall(new CallBrowsing() {

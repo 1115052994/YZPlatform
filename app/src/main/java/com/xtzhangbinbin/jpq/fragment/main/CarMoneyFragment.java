@@ -42,7 +42,7 @@ public class CarMoneyFragment extends Fragment {
 
         fragments.add(new CarFinancialPersonal());
 //        fragments.add(new CarFinancialPersonal());
-        arrayList.add("");//个人
+        arrayList.add("个人");//
 //        arrayList.add("企业");
         viewPager.setAdapter(new CarFinancialAdapter(getChildFragmentManager(),fragments, arrayList));
         tab.setxTabDisplayNum(1);
@@ -56,4 +56,5 @@ public class CarMoneyFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

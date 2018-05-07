@@ -39,6 +39,7 @@ public class CarFinancial extends AppCompatActivity {
         viewPager.setAdapter(new CarFinancialAdapter(getSupportFragmentManager(),fragments, arrayList));
         tab.setxTabDisplayNum(1);
         tab.setupWithViewPager(viewPager);
+        tab.setVisibility(View.GONE);
 
     }
 }

@@ -45,7 +45,7 @@ public class CarCreditAdapter extends  RecyclerView.Adapter<CarCreditAdapter.Vie
         Log.d("aaaaaa", "onBindViewHolder: "+result.get(position).getDict_9());
         holder.name.setText(result.get(position).getDict_9());
         OKhttptils.getPic(context,result.get(position).getDict_10(),holder.imageView);
-        holder.name.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, LoanDetails.class);
@@ -64,10 +64,12 @@ public class CarCreditAdapter extends  RecyclerView.Adapter<CarCreditAdapter.Vie
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private RoundedImageView imageView;
+        private LinearLayout layout;
         public ViewHolder(View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
             imageView=itemView.findViewById(R.id.image);
+            layout=itemView.findViewById(R.id.layout);
         }
     }
 }

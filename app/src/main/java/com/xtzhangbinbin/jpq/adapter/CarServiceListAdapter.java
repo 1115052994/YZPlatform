@@ -1,6 +1,7 @@
 package com.xtzhangbinbin.jpq.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -86,9 +87,9 @@ public class CarServiceListAdapter extends RecyclerView.Adapter<CarServiceListAd
         holder.mDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("comp_id",comp_id);
-                JumpUtil.newInstance().jumpRight(context, CompDetail.class,bundle);
+                Intent intent = new Intent(context, CompDetail.class);
+                intent.putExtra("comp_id",comp_id);
+                context.startActivity(intent);
             }
         });
 

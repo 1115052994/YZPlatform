@@ -18,6 +18,7 @@ import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
+import com.xtzhangbinbin.jpq.entity.EventBasBean;
 import com.xtzhangbinbin.jpq.fragment.main.CarBuyFragment;
 import com.xtzhangbinbin.jpq.fragment.main.CarMoneyFragment;
 import com.xtzhangbinbin.jpq.fragment.main.CarServiceFragment;
@@ -32,6 +33,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener , MainFragment.Fragmentwsby{
@@ -73,6 +77,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        //EventBus.getDefault().register(this);
         ActivityUtil.addActivity(this);
         rxPermission = new RxPermissions(this);
         // 申请应用高危险权限
@@ -81,6 +86,53 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         // initLoc();
         //应用升级
         upgrade();
+    }
+
+//    @Subscribe(threadMode = ThreadMode.MainThread)
+//    public void onShowMessageEvent(EventBasBean event) {
+//       if(event!=null){
+//           Log.d("aaaaa", "onShowMessageEvent: "+event.getIndexFragment());
+//           fm = getSupportFragmentManager();
+//           transaction = fm.beginTransaction();
+//           switch (event.getIndexFragment()){
+//               case "1":
+//
+//                   break;
+//               case "2":
+//                   fragment = fragmentList.get(1);
+//                   Bundle bundle = new Bundle();
+//                   bundle.putString("indexbotton",event.getIndexBotton());
+//                   fragment.setArguments(bundle);
+//                   transaction.replace(R.id.view_pager, fragment);
+//                   buy.setChecked(true);
+//                   break;
+//               case "3":
+//
+//                   break;
+//               case "4":
+//
+//                   break;
+//               case "5":
+//
+//                   break;
+//           }
+//       }
+//    }
+
+    public void switchTocar(String type){
+        fm = getSupportFragmentManager();
+        transaction = fm.beginTransaction();
+        fragment = fragmentList.get(1);
+        Bundle bundle = new Bundle();
+        bundle.putString("type",type);
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.view_pager, fragment);
+        buy.setChecked(true);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 

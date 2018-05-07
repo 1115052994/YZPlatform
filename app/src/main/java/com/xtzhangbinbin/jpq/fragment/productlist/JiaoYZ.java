@@ -2,6 +2,7 @@ package com.xtzhangbinbin.jpq.fragment.productlist;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
@@ -18,6 +20,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.AddCarProduct;
 import com.xtzhangbinbin.jpq.adapter.JiaoyzAdapter;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.WeisjBean;
@@ -46,6 +49,8 @@ public class JiaoYZ extends Fragment {
     ImageView browsingCardealImage;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.radio)
+    Button radio;
 
     private List<WeisjBean.DataBean.ResultBean> result = new ArrayList<>();
     private JiaoyzAdapter jiaoyzAdapter;
@@ -76,10 +81,17 @@ public class JiaoYZ extends Fragment {
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                if(pageCount>pageIndex){
+                if (pageCount > pageIndex) {
                     getData(++pageIndex, refreshlayout);
                 }
                 refreshlayout.finishLoadmore();
+            }
+        });
+        radio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddCarProduct.class);
+                startActivity(intent);
             }
         });
 
@@ -95,30 +107,31 @@ public class JiaoYZ extends Fragment {
         initview();
 
 
-
         return view;
     }
+
     private void initview() {
 
     }
+
     private void getData(final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
         map.put("car_deal_state", "jyz");
-        map.put("pageIndex",String.valueOf(pageIndex));
+        map.put("pageIndex", String.valueOf(pageIndex));
         OKhttptils.post((Activity) getContext(), Config.COMPCAR, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
                 Log.d("aaaaa", "onResponse获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
-                pageCount=weisjBean.getData().getPageCount();
+                pageCount = weisjBean.getData().getPageCount();
                 result.addAll(weisjBean.getData().getResult());
                 jiaoyzAdapter.notifyDataSetChanged();
 
                 //没有信息图片显示
                 if (result.size() <= 0) {
                     browsingCardealImage.setVisibility(View.VISIBLE);
-                    if(refreshlayout != null){
+                    if (refreshlayout != null) {
                         refreshlayout.finishRefresh(2000);
                     }
                 } else {

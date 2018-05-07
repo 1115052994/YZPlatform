@@ -154,7 +154,7 @@ public class CompDetail extends BaseActivity {
     private List<CompAppraise.DataBean.ResultBean> compAppraiseList = new ArrayList<>();
     private CommonRecyclerAdapter appraiseAdapter;
 
-    private String comp_id = "24";//商家Id
+    private String comp_id = "";//商家Id
     private String comp_phone = "";
     private Double comp_lon, comp_lat;
 
@@ -165,9 +165,7 @@ public class CompDetail extends BaseActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                comp_id = bundle.getString("comp_id");
+                String comp_id = intent.getStringExtra("comp_id");
                 map.put("comp_id", comp_id);
                 OKhttptils.post(CompDetail.this, Config.BROWSECOMP, map, new OKhttptils.HttpCallBack() {
                     @Override
@@ -182,7 +180,6 @@ public class CompDetail extends BaseActivity {
                     }
                 });
             }
-        }
         initView();
         initData();
         getData();

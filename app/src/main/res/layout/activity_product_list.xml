@@ -23,8 +23,6 @@
         <RelativeLayout
             android:layout_width="@dimen/common330.5dp"
             android:layout_height="@dimen/common31.5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="12dp"
             android:layout_marginTop="@dimen/common8dp"
             android:background="@color/text_ff96"
             android:gravity="center">
@@ -37,7 +35,7 @@
                 android:background="@drawable/aaa1"
                 android:gravity="center"
                 android:horizontalSpacing="1dp"
-                android:numColumns="5" />
+                 />
         </RelativeLayout>
     </RelativeLayout>
     <View

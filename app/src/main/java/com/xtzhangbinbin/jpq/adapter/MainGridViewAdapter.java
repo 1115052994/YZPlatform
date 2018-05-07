@@ -1,14 +1,18 @@
 package com.xtzhangbinbin.jpq.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.ETC;
+import com.xtzhangbinbin.jpq.activity.SOS;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CarServiceImage;
 import com.squareup.picasso.Picasso;
@@ -68,14 +72,34 @@ public class MainGridViewAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tv = (TextView) convertView.findViewById(R.id.textView);
             viewHolder.iv = (ImageView) convertView.findViewById(R.id.imageView);
+            viewHolder.layout=convertView.findViewById(R.id.layout);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        int pos = position + curIndex * pageSize;
+        switch (mDatas.get(pos).getServerDesc()){
+            case "ETC":
+                viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        context.startActivity(new Intent(context, ETC.class));
+                    }
+                });
+                break;
+            case "紧急救援":
+                viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        context.startActivity(new Intent(context, SOS.class));
+                    }
+                });
+                break;
+        }
         /**
          * 在给View绑定显示的数据时，计算正确的position = position + curIndex * pageSize
          */
-        int pos = position + curIndex * pageSize;
+
         viewHolder.tv.setText(mDatas.get(pos).getServerDesc());
         Picasso.with(context).load(Config.BASE_URL + Config.Y + mDatas.get(pos).getServerImgPath()).into(viewHolder.iv);
         /* 下载好的图片需要缓存到本地 */
@@ -87,5 +111,6 @@ public class MainGridViewAdapter extends BaseAdapter {
     class ViewHolder {
         public TextView tv;
         public ImageView iv;
+        private LinearLayout layout;
     }
 }

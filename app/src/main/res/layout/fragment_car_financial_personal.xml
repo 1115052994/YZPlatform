@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="车险"
                 android:textColor="@color/text_66"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:text="保险"
                 android:textColor="@color/text_66"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:text="保险超市"
                 android:textColor="@color/text_66"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_14sp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:text="车贷"
                 android:textColor="@color/text_66"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -193,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:text="贷款计算器"
                 android:textColor="@color/text_66"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -224,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:text="信用贷"
                 android:textColor="@color/text_66"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_14sp"/>
         </LinearLayout>
     </LinearLayout>
     <View
