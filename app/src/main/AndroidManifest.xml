@@ -48,12 +48,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+
 
 
         <activity
@@ -362,10 +358,10 @@
         <!-- 欢迎页 -->
         <activity android:name=".activity.Welcome"
             android:theme="@style/FullScreen">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".activity.Guide"
             android:theme="@style/FullScreen"/>

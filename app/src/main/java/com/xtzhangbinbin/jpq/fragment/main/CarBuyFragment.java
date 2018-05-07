@@ -71,6 +71,7 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
     private RxPermissions rxPermission;
 
     private View view;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,8 +81,34 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
             sellFragment = new Sellcars();
         }
         unbinder = ButterKnife.bind(this, view);
-        initView();
         initLoc();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String type = bundle.getString("type", "");
+            if ("carbuy".equals(type)) {
+                String param = bundle.getString("param");
+                lyBuy.setSelected(false);
+                lySell.setSelected(false);
+                tvSell.setTextColor(Color.parseColor("#ff9696"));
+                tvBuy.setTextColor(Color.parseColor("#ffffff"));
+                fm = getFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.content, buyFragment);
+                transaction.commit();
+                ((BuyCar) buyFragment).setParam(param);
+            } else if ("2".equals(type)){
+                lySell.setSelected(true);
+                lyBuy.setSelected(true);
+                tvBuy.setTextColor(Color.parseColor("#ff9696"));
+                tvSell.setTextColor(Color.parseColor("#ffffff"));
+                fm = getFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.content, sellFragment);
+                transaction.commit();
+            }
+        } else {
+            initView();
+        }
         return view;
     }
 
@@ -116,7 +143,7 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
                 tvBuy.setTextColor(Color.parseColor("#ff9696"));
                 tvSell.setTextColor(Color.parseColor("#ffffff"));
                 transaction = fm.beginTransaction();
-                transaction.replace(R.id.content, new Fragment());
+                transaction.replace(R.id.content, sellFragment);
                 transaction.commit();
                 break;
             case R.id.mSearch:
@@ -130,7 +157,7 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
                         mLocation.setText(city);
                         Intent intent = new Intent();
                         intent.setAction("city");
-                        intent.putExtra("city",city);
+                        intent.putExtra("city", city);
                         getContext().sendBroadcast(intent);
                     }
                 });
@@ -223,15 +250,14 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
                         + amapLocation.getErrorInfo());
                 Toast.makeText(getActivity(), "定位失败", Toast.LENGTH_LONG).show();
                 /* 定位失败 获取默认城市 */
-               city = "北京";
+                city = "北京";
             }
             mLocation.setText(city);
             Intent intent = new Intent();
             intent.setAction("city");
-            intent.putExtra("city",city);
+            intent.putExtra("city", city);
             getContext().sendBroadcast(intent);
         }
     }
-
 
 }

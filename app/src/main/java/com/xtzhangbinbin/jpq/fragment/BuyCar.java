@@ -751,7 +751,7 @@ public class BuyCar extends Fragment {
                     }
                 } else {
                     if (progressHigh == 6) {
-                        tvPrice.setText((int) progressLow * 10 + "0万以上");
+                        tvPrice.setText((int) progressLow  + "0万以上");
                         startPrice = (int) progressLow * 10 + "";
                         endPrice = "";
                     } else {
@@ -919,7 +919,8 @@ public class BuyCar extends Fragment {
                     JSONObject result = data.getJSONObject("result");
                     cityId = result.getString("city_id");
 //                    Log.i("city_Id",cityId);
-                    getCarList();
+                    if (getActivity()!=null)
+                        getCarList();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1198,8 +1199,10 @@ public class BuyCar extends Fragment {
         selectedRankId = "";
 
         // 清空liu布局
-        cartagLayout.removeAllViews();
-        carLy.setVisibility(View.GONE);
+        if (cartagLayout!=null) {
+            cartagLayout.removeAllViews();
+            carLy.setVisibility(View.GONE);
+        }
 
         //tvCz.setTextColor(Color.parseColor("#333333"));
         tvZn.setText(rankList.get(0));
@@ -1274,4 +1277,65 @@ public class BuyCar extends Fragment {
         super.onDestroy();
         getContext().unregisterReceiver(smsBroadCastReceiver);
     }
+
+
+
+    private String param = "";
+    public void setParam(String param) {
+        Log.i("param---", param);
+        this.param = param;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mainSX();
+            }
+        },100);
+    }
+    private void mainSX(){
+        // 清空上次选择
+        resetParams();
+        switch (param) {
+            case "cmzy":
+                sxCx = "YZcarscreencarstypeSUV";
+                sxCxName = "SUV";
+                View cxLy = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                TextView cx = cxLy.findViewById(R.id.tv_tag);
+                if (cx.getParent() != null) {
+                    ViewGroup group = (ViewGroup) cx.getParent();
+                    group.removeAllViews();
+                }
+                cartagLayout.addView(cx);
+                cx.setText("SUV");
+                carLy.setVisibility(View.VISIBLE);
+                break;
+            case "rmsx":
+                startPrice = "5";
+                endPrice = "8";
+                View ly = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                if (!"".equals(startPrice) || !"".equals(endPrice)) {
+                    if (priceView == null) {
+                        priceView = ly.findViewById(R.id.tv_tag);
+                        if (priceView.getParent() != null) {
+                            ViewGroup group = (ViewGroup) priceView.getParent();
+                            group.removeAllViews();
+                        }
+                        cartagLayout.addView(priceView);
+                    }
+                    priceView.setText("5-8万");
+                    carLy.setVisibility(View.VISIBLE);
+                }
+                break;
+            case "zxc":
+                selectedRank = "车龄最短";
+                selectedRankId = "car_age";
+                break;
+            case "pprm":
+                selectedRank = "智能排序";
+                selectedRankId = "intelligence";
+                break;
+        }
+        // 重新筛选
+        getCarList();
+    }
+
 }

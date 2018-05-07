@@ -508,6 +508,7 @@
                 android:layout_marginRight="@dimen/common15dp"
                 android:layout_marginLeft="@dimen/common15dp">
                 <ImageView
+                    android:id="@+id/image_ms"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -518,6 +519,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/bg_color" />-->
                 <ImageView
+                    android:id="@+id/image_xxyl"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -529,6 +531,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/bg_color" />-->
                 <ImageView
+                    android:id="@+id/image_shfw"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

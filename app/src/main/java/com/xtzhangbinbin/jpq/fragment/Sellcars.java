@@ -92,7 +92,8 @@ public class Sellcars extends Fragment {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject data = jsonObject.getJSONObject("data");
-                        SellcarsTv.setText(String.valueOf(data.getInt("result")));
+                        if (SellcarsTv!=null)
+                            SellcarsTv.setText(String.valueOf(data.getInt("result")));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -20,9 +20,12 @@ import com.amap.api.location.AMapLocationListener;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AccessCar;
 import com.xtzhangbinbin.jpq.activity.CarProduct;
+import com.xtzhangbinbin.jpq.activity.CarProductSX;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
+import com.xtzhangbinbin.jpq.activity.MainActivity;
 import com.xtzhangbinbin.jpq.activity.PoiAroundSearchActivity;
 import com.xtzhangbinbin.jpq.activity.WeizhangQuery;
+import com.xtzhangbinbin.jpq.activity.ZhongLife;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
@@ -72,6 +75,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
 
     private View view;
     private double lat,lon;
+    private String cityId ="";
 
     @Nullable
     @Override
@@ -134,9 +138,9 @@ public class MainFragment extends Fragment implements AMapLocationListener {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.image_scan, R.id.image_man, R.id.ly_etc, R.id.ly_wby, R.id.ly_jyz, R.id.ly_jjjy, R.id.ly_wzcx, R.id.ly_yxc, R.id.ly_xydk, R.id.ly_cyp, R.id.ly_mc, R.id.ly_gj, R.id.image_czcl, R.id.yzfw, R.id.image_xyd, R.id.image_cyp, R.id.image_csh, R.id.image_wxby, R.id.image_xc, R.id.image_qcmr, R.id.image_pprm, R.id.image_rmsx, R.id.image_zxc, R.id.image_cmzy, R.id.iamge_etzy, R.id.iamge_qczd, R.id.iamge_xcjly, R.id.iamge_dcld,R.id.mLocation})
+    @OnClick({R.id.image_scan, R.id.image_man, R.id.ly_etc, R.id.ly_wby, R.id.ly_jyz, R.id.ly_jjjy, R.id.ly_wzcx, R.id.ly_yxc, R.id.ly_xydk, R.id.ly_cyp, R.id.ly_mc, R.id.ly_gj, R.id.image_czcl, R.id.yzfw, R.id.image_xyd, R.id.image_cyp, R.id.image_csh, R.id.image_wxby, R.id.image_xc, R.id.image_qcmr, R.id.image_pprm, R.id.image_rmsx, R.id.image_zxc, R.id.image_cmzy, R.id.iamge_etzy, R.id.iamge_qczd, R.id.iamge_xcjly, R.id.iamge_dcld,R.id.mLocation,R.id.image_ms,R.id.image_xxyl,R.id.image_shfw})
     public void onViewClicked(View view) {
-        //ToastUtil.show(getContext(),view.getId());
+        MainActivity mainActivity = (MainActivity) getActivity();
         switch (view.getId()) {
             case R.id.image_scan:
                 break;
@@ -168,6 +172,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class);
                 break;
             case R.id.ly_mc:
+                // 卖che
+                mainActivity.switchToCarSell("2");
                 break;
             case R.id.ly_gj:
                 // 估价
@@ -180,8 +186,12 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.image_xyd:
                 break;
             case R.id.image_cyp:
+                // 车用品
+                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class);
                 break;
             case R.id.image_csh:
+                // 车生活
+                mainActivity.switchToLife();
                 break;
             case R.id.image_wxby:
                 break;
@@ -190,25 +200,57 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.image_qcmr:
                 break;
             case R.id.image_pprm:
+                // 品牌热卖
+                mainActivity.switchToCarBuy("pprm");
                 break;
             case R.id.image_rmsx:
+                mainActivity.switchToCarBuy("rmsx");
+                // 入门首选
                 break;
             case R.id.image_zxc:
+                mainActivity.switchToCarBuy("zxc");
+                // 准新车
                 break;
             case R.id.image_cmzy:
+                // 车meizhiyou
+                mainActivity.switchToCarBuy("cmzy");
+                break;
+            case R.id.image_ms:
+                // meishi
+                Bundle ms = new Bundle();
+                ms.putString("cityId",cityId);
+                ms.putString("String","YZzshms");
+                JumpUtil.newInstance().jumpLeft(getActivity(), ZhongLife.class,ms );
+                break;
+            case R.id.image_xxyl:
+                // 休闲
+                Bundle xxyl = new Bundle();
+                xxyl.putString("cityId",cityId);
+                xxyl.putString("String","YZzshxxyl");
+                JumpUtil.newInstance().jumpLeft(getActivity(), ZhongLife.class, xxyl);
+                break;
+            case R.id.image_shfw:
+                // 生活服务
+                Bundle shfw = new Bundle();
+                shfw.putString("cityId",cityId);
+                shfw.putString("String","YZzshshfu");
+                JumpUtil.newInstance().jumpLeft(getActivity(), ZhongLife.class, shfw);
                 break;
             case R.id.iamge_etzy:
                 // 车用品 儿童座椅
-                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxetzy");
+                JumpUtil.newInstance().jumpLeft(getActivity(),CarProductSX.class,"YZcarYPcyplxetzy");
                 break;
             case R.id.iamge_qczd:
-                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxqczd");
+                // 汽车坐垫
+                JumpUtil.newInstance().jumpLeft(getActivity(),CarProductSX.class,"YZcarYPcyplxqczd");
                 break;
             case R.id.iamge_xcjly:
-                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxxcjly");
+                // 行车记录仪
+                JumpUtil.newInstance().jumpLeft(getActivity(),CarProductSX.class,"YZcarYPcyplxxcjly");
                 break;
             case R.id.iamge_dcld:
-                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxdcld");
+                // 倒车雷达
+                JumpUtil.newInstance().jumpLeft(getActivity(),CarProductSX.class,"YZcarYPcyplxdcld");
                 break;
             case R.id.mLocation:
                 // 城市
@@ -217,6 +259,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                     @Override
                     public void backData(String city) {
                         mLocation.setText(city);
+                        // 获取城市ID
+                        getCityId(city);
                     }
                 });
                 break;
@@ -306,8 +350,34 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 /* 定位失败 获取默认城市 */
                 city = "北京";
             }
+            // 获取城市ID
+            getCityId(city);
             mLocation.setText(city);
         }
     }
 
+
+    //通过城市名获取城市Id
+    public void getCityId(String cityName) {
+        Map<String, String> map = new HashMap<>();
+        map.put("cityName", cityName);
+        OKhttptils.post(getActivity(), Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    JSONObject data = object.getJSONObject("data");
+                    JSONObject result = data.getJSONObject("result");
+                    cityId = result.getString("city_id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
+    }
 }

@@ -52,6 +52,7 @@
                         android:drawableRight="@drawable/qy_dhs"
                         android:gravity="center_vertical"
                         android:textColor="@color/black_33"
+                        android:clickable="true"
                         android:textSize="@dimen/text_size_15sp" />
 
                     <TextView
@@ -116,6 +117,7 @@
                     android:layout_marginBottom="@dimen/common8dp"
                     android:background="@color/white"
                     android:orientation="horizontal"
+                    android:clickable="true"
                     android:paddingLeft="@dimen/common30dp">
 
                     <LinearLayout

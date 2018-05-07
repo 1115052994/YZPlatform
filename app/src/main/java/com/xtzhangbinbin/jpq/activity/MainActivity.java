@@ -29,6 +29,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -117,18 +118,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         fm = getSupportFragmentManager();
         transaction = fm.beginTransaction();
         fragment = fragmentList.get(0);
-//        Bundle bundle = new Bundle();
-//        bundle.putString("selected_city",selected_city);
-//        fragment.setArguments(bundle);
         transaction.replace(R.id.view_pager, fragment);
         transaction.commit();
+        main.setChecked(true);
     }
 
 
 
     /* 退出程序 */
     private long firstTime = 0;
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
@@ -217,5 +215,46 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
      */
     public void upgrade(){
         UpgradeUtil.getInstance(this).upgrade(main);
+    }
+
+    // 切换到 买che
+    public void switchToCarBuy(String str){
+        buy.setChecked(true);
+        fm = getSupportFragmentManager();
+        transaction = fm.beginTransaction();
+        fragment = fragmentList.get(1);
+        Bundle bundle = new Bundle();
+        bundle.putString("type","carbuy");
+        switch (str) {
+            case "cmzy":
+                bundle.putString("param","cmzy");
+                break;
+            case "rmsx":
+                bundle.putString("param","rmsx");
+                break;
+            case "zxc":
+                bundle.putString("param","zxc");
+                break;
+            case "pprm":
+                bundle.putString("param","pprm");
+                break;
+        }
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.view_pager, fragment);
+        transaction.commit();
+    }
+    public void switchToCarSell(String type){
+        buy.setChecked(true);
+        fm = getSupportFragmentManager();
+        transaction = fm.beginTransaction();
+        fragment = fragmentList.get(1);
+        Bundle bundle = new Bundle();
+        bundle.putString("type",type);
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.view_pager, fragment);
+    }
+    // 切换到 车生活
+    public void switchToLife(){
+        life.setChecked(true);
     }
 }
