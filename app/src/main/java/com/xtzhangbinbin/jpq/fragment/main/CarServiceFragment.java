@@ -43,6 +43,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
+import com.xtzhangbinbin.jpq.activity.ETC;
 import com.xtzhangbinbin.jpq.activity.SearchActivity;
 import com.xtzhangbinbin.jpq.adapter.CarServiceListAdapter;
 import com.xtzhangbinbin.jpq.adapter.MainGridViewAdapter;
@@ -202,15 +203,25 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     int pos = position + curIndex * pageSize;
-//                    Toast.makeText(getContext(), itemListBeans.get(pos).getServerDesc(), Toast.LENGTH_SHORT).show();
 
                     //inner为条件筛选 其他为跳转界面
                     if ("inner".equals(itemListBeans.get(pos).getServerLinkType())) {
                         dict_id = itemListBeans.get(pos).getServerId();
                         getData(dict_id, order_by, sort, city_id, 1);
+                        Log.i(TAG, "onItemClick啦啦啦: " + dict_id);
                     } else {
-                        ToastUtil.show(getContext(), "跳一跳");
+                        switch (itemListBeans.get(pos).getServerDesc()){
+                            case "紧急救援":
 
+                                break;
+                            case "ETC":
+                                JumpUtil.newInstance().jumpRight(getContext(), ETC.class);
+                                break;
+                            case "加油站":
+                                break;
+                            case "违章查询":
+                                break;
+                        }
                     }
                 }
             });
@@ -243,6 +254,10 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             view = inflater.inflate(R.layout.fragment_car_service, null);
         }
         unbinder = ButterKnife.bind(this, view);
+
+        Bundle bundle = getArguments();
+        dict_id = getArguments().getString("dict_id","");
+        Log.d(TAG, "onCreateView啦啦啦----: " + dict_id);
         manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
         /* 请求定位权限 */
@@ -672,10 +687,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 //                List<CarServiceList.DataBean.ResultBean> beanList = serviceList.getData().getResult();
                 beanList = serviceList.getData().getResult();
                 pageTotal = serviceList.getData().getPageCount();
-//                Message message = new Message();
-//                message.what = 003;
-//                message.obj = beanList;
-//                handler.sendMessage(message);
                 setAdapter();
 
 
@@ -800,5 +811,4 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         }
         Log.i(TAG, "onResume: " + bundle.getString("selected_city"));
     }
-
 }

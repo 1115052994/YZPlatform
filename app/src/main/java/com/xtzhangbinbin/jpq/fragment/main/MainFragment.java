@@ -1,6 +1,7 @@
 package com.xtzhangbinbin.jpq.fragment.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,9 +25,9 @@ import com.xtzhangbinbin.jpq.activity.CarCredit;
 import com.xtzhangbinbin.jpq.activity.CarProduct;
 import com.xtzhangbinbin.jpq.activity.CarProductSX;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
-import com.xtzhangbinbin.jpq.activity.MainActivity;
 import com.xtzhangbinbin.jpq.activity.CompanyCenterActivity;
 import com.xtzhangbinbin.jpq.activity.LoginActivity;
+import com.xtzhangbinbin.jpq.activity.MainActivity;
 import com.xtzhangbinbin.jpq.activity.PersonalCenterActivity;
 import com.xtzhangbinbin.jpq.activity.PoiAroundSearchActivity;
 import com.xtzhangbinbin.jpq.activity.WeizhangQuery;
@@ -66,8 +67,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
     Banner banner;
     @BindView(R.id.mLocation)
     TextView mLocation;
-
-    private String user_type;
+    private Fragmentwsby wxbyListener;
 
     // 轮播图
     private List<String> bannersImage = new ArrayList<>();
@@ -81,6 +81,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
 
     private View view;
     private double lat,lon;
+    private String user_type;
     private String cityId ="";
 
     @Nullable
@@ -146,11 +147,6 @@ public class MainFragment extends Fragment implements AMapLocationListener {
 
     @OnClick({R.id.image_scan, R.id.image_man, R.id.ly_etc, R.id.ly_wby, R.id.ly_jyz, R.id.ly_jjjy, R.id.ly_wzcx, R.id.ly_yxc, R.id.ly_xydk, R.id.ly_cyp, R.id.ly_mc, R.id.ly_gj, R.id.image_czcl, R.id.yzfw, R.id.image_xyd, R.id.image_cyp, R.id.image_csh, R.id.image_wxby, R.id.image_xc, R.id.image_qcmr, R.id.image_pprm, R.id.image_rmsx, R.id.image_zxc, R.id.image_cmzy, R.id.iamge_etzy, R.id.iamge_qczd, R.id.iamge_xcjly, R.id.iamge_dcld,R.id.mLocation,R.id.image_ms,R.id.image_xxyl,R.id.image_shfw})
     public void onViewClicked(View view) {
-        //YZcompcfwlxxcxc洗车
-        //YZcompcfwlxwxbywxby维修保养
-        //YZcompcfwlxxcmr美容
-        //YZcompcfwlxwxbybjpq钣金喷漆
-        //YZcompcfwlxwxbyghdc更换电瓶
         MainActivity mainActivity = (MainActivity) getActivity();
         switch (view.getId()) {
             case R.id.image_scan:
@@ -175,6 +171,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.ly_etc:
                 break;
             case R.id.ly_wby:
+                String dict_id = "YZcompcfwlxwxbywxby";
+                wxbyListener.pross(dict_id);
                 break;
             case R.id.ly_jyz:
                 // 加油站
@@ -388,6 +386,25 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             // 获取城市ID
             getCityId(city);
             mLocation.setText(city);
+        }
+    }
+
+    /* 维修保养回调函数 */
+    public interface  Fragmentwsby{
+        void pross(String s);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof  Fragmentwsby){
+            wxbyListener = (Fragmentwsby) activity;
+        }else {
+            try {
+                throw new IllegalAccessException("activity must implements Fragmengtwxby");
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 

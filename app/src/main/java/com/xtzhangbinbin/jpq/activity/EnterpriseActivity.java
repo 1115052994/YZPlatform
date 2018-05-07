@@ -443,7 +443,6 @@ public class EnterpriseActivity extends BaseActivity {
                     address = bundle.getString("address");
                     getLocation.setText(lon + "," + lat);
                     compAddress.setText(address);
-//                    sheng = bundle.getString("省");
                     shi = bundle.getString("市");
                     getCityId(shi.substring(0, shi.length() - 1));
                     break;

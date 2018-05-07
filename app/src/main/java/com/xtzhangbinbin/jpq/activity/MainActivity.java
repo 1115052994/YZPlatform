@@ -14,6 +14,8 @@ import android.widget.RadioGroup;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.fragment.main.CarBuyFragment;
@@ -24,18 +26,15 @@ import com.xtzhangbinbin.jpq.fragment.main.MainFragment;
 import com.xtzhangbinbin.jpq.upgrade.UpgradeUtil;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener{
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener , MainFragment.Fragmentwsby{
 
     @BindView(R.id.view_pager)
     FrameLayout viewPager;
@@ -53,6 +52,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     RadioGroup tabBottom;
 
     private String selected_city;
+    private String dict_id;
 
     private FragmentManager fm;
     private Fragment fragment;
@@ -256,5 +256,27 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     // 切换到 车生活
     public void switchToLife(){
         life.setChecked(true);
+    }
+
+    /* 维修保养回调函数 */
+    @Override
+    public void pross(String s) {
+        if (s != null){
+            main.setChecked(false);
+            service.setChecked(true);
+            dict_id = s;
+            transaction = fm.beginTransaction();
+            fragment = fragmentList.get(2);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("dict_id",dict_id);
+            Log.d(TAG, "pross啦啦啦: " + dict_id );
+            fragment.setArguments(bundle);
+
+
+            transaction.replace(R.id.view_pager, fragment);
+            transaction.commit();
+
+        }
     }
 }
