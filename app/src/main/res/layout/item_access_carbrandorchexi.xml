@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/common35dp"
         android:layout_centerVertical="true"
+        android:text="奔驰"
         android:textColor="@color/text_33"
         android:textSize="@dimen/text_size_14sp"/>
     <View

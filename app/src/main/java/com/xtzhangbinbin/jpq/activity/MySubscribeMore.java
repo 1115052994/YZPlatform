@@ -170,7 +170,6 @@ public class MySubscribeMore extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override

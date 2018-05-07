@@ -2,7 +2,6 @@ package com.xtzhangbinbin.jpq.fragment.main;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,20 +17,18 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AccessCar;
-import com.xtzhangbinbin.jpq.activity.CarCredit;
 import com.xtzhangbinbin.jpq.activity.CarProduct;
-import com.xtzhangbinbin.jpq.activity.CompanyCenterActivity;
-import com.xtzhangbinbin.jpq.activity.ETC;
-import com.xtzhangbinbin.jpq.activity.LoginActivity;
-import com.xtzhangbinbin.jpq.activity.PersonalCenterActivity;
+import com.xtzhangbinbin.jpq.activity.CityActivity;
+import com.xtzhangbinbin.jpq.activity.PoiAroundSearchActivity;
+import com.xtzhangbinbin.jpq.activity.WeizhangQuery;
 import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.fragment.Sellcars;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
-import com.xtzhangbinbin.jpq.zxing.android.CaptureActivity;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -39,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.BufferUnderflowException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,11 +58,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
     Unbinder unbinder;
     @BindView(R.id.banner)
     Banner banner;
-    private View view;
     @BindView(R.id.mLocation)
     TextView mLocation;
-
-    private String user_type;
 
     // 轮播图
     private List<String> bannersImage = new ArrayList<>();
@@ -76,6 +71,9 @@ public class MainFragment extends Fragment implements AMapLocationListener {
     private boolean isFirstLoc = true;
     private RxPermissions rxPermission;
 
+    private View view;
+    private double lat,lon;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,7 +81,6 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             view = inflater.inflate(R.layout.fragment_main1, container, false);
         }
         unbinder = ButterKnife.bind(this, view);
-
         getData();
         initView();
         initLoc();
@@ -116,14 +113,13 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                         String fileId = object1.getString("adve_file_id");
                         bannersImage.add(fileId);
                     }
-                    if (banner != null) {
+                    if (banner!=null) {
                         banner.setImages(bannersImage);
                         banner.start();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -133,82 +129,47 @@ public class MainFragment extends Fragment implements AMapLocationListener {
         });
     }
 
-//    @OnClick({R.id.renzheng, R.id.setting, R.id.add, R.id.carDetail,R.id.test,R.id.priceWarn,R.id.test1,R.id.updatePic})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
-//            case R.id.renzheng:
-//                JumpUtil.newInstance().jumpRight(getContext(), EnterpriseActivity.class);
-//                break;
-//            case R.id.setting:
-//                JumpUtil.newInstance().jumpRight(getContext(), PersonalSettingActivity.class);
-//                break;
-//            case R.id.add:
-//                JumpUtil.newInstance().jumpRight(getContext(), AddProductActivity.class);
-//                break;
-//            case R.id.carDetail:
-//                JumpUtil.newInstance().jumpRight(getContext(), CarDetailsActivity.class);
-//                break;
-//            case R.id.test:
-//                JumpUtil.newInstance().jumpLeft(getContext(), CarCompDetail.class);
-//                break;
-//            case R.id.priceWarn:
-//                JumpUtil.newInstance().jumpRight(getContext(), PriceWarnActivity.class);
-//                break;
-//            case R.id.test1:
-//                //MySubscribe   AccessCar  AccessResult
-//                JumpUtil.newInstance().jumpLeft(getContext(), AccessCar.class);
-//                break;
-//
-//            case R.id.updatePic:
-//                JumpUtil.newInstance().jumpRight(getContext(), CarPhoto.class);
-//                break;
-//        }
-//    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick({R.id.image_scan, R.id.image_man, R.id.ly_etc, R.id.ly_wby, R.id.ly_jyz, R.id.ly_jjjy, R.id.ly_wzcx, R.id.ly_yxc, R.id.ly_xydk, R.id.ly_cyp, R.id.ly_mc, R.id.ly_gj, R.id.image_czcl, R.id.yzfw, R.id.image_xyd, R.id.image_cyp, R.id.image_csh, R.id.image_wxby, R.id.image_xc, R.id.image_qcmr, R.id.image_pprm, R.id.image_rmsx, R.id.image_zxc, R.id.image_cmzy, R.id.iamge_etzy, R.id.iamge_qczd, R.id.iamge_xcjly, R.id.iamge_dcld})
+    @OnClick({R.id.image_scan, R.id.image_man, R.id.ly_etc, R.id.ly_wby, R.id.ly_jyz, R.id.ly_jjjy, R.id.ly_wzcx, R.id.ly_yxc, R.id.ly_xydk, R.id.ly_cyp, R.id.ly_mc, R.id.ly_gj, R.id.image_czcl, R.id.yzfw, R.id.image_xyd, R.id.image_cyp, R.id.image_csh, R.id.image_wxby, R.id.image_xc, R.id.image_qcmr, R.id.image_pprm, R.id.image_rmsx, R.id.image_zxc, R.id.image_cmzy, R.id.iamge_etzy, R.id.iamge_qczd, R.id.iamge_xcjly, R.id.iamge_dcld,R.id.mLocation})
     public void onViewClicked(View view) {
         //ToastUtil.show(getContext(),view.getId());
         switch (view.getId()) {
             case R.id.image_scan:
-                JumpUtil.newInstance().jumpRight(getContext(), CaptureActivity.class);
                 break;
             case R.id.image_man:
-                user_type = Prefs.with(getContext()).read("user_type");
-                Log.d("用户类型", "onViewClicked: " + user_type);
-                if (user_type.isEmpty()){
-                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
-                }else if (user_type.equals("comp")){
-                    JumpUtil.newInstance().jumpRight(getContext(), CompanyCenterActivity.class);
-                }else if (user_type.equals("pers")){
-                    /* 跳转到个人中心 */
-                    JumpUtil.newInstance().jumpRight(getContext(), PersonalCenterActivity.class);
-                }
                 break;
             case R.id.ly_etc:
-                JumpUtil.newInstance().jumpRight(getContext(), ETC.class);
                 break;
             case R.id.ly_wby:
                 break;
             case R.id.ly_jyz:
+                // 加油站
+                Bundle bundle = new Bundle();
+                bundle.putDouble("lat",lat);
+                bundle.putDouble("lon",lon);
+                JumpUtil.newInstance().jumpLeft(getActivity(), PoiAroundSearchActivity.class,bundle);
                 break;
             case R.id.ly_jjjy:
                 break;
             case R.id.ly_wzcx:
+                // 违章查询
+                JumpUtil.newInstance().jumpLeft(getActivity(), WeizhangQuery.class);
                 break;
             case R.id.ly_yxc:
                 break;
             case R.id.ly_xydk:
                 break;
             case R.id.ly_cyp:
+                // 车用品
                 JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class);
                 break;
             case R.id.ly_mc:
+                //卖车
                 break;
             case R.id.ly_gj:
                 // 估价
@@ -219,7 +180,6 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.yzfw:
                 break;
             case R.id.image_xyd:
-                JumpUtil.newInstance().jumpRight(getContext(), CarCredit.class);
                 break;
             case R.id.image_cyp:
                 break;
@@ -240,16 +200,27 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.image_cmzy:
                 break;
             case R.id.iamge_etzy:
-                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class, "YZcarYPcyplxetzy");
+                // 车用品 儿童座椅
+                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxetzy");
                 break;
             case R.id.iamge_qczd:
-                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class, "YZcarYPcyplxqczd");
+                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxqczd");
                 break;
             case R.id.iamge_xcjly:
-                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class, "YZcarYPcyplxxcjly");
+                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxxcjly");
                 break;
             case R.id.iamge_dcld:
-                JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class, "YZcarYPcyplxdcld");
+                JumpUtil.newInstance().jumpLeft(getActivity(),CarProduct.class,"YZcarYPcyplxdcld");
+                break;
+            case R.id.mLocation:
+                // 城市
+                JumpUtil.newInstance().jumpRight(getContext(), CityActivity.class);
+                CityActivity.setOnBackListener(new CityActivity.BackListener() {
+                    @Override
+                    public void backData(String city) {
+                        mLocation.setText(city);
+                    }
+                });
                 break;
         }
     }
@@ -303,8 +274,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             if (amapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
                 amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见官方定位类型表
-                amapLocation.getLatitude();//获取纬度
-                amapLocation.getLongitude();//获取经度
+                lat = amapLocation.getLatitude();//获取纬度
+                lon = amapLocation.getLongitude();//获取经度
                 amapLocation.getAccuracy();//获取精度信息
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = new Date(amapLocation.getTime());
@@ -313,7 +284,6 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 amapLocation.getCountry();//国家信息
                 amapLocation.getProvince();//省信息
                 amapLocation.getCity();//城市信息
-                //locPlace.setText(amapLocation.getCity().split("市")[0]);
                 amapLocation.getDistrict();//城区信息
                 amapLocation.getStreet();//街道信息
                 amapLocation.getStreetNum();//街道门牌号信息
@@ -326,8 +296,6 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                     //获取定位信息
                     StringBuffer buffer = new StringBuffer();
                     buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince() + "" + amapLocation.getCity() + "" + amapLocation.getProvince() + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet() + "" + amapLocation.getStreetNum());
-//                    Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
-//                    ToastUtil.show(getActivity(), "已定位到当前城市");
                     isFirstLoc = false;
                 }
                 city = amapLocation.getCity().split("市")[0];

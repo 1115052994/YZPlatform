@@ -17,6 +17,7 @@
             android:layout_width="@dimen/common4dp"
             android:layout_height="@dimen/common20dp" />
         <TextView
+            android:gravity="center_vertical"
             android:text="惠保险"
             android:layout_marginLeft="@dimen/common30dp"
             android:textColor="@color/text_ffd9"
@@ -129,6 +130,7 @@
             android:layout_width="@dimen/common4dp"
             android:layout_height="@dimen/common20dp" />
         <TextView
+            android:gravity="center_vertical"
             android:text="惠保险"
             android:layout_marginLeft="@dimen/common30dp"
             android:textColor="@color/text_ffd9"

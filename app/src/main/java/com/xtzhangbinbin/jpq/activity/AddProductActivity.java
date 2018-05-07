@@ -227,7 +227,6 @@ public class AddProductActivity extends BaseActivity {
                 message.what = 001;
                 message.obj = beanList;
                 handler.sendMessage(message);
-
             }
 
             @Override

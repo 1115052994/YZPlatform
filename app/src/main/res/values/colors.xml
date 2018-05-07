@@ -83,6 +83,9 @@
     <color name="red_66">#ff6666</color>
     <color name="red_7d">#f6807d</color>
     <color name="red_29">#ff2929</color>
+
+    <color name="darkgrey"> #C0C0C0</color>
+    <color name="gary">#898989</color>
     <color name="red_74">#fa7574</color>
     <color name="red_68">#ff6868</color>
 </resources>
