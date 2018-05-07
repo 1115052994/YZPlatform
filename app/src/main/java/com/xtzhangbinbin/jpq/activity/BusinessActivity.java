@@ -45,7 +45,7 @@ public class BusinessActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.pic:
-                upDataPicture(this,pic,null,"营业执照");
+                upDataPicture(this,pic,null,"营业执照",3,2,900,600);
                 file_id = Prefs.with(getApplicationContext()).read("营业执照");
                 Log.e(TAG, "onViewClicked: " + file_id );
                 break;

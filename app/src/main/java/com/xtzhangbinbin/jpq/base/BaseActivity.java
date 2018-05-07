@@ -294,13 +294,19 @@ public class BaseActivity extends AppCompatActivity{
     private ImageView img;
     private ImageView img1;
 //    private MyProgressDialog dialog;
+    private int swidth,sheight;
+    private int sw,sh;
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    public void upDataPicture(Context context, ImageView imageView, ImageView imageView1, String t) {
+    public void upDataPicture(Context context, ImageView imageView, ImageView imageView1, String t,int w,int h,int width,int height) {
         img = imageView;
         img1 = imageView1;
         mContext = context;
         sType = t;
+        sw = w;
+        sh = h;
+        swidth = width;
+        sheight = height;
         View view = LayoutInflater.from(mContext).inflate(R.layout.popup_uploading_head, null);
         popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT, true);
@@ -406,8 +412,8 @@ public class BaseActivity extends AppCompatActivity{
     /**
      * 裁剪图片，并完成结果返回值
      */
-    private int output_X = 480;
-    private int output_Y = 480;
+//    private int output_X = 480;
+//    private int output_Y = 480;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -422,7 +428,7 @@ public class BaseActivity extends AppCompatActivity{
                         Uri newUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                             newUri = FileProvider.getUriForFile(this, "com.xtzhangbinbin.jpq.fileProvider", new File(newUri.getPath()));
-                        PhotoUtils.cropImageUri(this, newUri, cropImageUri, 1, 1, output_X, output_Y, CODE_RESULTS_REQUEST);
+                        PhotoUtils.cropImageUri(this, newUri, cropImageUri, sw, sh, swidth, sheight, CODE_RESULTS_REQUEST);
                     } else {
                         ToastUtil.show(this, "设备没有SD卡！");
                     }
@@ -430,7 +436,7 @@ public class BaseActivity extends AppCompatActivity{
                 //直接上传图片 调用相机
                 case CODE_UPDATA2_REQUEST:
                     cropImageUri = Uri.fromFile(fileCropUri);
-                    PhotoUtils.cropImageUri(this, imageUri, cropImageUri, 1, 1, output_X, output_Y, CODE_RESULTS_REQUEST);
+                    PhotoUtils.cropImageUri(this, imageUri, cropImageUri,  sw, sh, swidth, sheight, CODE_RESULTS_REQUEST);
                     break;
                 //直接上传图片 返回成功值
                 case CODE_RESULTS_REQUEST:
