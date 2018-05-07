@@ -19,8 +19,13 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AccessCar;
+import com.xtzhangbinbin.jpq.activity.CarCredit;
 import com.xtzhangbinbin.jpq.activity.CarProduct;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
+import com.xtzhangbinbin.jpq.activity.CompanyCenterActivity;
+import com.xtzhangbinbin.jpq.activity.LoginActivity;
+import com.xtzhangbinbin.jpq.activity.OrdersScanActivity;
+import com.xtzhangbinbin.jpq.activity.PersonalCenterActivity;
 import com.xtzhangbinbin.jpq.activity.PoiAroundSearchActivity;
 import com.xtzhangbinbin.jpq.activity.WeizhangQuery;
 import com.xtzhangbinbin.jpq.config.Config;
@@ -29,6 +34,7 @@ import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.xtzhangbinbin.jpq.zxing.android.CaptureActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -60,6 +66,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
     Banner banner;
     @BindView(R.id.mLocation)
     TextView mLocation;
+
+    private String user_type;
 
     // 轮播图
     private List<String> bannersImage = new ArrayList<>();
@@ -140,8 +148,19 @@ public class MainFragment extends Fragment implements AMapLocationListener {
         //ToastUtil.show(getContext(),view.getId());
         switch (view.getId()) {
             case R.id.image_scan:
+                JumpUtil.newInstance().jumpRight(getContext(), CaptureActivity.class);
                 break;
             case R.id.image_man:
+                user_type = Prefs.with(getContext()).read("user_type");
+                Log.d("用户类型", "onViewClicked: " + user_type);
+                if (user_type.isEmpty()){
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }else if (user_type.equals("comp")){
+                    JumpUtil.newInstance().jumpRight(getContext(), CompanyCenterActivity.class);
+                }else if (user_type.equals("pers")){
+                    /* 跳转到个人中心 */
+                    JumpUtil.newInstance().jumpRight(getContext(), PersonalCenterActivity.class);
+                }
                 break;
             case R.id.ly_etc:
                 break;
@@ -180,6 +199,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.yzfw:
                 break;
             case R.id.image_xyd:
+                JumpUtil.newInstance().jumpRight(getContext(), CarCredit.class);
                 break;
             case R.id.image_cyp:
                 break;
