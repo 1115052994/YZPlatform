@@ -87,7 +87,7 @@ public class Welcome extends AppCompatActivity {
             startActivity(intent1);
         } else {
             Intent intent2 = new Intent();
-            intent2.setClass(Welcome.this, LoginActivity.class);
+            intent2.setClass(Welcome.this, MainActivity.class);
             startActivity(intent2);
         }
         finish();

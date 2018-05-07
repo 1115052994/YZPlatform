@@ -37,12 +37,8 @@ import butterknife.OnClick;
 
 public class CarProduct extends BaseActivity {
 
-//    @BindView(R.id.banner)
-//    Banner banner;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-//    @BindView(R.id.scrollView)
-//    ScrollView scrollView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
 
@@ -57,11 +53,14 @@ public class CarProduct extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_product);
         ButterKnife.bind(this);
+        type = "YZcarYPcyplxetzy";
         Intent intent = getIntent();
         if (intent!=null){
             Bundle bundle = intent.getExtras();
-            if (bundle!=null)
-                type = bundle.getString("String");
+            if (bundle!=null) {
+                if (!"".equals(bundle.getString("String","")))
+                    type = bundle.getString("String","");
+            }
         }
         initView();
 //        scrollView.fullScroll(ScrollView.FOCUS_UP);//滚动到顶部

@@ -146,8 +146,6 @@ public class MainFragment extends Fragment implements AMapLocationListener {
 
     @OnClick({R.id.image_scan, R.id.image_man, R.id.ly_etc, R.id.ly_wby, R.id.ly_jyz, R.id.ly_jjjy, R.id.ly_wzcx, R.id.ly_yxc, R.id.ly_xydk, R.id.ly_cyp, R.id.ly_mc, R.id.ly_gj, R.id.image_czcl, R.id.yzfw, R.id.image_xyd, R.id.image_cyp, R.id.image_csh, R.id.image_wxby, R.id.image_xc, R.id.image_qcmr, R.id.image_pprm, R.id.image_rmsx, R.id.image_zxc, R.id.image_cmzy, R.id.iamge_etzy, R.id.iamge_qczd, R.id.iamge_xcjly, R.id.iamge_dcld,R.id.mLocation,R.id.image_ms,R.id.image_xxyl,R.id.image_shfw})
     public void onViewClicked(View view) {
-        //ToastUtil.show(getContext(),view.getId());
-
         //YZcompcfwlxxcxc洗车
         //YZcompcfwlxwxbywxby维修保养
         //YZcompcfwlxxcmr美容
@@ -205,7 +203,6 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 break;
             case R.id.ly_mc:
                 //卖车
-                // 卖che
                 mainActivity.switchToCarSell("2");
                 break;
             case R.id.ly_gj:

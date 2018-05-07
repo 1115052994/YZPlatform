@@ -87,36 +87,6 @@ public class LifeFragment extends Fragment implements AMapLocationListener {
     private String cityId = "";
     private String cityName = "";
 
-    /*
-    {
-	"data": {
-		"result": [
-			{
-				"dict_id": "YZzshjd",
-				"dict_desc": "酒店",
-				"dict_value": "jd"
-			},
-			{
-				"dict_id": "YZzshms",
-				"dict_desc": "美食",
-				"dict_value": "ms"
-			},
-			{
-				"dict_id": "YZzshshfu",
-				"dict_desc": "生活服务",
-				"dict_value": "shfu"
-			},
-			{
-				"dict_id": "YZzshxxyl",
-				"dict_desc": "休闲娱乐",
-				"dict_value": "xxyl"
-			}
-		]
-	},
-	"message": "",
-	"status": "1"
-}
-     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
