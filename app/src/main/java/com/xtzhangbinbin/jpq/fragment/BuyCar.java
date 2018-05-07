@@ -31,6 +31,7 @@ import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AdvanceSX;
 import com.xtzhangbinbin.jpq.activity.CarBrandSearch;
 import com.xtzhangbinbin.jpq.activity.CarDetailsActivity;
+import com.xtzhangbinbin.jpq.activity.MySubscribe;
 import com.xtzhangbinbin.jpq.adapter.AppraiseGVAdapter;
 import com.xtzhangbinbin.jpq.adapter.CommonRecyclerAdapter;
 import com.xtzhangbinbin.jpq.adapter.ViewHolder;
@@ -922,7 +923,6 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -961,7 +961,6 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -1052,7 +1051,6 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -1146,7 +1144,6 @@ public class BuyCar extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -1242,14 +1239,13 @@ public class BuyCar extends Fragment {
                     if ("1".equals(object.getString("status"))) {
                         ToastUtil.show(getActivity(), "订阅成功");
                         // 订阅成功刷新订阅列表数据
-                        //getData();
+                        JumpUtil.newInstance().jumpLeft(getActivity(), MySubscribe.class);
                     } else {
                         ToastUtil.show(getActivity(), "请选择订阅条件");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.xtzhangbinbin.jpq.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class BuyCarBean {
@@ -73,7 +74,7 @@ public class BuyCarBean {
             this.result = result;
         }
 
-        public static class ResultBean {
+        public static class ResultBean implements Serializable{
             /*
                 "car_name": "斯柯达",
 				"car_1_icon_file_id": "834b3281180f4f7a9ed1405777ced0e1",

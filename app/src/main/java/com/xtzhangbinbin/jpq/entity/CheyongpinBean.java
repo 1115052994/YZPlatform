@@ -70,8 +70,8 @@ public class CheyongpinBean {
             private String jd_sp_wareurl;
             private String jd_sp_imageurl;
             private String jd_sp_type;
-            private int jd_sp_price;
-            private int jd_sp_market_price;
+            private String jd_sp_price;
+            private String jd_sp_market_price;
             private String jd_sp_id;
 
             public String getJd_sp_good() {
@@ -114,19 +114,19 @@ public class CheyongpinBean {
                 this.jd_sp_type = jd_sp_type;
             }
 
-            public int getJd_sp_price() {
+            public String getJd_sp_price() {
                 return jd_sp_price;
             }
 
-            public void setJd_sp_price(int jd_sp_price) {
+            public void setJd_sp_price(String jd_sp_price) {
                 this.jd_sp_price = jd_sp_price;
             }
 
-            public int getJd_sp_market_price() {
+            public String getJd_sp_market_price() {
                 return jd_sp_market_price;
             }
 
-            public void setJd_sp_market_price(int jd_sp_market_price) {
+            public void setJd_sp_market_price(String jd_sp_market_price) {
                 this.jd_sp_market_price = jd_sp_market_price;
             }
 

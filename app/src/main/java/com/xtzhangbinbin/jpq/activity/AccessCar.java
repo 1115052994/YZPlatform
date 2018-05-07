@@ -2,6 +2,7 @@ package com.xtzhangbinbin.jpq.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -132,7 +133,6 @@ public class AccessCar extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -174,7 +174,6 @@ public class AccessCar extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override

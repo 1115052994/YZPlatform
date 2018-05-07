@@ -1,9 +1,11 @@
 package com.xtzhangbinbin.jpq.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +42,7 @@ import com.xtzhangbinbin.jpq.utils.CommonUtils;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
+import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.ExpandableGridView;
 import com.xtzhangbinbin.jpq.view.LetterSideBar;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -360,7 +363,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -399,7 +401,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -435,7 +436,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override

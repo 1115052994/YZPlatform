@@ -261,7 +261,6 @@ public class CarAccessBrandSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -297,7 +296,6 @@ public class CarAccessBrandSearch extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
