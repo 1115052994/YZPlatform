@@ -186,13 +186,13 @@ public class EnterpriseActivity extends BaseActivity {
                     compName.setText(resultBean.getAuth_comp_name());
                     getLocation.setText(resultBean.getAuth_comp_lon() + "," + resultBean.getAuth_comp_lat());
                     compAddress.setText(resultBean.getAuth_comp_addr());
-                    String yingye = resultBean.getAuth_comp_file_id();
-                    Prefs.with(getApplicationContext()).write("营业执照", yingye);
+                    file_id = resultBean.getAuth_comp_file_id();
+                    Prefs.with(getApplicationContext()).write("营业执照", file_id);
                     business.setText("已上传");
                     linkName.setText(resultBean.getAuth_comp_linkman());
                     linkPhone.setText(resultBean.getAuth_comp_phone());
-                    String mentou = resultBean.getAuth_comp_img_head_file_id();
-                    Prefs.with(getApplicationContext()).write("门头照", mentou);
+                    head_file_id = resultBean.getAuth_comp_img_head_file_id();
+                    Prefs.with(getApplicationContext()).write("门头照", head_file_id);
                     headPic.setText("已上传");
                     updateType = resultBean.getAuth_comp_service_type();
                     lon = String.valueOf(resultBean.getAuth_comp_lon());
@@ -416,10 +416,14 @@ public class EnterpriseActivity extends BaseActivity {
                 JumpUtil.newInstance().jumpRight(EnterpriseActivity.this, MapActivity.class, 001);
                 break;
             case R.id.business:
-                JumpUtil.newInstance().jumpRight(EnterpriseActivity.this, BusinessActivity.class, 002);
+                Bundle bundle = new Bundle();
+                bundle.putString("file_id",file_id);
+                JumpUtil.newInstance().jumpRight(EnterpriseActivity.this, BusinessActivity.class, 002,bundle);
                 break;
             case R.id.headPic:
-                JumpUtil.newInstance().jumpRight(EnterpriseActivity.this, HeadPictureActivity.class, 003);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("head_file_id",head_file_id);
+                JumpUtil.newInstance().jumpRight(EnterpriseActivity.this, HeadPictureActivity.class, 003,bundle1);
                 break;
         }
     }

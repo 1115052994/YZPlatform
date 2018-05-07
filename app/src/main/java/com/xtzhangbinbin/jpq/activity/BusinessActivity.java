@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
+import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 
@@ -27,6 +28,9 @@ public class BusinessActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
         ButterKnife.bind(this);
+        file_id = getIntent().getExtras().getString("file_id");
+        Log.d(TAG, "onCreate营业执照: " + file_id);
+        OKhttptils.getPic(this,file_id,pic);
     }
 
     @Override
@@ -46,10 +50,10 @@ public class BusinessActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.pic:
                 upDataPicture(this,pic,null,"营业执照",3,2,900,600);
-                file_id = Prefs.with(getApplicationContext()).read("营业执照");
                 Log.e(TAG, "onViewClicked: " + file_id );
                 break;
             case R.id.uploading:
+                file_id = Prefs.with(getApplicationContext()).read("营业执照");
                 if (getBitmap(pic) == null){
                     Bundle bundle = new Bundle();
                     bundle.putString("file_id",file_id);

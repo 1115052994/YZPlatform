@@ -23,7 +23,8 @@
             android:layout_height="@dimen/common240dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/common5dp"
-            android:background="@drawable/corporate_wallet_gr" />
+            android:scaleType="fitXY"
+            android:src="@drawable/corporate_wallet_gr" />
 
         <Button
             android:id="@+id/uploading"

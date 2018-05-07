@@ -1,12 +1,14 @@
 package com.xtzhangbinbin.jpq.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
+import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 
@@ -26,6 +28,9 @@ public class HeadPictureActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_head_picture);
         ButterKnife.bind(this);
+        head_file_id = getIntent().getExtras().getString("head_file_id");
+        Log.d(TAG, "onCreate门头照: " + head_file_id);
+        OKhttptils.getPic(this,head_file_id,pic);
     }
 
 
