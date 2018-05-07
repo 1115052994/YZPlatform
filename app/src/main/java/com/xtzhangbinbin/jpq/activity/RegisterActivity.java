@@ -1,6 +1,8 @@
 package com.xtzhangbinbin.jpq.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -166,7 +168,10 @@ public class RegisterActivity extends BaseActivity {
                     if(null != jsonObject){
                         Prefs.with(getApplicationContext()).write("user_token", jsonObject.getJSONObject("data").getString("result"));
                         Prefs.with(getApplicationContext()).write("user_phone", registerPhone.getText().toString());
-                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
+//                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
+                        Message message = new Message();
+                        message.what = 001;
+                        handler.sendMessage(message);
                     }
 //                    String data = jsonObject.getString("data");
 //                    JSONObject object = new JSONObject(data);
@@ -310,5 +315,68 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 001:
+                    getUserInfo();
+                    JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
+                    break;
+            }
+        }
+    };
+
+    /* 获取用户信息 */
+    private void getUserInfo() {
+        Map<String, String> map = new HashMap<>();
+        OKhttptils.post(RegisterActivity.this, Config.GET_USERINFO, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.e("", "onResponse用户信息: " + response);
+                /**
+                 * {"data":
+                 * {"result":
+                 * {"login_name":"17685416552",
+                 * "user_type":"comp",
+                 * "user_id":"15",
+                 * "phone_number":"17685416552",
+                 * "user_token":"96730A47BBCD8F345203CFAB9A2CA83A768A3A7A1150AC667DA0330D0B94B04602AACF19E9AB5C98A977CA377CD73B6F8CBAECEE459C76A0EF20E0615C5498E8",
+                 * "invi_code":"",
+                 * "user_state":"active"}},
+                 * "message":"",
+                 * "status":"1"}
+                 * */
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String data = object.getString("data");
+                    JSONObject jsonObject = new JSONObject(data);
+                    String result = jsonObject.getString("result");
+                    JSONObject obj = new JSONObject(result);
+                    user_type = obj.getString("user_type");
+                    Prefs.with(getApplicationContext()).write("user_type",user_type);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void fail(String response) {
+                Log.d(TAG, "fail用户信息: " + response);
+//                try {
+//                    JSONObject object = new JSONObject(response);
+//                    user_type = "";
+//                    ToastUtil.show(LoginActivity.this, object.getString("message"));
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+            }
+        });
+
+    }
 
 }

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
     <com.xtzhangbinbin.jpq.view.CircleImageView
         android:layout_marginLeft="@dimen/common15dp"
@@ -13,98 +15,111 @@
         android:background="@drawable/circle_2"
         android:layout_marginBottom="@dimen/common15dp"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/common16dp"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/common26dp"
         android:layout_marginLeft="@dimen/common15dp"
-        android:layout_marginRight="@dimen/common20dp">
+        android:layout_marginRight="@dimen/common20dp"
+        android:layout_marginTop="@dimen/common15dp"
+        >
+
         <TextView
             android:id="@+id/star_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_13sp"
+            android:layout_alignParentTop="true"
             android:textColor="@color/text_33"
-            />
-        <TextView
-            android:id="@+id/star_item_introduce"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:maxEms="18"
-            android:singleLine="false"
-            android:textSize="@dimen/text_size_13sp"
-            android:layout_marginTop="@dimen/common17dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_33"
-            />
+            android:textSize="@dimen/text_size_13sp" />
+
         <RelativeLayout
+            android:id="@+id/item_star_state_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/common16dp"
-            >
+            android:layout_height="@dimen/common30dp"
+            android:layout_marginBottom="@dimen/common5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/common16dp">
+
             <RelativeLayout
                 android:id="@+id/item_lilayout1"
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true">
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="删除"
-                    android:layout_alignBottom="@id/item_iv2"
                     android:layout_toRightOf="@id/item_iv2"
-                    android:textSize="@dimen/text_size_13sp"
+                    android:text="删除"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/black_66"
+                    android:textSize="@dimen/text_size_13sp"
 
                     />
+
                 <ImageView
                     android:id="@+id/item_iv2"
-                    android:src="@drawable/star_delete"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/common20dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/common10dp"/>
+                    android:adjustViewBounds="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/common10dp"
+                    android:src="@drawable/star_delete" />
 
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginRight="@dimen/common17dp"
-                android:layout_toLeftOf="@id/item_lilayout1"
                 android:id="@+id/item_lilayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/item_lilayout1"
-                >
+                android:layout_marginRight="@dimen/common17dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/item_lilayout1">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="编辑"
-                    android:layout_alignBottom="@id/item_iv3"
                     android:layout_toRightOf="@id/item_iv3"
-                    android:textSize="@dimen/text_size_13sp"
+                    android:text="编辑"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/black_66"
-                    />
+                    android:textSize="@dimen/text_size_13sp" />
+
                 <ImageView
-                    android:layout_marginRight="@dimen/common10dp"
                     android:id="@+id/item_iv3"
-                    android:src="@drawable/star_editor"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/common20dp"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_marginRight="@dimen/common10dp"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/star_editor" />
 
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/item_estimate"
-                android:textSize="@dimen/text_size_13sp"
-                android:text="已通过"
-                android:textColor="@color/theme_coloer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"/>
+                android:layout_centerVertical="true"
+                android:text="已通过"
+                android:textColor="@color/theme_coloer"
+                android:textSize="@dimen/text_size_13sp" />
 
         </RelativeLayout>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/star_item_introduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="@id/item_star_state_layout"
+            android:layout_below="@id/star_item_name"
+            android:layout_marginTop="@dimen/common17dp"
+            android:ellipsize="end"
+            android:maxEms="18"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:textColor="@color/text_33"
+            android:textSize="@dimen/text_size_13sp" />
+    </RelativeLayout>
 </LinearLayout>

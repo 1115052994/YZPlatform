@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TableLayout;
 
 import com.androidkun.xtablayout.XTabLayout;
@@ -33,13 +34,12 @@ public class CarFinancial extends AppCompatActivity {
         ButterKnife.bind(this);
         fragments.add(new CarFinancialPersonal());
 //        fragments.add(new CarFinancialPersonal());
-        arrayList.add("");//个人
+        arrayList.add("个人");
 //        arrayList.add("企业");
         viewPager.setAdapter(new CarFinancialAdapter(getSupportFragmentManager(),fragments, arrayList));
         tab.setxTabDisplayNum(1);
         tab.setupWithViewPager(viewPager);
+
     }
-
-
 }
 

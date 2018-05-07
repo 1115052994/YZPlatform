@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -128,7 +127,7 @@ public class EvaluationFragment extends Fragment {
                     if(refreshlayout==null){
                         evaluationAdapter.notifyDataSetChanged();
                     }
-
+                    Log.w("test", result.size() + "aaaaa");
                     //没有信息图片显示
                     if (result.size() <= 0) {
                         evaluationListImage.setVisibility(View.VISIBLE);

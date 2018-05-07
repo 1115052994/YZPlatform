@@ -17,12 +17,17 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AccessCar;
+import com.xtzhangbinbin.jpq.activity.CarCredit;
 import com.xtzhangbinbin.jpq.activity.CarProduct;
 import com.xtzhangbinbin.jpq.activity.CarProductSX;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
 import com.xtzhangbinbin.jpq.activity.MainActivity;
+import com.xtzhangbinbin.jpq.activity.CompanyCenterActivity;
+import com.xtzhangbinbin.jpq.activity.LoginActivity;
+import com.xtzhangbinbin.jpq.activity.PersonalCenterActivity;
 import com.xtzhangbinbin.jpq.activity.PoiAroundSearchActivity;
 import com.xtzhangbinbin.jpq.activity.WeizhangQuery;
 import com.xtzhangbinbin.jpq.activity.ZhongLife;
@@ -30,7 +35,7 @@ import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.xtzhangbinbin.jpq.zxing.android.CaptureActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -38,7 +43,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.BufferUnderflowException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +66,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
     Banner banner;
     @BindView(R.id.mLocation)
     TextView mLocation;
+
+    private String user_type;
 
     // 轮播图
     private List<String> bannersImage = new ArrayList<>();
@@ -140,11 +146,33 @@ public class MainFragment extends Fragment implements AMapLocationListener {
 
     @OnClick({R.id.image_scan, R.id.image_man, R.id.ly_etc, R.id.ly_wby, R.id.ly_jyz, R.id.ly_jjjy, R.id.ly_wzcx, R.id.ly_yxc, R.id.ly_xydk, R.id.ly_cyp, R.id.ly_mc, R.id.ly_gj, R.id.image_czcl, R.id.yzfw, R.id.image_xyd, R.id.image_cyp, R.id.image_csh, R.id.image_wxby, R.id.image_xc, R.id.image_qcmr, R.id.image_pprm, R.id.image_rmsx, R.id.image_zxc, R.id.image_cmzy, R.id.iamge_etzy, R.id.iamge_qczd, R.id.iamge_xcjly, R.id.iamge_dcld,R.id.mLocation,R.id.image_ms,R.id.image_xxyl,R.id.image_shfw})
     public void onViewClicked(View view) {
+        //ToastUtil.show(getContext(),view.getId());
+
+        //YZcompcfwlxxcxc洗车
+        //YZcompcfwlxwxbywxby维修保养
+        //YZcompcfwlxxcmr美容
+        //YZcompcfwlxwxbybjpq钣金喷漆
+        //YZcompcfwlxwxbyghdc更换电瓶
         MainActivity mainActivity = (MainActivity) getActivity();
         switch (view.getId()) {
             case R.id.image_scan:
+                if(null != Prefs.with(getContext()).read("user_token")){
+                    JumpUtil.newInstance().jumpRight(getContext(), CaptureActivity.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }
                 break;
             case R.id.image_man:
+                user_type = Prefs.with(getContext()).read("user_type");
+                Log.d("用户类型", "onViewClicked: " + user_type);
+                if (user_type.isEmpty()){
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }else if (user_type.equals("comp")){
+                    JumpUtil.newInstance().jumpRight(getContext(), CompanyCenterActivity.class);
+                }else if (user_type.equals("pers")){
+                    /* 跳转到个人中心 */
+                    JumpUtil.newInstance().jumpRight(getContext(), PersonalCenterActivity.class);
+                }
                 break;
             case R.id.ly_etc:
                 break;
@@ -160,8 +188,12 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             case R.id.ly_jjjy:
                 break;
             case R.id.ly_wzcx:
-                // 违章查询
-                JumpUtil.newInstance().jumpLeft(getActivity(), WeizhangQuery.class);
+                if(null != Prefs.with(getContext()).read("user_token")){
+                    // 违章查询
+                    JumpUtil.newInstance().jumpLeft(getActivity(), WeizhangQuery.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }
                 break;
             case R.id.ly_yxc:
                 break;
@@ -172,18 +204,24 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class);
                 break;
             case R.id.ly_mc:
+                //卖车
                 // 卖che
                 mainActivity.switchToCarSell("2");
                 break;
             case R.id.ly_gj:
-                // 估价
-                JumpUtil.newInstance().jumpRight(getContext(), AccessCar.class);
+                if(null != Prefs.with(getContext()).read("user_token")){
+                    // 估价
+                    JumpUtil.newInstance().jumpRight(getContext(), AccessCar.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }
                 break;
             case R.id.image_czcl:
                 break;
             case R.id.yzfw:
                 break;
             case R.id.image_xyd:
+                JumpUtil.newInstance().jumpRight(getContext(), CarCredit.class);
                 break;
             case R.id.image_cyp:
                 // 车用品
