@@ -108,6 +108,13 @@ public class CarCompDetail extends BaseActivity {
         setContentView(R.layout.activity_car_comp_detail);
         ButterKnife.bind(this);
         initView();
+        Intent intent = getIntent();
+        if (intent!=null){
+            Bundle bundle = intent.getExtras();
+            if (bundle!=null){
+                comp_id = bundle.getString("comp_id");
+            }
+        }
     }
 
     @Override
