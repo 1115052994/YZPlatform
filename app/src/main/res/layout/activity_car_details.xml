@@ -18,7 +18,7 @@
         android:layout_below="@+id/linear"
         android:layout_weight="1">
 
-        <com.xtzhangbinbin.jpq.view.JudgeNestedScrollView
+        <ScrollView
             android:id="@+id/mScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -95,8 +95,10 @@
 
                         <ImageView
                             android:id="@+id/mSale"
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/common60dp"
                             android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:adjustViewBounds="true"
                             android:src="@drawable/b_a_b" />
 
                     </LinearLayout>
@@ -106,9 +108,10 @@
                 <ImageView
                     android:id="@+id/mAd"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/common80dp"
-                    android:layout_marginBottom="@dimen/common8dp"
-                    android:layout_marginTop="@dimen/common8dp" />
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white"
+                    />
 
                 <LinearLayout
                     android:id="@+id/mDetails"
@@ -502,7 +505,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
-        </com.xtzhangbinbin.jpq.view.JudgeNestedScrollView>
+        </ScrollView>
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:id="@+id/recyclerView_foot_more"

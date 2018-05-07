@@ -38,6 +38,7 @@ public class JudgeNestedScrollView extends NestedScrollView {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                Log.w("test", "这里拦截了");
                 xDistance = yDistance = 0f;
                 xLast = ev.getX();
                 yLast = ev.getY();

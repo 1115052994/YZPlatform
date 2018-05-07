@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.xtzhangbinbin.jpq.view.ScrollLinearLayoutManager;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -110,7 +112,7 @@ public class CarDetailsActivity extends BaseActivity {
     @BindView(R.id.mRecycler)
     RecyclerView mRecycler;
     @BindView(R.id.mScroll)
-    JudgeNestedScrollView mScroll;
+    ScrollView mScroll;
     @BindView(R.id.mRefresh)
     SmartRefreshLayout mRefresh;
     @BindView(R.id.mOrder)
@@ -213,8 +215,6 @@ public class CarDetailsActivity extends BaseActivity {
         getAd();
         getCollect();
         getSale();
-        mScroll.setNeedScroll(true);
-//        mRecycler.setNestedScrollingEnabled(false);
     }
 
     /* 订阅降价通知 */
@@ -223,6 +223,7 @@ public class CarDetailsActivity extends BaseActivity {
         mSale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.w("test", "abc");
                 Map<String, String> map = new HashMap<>();
                 map.put("car_id", car_id);
                 OKhttptils.post(currtActivity, Config.CAR_DETAIL_IS_SALE, map, new OKhttptils.HttpCallBack() {
@@ -427,6 +428,9 @@ public class CarDetailsActivity extends BaseActivity {
         }
         adapter = new CarDetailePicAdapter(beanList);
         mRecycler.setLayoutManager(new LinearLayoutManager(currtActivity));
+        ScrollLinearLayoutManager scrollLinearLayoutManager = new ScrollLinearLayoutManager(this);
+        scrollLinearLayoutManager.setScrollEnabled(false);
+        mRecycler.setLayoutManager(scrollLinearLayoutManager);
         mRecycler.setAdapter(adapter);
 
         mRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
