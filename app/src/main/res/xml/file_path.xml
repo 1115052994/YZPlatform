@@ -2,6 +2,7 @@
 <resources>
     <paths>
         <root-path name="name" path=""/>
+        <cache-path name="name2" path="" />
     </paths>
 
 </resources>

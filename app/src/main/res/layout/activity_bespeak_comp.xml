@@ -5,8 +5,11 @@
     android:background="@color/bg_color"
     android:orientation="vertical">
 
+    <include layout="@layout/header_layout"
+        android:id="@+id/head_title"/>
+
     <ImageView
-        android:id="@+id/orders_comp_default_image"
+        android:id="@+id/bespeak_comp_default_image"
         android:layout_width="180dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"

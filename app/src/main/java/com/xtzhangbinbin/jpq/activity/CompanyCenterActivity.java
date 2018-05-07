@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.entity.BespeakComp;
 import com.xtzhangbinbin.jpq.entity.Enterprise;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
@@ -80,7 +81,6 @@ public class CompanyCenterActivity extends BaseActivity {
                     Prefs.with(getApplicationContext()).write("门头照", mentou);
                     OKhttptils.getPic(CompanyCenterActivity.this, mentou, mIcon);
                 }
-
             }
 
             @Override
@@ -105,12 +105,15 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mOrders:
                 //订单管理
+                JumpUtil.newInstance().jumpRight(this, CompOrderListsActivity.class);
                 break;
             case R.id.mWallet:
                 //钱包
+                JumpUtil.newInstance().jumpRight(this, CompWalletActivity.class);
                 break;
             case R.id.mBook:
                 //预约信息
+                JumpUtil.newInstance().jumpRight(this, BespeakComp.class);
                 break;
             case R.id.mAppraise:
                 //评价管理

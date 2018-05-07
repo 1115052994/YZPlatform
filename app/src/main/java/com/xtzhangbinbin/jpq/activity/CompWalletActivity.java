@@ -2,7 +2,6 @@ package com.xtzhangbinbin.jpq.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -14,17 +13,23 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.CommonRecyclerAdapter;
 import com.xtzhangbinbin.jpq.adapter.ViewHolder;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.entity.CompWalletBindInfo;
 import com.xtzhangbinbin.jpq.entity.CompWalletDetail;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.StringUtil;
+import com.xtzhangbinbin.jpq.view.FullyLinearLayoutManager;
+import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,12 +62,15 @@ public class CompWalletActivity extends BaseActivity {
     LinearLayout comp_wallet_query;
     @BindView(R.id.comp_wallet_bind_account)
     LinearLayout comp_wallet_bind_account;
+    @BindView(R.id.comp_wallet_bind_presentation)
+    LinearLayout comp_wallet_bind_presentation;
+    @BindView(R.id.comp_wallet_presentation)
+    LinearLayout comp_wallet_presentation;
     private CommonRecyclerAdapter cashListAdapter;
-    RecyclerView recyclerViewChild;
-    private CommonRecyclerAdapter cashChildAdapter;
-    private List<CompWalletDetail.DataBean.ResultBeanX> result;
+    private List<CompWalletDetail.DataBean.ResultBean> result;
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
+    private List<String> accountList;//帐户数量
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,12 +78,26 @@ public class CompWalletActivity extends BaseActivity {
         setContentView(R.layout.activity_comp_wallet);
         ButterKnife.bind(this);
         ActivityUtil.addActivity(this);
-
-        result = new ArrayList<>();
         init();
+        initAdapter();
         initData();
         initDataList(1, null);
-        initAdapter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initAccount();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(null != result){
+            result.clear();
+        }
+        initData();
+        initDataList(1, null);
     }
 
     @Override
@@ -85,6 +107,7 @@ public class CompWalletActivity extends BaseActivity {
     }
 
     public void init(){
+        result = new ArrayList<>();
         comp_wallet_query.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +118,51 @@ public class CompWalletActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 JumpUtil.newInstance().jumpRight(CompWalletActivity.this, CompWalletBindAccountActivity.class);
+            }
+        });
+        comp_wallet_presentation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                JumpUtil.newInstance().jumpRight(CompWalletActivity.this, CompWalletPresentationListActivity.class);
+            }
+        });
+        comp_wallet_bind_presentation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(null != accountList && !accountList.isEmpty()){
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("accountList", (ArrayList)accountList);
+                    JumpUtil.newInstance().jumpRight(CompWalletActivity.this, CompWalletPresentationActivity.class, bundle);
+                } else {
+                    final OrdinaryDialog dialog = OrdinaryDialog.newInstance(CompWalletActivity.this).setMessage1("信息提示").setMessage2("您还没有绑定任何帐户，暂时无法申请提款！您现在去绑定帐户吗？").showDialog();
+                    dialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+                        @Override
+                        public void onYesClick() {
+                            JumpUtil.newInstance().jumpRight(CompWalletActivity.this, CompWalletBindAccountActivity.class);
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
+                        @Override
+                        public void onNoClick() {
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            }
+        });
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                pageIndex = 1;
+                result.clear();
+                initDataList(pageIndex, refreshlayout);
+            }
+        });
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                initDataList(++pageIndex, refreshlayout);
             }
         });
     }
@@ -144,10 +212,9 @@ public class CompWalletActivity extends BaseActivity {
                 public void success(String response) {
                     Gson gson = GsonFactory.create();
                     CompWalletDetail wallet = gson.fromJson(response, CompWalletDetail.class);
-                    List<CompWalletDetail.DataBean.ResultBeanX> result2 = wallet.getData().getResult();
+                    List<CompWalletDetail.DataBean.ResultBean> result2 = wallet.getData().getResult();
                     pageCount = wallet.getData().getPageCount();
                     result.addAll(result2);
-                    initAdapter();
                     //没有信息图片显示
                     if (refreshlayout != null) {
                         if (pageIndex > pageCount) {
@@ -176,65 +243,81 @@ public class CompWalletActivity extends BaseActivity {
      * 初始化adapter
      */
     public void initAdapter(){
-        cashListAdapter = new CommonRecyclerAdapter(this, result, R.layout.item_comp_wallet_cash) {
+        cashListAdapter = new CommonRecyclerAdapter(this, result, R.layout.item_comp_wallet_cash_child) {
             @Override
             public void convert(ViewHolder holder, Object item, int position) {
-                Log.w("test", "aaaaaaaaaaa:");
-
-                final CompWalletDetail.DataBean.ResultBeanX wallet = result.get(position);
-                TextView item_comp_wallet_month = holder.getView(R.id.item_comp_wallet_month);
-                item_comp_wallet_month.setText(wallet.getDate().replace("-","年") + "日");
-                recyclerViewChild = holder.getView(R.id.recyclerViewChild);
-                recyclerViewChild.setNestedScrollingEnabled(false);//不滑动
-                recyclerViewChild.setLayoutManager(new LinearLayoutManager(CompWalletActivity.this));
-                final List<CompWalletDetail.DataBean.ResultBeanX.ResultBean> list = wallet.getResult();
-                cashChildAdapter = new CommonRecyclerAdapter(CompWalletActivity.this, list, R.layout.item_comp_wallet_cash_child) {
-                    @Override
-                    public void convert(ViewHolder holder, Object item, int position) {
-                        //图标，收，订单收入   提，提现
-                        ImageView item_comp_wallet_child_icon = holder.getView(R.id.item_comp_wallet_child_icon);
-                        //金额
-                        TextView item_comp_wallet_child_price = holder.getView(R.id.item_comp_wallet_child_price);
-                        if("sr".equals(list.get(position).getWallet_log_type())){
-                            item_comp_wallet_child_icon.setImageResource(R.drawable.ic_comp_wallt_shoushou);
-                            item_comp_wallet_child_price.setText("+" + new DecimalFormat("#0.00").format(Math.abs(list.get(position).getWallet_log_money())));
-                        } else {
-                            item_comp_wallet_child_icon.setImageResource(R.drawable.ic_comp_wallt_ti);
-                            item_comp_wallet_child_price.setText("-" + new DecimalFormat("#0.00").format(Math.abs(list.get(position).getWallet_log_money())));
-                        }
-                        //提现方式，如果是收入，则不显示
-                        TextView item_comp_wallet_child_type = holder.getView(R.id.item_comp_wallet_child_type);
-                        //帐号，如果是收入，显示消费名称。
-                        TextView item_comp_wallet_child_account = holder.getView(R.id.item_comp_wallet_child_account);
-                        switch(list.get(position).getCard_type()){
-                            case "alipay":
-                                item_comp_wallet_child_account.setText(list.get(position).getAlipay_id());
-                                item_comp_wallet_child_type.setText("(支付宝)");
-                                break;
-                            case "wechat":
-                                item_comp_wallet_child_account.setText(list.get(position).getWechat_id());
-                                item_comp_wallet_child_type.setText("(微信)");
-                                break;
-                            case "bankcard":
-                                item_comp_wallet_child_account.setText(list.get(position).getCard_bc_no());
-                                item_comp_wallet_child_type.setText("(银行卡)");
-                                break;
-                            default:
-                                item_comp_wallet_child_account.setText(list.get(position).getCard_type());
-                        }
-                        //操作时间
-                        TextView item_comp_wallet_date = holder.getView(R.id.item_comp_wallet_date);
-                        try {
-                            item_comp_wallet_date.setText(new SimpleDateFormat("MM-dd  HH:mm").format((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse(list.get(position).getWallet_log_date())));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                final CompWalletDetail.DataBean.ResultBean wallet = result.get(position);
+                //图标，收，订单收入   提，提现
+                ImageView item_comp_wallet_child_icon = holder.getView(R.id.item_comp_wallet_child_icon);
+                //金额
+                TextView item_comp_wallet_child_price = holder.getView(R.id.item_comp_wallet_child_price);
+                if("sr".equals(result.get(position).getWallet_log_type())){
+                    item_comp_wallet_child_icon.setImageResource(R.drawable.ic_comp_wallt_shoushou);
+                    item_comp_wallet_child_price.setText("+" + new DecimalFormat("#0.00").format(Math.abs(result.get(position).getWallet_log_money())));
+                } else {
+                    item_comp_wallet_child_icon.setImageResource(R.drawable.ic_comp_wallt_ti);
+                    item_comp_wallet_child_price.setText("-" + new DecimalFormat("#0.00").format(Math.abs(result.get(position).getWallet_log_money())));
+                }
+                //提现方式，如果是收入，则不显示
+                TextView item_comp_wallet_child_type = holder.getView(R.id.item_comp_wallet_child_type);
+                //帐号，如果是收入，显示消费名称。
+                TextView item_comp_wallet_child_account = holder.getView(R.id.item_comp_wallet_child_account);
+                String name = "";
+                String type = "";
+                if(!StringUtil.isEmpty(result.get(position).getCard_type())){
+                    switch(result.get(position).getCard_type()){
+                        case "alipay":
+                            name = result.get(position).getAlipay_id();
+                            type = "(支付宝)";
+                            break;
+                        case "wechat":
+                            name = result.get(position).getWechat_id();
+                            type = "(微信)";
+                            break;
+                        case "bankcard":
+                            name = result.get(position).getCard_bc_no();
+                            type = "(银行卡)";
+                            break;
+                        default:
+                            name = result.get(position).getCard_type();
                     }
-                };
-                recyclerViewChild.setAdapter(cashChildAdapter);
+                }
+                item_comp_wallet_child_account.setText(name);
+                item_comp_wallet_child_type.setText(type);
+                //操作时间
+                TextView item_comp_wallet_date = holder.getView(R.id.item_comp_wallet_date);
+                try {
+                    item_comp_wallet_date.setText(new SimpleDateFormat("MM-dd  HH:mm").format((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse(result.get(position).getWallet_log_date())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         };
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new FullyLinearLayoutManager(this));
         recyclerView.setAdapter(cashListAdapter);
+    }
+
+    /**
+     * 获取帐户列表
+     */
+    public void initAccount(){
+        if (NetUtil.isNetAvailable(this)) {
+            Map<String ,String> map = new HashMap<>();
+            OKhttptils.post(this, Config.COMP_WALLET_QUERY_ACCOUNT, map, new OKhttptils.HttpCallBack() {
+                @Override
+                public void success(String response) {
+                    Gson gson = GsonFactory.create();
+                    CompWalletBindInfo bindInfo = gson.fromJson(response, CompWalletBindInfo.class);
+                    accountList = bindInfo.getData().getResult().getData();
+
+                }
+
+                @Override
+                public void fail(String response) {
+                    Log.w("test", response);
+                    Toast.makeText(CompWalletActivity.this, "查询失败", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

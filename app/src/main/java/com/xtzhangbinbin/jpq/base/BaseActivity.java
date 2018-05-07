@@ -119,7 +119,6 @@ public class BaseActivity extends AppCompatActivity{
 //        wayList.add(new Poi("呼家楼", new LatLng(39.923484,116.461327), ""));
 //        wayList.add(new Poi("华润大厦", new LatLng(39.912914,116.434247), ""));
         AmapNaviPage.getInstance().showRouteActivity(this, new AmapNaviParams(null, null, end, AmapNaviType.DRIVER), new INaviInfoCallback() {
-
             @Override
             public void onInitNaviFailure() {
 
@@ -167,26 +166,6 @@ public class BaseActivity extends AppCompatActivity{
 
             @Override
             public void onExitPage(int i) {
-
-            }
-
-            @Override
-            public void onStrategyChanged(int i) {
-
-            }
-
-            @Override
-            public View getCustomNaviBottomView() {
-                return null;
-            }
-
-            @Override
-            public View getCustomNaviView() {
-                return null;
-            }
-
-            @Override
-            public void onArrivedWayPoint(int i) {
 
             }
         });
@@ -480,7 +459,6 @@ public class BaseActivity extends AppCompatActivity{
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
 
                         @Override
@@ -518,7 +496,6 @@ public class BaseActivity extends AppCompatActivity{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
