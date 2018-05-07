@@ -160,12 +160,11 @@ public class Addstar extends BaseActivity {
         if(file_id!=null){
             OKhttptils.post(Addstar.this, Config.SAVESTAR, map, new OKhttptils.HttpCallBack() {
                 @Override
-                public String success(String response) {
+                public void success(String response) {
                     Log.d("aaaaa", "success: "+response);
                     Intent intent = new Intent();
                     setResult(1, intent);
                     finish();
-                    return response;
                 }
                 @Override
                 public void fail(String response) {

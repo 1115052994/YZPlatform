@@ -215,7 +215,7 @@ public class AddProductActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(AddProductActivity.this, Config.GET_COMP_SERVICE_TYPE, map, new OKhttptils.HttpCallBack() {
             @Override
-            public String success(String response) {
+            public void success(String response) {
                 Log.i(TAG, "onResponse: " + response);
                 /**
                  * {"data":{"result":[{"dic_id":"YZcompcfwlxwxby","dic_value":"维修保养"},{"dic_id":"YZcompcfwlxxc","dic_value":"洗车"},{"dic_id":"YZcompcfwlxjx","dic_value":"驾校"},{"dic_id":"YZcompcfwlxfwjg","dic_value":"服务机构"},{"dic_id":"YZcompcfwlxjcz","dic_value":"监测站"},{"dic_id":"YZcompcfwlxqcgz","dic_value":"汽车改装"}]},"message":"","status":"1"}
@@ -227,7 +227,6 @@ public class AddProductActivity extends BaseActivity {
                 message.what = 001;
                 message.obj = beanList;
                 handler.sendMessage(message);
-                return response;
             }
 
             @Override

@@ -24,6 +24,7 @@ import com.xtzhangbinbin.jpq.activity.CityActivity;
 import com.xtzhangbinbin.jpq.activity.PoiAroundSearchActivity;
 import com.xtzhangbinbin.jpq.activity.WeizhangQuery;
 import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.fragment.Sellcars;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
@@ -168,6 +169,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 JumpUtil.newInstance().jumpLeft(getActivity(), CarProduct.class);
                 break;
             case R.id.ly_mc:
+                //卖车
                 break;
             case R.id.ly_gj:
                 // 估价

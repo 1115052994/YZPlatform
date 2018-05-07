@@ -47,7 +47,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.CityActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -91,8 +96,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -224,10 +228,6 @@
         <activity
             android:name=".activity.BespeakCompActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- 微信支付所使用的activity -->
         <activity
