@@ -835,6 +835,7 @@ public class UpdateCarActivity extends BaseActivity {
                         ChassisNumber chassisNumber = gson.fromJson(response, ChassisNumber.class);
                         String vin = chassisNumber.getData().getResult().getVin();
                         mCarNumb.setText(vin);
+
                     }
 
                     @Override

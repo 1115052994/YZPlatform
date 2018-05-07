@@ -237,6 +237,7 @@ public class AddCarProduct extends BaseActivity {
                             break;
                     }
                 }
+
             }
 
             @Override
@@ -260,6 +261,7 @@ public class AddCarProduct extends BaseActivity {
                 Enterprise enterprise = gson.fromJson(response, Enterprise.class);
                 Enterprise.DataBean.ResultBean result = enterprise.getData().getResult();
                 car_place_city = result.getAuth_comp_city();          //市
+
             }
 
             @Override
@@ -605,6 +607,7 @@ public class AddCarProduct extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
 
                 @Override

@@ -126,7 +126,7 @@ public class PersonalSettingActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.icon:
-                upDataPicture(this, icon, null, "用户头像");
+                upDataPicture(this, icon, null, "用户头像",1,1,480,480);
                 break;
             case R.id.clean:
                 final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(this).setMessage1("清除缓存").setMessage2("清除后图片等多媒体消息需要重新下载查看，确定清除？").showDialog();

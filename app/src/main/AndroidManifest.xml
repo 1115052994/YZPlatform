@@ -32,7 +32,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    //6比4自定義相機
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -48,14 +47,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-            android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".activity.CityActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -99,7 +91,8 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -244,10 +237,10 @@
         <!-- zxing使用的activity -->
         <activity
             android:name=".zxing.android.CaptureActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:exported="true"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:launchMode="singleTop" />
         <!-- liyan  end -->
         <!--
         信鸽使用的receiver，这是自定义接收信息的地方。暂时不用，先注释，后面要是用了再打开
@@ -304,10 +297,13 @@
             android:name=".activity.MySubscribeMore"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+
         <activity
             android:name=".activity.AccessCar"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+
+
         <activity
             android:name=".activity.AccessResult"
             android:configChanges="orientation|keyboardHidden"
@@ -336,16 +332,46 @@
             android:name=".activity.CarAccessModeSearch"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.CarFinancial" />
+        <activity android:name=".activity.CarFinancial"/>
 
         <activity android:name=".activity.InsuranceSupermarket" />
+        <activity android:name=".DemoActivity" />
         <activity android:name=".camera.MainActivity" />
         <activity android:name=".camera.FileActivity" />
         <activity android:name=".camera.test.TestActivity" />
         <activity android:name=".camera.PhotographActivity" />
-        <activity android:name=".activity.CarProduct"></activity>
-        <activity android:name=".activity.CompanyCenterActivity" />
-        <activity android:name=".activity.PersonalCenterActivity"></activity>
+        <activity android:name=".activity.CarProduct" />
+        <activity android:name=".activity.CarProductSX" />
+        <activity android:name=".activity.CarProductJD" />
+        <activity android:name=".activity.ZhongLife" />
+        <activity android:name=".activity.ZhongLifeDetail" />
+
+        <!-- poi检索加油站 -->
+        <activity android:name=".activity.PoiAroundSearchActivity" />
+        <activity android:name=".activity.WeizhangQuery" />
+        <activity android:name=".activity.WeizhangResult" />
+        <activity android:name=".activity.WeizhangCity"/>
+
+        <!-- 欢迎页 -->
+        <activity android:name=".activity.Welcome"
+            android:theme="@style/FullScreen">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity android:name=".activity.Guide"
+            android:theme="@style/FullScreen"/>
+
+        <activity
+            android:name=".activity.CompanyCenterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.PersonalCenterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
         <activity android:name=".activity.CarCredit" />
         <activity android:name=".activity.WebView" />
         <activity android:name=".activity.LoanDetails" />
