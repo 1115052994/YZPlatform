@@ -162,7 +162,7 @@ public class Config {
     public static final String ACCRETIONPICTURECAR = M + S + "accretionPictureCar";
 
     //获取登录企业的服务细项类型（添加服务产品用）
-    public static final String SERVERITEMTYPE = M + S + "serverItemType";
+    public static final String ALLSERVERITEMTYPE = M + S + "allServerItemType";
 
     //查询所有道路救援
     public static final String SELECTROADSIDE = M + S + "selectRoadSide";

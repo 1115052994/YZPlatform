@@ -60,6 +60,7 @@ public class Maintenance extends Fragment {
     private List<CarBeautyBean.DataBean.ResultBean>  result = new ArrayList<>();
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_maintenance, container, false);

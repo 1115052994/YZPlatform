@@ -83,7 +83,7 @@
                     android:textSize="@dimen/text_size_14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="价格: # "
+                    android:text="价格: ¥ "
                     android:textColor="@color/text_ff29"
                     android:singleLine="false"
                     android:ellipsize="none"

@@ -52,7 +52,7 @@ public class ProductList extends BaseActivity {
     }
     public void getDate(){
         Map<String, String> map = new HashMap<>();
-        OKhttptils.post(ProductList.this, Config.SERVERITEMTYPE, map, new OKhttptils.HttpCallBack() {
+        OKhttptils.post(ProductList.this, Config.ALLSERVERITEMTYPE, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
                         Log.d("aaaaa", "onResponse获取数据1111: " + response);
