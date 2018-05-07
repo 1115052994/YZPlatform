@@ -98,7 +98,7 @@ public class BuyCarBean {
             private String car_name;
             private int his_sort_weight;
             private String car_place_city;
-            private int car_id;
+            private String car_id;
             private String car_1_icon_file_id;
             private int car_price;
             private String car_sign_date;
@@ -129,11 +129,11 @@ public class BuyCarBean {
                 this.car_place_city = car_place_city;
             }
 
-            public int getCar_id() {
+            public String getCar_id() {
                 return car_id;
             }
 
-            public void setCar_id(int car_id) {
+            public void setCar_id(String car_id) {
                 this.car_id = car_id;
             }
 

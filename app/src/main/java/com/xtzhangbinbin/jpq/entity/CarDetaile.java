@@ -127,7 +127,7 @@ public class CarDetaile {
                 private String car_letout;
                 private String car_comp_id;
                 private int comp_visit_count;
-                private int car_id;
+                private String car_id;
                 private double comp_lon;
                 private String car_24_file_id;
                 private String car_vin;
@@ -201,11 +201,11 @@ public class CarDetaile {
                     this.comp_visit_count = comp_visit_count;
                 }
 
-                public int getCar_id() {
+                public String getCar_id() {
                     return car_id;
                 }
 
-                public void setCar_id(int car_id) {
+                public void setCar_id(String car_id) {
                     this.car_id = car_id;
                 }
 
