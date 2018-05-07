@@ -43,7 +43,7 @@ public class YisjAdapter extends RecyclerView.Adapter<YisjAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final YisjAdapter.ViewHolder holder, final int position) {
         WeisjBean.DataBean.ResultBean resultBean = result.get(position);
-        holder.price.setText(" ¥ "+new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) /10000)+"万");
+        holder.price.setText(new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) /10000)+"万");
         holder.weisj_name.setText(resultBean.getCar_name());
         holder.weisj_time.setText(resultBean.getCar_sign_date());
         holder.weisj_cjh.setText(resultBean.getCar_vin());
@@ -57,6 +57,8 @@ public class YisjAdapter extends RecyclerView.Adapter<YisjAdapter.ViewHolder> {
             case "3":
                 holder.weisj_sh.setText("未审核");
                 break;
+            case "4":
+                holder.weisj_sh.setText("编辑中");
         }
         holder.switch_button.setChecked(true);
         holder.switch_button.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {

@@ -37,7 +37,7 @@ public class JiaoyzAdapter extends RecyclerView.Adapter<JiaoyzAdapter.ViewHolder
     @Override
     public void onBindViewHolder(JiaoyzAdapter.ViewHolder holder, int position) {
         WeisjBean.DataBean.ResultBean resultBean = result.get(position);
-        holder.price.setText(" ¥ "+new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) /10000)+"万");
+        holder.price.setText(new DecimalFormat("#0.00").format(Double.valueOf(resultBean.getCar_price()) /10000)+"万");
         holder.weisj_name.setText(resultBean.getCar_name());
         holder.weisj_time.setText(resultBean.getCar_sign_date());
         holder.weisj_cjh.setText(resultBean.getCar_vin());
@@ -51,6 +51,8 @@ public class JiaoyzAdapter extends RecyclerView.Adapter<JiaoyzAdapter.ViewHolder
             case "3":
                 holder.weisj_sh.setText("未审核");
                 break;
+            case "4":
+                holder.weisj_sh.setText("编辑中");
         }
         holder.weisj_image.setType(ZQImageViewRoundOval.TYPE_ROUND);
         holder.weisj_image.setRoundRadius(5);

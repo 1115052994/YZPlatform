@@ -97,7 +97,7 @@ public class WeisjBean {
             private String car_name;//车名称
             private int his_sort_weight;
             private String car_place_city;
-            private int car_id;//车id
+            private String car_id;//车id
             private String car_1_icon_file_id;//图片id
             private int car_price;//价格
             private String car_sign_date;//时间
@@ -156,11 +156,11 @@ public class WeisjBean {
                 this.car_place_city = car_place_city;
             }
 
-            public int getCar_id() {
+            public String getCar_id() {
                 return car_id;
             }
 
-            public void setCar_id(int car_id) {
+            public void setCar_id(String car_id) {
                 this.car_id = car_id;
             }
 

@@ -42,6 +42,7 @@ import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.ExpandableGridView;
 import com.xtzhangbinbin.jpq.view.MyGridView;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -406,6 +407,7 @@ public class UpdateCarActivity extends BaseActivity {
                     gridMore.setAdapter(new Grid_Updata(arrDetail, UpdateCarActivity.this, 21, photoList));
                     break;
             }
+            closeDialog();
         }
     };
 
@@ -417,6 +419,9 @@ public class UpdateCarActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         car_id = getIntent().getStringExtra("car_id");
         Log.d(TAG, "onCreate车编号: " + car_id);
+        dialog = MyProgressDialog.createDialog(this);
+        dialog.setMessage("正在加载车辆数据，请稍候！");
+        dialog.show();
     }
 
     @Override
@@ -761,6 +766,7 @@ public class UpdateCarActivity extends BaseActivity {
                 picker.setUseWeight(true);
                 picker.setTopPadding(ConvertUtils.toPx(UpdateCarActivity.this, 10));
                 picker.setRangeStart(1950, 01, 01);
+                picker.setSelectedItem(2010, 1,1);
                 picker.setRangeEnd(DateUtil.getYEAR(), DateUtil.getMONTH(), DateUtil.getDAY());
                 picker.setResetWhileWheel(false);
                 picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
@@ -1168,5 +1174,11 @@ public class UpdateCarActivity extends BaseActivity {
             }
         });
 //        Log.e(TAG, "看看哪些值不对: " + map.toString() );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        closeDialog();
     }
 }
