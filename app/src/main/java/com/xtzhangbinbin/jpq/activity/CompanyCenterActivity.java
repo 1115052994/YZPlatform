@@ -1,18 +1,25 @@
 package com.xtzhangbinbin.jpq.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.BespeakComp;
 import com.xtzhangbinbin.jpq.entity.Enterprise;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
+import com.xtzhangbinbin.jpq.utils.DataCleanManager;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
@@ -25,6 +32,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 public class CompanyCenterActivity extends BaseActivity {
 
@@ -120,6 +128,26 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mClean:
                 //清除缓存
+                final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(this).setMessage1("清除缓存").setMessage2("清除后图片等多媒体消息需要重新下载查看，确定清除？").showDialog();
+                ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
+                    @Override
+                    public void onNoClick() {
+                        ordinaryDialog.dismiss();
+                    }
+                });
+                ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
+                    @Override
+                    public void onYesClick() {
+                        DataCleanManager.clearAllCache(CompanyCenterActivity.this);
+                        ordinaryDialog.dismiss();
+//                        try {
+//                            String s = DataCleanManager.getTotalCacheSize(CompanyCenterActivity.this);
+//                            clean.setText("有" + s + "缓存可以清除");
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+                });
                 break;
             case R.id.mNewPhone:
                 //换绑手机号
@@ -127,6 +155,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mKefu:
                 //联系客服
+                call("4001198698");
                 break;
             case R.id.mBtn:
                 //退出登录
@@ -149,5 +178,42 @@ public class CompanyCenterActivity extends BaseActivity {
                 });
                 break;
         }
+    }
+
+    /* 拨打客服电话 */
+    private RxPermissions rxPermission;
+
+    private void call(final String phone) {
+        // 申请定位权限
+        rxPermission = new RxPermissions(this);
+        rxPermission.request(Manifest.permission.CALL_PHONE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) throws Exception {
+                        if (granted) { // 在android 6.0之前会默认返回true
+                            // 已经获取权限
+                            Intent intent = new Intent(); // 意图对象：动作 + 数据
+                            intent.setAction(Intent.ACTION_CALL); // 设置动作
+                            Uri data = Uri.parse("tel:" + phone); // 设置数据
+                            intent.setData(data);
+                            startActivity(intent); // 激活Activity组件
+                        } else {
+                            // 未获取权限
+                            Toast.makeText(CompanyCenterActivity.this, "您没有授权该权限，请在设置中打开授权", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            if (Build.VERSION.SDK_INT >= 9) {
+                                intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                                intent.setData(Uri.fromParts("package", getPackageName(), null));
+                            } else if (Build.VERSION.SDK_INT <= 8) {
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+                                intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+                            }
+                            startActivity(intent);
+                        }
+                    }
+                });
+
     }
 }
