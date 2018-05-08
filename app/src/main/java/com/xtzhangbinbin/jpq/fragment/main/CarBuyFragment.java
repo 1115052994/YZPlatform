@@ -96,6 +96,21 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
                 transaction.replace(R.id.content, buyFragment);
                 transaction.commit();
                 ((BuyCar) buyFragment).setParam(param);
+            } else if ("searchcar".equals(type)){
+                String searchData =
+                bundle.getString("brand")+","+
+                bundle.getString("brandId")+","+
+                bundle.getString("carName")+","+
+                bundle.getString("carId");
+                lyBuy.setSelected(false);
+                lySell.setSelected(false);
+                tvSell.setTextColor(Color.parseColor("#ff9696"));
+                tvBuy.setTextColor(Color.parseColor("#ffffff"));
+                fm = getFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.content, buyFragment);
+                transaction.commit();
+                ((BuyCar) buyFragment).setParam(searchData);
             } else if ("2".equals(type)){
                 lySell.setSelected(true);
                 lyBuy.setSelected(true);
@@ -106,8 +121,19 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
                 transaction.replace(R.id.content, sellFragment);
                 transaction.commit();
             }
+            // ---------Bundle设置后以后不为空--------
+            setArguments(null);
         } else {
             initView();
+        }
+        // 城市
+        String city = Prefs.with(getContext()).read("city");
+        if (city!=null&&!"".equals(city)){
+            mLocation.setText(city);
+//            Intent intent = new Intent();
+//            intent.setAction("city");
+//            intent.putExtra("city", city);
+//            getContext().sendBroadcast(intent);
         }
         return view;
     }
@@ -232,7 +258,7 @@ public class CarBuyFragment extends Fragment implements AMapLocationListener {
                 amapLocation.getCityCode();//城市编码
                 amapLocation.getAdCode();//地区编码
                 /* 将定位地址 存储在本地  */
-                Prefs.with(getActivity()).write("定位城市", amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1));
+                Prefs.with(getActivity()).write("city", amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1));
                 // 如果不设置标志位，此时再拖动地图时，它会不断将地图移动到当前的位置
                 if (isFirstLoc) {
                     //获取定位信息

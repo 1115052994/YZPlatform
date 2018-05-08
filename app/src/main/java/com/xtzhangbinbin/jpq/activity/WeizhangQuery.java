@@ -18,12 +18,15 @@ import android.widget.Toast;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.fragment.main.CarBuyFragment;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.PhotoUtils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -170,8 +173,12 @@ public class WeizhangQuery extends BaseActivity {
     }
 
     // 违章查询
+    private MyProgressDialog dialog;
     private void getResult(){
         if (!"".equals(cityId)&&!"".equals(tvEditcjh.getText().toString().trim()) &&!"".equals(tvEditcph.getText().toString().trim())&&!"".equals(tvEditfdjh.getText().toString().trim())){
+            dialog = MyProgressDialog.createDialog(WeizhangQuery.this);
+            dialog.setMessage("正在查询中,请稍候");
+            dialog.show();
             Map<String,String> map = new HashMap<>();
             map.put("citycarorg",cityId);
             map.put("lsnum",tvEditcph.getText().toString().trim());//车牌号
@@ -181,13 +188,27 @@ public class WeizhangQuery extends BaseActivity {
                 @Override
                 public void success(String response) {
                     Log.i("getResult",response);
-                    JumpUtil.newInstance().jumpLeft(WeizhangQuery.this, WeizhangResult.class);
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        JSONObject data = object.getJSONObject("data");
+                        String result = data.getString("result");
+                        JSONObject res = new JSONObject(result);
+                        Log.i("result===",res.toString());
+                        JSONArray array = res.getJSONArray("lists");
+                        if (array.length()>0){
+                            JumpUtil.newInstance().jumpLeft(WeizhangQuery.this, WeizhangResult.class,res.toString());
+                        }else {
+                            ToastUtil.show(WeizhangQuery.this,"恭喜您未有违章记录");
+                        }
+                        dialog.dismiss();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
                 public void fail(String response) {
                     Log.i("getResult","fail="+response);
-                    JumpUtil.newInstance().jumpLeft(WeizhangQuery.this, WeizhangResult.class);
                 }
             });
         }else{

@@ -281,8 +281,6 @@ public class CarDetailsActivity extends BaseActivity {
                                                 Log.i(TAG, "fail添加订阅: " + response);
                                                 try {
                                                     JSONObject jsonObject1 = new JSONObject(response);
-                                                    ToastUtil.show(currtActivity, jsonObject1.getString("message"));
-
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }

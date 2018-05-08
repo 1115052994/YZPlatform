@@ -180,6 +180,8 @@ public class BuyCar extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         iniData();
         initView();
+        // 清空上次选择
+        resetParams();
         getData();
         // 广播
         smsBroadCastReceiver = new MyBroadcast ();
@@ -251,16 +253,19 @@ public class BuyCar extends Fragment {
                     selectedCarName.put("tv_carbrand", "");
                     selectedCarName.put("id_carbrand", "");
                     selectedCarName.put("image_carbrand", "");
-                    carView = null;
+                    if (carView != null) {
+                        cartagLayout.removeView(carView);
+                        carView = null;
+                    }
                 } else if (name.equals(selectedCarName.get("tv_carbrand"))) {
                     selectedCarName.clear();
                     selectedCarName.put("tv_carbrand", "");
                     selectedCarName.put("id_carbrand", "");
                     selectedCarName.put("image_carbrand", "");
-                    if (carView != null) {
-                        cartagLayout.removeView(carView);
-                        carView = null;
-                    }
+//                    if (carView != null) {
+//                        cartagLayout.removeView(carView);
+//                        carView = null;
+//                    }
                 }
                 // 价格
                 else if (name.contains(startPrice) || name.contains(endPrice)) {
@@ -1333,6 +1338,36 @@ public class BuyCar extends Fragment {
                 selectedRank = "智能排序";
                 selectedRankId = "intelligence";
                 break;
+            default:
+                if (param.contains(",")){
+                    String[] searchData = param.split(",");
+                    selectedBrand.put("tv_carbrand", searchData[0]);
+                    selectedBrand.put("id_carbrand", searchData[1]);
+                    selectedCarName.put("tv_carbrand", searchData[2]);
+                    selectedCarName.put("id_carbrand", searchData[3]);
+                    if (brandView == null) {
+                        View lyBrand = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                        brandView = lyBrand.findViewById(R.id.tv_tag);
+                        if (brandView.getParent() != null) {
+                            ViewGroup group = (ViewGroup) brandView.getParent();
+                            group.removeAllViews();
+                        }
+                        cartagLayout.addView(brandView);
+                    }
+                    brandView.setText(searchData[0]);
+                    carLy.setVisibility(View.VISIBLE);
+                    if (carView == null) {
+                        View lyCarView = LayoutInflater.from(getContext()).inflate(R.layout.item_cartag, null);
+                        carView = lyCarView.findViewById(R.id.tv_tag);
+                        if (carView.getParent() != null) {
+                            ViewGroup group = (ViewGroup) carView.getParent();
+                            group.removeAllViews();
+                        }
+                        cartagLayout.addView(carView);
+                    }
+                    carView.setText(searchData[2]);
+                }
+                 break;
         }
         // 重新筛选
         getCarList();

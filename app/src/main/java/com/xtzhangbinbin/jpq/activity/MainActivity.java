@@ -86,6 +86,20 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         // initLoc();
         //应用升级
         upgrade();
+        //搜索车辆回调
+        Intent intent = getIntent();
+        if (intent!=null){
+            Bundle bundle = intent.getExtras();
+            if (bundle!=null){
+                String searchData = bundle.getString("String","");
+                if (!"".equals(searchData)){
+                    if (searchData.contains(",")) {
+                        String[] data = searchData.split(",");
+                        switchToCarBuyFromSearch(data[0],data[1],data[2],data[3]);
+                    }
+                }
+            }
+        }
     }
 
 //    @Subscribe(threadMode = ThreadMode.MainThread)
@@ -238,7 +252,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 transaction.replace(R.id.view_pager, fragment);
                 break;
         }
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
 
@@ -269,7 +283,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         UpgradeUtil.getInstance(this).upgrade(main);
     }
 
-    // 切换到 买che
+    // 切换到 买车
     public void switchToCarBuy(String str){
         buy.setChecked(true);
         fm = getSupportFragmentManager();
@@ -310,6 +324,25 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         life.setChecked(true);
     }
 
+    // 搜索 切换到 买车
+    public void switchToCarBuyFromSearch(String brand,String brandId,String carName,String carId){
+        Log.i("BuyFromSearch",brand+"---"+brandId+"---"+carName+"---"+carId);
+        buy.setChecked(true);
+        fragment = fragmentList.get(1);
+        fm = getSupportFragmentManager();
+        transaction = fm.beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("type","searchcar");
+        bundle.putString("brand",brand);
+        bundle.putString("brandId",brandId);
+        bundle.putString("carName",carName);
+        bundle.putString("carId",carId);
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.view_pager, fragment);
+        transaction.commitAllowingStateLoss();
+    }
+
+
     /* 维修保养回调函数 */
     @Override
     public void pross(String s) {
@@ -324,11 +357,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             bundle.putString("dict_id",dict_id);
             Log.d(TAG, "pross啦啦啦: " + dict_id );
             fragment.setArguments(bundle);
-
-
             transaction.replace(R.id.view_pager, fragment);
             transaction.commit();
-
         }
     }
 }

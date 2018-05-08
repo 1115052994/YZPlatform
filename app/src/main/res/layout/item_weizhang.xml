@@ -28,6 +28,7 @@
                     android:textColor="@color/text_c8"
                     android:text="日　　期"/>
                 <TextView
+                    android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_15sp"
@@ -52,6 +53,7 @@
                     android:layout_marginTop="@dimen/common18dp"
                     android:text="违章地点"/>
                 <TextView
+                    android:id="@+id/tv_loc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_15sp"
@@ -79,6 +81,7 @@
                     android:layout_marginTop="@dimen/common18dp"
                     android:text="情　　况"/>
                 <TextView
+                    android:id="@+id/tv_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_15sp"
@@ -104,6 +107,7 @@
                     android:textColor="@color/text_c8"
                     android:text="计　　分"/>
                 <TextView
+                    android:id="@+id/tv_jifen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_15sp"
@@ -126,6 +130,7 @@
                     android:textColor="@color/text_c8"
                     android:text="罚款金额"/>
                 <TextView
+                    android:id="@+id/tv_fk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_15sp"

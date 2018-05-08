@@ -147,12 +147,14 @@ public class AdvanceSX extends BaseActivity {
                             brandId = requireBean.getCar_brand();
                             car = requireBean.getModel_name();
                             carId = requireBean.getCar_model();
+                            tvBrand.setText(brandName+" "+car);
                         }else {
                             tvBrand.setText(requireBean.getBrand_name());
                             brandName = requireBean.getBrand_name();
                             brandId = requireBean.getCar_brand();
                             car = "";
                             carId = "";
+                            tvBrand.setText(brandName);
                         }
                     }
                 }

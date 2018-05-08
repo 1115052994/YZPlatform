@@ -131,7 +131,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:weightSum="4"
-                        android:layout_marginRight="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_marginLeft="@dimen/common15dp">
                         <LinearLayout
                             android:layout_width="@dimen/common0dp"
@@ -170,7 +170,8 @@
                                 android:id="@+id/tv_buyNum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="浏览人"
+                                android:text="浏览人数"
+                                android:lines="1"
                                 android:textColor="@color/text_66"
                                 android:textSize="@dimen/common13dp"
                                 />

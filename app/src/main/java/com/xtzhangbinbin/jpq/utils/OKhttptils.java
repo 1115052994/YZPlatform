@@ -30,13 +30,13 @@ import okhttp3.Response;
 
 public class OKhttptils {
     public static void post(final Activity context, String url, Map<String, String> params, final HttpCallBack callBack) {
-//        Log.i("user_token",Prefs.with(context).read("user_token"));
+        if (context==null||callBack==null||params==null||url==null){
+            return;
+        }
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.post()
                     .url(url)      //Prefs.with(context).read("user_token")
                     .addHeader("user_token", Prefs.with(context).read("user_token"))
-//                    .addHeader("user_token","96730A47BBCD8F345203CFAB9A2CA83A35C12AA36192A0292D244D3311544008C3C9F18DF39244D818CDA2A73778DEB0CC426DF62D9797A2A6258912FF12AD67" )
-                    //.addParams("car_name", s)
                     .params(params)
                     .build()
                     .execute(new StringCallback() {
@@ -176,7 +176,6 @@ public class OKhttptils {
 //        }
 //            .placeholder(R.drawable.user_placeholder).error(R.drawable.user_placeholder_error)
         String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name=" + file_id + ".jpg";
-        Log.i("url", "url===" + url);
         if (url == null) {
             icon.setImageResource(R.drawable.no_pic);
         } else {

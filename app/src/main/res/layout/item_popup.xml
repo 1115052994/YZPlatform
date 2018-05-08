@@ -11,6 +11,9 @@
         android:textSize="@dimen/text_size_16sp"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/common50dp"
+        android:layout_marginRight="@dimen/common20dp"
+        android:lines="1"
+        android:ellipsize="end"
         />
         <View
             style="@style/gray_line"

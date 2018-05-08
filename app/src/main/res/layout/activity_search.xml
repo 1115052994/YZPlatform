@@ -109,7 +109,7 @@
         android:id="@+id/line2"
         android:layout_below="@id/history"
         android:layout_marginTop="@dimen/common10dp"/>
-    <com.xtzhangbinbin.jpq.view.ExpandableGridView
+    <!--<com.xtzhangbinbin.jpq.view.ExpandableGridView
         android:id="@+id/historyPlace"
         android:layout_below="@id/line2"
         android:layout_height="wrap_content"
@@ -117,12 +117,22 @@
         android:layout_marginLeft="@dimen/common10dp"
         android:layout_marginRight="@dimen/common30dp"
         android:horizontalSpacing="@dimen/common1dp"
-        android:numColumns="4"
-        android:verticalSpacing="@dimen/common1dp"/>
+        android:numColumns="2"
+        android:verticalSpacing="@dimen/common1dp"/>-->
+    <com.xtzhangbinbin.jpq.view.CarTagLayout
+        android:id="@+id/cartag_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line2"
+        android:layout_marginLeft="@dimen/common20dp"
+        android:layout_marginBottom="@dimen/common10dp"
+        android:layout_marginRight="@dimen/common10dp"
+        android:layout_toLeftOf="@id/tv_dy"
+        />
     <View
         style="@style/gray_line"
         android:id="@+id/line3"
-        android:layout_below="@id/historyPlace"
+        android:layout_below="@id/cartag_history"
         android:layout_marginTop="@dimen/common10dp"/>
     <!-- 热门 -->
     <RelativeLayout
@@ -152,7 +162,7 @@
         android:id="@+id/line4"
         android:layout_below="@id/hot"
         android:layout_marginTop="@dimen/common10dp"/>
-    <com.xtzhangbinbin.jpq.view.ExpandableGridView
+    <!--<com.xtzhangbinbin.jpq.view.ExpandableGridView
         android:id="@+id/hotPlace"
         android:layout_below="@id/line4"
         android:layout_height="wrap_content"
@@ -160,6 +170,16 @@
         android:layout_marginLeft="@dimen/common10dp"
         android:layout_marginRight="@dimen/common30dp"
         android:horizontalSpacing="@dimen/common1dp"
-        android:numColumns="4"
-        android:verticalSpacing="@dimen/common1dp"/>
+        android:numColumns="2"
+        android:verticalSpacing="@dimen/common1dp"/>-->
+    <com.xtzhangbinbin.jpq.view.CarTagLayout
+        android:id="@+id/cartag_hot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line4"
+        android:layout_marginLeft="@dimen/common20dp"
+        android:layout_marginBottom="@dimen/common10dp"
+        android:layout_marginRight="@dimen/common10dp"
+        android:layout_toLeftOf="@id/tv_dy"
+        />
 </RelativeLayout>

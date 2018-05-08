@@ -98,7 +98,7 @@ public class CarCompDetail extends BaseActivity {
     private List<CompAppraise.DataBean.ResultBean> compAppraiseList = new ArrayList<>();
 
     private String phone = "";//商家phone
-    private String comp_id = "24";//商家Id
+    private String comp_id = "";//商家Id
     private double lat,lon;
 
     private int pageIndex = 1;
@@ -113,6 +113,7 @@ public class CarCompDetail extends BaseActivity {
             Bundle bundle = intent.getExtras();
             if (bundle!=null){
                 comp_id = bundle.getString("comp_id");
+                Log.i("comp_id===",comp_id);
             }
         }
     }

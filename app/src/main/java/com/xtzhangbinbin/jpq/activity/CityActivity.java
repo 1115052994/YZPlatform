@@ -121,6 +121,11 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
             type = bundle.getString("type");
             //车服务、二手车等type
         }
+        // 定位城市
+        String city = Prefs.with(this).read("city");
+        if (city!=null&&!"".equals(city)){
+            locPlace.setText(city);
+        }
         initView();
         initData();
         getData();
@@ -585,7 +590,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 amapLocation.getCityCode();//城市编码
                 amapLocation.getAdCode();//地区编码
                 /* 将定位地址 存储在本地  */
-                Prefs.with(getApplicationContext()).write("定位城市", amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1));
+                Prefs.with(getApplicationContext()).write("city", amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1));
                 // 如果不设置标志位，此时再拖动地图时，它会不断将地图移动到当前的位置
                 if (isFirstLoc) {
                     //获取定位信息

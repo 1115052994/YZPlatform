@@ -165,7 +165,10 @@ public class CompDetail extends BaseActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         if (intent != null) {
-                String comp_id = intent.getStringExtra("comp_id");
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                comp_id = bundle.getString("comp_id");
+                Log.i("conp_id",comp_id);
                 map.put("comp_id", comp_id);
                 OKhttptils.post(CompDetail.this, Config.BROWSECOMP, map, new OKhttptils.HttpCallBack() {
                     @Override
@@ -176,10 +179,11 @@ public class CompDetail extends BaseActivity {
 
                     @Override
                     public void fail(String response) {
-                        Toast.makeText(CompDetail.this, "添加失败", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(CompDetail.this, "添加失败", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
+        }
         initView();
         initData();
         getData();
@@ -254,7 +258,6 @@ public class CompDetail extends BaseActivity {
                 LinearLayout bg = view.findViewById(R.id.bg);
                 bg.setVisibility(View.VISIBLE);
                 // 切换Adapter
-                Log.i("appraise===", position + "");
                 if (position == serverList.size()) {
                     recyclerView.setAdapter(appraiseAdapter);
                 } else {
@@ -725,8 +728,6 @@ public class CompDetail extends BaseActivity {
                                 compAppraiseList.add(bean);
                             }
                             appraiseAdapter.notifyDataSetChanged();
-                            Log.i("appraise===", compAppraiseList.toString());
-//                                recyclerView.setAdapter(appraiseAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -739,7 +740,7 @@ public class CompDetail extends BaseActivity {
 
             @Override
             public void fail(String response) {
-
+                Log.i("appraise===", "fail="+response);
             }
         });
     }

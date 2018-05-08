@@ -12,9 +12,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -24,18 +24,18 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.CommonRecyclerAdapter;
-import com.xtzhangbinbin.jpq.adapter.GrideViewAdapter;
 import com.xtzhangbinbin.jpq.adapter.ViewHolder;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.HotCar;
 import com.xtzhangbinbin.jpq.entity.SearchCarBean;
+import com.xtzhangbinbin.jpq.entity.SearchCarBeanNew;
 import com.xtzhangbinbin.jpq.entity.SearchCompBean;
 import com.xtzhangbinbin.jpq.utils.CommonUtils;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
-import com.xtzhangbinbin.jpq.view.ExpandableGridView;
+import com.xtzhangbinbin.jpq.view.CarTagLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,22 +61,27 @@ public class SearchActivity extends AppCompatActivity {
     EditText editSearch;
     @BindView(R.id.cancle)
     TextView cancle;
-    @BindView(R.id.historyPlace)
-    ExpandableGridView history;
-    @BindView(R.id.hotPlace)
-    ExpandableGridView hot;
+    //    @BindView(R.id.historyPlace)
+//    ExpandableGridView history;
+//    @BindView(R.id.hotPlace)
+//    ExpandableGridView hot;
     @BindView(R.id.search)
     RelativeLayout search;
+    @BindView(R.id.cartag_history)
+    CarTagLayout cartagHistory;
+    @BindView(R.id.cartag_hot)
+    CarTagLayout cartagHot;
 
-    private GrideViewAdapter hotAdapter;
-    private GrideViewAdapter hisGvAapter;
+    //    private GrideViewAdapter hotAdapter;
+//    private GrideViewAdapter hisGvAapter;
     private List<String> hotList = new ArrayList<>();
-    //    private List<String> hotListId = new ArrayList<>();
     private List<String> hisList = new ArrayList<>();
-    //    private List<String> hisListId = new ArrayList<>();
     // 搜索结果
     private List<String> searchList = new ArrayList<>();
     private List<String> searchListId = new ArrayList<>();
+    // 新添加
+    private List<String> searchBrandList = new ArrayList<>();
+    private List<String> searchBrandListId = new ArrayList<>();
     //类别（汽车、商户）car/comp
     private String type = "comp";
 
@@ -89,15 +94,15 @@ public class SearchActivity extends AppCompatActivity {
         WindowManager.LayoutParams params = win.getAttributes();
         win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         Intent intent = getIntent();
-        if (intent!=null) {
+        if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (bundle!=null){
-                type = bundle.getString("string","comp");
-                if("car".equals(type))
+            if (bundle != null) {
+                type = bundle.getString("string", "comp");
+                if ("car".equals(type))
                     name.setText("汽车");
                 else
                     name.setText("商家");
-                Log.i("type","type="+type);
+                Log.i("type", "type=" + type);
             }
         }
         initView();
@@ -115,7 +120,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("edittextview", "onTextChanged=" + editSearch.getText().toString());
-                if(""!=s.toString()) {
+                if ("" != s.toString()) {
                     if ("car".equals(type)) {
                         getSeachCar(editSearch.getText().toString().trim());
                     } else {
@@ -129,15 +134,27 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                preSearch(hisList.get(position));
+//            }
+//        });
+//        hot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                preSearch(hotList.get(position));
+//            }
+//        });
+        cartagHistory.setOnItemClickListener(new CarTagLayout.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View view, int position) {
                 preSearch(hisList.get(position));
             }
         });
-        hot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        cartagHot.setOnItemClickListener(new CarTagLayout.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View view, int position) {
                 preSearch(hotList.get(position));
             }
         });
@@ -145,10 +162,10 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initData() {
         /* girdview绑定adapter */
-        hotAdapter = new GrideViewAdapter(this, hotList);
-        hisGvAapter = new GrideViewAdapter(this, hisList);
-        hot.setAdapter(hotAdapter);
-        history.setAdapter(hisGvAapter);
+//        hotAdapter = new GrideViewAdapter(this, hotList);
+//        hisGvAapter = new GrideViewAdapter(this, hisList);
+//        hot.setAdapter(hotAdapter);
+//        history.setAdapter(hisGvAapter);
     }
 
     public void getData() {
@@ -178,7 +195,18 @@ public class SearchActivity extends AppCompatActivity {
                                 //hotListId.add(list.get(i).getHotword_id());
                             }
                         }
-                        hotAdapter.notifyDataSetChanged();
+                        //hotAdapter.notifyDataSetChanged();
+                        cartagHot.removeAllViews();
+                        for (int i=0;i<hotList.size();i++){
+                            View ly = LayoutInflater.from(SearchActivity.this).inflate(R.layout.item_searchtag, null);
+                            TextView tv = ly.findViewById(R.id.tv_tag);
+                            if (tv.getParent() != null) {
+                                ViewGroup group = (ViewGroup) tv.getParent();
+                                group.removeAllViews();
+                            }
+                            tv.setText(hotList.get(i));
+                            cartagHot.addView(tv);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -195,31 +223,45 @@ public class SearchActivity extends AppCompatActivity {
     public void getHis() {
         hisList.clear();
         if ("car".equals(type)) {
-//            Set<String> value = new HashSet<>();
-//            value.add("大众");
-//            value.add("宝马");
-//            Prefs.with(getApplicationContext()).putStringSet("historyCars", value);
             Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyCars", null);
-            if (set!=null) {
+            if (set != null) {
                 for (String s : set) {
                     if (hisList.size() < 8)
                         hisList.add(s);
                 }
             }
-            hisGvAapter.notifyDataSetChanged();
+            cartagHistory.removeAllViews();
+            for (int i=0;i<hisList.size();i++){
+                View ly = LayoutInflater.from(this).inflate(R.layout.item_searchtag, null);
+                TextView tv = ly.findViewById(R.id.tv_tag);
+                if (tv.getParent() != null) {
+                    ViewGroup group = (ViewGroup) tv.getParent();
+                    group.removeAllViews();
+                }
+                tv.setText(hisList.get(i));
+                cartagHistory.addView(tv);
+            }
+            //hisGvAapter.notifyDataSetChanged();
         } else if ("comp".equals(type)) {
-//            Set<String> value = new HashSet<>();
-//            value.add("山东");
-//            value.add("北京");
-//            Prefs.with(getApplicationContext()).putStringSet("historyComp", value);
             Set<String> set = Prefs.with(getApplicationContext()).getStringSet("historyComp", null);
-            if (set!=null) {
+            if (set != null) {
                 for (String s : set) {
                     if (hisList.size() < 8)
                         hisList.add(s);
                 }
             }
-            hisGvAapter.notifyDataSetChanged();
+            //hisGvAapter.notifyDataSetChanged();
+            cartagHistory.removeAllViews();
+            for (int i=0;i<hisList.size();i++){
+                View ly = LayoutInflater.from(this).inflate(R.layout.item_searchtag, null);
+                TextView tv = ly.findViewById(R.id.tv_tag);
+                if (tv.getParent() != null) {
+                    ViewGroup group = (ViewGroup) tv.getParent();
+                    group.removeAllViews();
+                }
+                tv.setText(hisList.get(i));
+                cartagHistory.addView(tv);
+            }
         }
     }
 
@@ -229,7 +271,7 @@ public class SearchActivity extends AppCompatActivity {
         OKhttptils.post(this, Config.GETSEARCHCOMP, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.i("getSearchComp",response);
+                Log.i("getSearchComp", response);
                 try {
                     JSONObject object = new JSONObject(response);
                     String data = object.getString("data");
@@ -272,13 +314,31 @@ public class SearchActivity extends AppCompatActivity {
                     String data = object.getString("data");
                     if (data != null) {
                         Gson gson = new Gson();
-                        SearchCarBean searchCarBean = gson.fromJson(response, SearchCarBean.class);
-                        List<SearchCarBean.DataBean.ResultBean> resultBeans = searchCarBean.getData().getResult();
+//                        SearchCarBean searchCarBean = gson.fromJson(response, SearchCarBean.class);
+//                        List<SearchCarBean.DataBean.ResultBean> resultBeans = searchCarBean.getData().getResult();
+//                        searchListId.clear();
+//                        searchList.clear();
+//                        for (SearchCarBean.DataBean.ResultBean bean : resultBeans) {
+//                            searchList.add(bean.getCar_name());
+//                            searchListId.add(bean.getCar_id());
+//                        }
+                        /*
+                        "item_id": "YZescxgescppcxdlxlcnkcxmy_1_50_700",
+                        "item_name": "大众CC",
+                        "brand_name": "大众",
+                        "brand_id": "YZescxgescppcxdlxlcnkcxmy_1"
+                         */
+                        SearchCarBeanNew resultBeans = gson.fromJson(response, SearchCarBeanNew.class);
+                        List<SearchCarBeanNew.DataBean.ResultBean> resultBeanList = resultBeans.getData().getResult();
                         searchListId.clear();
                         searchList.clear();
-                        for (SearchCarBean.DataBean.ResultBean bean : resultBeans) {
-                            searchList.add(bean.getCar_name());
-                            searchListId.add(bean.getCar_id());
+                        searchBrandList.clear();
+                        searchBrandListId.clear();
+                        for (SearchCarBeanNew.DataBean.ResultBean bean : resultBeanList) {
+                            searchBrandList.add(bean.getBrand_name());
+                            searchBrandListId.add(bean.getBrand_id());
+                            searchList.add(bean.getItem_name());
+                            searchListId.add(bean.getItem_id());
                         }
                         if (searchList.size() > 0)
                             PopupWindow();
@@ -362,8 +422,9 @@ public class SearchActivity extends AppCompatActivity {
                     value.add(searchList.get(position));
                     Prefs.with(getApplicationContext()).putStringSet("historyCars", value);
                     Bundle bundle = new Bundle();
-                    bundle.putString("String", searchListId.get(position));
-                    JumpUtil.newInstance().jumpLeft(SearchActivity.this, CarDetailsActivity.class, bundle);
+                    bundle.putString("String", searchBrandList.get(position)+","+searchBrandListId.get(position)+","+searchList.get(position)+","+searchListId.get(position));
+                    JumpUtil.newInstance().jumpLeft(SearchActivity.this, MainActivity.class, bundle);
+                    SearchActivity.this.finish();
                 } else if ("comp".equals(type)) {
                     Set<String> value = new HashSet<>();
                     value.add(searchList.get(position));
@@ -371,6 +432,7 @@ public class SearchActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("comp_id", searchListId.get(position));
                     JumpUtil.newInstance().jumpLeft(SearchActivity.this, CompDetail.class, bundle);
+                    SearchActivity.this.finish();
                 }
             }
         });
@@ -388,17 +450,17 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     //弹出选择框
-    private void popupSelect(){
+    private void popupSelect() {
         // 用于PopupWindow的View
         View contentView = LayoutInflater.from(this).inflate(R.layout.item_searchselect, null, false);
         final View car = contentView.findViewById(R.id.ly_car);
         final View comp = contentView.findViewById(R.id.ly_comp);
         final TextView tv_car = car.findViewById(R.id.car);
         final TextView tv_comp = comp.findViewById(R.id.comp);
-        if("car".equals(type)){
+        if ("car".equals(type)) {
             tv_car.setTextColor(Color.parseColor("#ff5656"));
             tv_comp.setTextColor(Color.parseColor("#666666"));
-        }else{
+        } else {
             tv_comp.setTextColor(Color.parseColor("#ff5656"));
             tv_car.setTextColor(Color.parseColor("#666666"));
         }
@@ -456,4 +518,5 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
+
 }

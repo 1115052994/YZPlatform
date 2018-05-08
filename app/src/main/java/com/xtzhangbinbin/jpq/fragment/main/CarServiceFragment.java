@@ -229,7 +229,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                                 JumpUtil.newInstance().jumpLeft(getActivity(), PoiAroundSearchActivity.class,bundle);
                                 break;
                             case "违章查询":
-                                if(null != Prefs.with(getContext()).read("user_token")){
+                                if(null != Prefs.with(getContext()).read("user_token")&&!"".equals(Prefs.with(getContext()).read("user_token"))){
                                     // 违章查询
                                     JumpUtil.newInstance().jumpLeft(getActivity(), WeizhangQuery.class);
                                 } else {
@@ -270,9 +270,15 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         }
         unbinder = ButterKnife.bind(this, view);
 
-        Bundle bundle = getArguments();
         dict_id = getArguments().getString("dict_id","");
         Log.d(TAG, "onCreateView啦啦啦----: " + dict_id);
+        // 城市
+        String city = Prefs.with(getContext()).read("city");
+        if (city!=null&&!"".equals(city)){
+            mLocation.setText(city);
+            // 获取城市ID
+            //getCityId(city);
+        }
         manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
         /* 请求定位权限 */
@@ -412,44 +418,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         });
     }
 
-    /* 通过头像id获取头像 */
-    public void getPic(final Context context, String file_id, final ImageView icon) {
-        Map<String, String> map = new HashMap<>();
-        map.put("file_id", file_id);
 
-        OKhttptils.post(getActivity(), Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String data = jsonObject.getString("data");
-                    JSONObject object = new JSONObject(data);
-                    String file_content = object.getString("file_content");
-                    if (file_content.contains("base64,"))
-                        file_content = file_content.split("base64,")[1];
-                    Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
-                    if (bitmap != null)
-                        icon.setImageBitmap(bitmap);
-                    else
-                        icon.setImageResource(R.drawable.qy_heat);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void fail(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    ToastUtil.show(context, jsonObject.getString("message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-    }
 
     /* 地图定位 */
     private void initLoc() {
@@ -515,6 +484,8 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 amapLocation.getStreetNum();//街道门牌号信息
                 amapLocation.getCityCode();//城市编码
                 amapLocation.getAdCode();//地区编码
+                /* 将定位地址 存储在本地  */
+                Prefs.with(getActivity()).write("city", amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1));
                 // 如果不设置标志位，此时再拖动地图时，它会不断将地图移动到当前的位置
                 if (isFirstLoc) {
                     //获取定位信息
