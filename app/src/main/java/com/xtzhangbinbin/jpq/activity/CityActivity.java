@@ -140,12 +140,12 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("edittextview", "onTextChanged=" + editSearch.getText().toString());
-                getSearchCity(editSearch.getText().toString());
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                getSearchCity(editSearch.getText().toString());
                 Log.i("edittextview", "afterTextChanged");
             }
         });

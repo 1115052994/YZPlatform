@@ -6,6 +6,8 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 
+import com.xtzhangbinbin.jpq.activity.MainActivity;
+import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.LogUtil;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
@@ -13,7 +15,7 @@ import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
-public class YizhongApplication extends Application{
+public class YizhongApplication extends Application implements Thread.UncaughtExceptionHandler{
     @Override
     public void onCreate() {
         super.onCreate();
@@ -49,5 +51,10 @@ public class YizhongApplication extends Application{
         XGCustomPushNotificationBuilder build = new XGCustomPushNotificationBuilder();
         build.setNotificationLargeIcon(R.drawable.icon_default);
         XGPushManager.setPushNotificationBuilder(this, 1, build);
+    }
+
+    @Override
+    public void uncaughtException(Thread t, Throwable e) {
+        JumpUtil.newInstance().jumpLeft(this, MainActivity.class);
     }
 }

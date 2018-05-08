@@ -114,14 +114,15 @@ public class CarBrandSearch extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!"".equals(s.toString())) {
-                    // 模糊搜索品牌
-                    getSearchBrand(s.toString());
-                }
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (!"".equals(s.toString())) {
+                    // 模糊搜索品牌
+                    getSearchBrand(s.toString());
+                }
             }
         });
 

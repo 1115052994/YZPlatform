@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -239,10 +240,10 @@ public class CarAccessBrandSearch extends BaseActivity {
                     JSONObject result = data.getJSONObject("result");
                     Gson gson = new Gson();
                     recyclerList.clear();
-                    Map<String, Map<String, String>> map = gson.fromJson(result.toString(), HashMap.class);
+                    Map<String, Map<String, String>> map = gson.fromJson(result.toString(), LinkedHashMap.class);
                     for (String s : map.keySet()) {
                         //Log.i("getBrand", "==="+s);
-                        Map<String, String> letter = new HashMap<>();
+                        Map<String, String> letter = new LinkedHashMap<>();
                         letter.put("id_carbrand", "letter");
                         letter.put("tv_carbrand", s);
                         recyclerList.add(letter);
