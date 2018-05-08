@@ -12,6 +12,7 @@ import com.androidkun.xtablayout.XTabLayout;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.CarFinancialAdapter;
 import com.xtzhangbinbin.jpq.fragment.CarFinancialPersonal;
+import com.xtzhangbinbin.jpq.view.CustomViewPagerShow;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class CarFinancial extends AppCompatActivity {
     @BindView(R.id.tab)
     XTabLayout tab;
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    CustomViewPagerShow viewPager;
     private ArrayList<Fragment> fragments=new ArrayList<>();
     private ArrayList<String> arrayList=new ArrayList<>();
 

@@ -213,6 +213,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 mainActivity.switchToCarBuy("pprm");
                 break;
             case R.id.ly_xydk:
+                JumpUtil.newInstance().jumpRight(getContext(), CarCredit.class);
                 break;
             case R.id.ly_cyp:
                 // 车用品
