@@ -72,7 +72,7 @@ public class Guide extends AppCompatActivity implements ViewPager.OnPageChangeLi
                     @Override
                     public boolean onTouch(View v, MotionEvent event){
                         //跳转到主界面
-                        Intent loginActivity = new Intent(Guide.this, LoginActivity.class);
+                        Intent loginActivity = new Intent(Guide.this, MainActivity.class);
                         startActivity(loginActivity);
                         Guide.this.finish();
                         return true;
