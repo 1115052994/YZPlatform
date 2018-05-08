@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="@dimen/common123dp">
     <com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval
         android:id="@+id/browsing_image"
@@ -14,7 +15,6 @@
         android:layout_marginBottom="@dimen/common15dp"/>
     <LinearLayout
         android:layout_toRightOf="@id/browsing_image"
-        android:layout_alignBottom="@id/browsing_image"
         android:layout_marginLeft="@dimen/common10dp"
         android:layout_marginTop="@dimen/common14dp"
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         >
         <TextView
             android:id="@+id/browsing_tv"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/common100dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_16sp"
             android:textColor="@color/text_33"

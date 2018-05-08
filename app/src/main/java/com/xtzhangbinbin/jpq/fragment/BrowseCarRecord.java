@@ -25,6 +25,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class BrowseCarRecord extends Fragment {
     private BrowsingAdapter browsingAdapter;
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
-
+    private MyProgressDialog dialog;
     public BrowseCarRecord(Context context) {
         this.context = context;
     }
@@ -63,6 +64,9 @@ public class BrowseCarRecord extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_browse_record, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        dialog = MyProgressDialog.createDialog(getContext());
+        dialog.setMessage("正在加载数据，请稍候！");
+        dialog.show();
         //  浏览记录地址
         PostRecord(Config.BROWSECARCOOKIES,1,null);
         browsingAdapter = new BrowsingAdapter(context, result);
@@ -95,7 +99,7 @@ public class BrowseCarRecord extends Fragment {
                 OKhttptils.post((Activity) getContext(), Config.BROWSEDLOG, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
-                        Log.d("aaaaa", "onResponse获取数据: " + response);
+                        Log.d("test", "onResponse获取数据: " + response);
                         result.remove(position);
                         browsingAdapter.notifyDataSetChanged();
                     }
@@ -113,11 +117,12 @@ public class BrowseCarRecord extends Fragment {
     public void PostRecord(String url, final int pageIndex, final RefreshLayout refreshlayout) {
         map.clear();
         map.put("pageIndex",String.valueOf(pageIndex));
+        map.put("pageSize", String.valueOf("20"));
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
-                    Log.i("aaaaa", "查询浏览记录: " + response);
+
                     Gson gson = GsonFactory.create();
                     QueryCarRecord queryRecord = gson.fromJson(response, QueryCarRecord.class);
                     pageCount=queryRecord.getData().getPageCount();
@@ -141,12 +146,16 @@ public class BrowseCarRecord extends Fragment {
                             browsingAdapter.notifyDataSetChanged();
                         }
                     }
-
+                    if(null != dialog && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
                 }
 
                 @Override
                 public void fail(String response) {
-                    Log.d("aaaaaa", "fail: "+response);
+                    if(null != dialog && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
                 }
             });
         }

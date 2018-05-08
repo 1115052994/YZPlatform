@@ -75,15 +75,14 @@ public class BrowsingAdapter extends BaseAdapter {
         }else {
             viewHolder= (BrowsingAdapter.ViewHolder) convertView.getTag();
         }
-        viewHolder.browsing_tv.setText(result.get(position).getAuth_comp_name());
+        viewHolder.browsing_tv.setText(result.get(position).getCar_name());
         viewHolder.browsing_km.setText("浏览时间: "+result.get(position).getLog_date());
         viewHolder.browsing_image.setType(ZQImageViewRoundOval.TYPE_ROUND);
         viewHolder.browsing_image.setRoundRadius(5);
-        OKhttptils.getPic(context,result.get(position).getAuth_comp_img_head_file_id(),viewHolder.browsing_image);
+        OKhttptils.getPicByHttp(context,result.get(position).getCar_1_file_id(),viewHolder.browsing_image);
         viewHolder.browsing_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Toast.makeText(context, position+"删除", Toast.LENGTH_SHORT).show();
                 final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("温馨提示").setMessage2("  删除后不可恢复，确定清除？").showDialog();
                 ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                     @Override
@@ -98,16 +97,19 @@ public class BrowsingAdapter extends BaseAdapter {
                             if (NetUtil.isNetAvailable(context)) {
                                 map.clear();
                                 map.put("log_id",result.get(position).getLog_id());  //别忘记改
+                                Log.w("test", map.toString());
                                 OKhttptils.post((Activity) context, Config.BROWSEDLOG, map, new OKhttptils.HttpCallBack() {
                                     @Override
                                     public void success(String response) {
-                                        Log.i("aaaa", "删除: " +result.get(position).getLog_id()+response);
                                         callBrowsing.getCallBrowsing(view,"",position);
-
+                                        result.remove(position);
+                                        notifyDataSetChanged();
                                     }
                                     @Override
                                     public void fail(String response) {
                                         Log.d("aaaa", "删除失败"+result.get(position).getLog_id());
+                                        result.remove(position);
+                                        notifyDataSetChanged();
                                     }
                                 });
                             }

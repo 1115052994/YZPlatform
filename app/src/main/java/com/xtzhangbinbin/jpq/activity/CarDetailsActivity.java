@@ -216,6 +216,7 @@ public class CarDetailsActivity extends BaseActivity {
         getAd();
         getCollect();
         getSale();
+        carVisit();
     }
 
     /* 订阅降价通知 */
@@ -820,5 +821,21 @@ public class CarDetailsActivity extends BaseActivity {
             }
 
         }
+    }
+
+    public void carVisit(){
+        Map<String, String> map = new HashMap<>();
+        map.put("car_id", car_id);
+        OKhttptils.post(currtActivity, Config.CARVISIT, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Log.w("test", response);
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 }

@@ -113,13 +113,15 @@ public class BrowseServerRecord extends Fragment {
         return inflate;
     }
     public void PostRecord(String url, final int pageIndex, final RefreshLayout refreshlayout) {
+        Log.w("test", "aaaaaaaaaaaaaaaa");
         map.clear();
         map.put("pageIndex",String.valueOf(pageIndex));
+        map.put("pageSize", String.valueOf("20"));
         if (NetUtil.isNetAvailable(context)) {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
-                    Log.i("aaaaa", "查询服务商浏览记录: " + response);
+                    Log.w("test", response);
                     Gson gson = GsonFactory.create();
                     QueryServerRecord queryRecord2 = gson.fromJson(response, QueryServerRecord.class);
                     pageCount=queryRecord2.getData().getPageCount();
@@ -148,6 +150,7 @@ public class BrowseServerRecord extends Fragment {
 
                 @Override
                 public void fail(String response) {
+                    browsingCardealImage.setVisibility(View.VISIBLE);
                     Toast.makeText(context, "查询失败", Toast.LENGTH_SHORT).show();
                 }
             });

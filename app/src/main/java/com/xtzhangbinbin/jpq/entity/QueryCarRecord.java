@@ -10,7 +10,7 @@ public class QueryCarRecord {
 
 
     /**
-     * data : {"result":[{"log_id":"1bd9328a3d93453f910ed7ad98f35371","log_to":"cf8f19d2b36e43709dde5d60c2e07a0b","log_type":"compbrow","log_from":"cf8f19d2b36e43709dde5d60c2e07a0b","auth_comp_name":"槐荫名家公司","log_date":"2018-05-07 21:52:15","auth_comp_img_head_file_id":"808fea921d184f7592a511adcc74bdbe"},{"log_id":"1bd9328a3d93453f910ed7ad98f35371","log_to":"cf8f19d2b36e43709dde5d60c2e07a0b","log_type":"compbrow","log_from":"cf8f19d2b36e43709dde5d60c2e07a0b","auth_comp_name":"槐荫名家公司","log_date":"2018-05-07 21:52:15","auth_comp_img_head_file_id":"808fea921d184f7592a511adcc74bdbe"},{"log_id":"1bd9328a3d93453f910ed7ad98f35371","log_to":"cf8f19d2b36e43709dde5d60c2e07a0b","log_type":"compbrow","log_from":"cf8f19d2b36e43709dde5d60c2e07a0b","auth_comp_name":"槐荫名家公司","log_date":"2018-05-07 21:52:15","auth_comp_img_head_file_id":"808fea921d184f7592a511adcc74bdbe"},{"log_id":"1bd9328a3d93453f910ed7ad98f35371","log_to":"cf8f19d2b36e43709dde5d60c2e07a0b","log_type":"compbrow","log_from":"cf8f19d2b36e43709dde5d60c2e07a0b","auth_comp_name":"槐荫名家公司","log_date":"2018-05-07 21:52:15","auth_comp_img_head_file_id":"808fea921d184f7592a511adcc74bdbe"}],"pageCount":1,"pageTotal":4}
+     * data : {"result":[{"log_id":"cd2b16661d0c4269b804395dab7df694","log_to":"17735","car_name":"名爵","log_type":"carbrow","car_1_file_id":"mmmmmm44","log_from":"8c223d443e804a5b8994783db1773004","log_date":"2018-05-08 15:32:02","carphone":"4444"}],"pageCount":1,"pageTotal":1}
      * message :
      * status : 1
      */
@@ -45,9 +45,9 @@ public class QueryCarRecord {
 
     public static class DataBean {
         /**
-         * result : [{"log_id":"1bd9328a3d93453f910ed7ad98f35371","log_to":"cf8f19d2b36e43709dde5d60c2e07a0b","log_type":"compbrow","log_from":"cf8f19d2b36e43709dde5d60c2e07a0b","auth_comp_name":"槐荫名家公司","log_date":"2018-05-07 21:52:15","auth_comp_img_head_file_id":"808fea921d184f7592a511adcc74bdbe"},{"log_id":"1bd9328a3d93453f910ed7ad98f35371","log_to":"cf8f19d2b36e43709dde5d60c2e07a0b","log_type":"compbrow","log_from":"cf8f19d2b36e43709dde5d60c2e07a0b","auth_comp_name":"槐荫名家公司","log_date":"2018-05-07 21:52:15","auth_comp_img_head_file_id":"808fea921d184f7592a511adcc74bdbe"},{"log_id":"1bd9328a3d93453f910ed7ad98f35371","log_to":"cf8f19d2b36e43709dde5d60c2e07a0b","log_type":"compbrow","log_from":"cf8f19d2b36e43709dde5d60c2e07a0b","auth_comp_name":"槐荫名家公司","log_date":"2018-05-07 21:52:15","auth_comp_img_head_file_id":"808fea921d184f7592a511adcc74bdbe"},{"log_id":"1bd9328a3d93453f910ed7ad98f35371","log_to":"cf8f19d2b36e43709dde5d60c2e07a0b","log_type":"compbrow","log_from":"cf8f19d2b36e43709dde5d60c2e07a0b","auth_comp_name":"槐荫名家公司","log_date":"2018-05-07 21:52:15","auth_comp_img_head_file_id":"808fea921d184f7592a511adcc74bdbe"}]
+         * result : [{"log_id":"cd2b16661d0c4269b804395dab7df694","log_to":"17735","car_name":"名爵","log_type":"carbrow","car_1_file_id":"mmmmmm44","log_from":"8c223d443e804a5b8994783db1773004","log_date":"2018-05-08 15:32:02","carphone":"4444"}]
          * pageCount : 1
-         * pageTotal : 4
+         * pageTotal : 1
          */
 
         private int pageCount;
@@ -80,22 +80,24 @@ public class QueryCarRecord {
 
         public static class ResultBean {
             /**
-             * log_id : 1bd9328a3d93453f910ed7ad98f35371
-             * log_to : cf8f19d2b36e43709dde5d60c2e07a0b
-             * log_type : compbrow
-             * log_from : cf8f19d2b36e43709dde5d60c2e07a0b
-             * auth_comp_name : 槐荫名家公司
-             * log_date : 2018-05-07 21:52:15
-             * auth_comp_img_head_file_id : 808fea921d184f7592a511adcc74bdbe
+             * log_id : cd2b16661d0c4269b804395dab7df694
+             * log_to : 17735
+             * car_name : 名爵
+             * log_type : carbrow
+             * car_1_file_id : mmmmmm44
+             * log_from : 8c223d443e804a5b8994783db1773004
+             * log_date : 2018-05-08 15:32:02
+             * carphone : 4444
              */
 
             private String log_id;
             private String log_to;
+            private String car_name;
             private String log_type;
+            private String car_1_file_id;
             private String log_from;
-            private String auth_comp_name;
             private String log_date;
-            private String auth_comp_img_head_file_id;
+            private String carphone;
 
             public String getLog_id() {
                 return log_id;
@@ -113,12 +115,28 @@ public class QueryCarRecord {
                 this.log_to = log_to;
             }
 
+            public String getCar_name() {
+                return car_name;
+            }
+
+            public void setCar_name(String car_name) {
+                this.car_name = car_name;
+            }
+
             public String getLog_type() {
                 return log_type;
             }
 
             public void setLog_type(String log_type) {
                 this.log_type = log_type;
+            }
+
+            public String getCar_1_file_id() {
+                return car_1_file_id;
+            }
+
+            public void setCar_1_file_id(String car_1_file_id) {
+                this.car_1_file_id = car_1_file_id;
             }
 
             public String getLog_from() {
@@ -129,14 +147,6 @@ public class QueryCarRecord {
                 this.log_from = log_from;
             }
 
-            public String getAuth_comp_name() {
-                return auth_comp_name;
-            }
-
-            public void setAuth_comp_name(String auth_comp_name) {
-                this.auth_comp_name = auth_comp_name;
-            }
-
             public String getLog_date() {
                 return log_date;
             }
@@ -145,12 +155,12 @@ public class QueryCarRecord {
                 this.log_date = log_date;
             }
 
-            public String getAuth_comp_img_head_file_id() {
-                return auth_comp_img_head_file_id;
+            public String getCarphone() {
+                return carphone;
             }
 
-            public void setAuth_comp_img_head_file_id(String auth_comp_img_head_file_id) {
-                this.auth_comp_img_head_file_id = auth_comp_img_head_file_id;
+            public void setCarphone(String carphone) {
+                this.carphone = carphone;
             }
         }
     }

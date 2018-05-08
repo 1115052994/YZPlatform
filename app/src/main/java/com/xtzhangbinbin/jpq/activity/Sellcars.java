@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
 import org.json.JSONException;
@@ -26,7 +28,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Sellcars extends AppCompatActivity {
+public class Sellcars extends BaseActivity {
 
     @BindView(R.id.Sellcars_tv)
     TextView SellcarsTv;
@@ -46,6 +48,7 @@ public class Sellcars extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sellcars);
         ButterKnife.bind(this);
+        dialog = MyProgressDialog.createDialog(this);
         PostSellcars();
         SellcarsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,12 +98,15 @@ public class Sellcars extends AppCompatActivity {
     }
 
     public void PostSellcarsPhone(String phone) {
+        dialog.setMessage("正在提交信息，请稍候！");
+        dialog.show();
         map.clear();
         if (NetUtil.isNetAvailable(this)) {
             map.put("sell_phone", phone);
             OKhttptils.post(this, Config.SAVESELLER, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    closeDialog();
                     try {
                         Log.i("aaaaa", "查询二手车收藏: " + response);
                         JSONObject jsonObject = new JSONObject(response);
@@ -121,6 +127,7 @@ public class Sellcars extends AppCompatActivity {
 
                 @Override
                 public void fail(String response) {
+                    closeDialog();
                     Toast.makeText(Sellcars.this, "预约失败", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -134,7 +141,7 @@ public class Sellcars extends AppCompatActivity {
             public void onNoClick() {
                 ordinaryDialog.dismiss();
 //                startActivity(new Intent(Sellcars.this,clas));
-                Toast.makeText(Sellcars.this, "我跳到主页了", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sellcars.this, "我跳到主页了", Toast.LENGTH_SHORT).show();
             }
         });
         ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {

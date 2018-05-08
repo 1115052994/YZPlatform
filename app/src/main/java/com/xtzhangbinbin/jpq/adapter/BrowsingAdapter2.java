@@ -79,7 +79,6 @@ public class BrowsingAdapter2 extends BaseAdapter {
         viewHolder.browsing_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Toast.makeText(context, position+"删除", Toast.LENGTH_SHORT).show();
                 final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("温馨提示").setMessage2("  删除后不可恢复，确定清除？").showDialog();
                 ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                     @Override
@@ -96,14 +95,16 @@ public class BrowsingAdapter2 extends BaseAdapter {
                                 OKhttptils.post((Activity) context, Config.BROWSEDLOG, map, new OKhttptils.HttpCallBack() {
                                     @Override
                                     public void success(String response) {
-                                        Log.i("aaaa", "删除: " +result.get(position).getLog_id()+response);
                                         if(callBrowsing!=null){
                                             callBrowsing.getCallBrowsing(view,"",position);
                                         }
+                                        result.remove(position);
+                                        notifyDataSetChanged();
                                     }
                                     @Override
                                     public void fail(String response) {
-                                        Log.d("aaaa", "删除失败"+result.get(position).getLog_id());
+                                        result.remove(position);
+                                        notifyDataSetChanged();
                                     }
                                 });
                             }

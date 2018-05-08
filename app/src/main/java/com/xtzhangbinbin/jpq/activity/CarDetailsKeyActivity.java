@@ -152,13 +152,14 @@ public class CarDetailsKeyActivity extends BaseActivity {
             @Override
             public void fail(String response) {
                 closeDialog();
+                default_image.setVisibility(View.VISIBLE);
                 Log.d(TAG, "fail: " + response);
-                try {
-                    JSONObject object = new JSONObject(response);
-                    ToastUtil.show(currtActivity, object.getString("message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    JSONObject object = new JSONObject(response);
+//                    ToastUtil.show(currtActivity, object.getString("message"));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
     }
