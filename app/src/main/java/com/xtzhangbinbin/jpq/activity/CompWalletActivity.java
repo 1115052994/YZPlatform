@@ -287,7 +287,9 @@ public class CompWalletActivity extends BaseActivity {
                 //操作时间
                 TextView item_comp_wallet_date = holder.getView(R.id.item_comp_wallet_date);
                 try {
-                    item_comp_wallet_date.setText(new SimpleDateFormat("MM-dd  HH:mm").format((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse(result.get(position).getWallet_log_date())));
+                    if(!StringUtil.isEmpty(result.get(position).getWallet_log_date())){
+                        item_comp_wallet_date.setText(new SimpleDateFormat("MM-dd  HH:mm").format((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse(result.get(position).getWallet_log_date())));
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

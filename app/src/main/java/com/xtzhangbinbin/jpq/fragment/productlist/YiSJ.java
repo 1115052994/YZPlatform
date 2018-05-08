@@ -72,7 +72,9 @@ public class YiSJ extends Fragment {
         yisjAdapter.getCall(new YisjAdapter.onCallBack() {
             @Override
             public void getprodid(int position) {
-                result.remove(position);
+                if(!result.isEmpty()){
+                    result.remove(position);
+                }
                 yisjAdapter.notifyDataSetChanged();
             }
         });

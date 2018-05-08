@@ -37,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/common15dp"
-            android:text="测试标题"
             android:textColor="@color/gray_99" />
     </LinearLayout>
 
@@ -66,7 +65,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common15dp"
-                android:text="大众汽车维修保养"
                 android:textColor="@color/black_33"
                 android:textSize="@dimen/text_size_17sp" />
         </LinearLayout>
@@ -160,7 +158,6 @@
                 android:layout_marginBottom="@dimen/common10dp"
                 android:layout_marginLeft="@dimen/common20dp"
                 android:layout_toRightOf="@id/orders_submit_price"
-                android:text="原价：150元"
                 android:textColor="@color/gray_c8"
                 android:textSize="@dimen/text_size_16sp" />
         </RelativeLayout>

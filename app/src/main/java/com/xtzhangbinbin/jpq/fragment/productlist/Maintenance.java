@@ -130,6 +130,7 @@ public class Maintenance extends Fragment {
         android.util.Log.d("prod_service_type_item", "getData: "+prod_service_type_item);
         map.put("prod_service_type_item", prod_service_type_item);
         map.put("pageIndex",String.valueOf(pageIndex));
+        Log.w("test", map.toString());
         OKhttptils.post((Activity) getContext(), Config.COMPPRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {

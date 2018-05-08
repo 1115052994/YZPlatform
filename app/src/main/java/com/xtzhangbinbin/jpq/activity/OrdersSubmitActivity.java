@@ -87,6 +87,9 @@ public class OrdersSubmitActivity extends BaseActivity {
     }
 
     public void init() {
+
+        dialog = MyProgressDialog.createDialog(this);
+
         //注册微信API对象
         api = WXAPIFactory.createWXAPI(this, Config.WECHAT_APP_ID);
         api.registerApp(Config.WECHAT_APP_ID);
@@ -167,7 +170,6 @@ public class OrdersSubmitActivity extends BaseActivity {
                         e.printStackTrace();
                         ToastUtil.show(OrdersSubmitActivity.this, "订单创建失败，请稍候重试！！");
                     }
-
                 }
 
                 @Override
@@ -213,9 +215,9 @@ public class OrdersSubmitActivity extends BaseActivity {
         Map<String ,String> map = new HashMap<>();
         map.put("timeout_express", "30");//超时时间
         map.put("product_code", product.getData().getResult().getProd_id());//产品编号
-//        map.put("total_amount", String.valueOf(product.getData().getResult().getProd_reduced_price()));//商品优惠后的支付价格
+        map.put("total_amount", String.valueOf(product.getData().getResult().getProd_reduced_price()));//商品优惠后的支付价格
         map.put("total_amount", "0.01");//商品单价
-        map.put("subject", product.getData().getResult().getProd_service_name());//支付时显示的标题
+//        map.put("subject", product.getData().getResult().getProd_service_name());//支付时显示的标题
         StringBuilder body = new StringBuilder();
         body.append(product.getData().getResult().getAuth_comp_name()).append("-").append(product.getData().getResult().getProd_service_name());
         map.put("body", body.toString());//备注说明信息
@@ -283,7 +285,6 @@ public class OrdersSubmitActivity extends BaseActivity {
                     price.setText(new DecimalFormat("#.#").format(product.getData().getResult().getProd_reduced_price()));
                     marketPrice.setText("原价：" + new DecimalFormat("#.#").format(product.getData().getResult().getProd_price()) + "元");
                 }
-
             }
 
             @Override

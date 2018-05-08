@@ -101,9 +101,11 @@ public class AlipayUtil {
 	 * 支付宝支付业务
 	 */
 	public void payV2(Map<String, String> map) {
-		dialog = MyProgressDialog.createDialog(context);
-		dialog.setMessage("正在调起支付，请稍候");
-		dialog.show();
+		if(null != dialog && !dialog.isShowing()){
+			dialog = MyProgressDialog.createDialog(context);
+			dialog.setMessage("正在调起支付，请稍候");
+			dialog.show();
+		}
 		if (TextUtils.isEmpty(APPID) || (TextUtils.isEmpty(RSA2_PRIVATE) && TextUtils.isEmpty(RSA_PRIVATE))) {
 			new AlertDialog.Builder(context).setTitle("警告").setMessage("需要配置APPID | RSA_PRIVATE")
 					.setPositiveButton("确定", new DialogInterface.OnClickListener() {

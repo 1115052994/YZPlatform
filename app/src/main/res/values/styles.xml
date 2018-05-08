@@ -131,4 +131,9 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold|italic</item>
     </style>
+    <!--微信背景透明-->
+    <style name="translucent">
+        　<item name="android:windowBackground">@android:color/transparent</item>
+        　<item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>

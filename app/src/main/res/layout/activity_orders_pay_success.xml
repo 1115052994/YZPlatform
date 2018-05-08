@@ -85,7 +85,7 @@
             android:id="@+id/orders_pay_success_tocomp"
             android:layout_width="@dimen/common300dp"
             android:layout_height="@dimen/common40dp"
-            android:text="返回商家"
+            android:text="返回"
             android:textColor="@color/white"
             android:background="@drawable/selector_login_button"
             />

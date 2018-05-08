@@ -160,7 +160,7 @@ public class OrdersCompUnUseFragment extends Fragment {
                 TextView item_orders_comp_status = holder.getView(R.id.item_orders_comp_status);
                 item_orders_comp_status.setText("wxf".equals(orders.getOrder_state_comp()) ? "未消费" : "已消费");
                 TextView item_orders_comp_service_type = holder.getView(R.id.item_orders_comp_service_type);
-                item_orders_comp_service_type.setText(orders.getProd_service_type_item());
+                item_orders_comp_service_type.setText(orders.getProd_service_name());
                 TextView item_orders_comp_service_name = holder.getView(R.id.item_orders_comp_service_name);
                 item_orders_comp_service_name.setText(orders.getProd_service_name());
                 TextView item_orders_comp_date = holder.getView(R.id.item_orders_comp_date);

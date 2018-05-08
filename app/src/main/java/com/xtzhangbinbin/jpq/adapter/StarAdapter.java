@@ -126,7 +126,6 @@ public class StarAdapter extends BaseAdapter {
                 viewHolder.item_estimate.setText("审核通过");
                 break;
             case "3":
-                Log.w("test", "aaaaaaaaaaaa");
                 viewHolder.item_estimate.setText("待审核");
                 break;
         }

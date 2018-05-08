@@ -17,6 +17,7 @@ import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +64,9 @@ public class OrdersUserEndActivity extends BaseActivity {
     }
 
     public void initData(){
+        dialog = MyProgressDialog.createDialog(this);
+        dialog.setMessage("正在加载订单数据");
+        dialog.show();
         if(null != getIntent().getStringExtra("order_id")){
             order_id = getIntent().getStringExtra("order_id");
         }
@@ -83,7 +87,7 @@ public class OrdersUserEndActivity extends BaseActivity {
                         orders_user_end_date.setText("消费时间：" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                         orders_user_end_comp_name.setText(orders.getData().getResult().getAuth_comp_name());
                     }
-
+                    closeDialog();
                 }
 
                 @Override
@@ -94,6 +98,7 @@ public class OrdersUserEndActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    closeDialog();
                 }
             });
         }

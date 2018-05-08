@@ -55,6 +55,12 @@ public class OrdersPaySuccessActivity extends BaseActivity {
                 OrdersPaySuccessActivity.this.finish();
             }
         });
+        tocomp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OrdersPaySuccessActivity.this.finish();
+            }
+        });
     }
 
     @Override

@@ -27,6 +27,7 @@ import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.WeisjBean;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +58,7 @@ public class WeiSJ extends Fragment {
     private WeisjAdapter weisjAdapter;
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
-
+    private MyProgressDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +69,9 @@ public class WeiSJ extends Fragment {
         weisjList.setLayoutManager(new LinearLayoutManager(getContext()));
         weisjAdapter = new WeisjAdapter(getContext(), result);
         weisjList.setAdapter(weisjAdapter);
+        dialog = MyProgressDialog.createDialog(getContext());
+        dialog.setMessage("正在加载数据，请稍候！");
+        dialog.show();
         getData(1, null);
 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -148,13 +152,18 @@ public class WeiSJ extends Fragment {
                         weisjAdapter.notifyDataSetChanged();
                     }
                 }
-
+                if(dialog != null && !dialog.isShowing()){
+                    dialog.dismiss();
+                }
 
             }
 
             @Override
             public void fail(String response) {
                 Log.d("aaaa", "fail: " + response);
+                if(dialog != null && !dialog.isShowing()){
+                    dialog.dismiss();
+                }
             }
         });
 
@@ -164,5 +173,13 @@ public class WeiSJ extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(dialog != null && !dialog.isShowing()){
+            dialog.dismiss();
+        }
     }
 }
