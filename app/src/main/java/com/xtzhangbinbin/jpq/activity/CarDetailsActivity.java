@@ -48,6 +48,7 @@ import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.OnlineOrderDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import com.xtzhangbinbin.jpq.view.ScrollLinearLayoutManager;
+import com.xtzhangbinbin.jpq.zxing.android.CaptureActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -629,9 +630,16 @@ public class CarDetailsActivity extends BaseActivity {
                 break;
             case R.id.mDeploy:
                 //查看详细参数配置
-                Bundle bundle = new Bundle();
-                bundle.putString("car_id",car_id);
-                JumpUtil.newInstance().jumpRight(currtActivity,CarDetailsKeyActivity.class,bundle);
+                if(null != Prefs.with(this).read("user_token")){
+                    if(null != carDetailBean && null != carDetailBean.getCar_model()){
+                        Bundle bundle = new Bundle();
+                        bundle.putString("car_name", carDetailBean.getCar_name());
+                        bundle.putString("model_id",carDetailBean.getCar_model().substring(carDetailBean.getCar_model().lastIndexOf("_") + 1));
+                        JumpUtil.newInstance().jumpRight(currtActivity,CarDetailsKeyActivity.class,bundle);
+                    }
+                } else {
+                    JumpUtil.newInstance().jumpRight(this, LoginActivity.class);
+                }
                 break;
             case R.id.mKefu:
                 //拨打客服电话

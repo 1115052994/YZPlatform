@@ -50,7 +50,7 @@ public class LoginActivity extends BaseActivity {
             switch (msg.what){
                 case 001:
                     getUserInfo();
-                    JumpUtil.newInstance().jumpRight(LoginActivity.this, MainActivity.class);
+                    LoginActivity.this.finish();
                     break;
             }
         }

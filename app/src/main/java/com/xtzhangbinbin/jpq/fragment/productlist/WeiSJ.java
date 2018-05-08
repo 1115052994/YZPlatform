@@ -152,7 +152,7 @@ public class WeiSJ extends Fragment {
                         weisjAdapter.notifyDataSetChanged();
                     }
                 }
-                if(dialog != null && !dialog.isShowing()){
+                if(dialog != null && dialog.isShowing()){
                     dialog.dismiss();
                 }
 
@@ -161,7 +161,7 @@ public class WeiSJ extends Fragment {
             @Override
             public void fail(String response) {
                 Log.d("aaaa", "fail: " + response);
-                if(dialog != null && !dialog.isShowing()){
+                if(dialog != null && dialog.isShowing()){
                     dialog.dismiss();
                 }
             }
@@ -178,7 +178,7 @@ public class WeiSJ extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if(dialog != null && !dialog.isShowing()){
+        if(dialog != null && dialog.isShowing()){
             dialog.dismiss();
         }
     }
