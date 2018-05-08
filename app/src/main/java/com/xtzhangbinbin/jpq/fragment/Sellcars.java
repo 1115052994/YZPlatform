@@ -16,9 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtzhangbinbin.jpq.R;
+import com.xtzhangbinbin.jpq.activity.AccessCar;
+import com.xtzhangbinbin.jpq.activity.LoginActivity;
 import com.xtzhangbinbin.jpq.config.Config;
+import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
 import org.json.JSONException;
@@ -77,7 +81,17 @@ public class Sellcars extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-
+        radio02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(null != Prefs.with(getContext()).read("user_token")&&!"".equals(Prefs.with(getContext()).read("user_token"))){
+                    // 估价
+                    JumpUtil.newInstance().jumpRight(getContext(), AccessCar.class);
+                } else {
+                    JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
+                }
+            }
+        });
 
 
         return inflate;

@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,6 +108,11 @@ public class MainFragment extends Fragment implements AMapLocationListener {
             //getCityId(city);
         }
         // banner
+//        WindowManager wm = (WindowManager) getActivity()
+//                .getSystemService(Context.WINDOW_SERVICE);
+//        int width = wm.getDefaultDisplay().getWidth();
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (width / 5 * 3));
+//        banner.setLayoutParams(params);
         banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
@@ -199,6 +206,8 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 }
                 break;
             case R.id.ly_yxc:
+                // 优选车
+                mainActivity.switchToCarBuy("pprm");
                 break;
             case R.id.ly_xydk:
                 break;
@@ -211,7 +220,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 mainActivity.switchToCarSell("2");
                 break;
             case R.id.ly_gj:
-                if(null != Prefs.with(getContext()).read("user_token")){
+                if(null != Prefs.with(getContext()).read("user_token")&&!"".equals(Prefs.with(getContext()).read("user_token"))){
                     // 估价
                     JumpUtil.newInstance().jumpRight(getContext(), AccessCar.class);
                 } else {

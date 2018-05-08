@@ -1060,7 +1060,8 @@ public class BuyCar extends Fragment {
                                 ) {
                             recyclerList.add(bean);
                         }
-                        recyclerAdapter.notifyDataSetChanged();
+                        if (recyclerAdapter!=null&&recyclerViewCar!=null)
+                            recyclerAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

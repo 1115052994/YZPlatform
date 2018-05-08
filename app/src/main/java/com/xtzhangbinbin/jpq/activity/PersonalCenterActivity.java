@@ -96,6 +96,7 @@ public class PersonalCenterActivity extends BaseActivity {
                 break;
             case R.id.mSubscribe:
                 //订阅车源
+                JumpUtil.newInstance().jumpLeft(this,MySubscribe.class);
                 break;
             case R.id.mOrders:
                 //我的订单
