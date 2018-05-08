@@ -28,10 +28,12 @@ import com.xtzhangbinbin.jpq.activity.CarProduct;
 import com.xtzhangbinbin.jpq.activity.CarProductSX;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
 import com.xtzhangbinbin.jpq.activity.CompanyCenterActivity;
+import com.xtzhangbinbin.jpq.activity.ETC;
 import com.xtzhangbinbin.jpq.activity.LoginActivity;
 import com.xtzhangbinbin.jpq.activity.MainActivity;
 import com.xtzhangbinbin.jpq.activity.PersonalCenterActivity;
 import com.xtzhangbinbin.jpq.activity.PoiAroundSearchActivity;
+import com.xtzhangbinbin.jpq.activity.SOS;
 import com.xtzhangbinbin.jpq.activity.WeizhangQuery;
 import com.xtzhangbinbin.jpq.activity.ZhongLife;
 import com.xtzhangbinbin.jpq.config.Config;
@@ -172,7 +174,6 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 break;
             case R.id.image_man:
                 user_type = Prefs.with(getContext()).read("user_type");
-                Log.d("用户类型", "onViewClicked: " + user_type);
                 if (user_type.isEmpty()){
                     JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
                 }else if (user_type.equals("comp")){
@@ -183,6 +184,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 }
                 break;
             case R.id.ly_etc:
+                JumpUtil.newInstance().jumpRight(getContext(), ETC.class);
                 break;
             case R.id.ly_wby:
                 String dict_id = "YZcompcfwlxwxbywxby";
@@ -196,6 +198,7 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                 JumpUtil.newInstance().jumpLeft(getActivity(), PoiAroundSearchActivity.class,bundle);
                 break;
             case R.id.ly_jjjy:
+                JumpUtil.newInstance().jumpRight(getActivity(), SOS.class);
                 break;
             case R.id.ly_wzcx:
                 if(null != Prefs.with(getContext()).read("user_token")&&!"".equals(Prefs.with(getContext()).read("user_token"))){

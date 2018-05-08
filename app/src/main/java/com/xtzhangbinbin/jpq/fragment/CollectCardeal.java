@@ -112,7 +112,9 @@ public class CollectCardeal extends Fragment {
                     carListAdapter.notifyDataSetChanged();
                     // 没有信息图片显示
                     if (CollectCardeal.this.result.size() <= 0) {
-                        noCollectServerImage.setVisibility(View.VISIBLE);
+                        if(null != noCollectServerImage){
+                            noCollectServerImage.setVisibility(View.VISIBLE);
+                        }
                     }else {
                         if(refreshlayout!=null){
                             if (pageIndex > pageCount) {

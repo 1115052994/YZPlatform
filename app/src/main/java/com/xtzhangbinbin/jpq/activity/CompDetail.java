@@ -34,6 +34,7 @@ import com.xtzhangbinbin.jpq.entity.WeixiuBean;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
+import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.CircleImageView;
 import com.xtzhangbinbin.jpq.view.indicator.IndicatorAdapter;
@@ -259,6 +260,7 @@ public class CompDetail extends BaseActivity {
                 LinearLayout bg = view.findViewById(R.id.bg);
                 bg.setVisibility(View.VISIBLE);
                 // 切换Adapter
+                Log.i("appraise===", position + "");
                 if (position == serverList.size()) {
                     recyclerView.setAdapter(appraiseAdapter);
                 } else {
@@ -585,12 +587,17 @@ public class CompDetail extends BaseActivity {
                         for (CompDetailBean.DataBean.ResultBean.StaffListBean staffListBean : resultBean.getStaffList()) {
                             staffList.add(staffListBean);
                         }
-                        if(staffList.size()<=1){
-                            staffsView.setmTabVisibleNums(1);
-                        }else{
-                            staffsView.setmTabVisibleNums(1.5f);
+                        if(null != staffList && staffList.isEmpty()){
+                            staffsView.setVisibility(View.GONE);
+                        } else {
+                            staffsView.setVisibility(View.VISIBLE);
+                            if(staffList.size()<=1){
+                                staffsView.setmTabVisibleNums(1);
+                            }else{
+                                staffsView.setmTabVisibleNums(1.5f);
+                            }
+                            staffsView.setAdapter(staffAdapter);
                         }
-                        staffsView.setAdapter(staffAdapter);
                         //tabs服务项目
                         serverList.clear();
                         List<CompDetailBean.DataBean.ResultBean.ServerTypeListBean> serverTypeListBean = resultBean.getServerTypeList();
@@ -898,9 +905,16 @@ public class CompDetail extends BaseActivity {
     public void pay(String pro_id){
         //如果已登录，调用支付
         if(null != Prefs.with(this).read("user_token")){
-            Bundle bundle = new Bundle();
-            bundle.putString("pro_id", pro_id);
-            JumpUtil.newInstance().jumpRight(getApplicationContext(), CompDetail.class, bundle);
+            String user_type = Prefs.with(this).read("user_type");
+            Log.w("test", "type:" + user_type);
+            //如果用户类型是个人用户，允许下单。否则不允许
+            if (!StringUtil.isEmpty(user_type) && user_type.equals("pers")){
+                Bundle bundle = new Bundle();
+                bundle.putString("pro_id", pro_id);
+                JumpUtil.newInstance().jumpRight(getApplicationContext(), OrdersSubmitActivity.class, bundle);
+            } else {
+                ToastUtil.show(this,"对不起，企业用户无法下单!");
+            }
         } else {
             //如果没有登录，跳转到登录页面
             JumpUtil.newInstance().jumpRight(getApplicationContext(), LoginActivity.class);

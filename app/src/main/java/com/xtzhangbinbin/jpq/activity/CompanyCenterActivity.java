@@ -112,7 +112,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mProduct:
                 //审核通过才能使用此功能
-                if ("2".equals(resultBean.getAuth_audit_state())){
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())){
                 //产品管理
                     JumpUtil.newInstance().jumpRight(this, ProductList.class);
                 } else {
@@ -121,7 +121,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mOrders:
                 //审核通过才能使用此功能
-                if ("2".equals(resultBean.getAuth_audit_state())){
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())){
                     //订单管理
                     JumpUtil.newInstance().jumpRight(this, OrdersCompListActivity.class);
                 }else {
@@ -130,7 +130,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mWallet:
                 //审核通过才能使用此功能
-                if ("2".equals(resultBean.getAuth_audit_state())){
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())){
                     //钱包
                     JumpUtil.newInstance().jumpRight(this, CompWalletActivity.class);
                 }else {
@@ -139,7 +139,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mBook:
                 //审核通过才能使用此功能
-                if ("2".equals(resultBean.getAuth_audit_state())) {
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
                     //预约信息
                     JumpUtil.newInstance().jumpRight(this, BespeakCompActivity.class);
                 }else {
@@ -148,7 +148,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mAppraise:
                 //审核通过才能使用此功能
-                if ("2".equals(resultBean.getAuth_audit_state())) {
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
                     //评价管理
                     JumpUtil.newInstance().jumpRight(this, EvaluationList.class);
                 }else {
@@ -157,7 +157,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mSuperEmp:
                 //审核通过才能使用此功能
-                if ("2".equals(resultBean.getAuth_audit_state())) {
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
                     //明星员工
                     JumpUtil.newInstance().jumpRight(this, Starperformers.class);
                 }else {

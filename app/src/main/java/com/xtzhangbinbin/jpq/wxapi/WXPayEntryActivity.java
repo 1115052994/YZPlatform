@@ -142,6 +142,9 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                             }
                         }.start();
                     } else {
+                        if(null != dialog && dialog.isShowing()){
+                            dialog.dismiss();
+                        }
                         JumpUtil.newInstance().jumpRight(getApplicationContext(), OrdersPersonalActivity.class);
                         WXPayEntryActivity.this.finish();
                     }

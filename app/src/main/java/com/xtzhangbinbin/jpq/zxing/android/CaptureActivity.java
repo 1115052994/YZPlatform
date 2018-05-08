@@ -114,9 +114,13 @@ public final class CaptureActivity extends BaseActivity implements
                     @Override
                     public void success(String response) {
                         try {
+                            Log.w("test", response);
                             JSONObject obj = new JSONObject(response);
                             if(null != obj && "1".equals(obj.getString("status"))){
-
+                                Bundle bundle = new Bundle();
+                                bundle.putString("order_id", obj.getJSONObject("data").getString("order_id"));
+                                JumpUtil.newInstance().jumpRight(getApplicationContext(), OrdersCompEndActivity.class, bundle);
+                                CaptureActivity.this.finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

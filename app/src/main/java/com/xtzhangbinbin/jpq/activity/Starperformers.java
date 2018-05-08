@@ -27,6 +27,7 @@ import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -139,20 +140,19 @@ public class Starperformers extends BaseActivity {
 
     //得到数据并且更新数据
     private void getData() {
+        Log.w("test", "aaaaaaaaaaaaaa");
         result.clear();
-        OKhttptils.post(Starperformers.this, Config.SELECTSTAR, null, new OKhttptils.HttpCallBack() {
+        Log.w("test", "bbbbbb");
+        OKhttptils.post(Starperformers.this, Config.SELECTSTAR, new HashMap<String, String>(), new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.d("aaaaa", "getData1: " + response);
                 Gson gson = GsonFactory.create();
                 Querystar querystar = gson.fromJson(response, Querystar.class);
-                Log.d("aaaaa", "getData2: " + response);
                 if (querystar.getData().getResult() == null) {
                     ToastUtil.show(Starperformers.this, "数据为空");
                 }
                 result.addAll(querystar.getData().getResult());
                 starAdapter.notifyDataSetChanged();
-                Log.d("aaaaa", "getData3: " + response);
                 if (result.size() <= 0) {
                     noInformationImage.setVisibility(View.VISIBLE);
                 }

@@ -1,6 +1,7 @@
 package com.xtzhangbinbin.jpq.fragment.productlist;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
+@SuppressLint("ValidFragment")
 public class Maintenance extends Fragment {
 
 
@@ -58,8 +60,12 @@ public class Maintenance extends Fragment {
     private int pageIndex = 1;//第几页
     private int pageCount = 1;//总页数  默认
     private List<CarBeautyBean.DataBean.ResultBean>  result = new ArrayList<>();
+    private String prod_service_type_item;
 
-
+    @SuppressLint("ValidFragment")
+    public Maintenance(String prod_service_type_item) {
+        this.prod_service_type_item = prod_service_type_item;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -121,8 +127,10 @@ public class Maintenance extends Fragment {
     //得到数据
     private void getData(final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
-//        map.put("prod_service_type_item", "WZBY");
+        android.util.Log.d("prod_service_type_item", "getData: "+prod_service_type_item);
+        map.put("prod_service_type_item", prod_service_type_item);
         map.put("pageIndex",String.valueOf(pageIndex));
+        Log.w("test", map.toString());
         OKhttptils.post((Activity) getContext(), Config.COMPPRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {

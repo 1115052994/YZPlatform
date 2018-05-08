@@ -31,6 +31,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.view.CircleImageView;
 import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
@@ -103,6 +104,7 @@ public class OrdersCompAllFragment extends Fragment {
             OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    Log.w("test", response);
                     Gson gson = GsonFactory.create();
                     OrdersCompInfo carCompInfo = gson.fromJson(response, OrdersCompInfo.class);
                     List<OrdersCompInfo.DataBean.ResultBean> result2 = carCompInfo.getData().getResult();
@@ -151,13 +153,15 @@ public class OrdersCompAllFragment extends Fragment {
             public void convert(ViewHolder holder, Object item, int position) {
                 OrdersCompInfo.DataBean.ResultBean orders = result.get(position);
                 CircleImageView icon = (CircleImageView) holder.getView(R.id.item_orders_comp_icon);
-                OKhttptils.getPicByHttp(context, orders.getPers_head_file_id(), icon);
+                if(!StringUtil.isEmpty(orders.getPers_head_file_id())){
+                    OKhttptils.getPicByHttp(context, orders.getPers_head_file_id(), icon);
+                }
                 TextView item_orders_comp_phone = holder.getView(R.id.item_orders_comp_phone);
                 item_orders_comp_phone.setText(orders.getPers_phone().substring(0,3) + "****" + orders.getPers_phone().substring(7));
                 TextView item_orders_comp_status = holder.getView(R.id.item_orders_comp_status);
                 item_orders_comp_status.setText("wxf".equals(orders.getOrder_state_comp()) ? "未消费" : "已消费");
                 TextView item_orders_comp_service_type = holder.getView(R.id.item_orders_comp_service_type);
-                item_orders_comp_service_type.setText(orders.getProd_service_type_item());
+                item_orders_comp_service_type.setText(orders.getProd_service_name());
                 TextView item_orders_comp_service_name = holder.getView(R.id.item_orders_comp_service_name);
                 item_orders_comp_service_name.setText(orders.getProd_service_name());
                 TextView item_orders_comp_date = holder.getView(R.id.item_orders_comp_date);

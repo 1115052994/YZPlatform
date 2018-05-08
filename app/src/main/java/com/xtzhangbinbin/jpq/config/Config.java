@@ -8,15 +8,15 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址
-    public static final String BASE_URL = "http://192.168.1.223/";
+    public static final String BASE_URL = "http://192.168.1.55/";
 
-    public static final String URL = "http://192.168.1.223/";
+    public static final String URL = "http://192.168.1.55/";
     //微信APPID
     public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
-    public static final String M = "http://192.168.1.223/";
+    public static final String M = "http://192.168.1.55/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";
@@ -185,7 +185,7 @@ public class Config {
     //查询保险超市所有产品
     public static final String QUERYALLINSURANCE = M + S + "queryAllInsurance";
 
-    //添加二手车图片
+    //查询企业二手车信息
     public static final String COMPCAR = M + S + "compCar";
 
     //商家查看二手车产品信息
@@ -324,7 +324,7 @@ public class Config {
     //查询企业用户订单信息
     public static  final String ORDERS_GET_COMP_LIST = URL + S + "orderListComp";
     //钱包消费明细查询
-    public static  final String COMP_WALLET_OPTION_DETAIL = URL + S + "consumptionDetail";
+    public static  final String COMP_WALLET_OPTION_DETAIL = URL + S + "consumptionDetailNoMonth";
     //钱包余额查询
     public static  final String COMP_WALLET_BALANCE= URL + S + "walletBalance";
     //钱包综合查询

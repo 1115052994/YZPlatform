@@ -142,7 +142,6 @@ public class CompWalletQueryActivity extends BaseActivity {
             OKhttptils.post(this, Config.COMP_WALLET_INTEGRATED_QUERY, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
-                    Log.w("test", response);
                     Gson gson = GsonFactory.create();
                     CompWalletQuery wallet = gson.fromJson(response, CompWalletQuery.class);
                     List<CompWalletQuery.DataBeanX.ResultBean.DataBean> result2 = wallet.getData().getResult().getData();
@@ -166,6 +165,7 @@ public class CompWalletQueryActivity extends BaseActivity {
                             cashQueryAdapter.notifyDataSetChanged();
                         }
                     } else {
+                        cashQueryAdapter.notifyDataSetChanged();
                         no_collect_server_image.setVisibility(View.VISIBLE);
                     }
                     closeDialog();
