@@ -67,7 +67,8 @@ public class Grid_Updata extends BaseAdapter {
         map = arr.get(position);
             for (String key : map.keySet()) {
                 if (map.get(key) == null ){
-                    Picasso.with(context).load(R.drawable.no_pic).into(viewHolder.grid_item_image);
+//                    Picasso.with(context).load(R.drawable.no_pic).into(viewHolder.grid_item_image);
+                    Picasso.get().load(R.drawable.no_pic).into(viewHolder.grid_item_image);
                     viewHolder.grid_item_text.setText(key);
                 }else {
                     viewHolder.grid_item_text.setText(key);

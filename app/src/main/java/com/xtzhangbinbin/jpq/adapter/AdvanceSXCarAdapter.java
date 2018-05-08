@@ -58,7 +58,8 @@ public class AdvanceSXCarAdapter extends BaseAdapter {
         ImageView car =viewHolder.getCar();
         String url = Config.BASE_URL + Config.Y + list.get(position).get("img");
         car.setImageBitmap(null);
-        Picasso.with(context).load(Uri.parse(url)).into(car);
+//        Picasso.with(context).load(Uri.parse(url)).into(car);
+        Picasso.get().load(Uri.parse(url)).into(car);
 
         final ViewGroup viewGroup = convertView.findViewById(R.id.gv_ly);
 

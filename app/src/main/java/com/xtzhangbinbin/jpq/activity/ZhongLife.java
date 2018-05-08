@@ -123,7 +123,8 @@ public class ZhongLife extends BaseActivity {
                 MeishiListBean.DataBean.ResultBean bean = list.get(position);
                 ImageView imageView = holder.getView(R.id.imageView);
 //                OKhttptils.getPic(getActivity(),bean.getZsh_img(),imageView);
-                Picasso.with(ZhongLife.this).load(bean.getZsh_img()).into(imageView);
+//                Picasso.with(ZhongLife.this).load(bean.getZsh_img()).into(imageView);
+                Picasso.get().load(bean.getZsh_img()).into(imageView);
                 TextView tvName = holder.getView(R.id.tv_name);
                 tvName.setText(bean.getZsh_name());
                 TextView tvPrice = holder.getView(R.id.tv_price);

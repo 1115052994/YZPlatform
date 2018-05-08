@@ -97,7 +97,8 @@ public class CarProductSX extends BaseActivity {
             public void convert(ViewHolder holder, Object item, int position) {
                 CheyongpinBean.DataBean.ResultBean bean = list.get(position);
                 ImageView imageView = holder.getView(R.id.image);
-                Picasso.with(getApplicationContext()).load(bean.getJd_sp_imageurl()).into(imageView);
+//                Picasso.with(getApplicationContext()).load(bean.getJd_sp_imageurl()).into(imageView);
+                Picasso.get().load(bean.getJd_sp_imageurl()).into(imageView);
                 TextView name = holder.getView(R.id.tv_name);
                 name.setText(bean.getJd_sp_warename());
                 TextView grade = holder.getView(R.id.tv_grade);

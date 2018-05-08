@@ -70,7 +70,8 @@ public class BrandGVAdapter extends BaseAdapter {
         if(list.get(position).get("image_carbrand")!=null) {
             String url = Config.BASE_URL + Config.Y + list.get(position).get("image_carbrand");
             car.setImageBitmap(null);
-            Picasso.with(context).load(Uri.parse(url)).into(car);
+//            Picasso.with(context).load(Uri.parse(url)).into(car);
+            Picasso.get().load(Uri.parse(url)).into(car);
         }
         return convertView;
     }

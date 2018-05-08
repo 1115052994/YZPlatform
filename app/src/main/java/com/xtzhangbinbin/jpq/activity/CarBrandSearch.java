@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.idst.nls.internal.utils.HttpUtils;
 import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.AppraiseInterface;
 import com.xtzhangbinbin.jpq.R;
@@ -39,6 +40,7 @@ import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.view.ExpandableGridView;
 import com.xtzhangbinbin.jpq.view.LetterSideBar;
 import com.squareup.picasso.Picasso;
+import com.zhy.http.okhttp.https.HttpsUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +57,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
+@SuppressWarnings("all")
 public class CarBrandSearch extends BaseActivity {
 
     @BindView(R.id.edit_search)
@@ -235,7 +237,8 @@ public class CarBrandSearch extends BaseActivity {
                     if (recyclerList.get(position).get("image_carbrand") != null) {
                         String url = Config.BASE_URL + Config.Y + recyclerList.get(position).get("image_carbrand");
                         brand.setImageBitmap(null);
-                        Picasso.with(CarBrandSearch.this).load(Uri.parse(url)).into(brand);
+//                        Picasso.with(CarBrandSearch.this).load(Uri.parse(url)).into(brand);
+                        Picasso.get().load(Uri.parse(url)).into(brand);
                     }
                     if (recyclerList.get(position).get("tv_carbrand") != null) {
                         name.setText(recyclerList.get(position).get("tv_carbrand"));
@@ -350,7 +353,8 @@ public class CarBrandSearch extends BaseActivity {
                 if (!"".equals(map.get("image_carbrand"))) {
                     String url = Config.BASE_URL + Config.Y + map.get("image_carbrand");
                     imageView.setImageBitmap(null);
-                    Picasso.with(CarBrandSearch.this).load(Uri.parse(url)).into(imageView);
+//                    Picasso.with(CarBrandSearch.this).load(Uri.parse(url)).into(imageView);
+                    Picasso.get().load(Uri.parse(url)).into(imageView);
                 }
             }
         };
@@ -478,7 +482,8 @@ public class CarBrandSearch extends BaseActivity {
                     String url = Config.BASE_URL + Config.Y + imageId;
                     Log.i("historyCarSearch","imageId="+imageId);
                     imageView.setImageBitmap(null);
-                    Picasso.with(CarBrandSearch.this).load(url).into(imageView);
+//                    Picasso.with(CarBrandSearch.this).load(url).into(imageView);
+                    Picasso.get().load(url).into(imageView);
                     TextView tv_all = holder.getView(R.id.tv_all);
                     tv_all.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -501,7 +506,8 @@ public class CarBrandSearch extends BaseActivity {
                     //if(!"".equals(map.get("image_carbrand"))) {
                     String url = Config.BASE_URL + Config.Y + map.get("image_carbrand");
                     imageView.setImageBitmap(null);
-                    Picasso.with(CarBrandSearch.this).load(url).into(imageView);
+//                    Picasso.with(CarBrandSearch.this).load(url).into(imageView);
+                    Picasso.get().load(url).into(imageView);
                     //}
                 }
             }

@@ -116,7 +116,8 @@ public class ModelsChoose extends BaseActivity {
                     if (recyclerList.get(position).get("image_carbrand") != null) {
                         String url = Config.BASE_URL + Config.Y + recyclerList.get(position).get("image_carbrand");
                         brand.setImageBitmap(null);
-                        Picasso.with(ModelsChoose.this).load(Uri.parse(url)).into(brand);
+//                        Picasso.with(ModelsChoose.this).load(Uri.parse(url)).into(brand);
+                        Picasso.get().load(Uri.parse(url)).into(brand);
                     }
                     if (recyclerList.get(position).get("tv_carbrand") != null) {
                         name.setText(recyclerList.get(position).get("tv_carbrand"));
@@ -250,7 +251,8 @@ public class ModelsChoose extends BaseActivity {
                     ImageView imageView = holder.getView(R.id.image_carbrand);
                     String url = Config.BASE_URL +  Config.Y +imageId;
                     imageView.setImageBitmap(null);
-                    Picasso.with(ModelsChoose.this).load(url).into(imageView);
+//                    Picasso.with(ModelsChoose.this).load(url).into(imageView);
+                    Picasso.get().load(url).into(imageView);
                 } else {
                     TextView tv_carbrand = holder.getView(R.id.tv_carbrand);
                     TextView tv_num = holder.getView(R.id.tv_num);
@@ -259,7 +261,8 @@ public class ModelsChoose extends BaseActivity {
                     tv_num.setText(map.get("tv_num"));
                     String url = Config.BASE_URL + Config.Y + map.get("image_carbrand");
                     imageView.setImageBitmap(null);
-                    Picasso.with(ModelsChoose.this).load(url).into(imageView);
+//                    Picasso.with(ModelsChoose.this).load(url).into(imageView);
+                    Picasso.get().load(url).into(imageView);
                 }
             }
         };

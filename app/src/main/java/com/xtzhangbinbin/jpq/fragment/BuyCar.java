@@ -1038,7 +1038,7 @@ public class BuyCar extends Fragment {
         OKhttptils.post(getActivity(), Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.i("BuyCarresponse", response);
+//                Log.i("BuyCarresponse", response);
                 try {
                     JSONObject object = new JSONObject(response);
                     if ("1".equals(object.getString("status"))) {
@@ -1049,7 +1049,7 @@ public class BuyCar extends Fragment {
                         recyclerList.clear();
                         List<BuyCarBean.DataBean.ResultBean> list = buyCarBean.getData().getResult();
                         if (list.size() == 0) {
-                            ToastUtil.show(getActivity(), "未查询到相关车系");
+//                            ToastUtil.show(getActivity(), "未查询到相关车系");
                             if (imageBlank!=null)
                                 imageBlank.setVisibility(View.VISIBLE);
                         }else{

@@ -157,7 +157,8 @@ public class ZhongLifeDetail extends BaseActivity implements GeocodeSearch.OnGeo
                             tvName.setText(bean.getZsh_name());
                             tvPrice.setText("人均￥"+bean.getZsh_avg_price()+"元");
                             locTv.setText(bean.getZsh_addr());
-                            Picasso.with(getApplicationContext()).load(bean.getZsh_img()).into(banner);
+//                            Picasso.with(getApplicationContext()).load(bean.getZsh_img()).into(banner);
+                            Picasso.get().load(bean.getZsh_img()).into(banner);
                             int level = (int) bean.getZsh_level();
                             switch (level) {
                                 case 5:

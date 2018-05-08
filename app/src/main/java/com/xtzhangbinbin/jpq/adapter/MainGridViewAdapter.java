@@ -101,7 +101,8 @@ public class MainGridViewAdapter extends BaseAdapter {
          */
 
         viewHolder.tv.setText(mDatas.get(pos).getServerDesc());
-        Picasso.with(context).load(Config.BASE_URL + Config.Y + mDatas.get(pos).getServerImgPath()).into(viewHolder.iv);
+//        Picasso.with(context).load(Config.BASE_URL + Config.Y + mDatas.get(pos).getServerImgPath()).into(viewHolder.iv);
+        Picasso.get().load(Config.BASE_URL + Config.Y + mDatas.get(pos).getServerImgPath()).into(viewHolder.iv);
         /* 下载好的图片需要缓存到本地 */
 //        viewHolder.iv.setImageBitmap(mDatas.get(pos).getServerImgPath());
         return convertView;

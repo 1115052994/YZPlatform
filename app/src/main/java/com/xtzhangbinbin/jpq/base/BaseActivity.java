@@ -561,7 +561,8 @@ public class BaseActivity extends AppCompatActivity{
         mContext = context;
         String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name="+file_id+".jpg";
         Log.i("url","url==="+url);
-        Picasso.with(mContext).load(Uri.parse(url)).into(icon);
+//        Picasso.with(mContext).load(Uri.parse(url)).into(icon);
+        Picasso.get().load(Uri.parse(url)).into(icon);
     }
 
 
