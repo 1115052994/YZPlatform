@@ -231,10 +231,10 @@ public class MainFragment extends Fragment implements AMapLocationListener {
                     JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);
                 }
                 break;
-            case R.id.image_czcl:
+            /*case R.id.image_czcl:
                 break;
             case R.id.yzfw:
-                break;
+                break;*/
             case R.id.image_xyd:
                 JumpUtil.newInstance().jumpRight(getContext(), CarCredit.class);
                 break;

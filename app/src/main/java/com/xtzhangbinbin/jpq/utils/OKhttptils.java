@@ -176,6 +176,7 @@ public class OKhttptils {
 //        }
 //            .placeholder(R.drawable.user_placeholder).error(R.drawable.user_placeholder_error)
         String url = Config.GET_Pic + file_id + "&type=showbase64thumbnail&name=" + file_id + ".jpg";
+        Log.i("url===",url);
         if (file_id == null) {
             icon.setImageResource(R.drawable.no_pic);
         } else {

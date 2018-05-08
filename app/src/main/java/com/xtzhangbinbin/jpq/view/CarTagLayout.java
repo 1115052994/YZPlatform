@@ -51,7 +51,7 @@ public class CarTagLayout extends ViewGroup {
         int maxHeight = 0;
 
         for (int i = 0; i < childCount; i++) {
-            position = i;
+            final int position = i;
             // 2.1.1 for循环测量子View
             View childView = getChildAt(i);
             // 这段话执行之后就可以获取子View的宽高，因为会调用子View的onMeasure
@@ -147,7 +147,6 @@ public class CarTagLayout extends ViewGroup {
     }
 
     OnItemClickListener clickListener;
-    int position;
     public interface OnItemClickListener{
         void onClick(View view,int position);
     }

@@ -58,6 +58,7 @@ public class Welcome extends AppCompatActivity {
                             @Override
                             public void run() {
                                 startAPP();
+                                Welcome.this.finish();
                             }
                         }, 3000);
 

@@ -74,6 +74,7 @@ public class Guide extends AppCompatActivity implements ViewPager.OnPageChangeLi
                         //跳转到主界面
                         Intent loginActivity = new Intent(Guide.this, LoginActivity.class);
                         startActivity(loginActivity);
+                        Guide.this.finish();
                         return true;
 
                     }
