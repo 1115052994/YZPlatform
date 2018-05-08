@@ -112,6 +112,7 @@
             android:layout_marginRight="@dimen/common17dp"
             android:layout_toLeftOf="@id/item_lilayout1"
             android:id="@+id/bianji"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/item_lilayout1"

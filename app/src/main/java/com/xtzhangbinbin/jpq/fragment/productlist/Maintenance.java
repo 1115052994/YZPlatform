@@ -130,16 +130,14 @@ public class Maintenance extends Fragment {
         android.util.Log.d("prod_service_type_item", "getData: "+prod_service_type_item);
         map.put("prod_service_type_item", prod_service_type_item);
         map.put("pageIndex",String.valueOf(pageIndex));
-        Log.w("test", map.toString());
         OKhttptils.post((Activity) getContext(), Config.COMPPRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.d("aaaaa", "onResponse456: " + response);
                 Gson gson = GsonFactory.create();
                 CarBeautyBean carBeauty = gson.fromJson(response, CarBeautyBean.class);
                 pageCount=carBeauty.getData().getPageCount();
                 result.addAll(carBeauty.getData().getResult());
-               carBeautyAdapter.notifyDataSetChanged();
+                carBeautyAdapter.notifyDataSetChanged();
 
                 //没有信息图片显示
                 if (result.size() <= 0) {

@@ -2,6 +2,7 @@ package com.xtzhangbinbin.jpq.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,11 @@ import android.widget.TextView;
 
 import com.xtzhangbinbin.jpq.R;
 import com.suke.widget.SwitchButton;
+import com.xtzhangbinbin.jpq.activity.ShowProductDetailActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.CarBeautyBean;
+import com.xtzhangbinbin.jpq.entity.ShowProductDetaile;
+import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 
 import java.util.HashMap;
@@ -69,7 +73,9 @@ public class CarBeautyAdapter extends RecyclerView.Adapter<CarBeautyAdapter.View
         holder.bianji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle bundle = new Bundle();
+                bundle.putString("prod_id",result.get(position).getProd_id() );
+                JumpUtil.newInstance().jumpRight(context, ShowProductDetailActivity.class, bundle);
             }
         });
 

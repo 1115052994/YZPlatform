@@ -102,7 +102,7 @@ public class BuyCarBean {
             private String car_1_icon_file_id;
             private int car_price;
             private String car_sign_date;
-            private int car_mileage;
+            private String car_mileage;
             private int age;
 
             public String getCar_name() {
@@ -161,11 +161,11 @@ public class BuyCarBean {
                 this.car_sign_date = car_sign_date;
             }
 
-            public int getCar_mileage() {
+            public String getCar_mileage() {
                 return car_mileage;
             }
 
-            public void setCar_mileage(int car_mileage) {
+            public void setCar_mileage(String car_mileage) {
                 this.car_mileage = car_mileage;
             }
 

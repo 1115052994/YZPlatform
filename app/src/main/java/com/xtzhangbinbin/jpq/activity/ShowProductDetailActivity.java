@@ -43,6 +43,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /* 修改商家产品 */
+@SuppressWarnings("all")
 public class ShowProductDetailActivity extends BaseActivity {
 
     private static final String TAG = "修改商家产品";
@@ -153,6 +154,9 @@ public class ShowProductDetailActivity extends BaseActivity {
 //        Bundle bundle = getIntent().getExtras();
 //        bundle.getString("prod_id");
         prod_id = "62";
+        if(getIntent().getStringExtra("prod_id") != null){
+            prod_id = getIntent().getStringExtra("prod_id");
+        }
         getData();
     }
 
@@ -190,7 +194,7 @@ public class ShowProductDetailActivity extends BaseActivity {
         OKhttptils.post(ShowProductDetailActivity.this, Config.GET_COMP_SERVICE_TYPE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.i(TAG, "onResponse: " + response);
+                Log.i(TAG, "test: " + response);
                 /**
                  * {"data":{"result":[{"dic_id":"YZcompcfwlxwxby","dic_value":"维修保养"},{"dic_id":"YZcompcfwlxxc","dic_value":"洗车"},{"dic_id":"YZcompcfwlxjx","dic_value":"驾校"},{"dic_id":"YZcompcfwlxfwjg","dic_value":"服务机构"},{"dic_id":"YZcompcfwlxjcz","dic_value":"监测站"},{"dic_id":"YZcompcfwlxqcgz","dic_value":"汽车改装"}]},"message":"","status":"1"}
                  * */
@@ -215,6 +219,7 @@ public class ShowProductDetailActivity extends BaseActivity {
     /* 获取数据 */
     private void getData() {
         Map<String, String> map = new HashMap<>();
+        Log.w("test", prod_id);
         map.put("prod_id", prod_id);
         OKhttptils.post(ShowProductDetailActivity.this, Config.SHOW_PRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
