@@ -161,6 +161,7 @@ public class Config {
     //添加二手车图片
     public static final String ACCRETIONPICTURECAR = M + S + "accretionPictureCar";
 
+
     //获取登录企业的服务细项类型（添加服务产品用）
     public static final String ALLSERVERITEMTYPE = M + S + "allServerItemType";
 

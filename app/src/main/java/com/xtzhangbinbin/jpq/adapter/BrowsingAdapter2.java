@@ -75,8 +75,7 @@ public class BrowsingAdapter2 extends BaseAdapter {
         viewHolder.browsing_km.setText("浏览时间: "+result.get(position).getLog_date());
         viewHolder.browsing_image.setType(ZQImageViewRoundOval.TYPE_ROUND);
         viewHolder.browsing_image.setRoundRadius(5);
-//        OKhttptils.getPic(context,result.get(position).getAuth_comp_img_head_file_id(),viewHolder.browsing_image);
-        getBitmap(result.get(position).getAuth_comp_img_head_file_id(),viewHolder.browsing_image);
+        OKhttptils.getPic(context,result.get(position).getAuth_comp_img_head_file_id(),viewHolder.browsing_image);
         viewHolder.browsing_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -91,7 +90,6 @@ public class BrowsingAdapter2 extends BaseAdapter {
                 ordinaryDialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
                     @Override
                     public void onYesClick() {
-                        if(callBrowsing!=null){
                             if (NetUtil.isNetAvailable(context)) {
                                 map.clear();
                                 map.put("log_id",result.get(position).getLog_id());  //别忘记改
@@ -99,8 +97,9 @@ public class BrowsingAdapter2 extends BaseAdapter {
                                     @Override
                                     public void success(String response) {
                                         Log.i("aaaa", "删除: " +result.get(position).getLog_id()+response);
-                                        callBrowsing.getCallBrowsing(view,"",position);
-
+                                        if(callBrowsing!=null){
+                                            callBrowsing.getCallBrowsing(view,"",position);
+                                        }
                                     }
                                     @Override
                                     public void fail(String response) {
@@ -108,7 +107,6 @@ public class BrowsingAdapter2 extends BaseAdapter {
                                     }
                                 });
                             }
-                        }
                         ordinaryDialog.dismiss();
                     }
                 });
@@ -123,56 +121,11 @@ public class BrowsingAdapter2 extends BaseAdapter {
         TextView browsing_tv,browsing_km;
         LinearLayout browsing_delete;
     }
+    public interface CallBrowsing {
+        void getCallBrowsing(View view,String is,int position);
+    }
     public void getBrowsingCall(CallBrowsing callBrowsing){
         this.callBrowsing=callBrowsing;
     }
-    public void getBitmap(final String file_id, final ZQImageViewRoundOval circleImageView){
-        //通过ID获得图片
-        if(file_id!=null){
-            if (NetUtil.isNetAvailable(context)) {
-                map.clear();
-                map.put("file_id",file_id);
-                OKhttptils.post((Activity) context, Config.GET_BASE64, map, new OKhttptils.HttpCallBack() {
-                    @Override
-                    public void success(String response) {
-                        Log.w("aaa", "onResponse获取base64: " + response );
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString("status").equals("1")) {
-                                String data = jsonObject.getString("data");
-                                JSONObject object = new JSONObject(data);
-                                String file_content = object.getString("file_content");
-                                if (file_content.contains("base64,"))
-                                    file_content = file_content.split("base64,")[1];
-                                Bitmap bitmap = PhotoUtils.base64ToBitmap(file_content);
-                                Log.d("aaaa", "file_id: "+bitmap);
-                                if (bitmap!=null)
-                                    circleImageView.setImageBitmap(bitmap);
-                                else
-                                    circleImageView.setImageResource(R.drawable.qy_heat);
-                            } else {
-                                ToastUtil.noNAR(context);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                    @Override
-                    public void fail(String response) {
-                        Toast.makeText(context, "获取失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                ToastUtil.noNetAvailable(context);
-            }
-        }
-    }
-
-
-
-
-
-
 
 }

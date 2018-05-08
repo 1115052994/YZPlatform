@@ -41,7 +41,6 @@ import java.util.Map;
 public class OrdersPersonalAdapter extends BaseAdapter {
     private Context context;
     private List<Orders.DataBean.ResultBean> result;
-    private CallBrowsing callBrowsing;
     private Map<String, String> map = new HashMap<>();
 
     public OrdersPersonalAdapter(Context context, List<Orders.DataBean.ResultBean> result) {

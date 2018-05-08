@@ -16,7 +16,6 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.BrowsingAdapter;
-import com.xtzhangbinbin.jpq.adapter.CallBrowsing;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.QueryCarRecord;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
@@ -30,6 +29,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,12 +87,24 @@ public class BrowseCarRecord extends Fragment {
                     }
                 });
 
-        browsingAdapter.getBrowsingCall(new CallBrowsing() {
+        browsingAdapter.getBrowsingCall(new BrowsingAdapter.CallBrowsing() {
             @Override
-            public void getCallBrowsing(View view, String is,int position) {
-                   //浏览记录地址
+            public void getCallBrowsing(View view, String is, final int position) {
+                Map<String, String> map = new HashMap<>();
+                map.put("log_id",result.get(position).getLog_id());
+                OKhttptils.post((Activity) getContext(), Config.BROWSEDLOG, map, new OKhttptils.HttpCallBack() {
+                    @Override
+                    public void success(String response) {
+                        Log.d("aaaaa", "onResponse获取数据: " + response);
                         result.remove(position);
                         browsingAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void fail(String response) {
+                        Log.d("aaaa", "fail: " + response);
+                    }
+                });
             }
         });
         return inflate;
