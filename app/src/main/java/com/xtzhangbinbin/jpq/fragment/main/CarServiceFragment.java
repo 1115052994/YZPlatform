@@ -84,7 +84,7 @@ import io.reactivex.functions.Consumer;
  * Created by glp on 2018/4/18.
  * 描述：车服务
  */
-
+@SuppressWarnings("all")
 public class CarServiceFragment extends Fragment implements View.OnClickListener, AMapLocationListener {
     private static final String TAG = "车服";
     @BindView(R.id.banner)

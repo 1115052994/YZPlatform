@@ -287,7 +287,7 @@ public class CarProductDetail {
             private String car_19_desc;
             private String car_5_file_id;
             private String car_23_desc;
-            private int car_price;
+            private String car_price;
             private String car_15_file_id;
             private String car_brand_cn;
             private String car_10_icon_file_id;
@@ -1145,11 +1145,11 @@ public class CarProductDetail {
                 this.car_23_desc = car_23_desc;
             }
 
-            public int getCar_price() {
+            public String getCar_price() {
                 return car_price;
             }
 
-            public void setCar_price(int car_price) {
+            public void setCar_price(String car_price) {
                 this.car_price = car_price;
             }
 

@@ -495,7 +495,7 @@ public class CarDetailsActivity extends BaseActivity {
         mGPS.setText(address);
         carName = carDetailBean.getCar_name();
         mCarName.setText(carName);
-        double d = carDetailBean.getCar_price();
+        double d = Double.parseDouble(carDetailBean.getCar_price());
         DecimalFormat df = new DecimalFormat("#0.00");
         price = String.valueOf(df.format(d / 10000));
         mPrice.setText(price);
@@ -769,6 +769,7 @@ public class CarDetailsActivity extends BaseActivity {
             carImgInfoListBean = carImgInfoListBeans.get(position);
             //缩略图id
             String file_id = carImgInfoListBean.getIconImg();
+            Log.w("test", Config.GET_Pic + file_id + "&type=showbase64thumbnail&name=" + file_id + ".jpg");
             OKhttptils.getPic(currtActivity, file_id, holder.mPic);
             String type = carImgInfoListBean.getImgName();
             holder.mType.setText(type);

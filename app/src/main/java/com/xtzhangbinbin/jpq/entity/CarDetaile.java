@@ -159,13 +159,13 @@ public class CarDetaile {
                 private int comp_eval_level;
                 private String putWayDate;
                 private int car_visit_count;
-                private int car_price;
+                private String car_price;
                 private String emissions;
                 private String seating;
                 private int on_sale_count;
                 private String car_seating;
                 private String car_24_icon_file_id;
-                private int car_mileage;
+                private String car_mileage;
                 private List<TopImgListBean> topImgList;
                 private List<CarImgInfoListBean> carImgInfoList;
 
@@ -457,11 +457,11 @@ public class CarDetaile {
                     this.car_visit_count = car_visit_count;
                 }
 
-                public int getCar_price() {
+                public String getCar_price() {
                     return car_price;
                 }
 
-                public void setCar_price(int car_price) {
+                public void setCar_price(String car_price) {
                     this.car_price = car_price;
                 }
 
@@ -505,11 +505,11 @@ public class CarDetaile {
                     this.car_24_icon_file_id = car_24_icon_file_id;
                 }
 
-                public int getCar_mileage() {
+                public String getCar_mileage() {
                     return car_mileage;
                 }
 
-                public void setCar_mileage(int car_mileage) {
+                public void setCar_mileage(String car_mileage) {
                     this.car_mileage = car_mileage;
                 }
 
