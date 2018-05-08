@@ -122,7 +122,8 @@ public class AlipayUtil {
 		OKhttptils.post(context, Config.ORDERS_ALIPAY_SIGNINFO, map, new OKhttptils.HttpCallBack() {
 			@Override
 			public void success(String response) {
-				dialog.dismiss();
+				if(null != dialog && dialog.isShowing())
+					dialog.dismiss();
 				try {
 					JSONObject object = new JSONObject(response);
 					if(null != object){
@@ -156,7 +157,8 @@ public class AlipayUtil {
 
 			@Override
 			public void fail(String response) {
-				dialog.dismiss();
+				if(null != dialog && dialog.isShowing())
+					dialog.dismiss();
 				try {
 					JSONObject jsonObject = new JSONObject(response);
 					ToastUtil.show(context, jsonObject.getString("message"));

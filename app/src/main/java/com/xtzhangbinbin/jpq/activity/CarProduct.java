@@ -54,14 +54,14 @@ public class CarProduct extends BaseActivity {
         setContentView(R.layout.activity_car_product);
         ButterKnife.bind(this);
         type = "YZcarYPcyplxetzy";
-        Intent intent = getIntent();
-        if (intent!=null){
-            Bundle bundle = intent.getExtras();
-            if (bundle!=null) {
-                if (!"".equals(bundle.getString("String","")))
-                    type = bundle.getString("String","");
-            }
-        }
+//        Intent intent = getIntent();
+//        if (intent!=null){
+//            Bundle bundle = intent.getExtras();
+//            if (bundle!=null) {
+//                if (!"".equals(bundle.getString("String","")))
+//                    type = bundle.getString("String","");
+//            }
+//        }
         initView();
 //        scrollView.fullScroll(ScrollView.FOCUS_UP);//滚动到顶部
 //        scrollView.fullScroll(ScrollView.FOCUS_DOWN);//滚动到底部

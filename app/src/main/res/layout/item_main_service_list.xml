@@ -119,6 +119,7 @@
             android:layout_marginTop="@dimen/common8dp"
             android:lines="2"
             android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="@color/text_66"
             android:textSize="@dimen/text_size_11sp" />
 
