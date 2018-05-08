@@ -226,7 +226,8 @@ public class CompDetail extends BaseActivity {
                 TextView des = view.findViewById(R.id.staffDes_tv);
                 des.setText(staffList.get(position).getStaff_info());
                 CircleImageView imageView = view.findViewById(R.id.circleImage);
-                getPic(CompDetail.this, staffList.get(position).getStaff_photo_file_id(), imageView);
+//                getPic(CompDetail.this, staffList.get(position).getStaff_photo_file_id(), imageView);
+                OKhttptils.getPicByHttp(CompDetail.this, staffList.get(position).getStaff_photo_file_id(), imageView);
                 return view;
             }
         };
@@ -500,7 +501,6 @@ public class CompDetail extends BaseActivity {
             public void convert(ViewHolder holder, Object item, int position) {
                 CircleImageView circleImageView = holder.getView(R.id.circle_Name);
                 if (compAppraiseList.get(position).getPers_head_file_id() != null) {
-                    //getPic(CompDetail.this, compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
                     OKhttptils.getPic(CompDetail.this, compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
                 }
                 TextView phone = holder.getView(R.id.tv_phone);

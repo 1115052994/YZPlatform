@@ -26,6 +26,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.xtzhangbinbin.jpq.AppraiseInterface;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AdvanceSX;
@@ -45,10 +49,6 @@ import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.CarTagLayout;
 import com.xtzhangbinbin.jpq.view.ExpandableGridView;
 import com.xtzhangbinbin.jpq.view.SeekBarPressure;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -119,6 +119,8 @@ public class BuyCar extends Fragment {
     CoordinatorLayout corrdinLayout;
     @BindView(R.id.recyclerView_foot_more)
     ClassicsFooter recyclerViewFootMore;
+    @BindView(R.id.image_blank)
+    ImageView imageBlank;
 
     // 轮播图
     private List<String> bannersImage = new ArrayList<>();
@@ -171,6 +173,7 @@ public class BuyCar extends Fragment {
     private MyBroadcast smsBroadCastReceiver;
 
     private View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -184,7 +187,7 @@ public class BuyCar extends Fragment {
         resetParams();
         getData();
         // 广播
-        smsBroadCastReceiver = new MyBroadcast ();
+        smsBroadCastReceiver = new MyBroadcast();
         //实例化过滤器并设置要过滤的广播
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("city");
@@ -756,7 +759,7 @@ public class BuyCar extends Fragment {
                     }
                 } else {
                     if (progressHigh == 6) {
-                        tvPrice.setText((int) progressLow  + "0万以上");
+                        tvPrice.setText((int) progressLow + "0万以上");
                         startPrice = (int) progressLow * 10 + "";
                         endPrice = "";
                     } else {
@@ -924,7 +927,7 @@ public class BuyCar extends Fragment {
                     JSONObject result = data.getJSONObject("result");
                     cityId = result.getString("city_id");
 //                    Log.i("city_Id",cityId);
-                    if (getActivity()!=null)
+                    if (getActivity() != null)
                         getCarList();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -958,7 +961,7 @@ public class BuyCar extends Fragment {
                         for (CarParams.DataBean.ResultBean.BannerListBean bean : bannerListBeans) {
                             bannersImage.add(bean.getAdve_file_id());
                         }
-                        if (banner !=null) {
+                        if (banner != null) {
                             banner.setImages(bannersImage);
                             banner.start();
                         }
@@ -1047,6 +1050,11 @@ public class BuyCar extends Fragment {
                         List<BuyCarBean.DataBean.ResultBean> list = buyCarBean.getData().getResult();
                         if (list.size() == 0) {
                             ToastUtil.show(getActivity(), "未查询到相关车系");
+                            if (imageBlank!=null)
+                                imageBlank.setVisibility(View.VISIBLE);
+                        }else{
+                            if (imageBlank!=null)
+                                imageBlank.setVisibility(View.INVISIBLE);
                         }
                         for (BuyCarBean.DataBean.ResultBean bean : list
                                 ) {
@@ -1204,7 +1212,7 @@ public class BuyCar extends Fragment {
         selectedRankId = "";
 
         // 清空liu布局
-        if (cartagLayout!=null) {
+        if (cartagLayout != null) {
             cartagLayout.removeAllViews();
             carLy.setVisibility(View.GONE);
         }
@@ -1264,13 +1272,12 @@ public class BuyCar extends Fragment {
     }
 
 
-
     class MyBroadcast extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             String city = intent.getStringExtra("city");
-            if (city!=null&&!"".equals(city)){
+            if (city != null && !"".equals(city)) {
                 cityName = city;
                 getCityId();
             }
@@ -1284,8 +1291,8 @@ public class BuyCar extends Fragment {
     }
 
 
-
     private String param = "";
+
     public void setParam(String param) {
         Log.i("param---", param);
         this.param = param;
@@ -1294,9 +1301,10 @@ public class BuyCar extends Fragment {
             public void run() {
                 mainSX();
             }
-        },100);
+        }, 100);
     }
-    private void mainSX(){
+
+    private void mainSX() {
         // 清空上次选择
         resetParams();
         switch (param) {
@@ -1339,7 +1347,7 @@ public class BuyCar extends Fragment {
                 selectedRankId = "intelligence";
                 break;
             default:
-                if (param.contains(",")){
+                if (param.contains(",")) {
                     String[] searchData = param.split(",");
                     selectedBrand.put("tv_carbrand", searchData[0]);
                     selectedBrand.put("id_carbrand", searchData[1]);
@@ -1367,7 +1375,7 @@ public class BuyCar extends Fragment {
                     }
                     carView.setText(searchData[2]);
                 }
-                 break;
+                break;
         }
         // 重新筛选
         getCarList();

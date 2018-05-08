@@ -62,14 +62,15 @@ public class PersonalCenterActivity extends BaseActivity {
                     Gson gson = GsonFactory.create();
                     PersonalSetting setting = gson.fromJson(response, PersonalSetting.class);
                     PersonalSetting.DataBean.ResultBean resultBean = setting.getData().getResult();
-                    head_file_id = resultBean.getPers_head_file_id();
-                    phone = resultBean.getPers_phone();
-                    mPhone.setText(DataConcealUtil.toConceal(phone));
-                    if (head_file_id == "") {
+                    if (resultBean!=null) {
+                        head_file_id = resultBean.getPers_head_file_id();
+                        phone = resultBean.getPers_phone();
+                        mPhone.setText(DataConcealUtil.toConceal(phone));
+                        if (head_file_id == "") {
 
-
-                    } else {
-                        OKhttptils.getPic(PersonalCenterActivity.this, head_file_id, mIcon);
+                        } else {
+                            OKhttptils.getPic(PersonalCenterActivity.this, head_file_id, mIcon);
+                        }
                     }
 
                 }
