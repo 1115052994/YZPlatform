@@ -134,7 +134,6 @@ public class StarAdapter extends BaseAdapter {
         viewHolder.item_lilayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Toast.makeText(context, i+"删除", Toast.LENGTH_SHORT).show();
                 staff_id = result.get(i).getStaff_id();
                 staff_photo_file_id = result.get(i).getStaff_photo_file_id();
                 final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("删除明星员工").setMessage2("删除后不可恢复，确定清除？").showDialog();

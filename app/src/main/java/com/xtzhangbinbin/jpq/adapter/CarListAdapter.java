@@ -91,7 +91,6 @@ public class CarListAdapter extends BaseAdapter {
         viewHolder.car_deal_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Toast.makeText(context, position+"删除", Toast.LENGTH_SHORT).show();
                 final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("温馨提示").setMessage2("  删除后不可恢复，确定清除？").setCancel("取消").setConfirm("确定").showDialog();
                 ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                     @Override

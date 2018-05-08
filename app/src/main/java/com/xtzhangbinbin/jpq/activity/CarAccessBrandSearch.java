@@ -258,6 +258,7 @@ public class CarAccessBrandSearch extends BaseActivity {
                             recyclerList.add(brand);
                         }
                     }
+                    Log.d("aaaaaa", "success: "+recyclerList.toString());
                     recyclerAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();

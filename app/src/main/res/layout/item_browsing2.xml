@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="@dimen/common123dp">
-    <com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval
+    <ImageView
         android:id="@+id/browsing_image"
         android:layout_width="@dimen/common137dp"
         android:layout_height="@dimen/common95dp"

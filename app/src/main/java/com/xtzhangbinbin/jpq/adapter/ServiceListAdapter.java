@@ -83,7 +83,6 @@ public class ServiceListAdapter extends BaseAdapter {
         viewHolder.service_provider_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                    Toast.makeText(context, position+"删除", Toast.LENGTH_SHORT).show();
                     final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(context).setMessage1("删除服务商收藏").setMessage2("删除后不可恢复，确定清除？").showDialog();
                     ordinaryDialog.setNoOnclickListener(new OrdinaryDialog.onNoOnclickListener() {
                         @Override

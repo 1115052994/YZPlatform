@@ -55,7 +55,7 @@ public class Starperformers extends BaseActivity {
         ButterKnife.bind(this);
         starList = findViewById(R.id.star_list);
         layout = findViewById(R.id.layout);
-        getData();
+        getData(null);
         starAdapter = new StarAdapter(this, result);
         starList.setAdapter(starAdapter);
         layout.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +104,7 @@ public class Starperformers extends BaseActivity {
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageIndex = 1;
                 result.clear();
-                getData();
+                getData(refreshlayout);
             }
         });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -135,14 +135,12 @@ public class Starperformers extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getData();
+        getData(null);
     }
 
     //得到数据并且更新数据
-    private void getData() {
-        Log.w("test", "aaaaaaaaaaaaaa");
+    private void getData(final RefreshLayout refreshlayout) {
         result.clear();
-        Log.w("test", "bbbbbb");
         OKhttptils.post(Starperformers.this, Config.SELECTSTAR, new HashMap<String, String>(), new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
@@ -152,11 +150,21 @@ public class Starperformers extends BaseActivity {
                     ToastUtil.show(Starperformers.this, "数据为空");
                 }
                 result.addAll(querystar.getData().getResult());
-                starAdapter.notifyDataSetChanged();
+                if(refreshlayout==null){
+                    starAdapter.notifyDataSetChanged();
+                }
                 if (result.size() <= 0) {
                     noInformationImage.setVisibility(View.VISIBLE);
+                    if(refreshlayout != null){
+                        refreshlayout.finishRefresh(2000);
+                    }
+                } else {
+                    if(refreshlayout != null){
+                        noInformationImage.setVisibility(View.GONE);
+                        starAdapter.notifyDataSetChanged();
+                        refreshlayout.finishRefresh(2000);
+                    }
                 }
-                starAdapter.notifyDataSetChanged();
 
             }
 
