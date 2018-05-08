@@ -217,7 +217,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         map.put("product_code", product.getData().getResult().getProd_id());//产品编号
         map.put("total_amount", String.valueOf(product.getData().getResult().getProd_reduced_price()));//商品优惠后的支付价格
         map.put("total_amount", "0.01");//商品单价
-//        map.put("subject", product.getData().getResult().getProd_service_name());//支付时显示的标题
+        map.put("subject", product.getData().getResult().getProd_service_name());//支付时显示的标题
         StringBuilder body = new StringBuilder();
         body.append(product.getData().getResult().getAuth_comp_name()).append("-").append(product.getData().getResult().getProd_service_name());
         map.put("body", body.toString());//备注说明信息
