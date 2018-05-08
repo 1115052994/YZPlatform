@@ -14,30 +14,33 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common1dp"
         android:background="@color/bg_color"/>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginTop="@dimen/common10dp"
+            android:layout_marginLeft="@dimen/common10dp"
+            android:layout_marginRight="@dimen/common10dp"
+            android:layout_gravity="center"
+            >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
 
-        <RelativeLayout
-            android:layout_width="@dimen/common330.5dp"
-            android:layout_height="@dimen/common31.5dp"
-            android:layout_marginTop="@dimen/common8dp"
-            android:background="@color/text_ff96"
-            android:gravity="center">
+                <GridView
+                    android:scrollbars="none"
+                    android:id="@+id/gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common35dp"
+                    android:gravity="center"
+                    android:numColumns="auto_fit"
+                    android:stretchMode="spacingWidthUniform" >
+                </GridView>
+            </LinearLayout>
+        </HorizontalScrollView>
 
-            <com.xtzhangbinbin.jpq.view.MyGridView
-                android:id="@+id/gridView"
-                android:layout_width="@dimen/common330dp"
-                android:layout_height="@dimen/common30dp"
-                android:layout_marginLeft="@dimen/common0.5dp"
-                android:background="@drawable/aaa1"
-                android:gravity="center"
-                android:horizontalSpacing="1dp"
-                 />
-        </RelativeLayout>
-    </RelativeLayout>
     <View
         android:id="@+id/view"
         android:layout_below="@id/linear"

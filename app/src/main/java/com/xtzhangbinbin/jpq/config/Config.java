@@ -185,7 +185,7 @@ public class Config {
     //查询保险超市所有产品
     public static final String QUERYALLINSURANCE = M + S + "queryAllInsurance";
 
-    //添加二手车图片
+    //查询企业二手车信息
     public static final String COMPCAR = M + S + "compCar";
 
     //商家查看二手车产品信息

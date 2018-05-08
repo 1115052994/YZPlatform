@@ -131,7 +131,7 @@ public class YiSJ extends Fragment {
         OKhttptils.post((Activity) getContext(), Config.COMPCAR, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.d("aaaaa", "onResponse获取数据: " + response);
+                Log.d("aaaaa", "onResponse获取数据2222: " + response);
                 Gson gson = GsonFactory.create();
                 WeisjBean weisjBean = gson.fromJson(response, WeisjBean.class);
                 pageCount=weisjBean.getData().getPageCount();

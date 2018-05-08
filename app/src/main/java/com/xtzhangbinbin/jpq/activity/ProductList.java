@@ -3,14 +3,18 @@ package com.xtzhangbinbin.jpq.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.GridViewAdapter;
 import com.xtzhangbinbin.jpq.adapter.MyFragmentPagerAdapter;
+import com.xtzhangbinbin.jpq.adapter.ProductGridViewAdapter;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.Enterprise;
@@ -37,10 +41,9 @@ import butterknife.ButterKnife;
 public class ProductList extends BaseActivity {
     @BindView(R.id.viewpager)
     CustomViewPager viewpager;
-    private MyGridView mGridView;
+    private GridView mGridView;
     private List<String> mList;
-    private GridViewAdapter mAdapter;
-    int selectorPosition = 0;
+    private ProductGridViewAdapter mAdapter;
     private ArrayList<Fragment> fragments= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,33 +70,27 @@ public class ProductList extends BaseActivity {
                                   mList.add(result.get(i).getServerDesc());
                                   break;
                               case "洗车":
-                                  fragments.add(new Maintenance());
+                                  fragments.add(new Maintenance(result.get(i).getServerId()));
                                   mList.add(result.get(i).getServerDesc());
                                   break;
                               case "美容":
-                                  fragments.add(new CarBeauty());
+                                  fragments.add(new CarBeauty(result.get(i).getServerId()));
                                   mList.add(result.get(i).getServerDesc());
                                   break;
                               case "钣金喷漆":
-                                  fragments.add(new SheetMetal());
+                                  fragments.add(new SheetMetal(result.get(i).getServerId()));
                                   mList.add(result.get(i).getServerDesc());
                                   break;
                               case "维修保养":
-                                  fragments.add(new Maintenance());
+                                  fragments.add(new Maintenance(result.get(i).getServerId()));
                                   mList.add(result.get(i).getServerDesc());
                                   break;
                               case "更换电瓶":
-                                  fragments.add(new Maintenance());
+                                  fragments.add(new Maintenance(result.get(i).getServerId()));
                                   mList.add(result.get(i).getServerDesc());
                                   break;
                           }
 
-                        }
-
-                        if(mList.size()<5){
-                            for (int i = mList.size(); i <5 ; i++) {
-                                mList.add("待添加");
-                            }
                         }
                         viewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments));
                         initView();
@@ -108,23 +105,38 @@ public class ProductList extends BaseActivity {
 
     private void initView() {
         mGridView = findViewById(R.id.gridView);
-        mGridView.setNumColumns(5);
-        //添加数据
-        mAdapter = new GridViewAdapter(this, mList);
-        mGridView.setAdapter(mAdapter);
-        //gridView的点击事件
+        setGridView();
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //把点击的position传递到adapter里面去
                 mAdapter.changeState(position);
-                selectorPosition = position;
-                viewpager.setCurrentItem((position));
+                viewpager.setCurrentItem(position);
             }
         });
         viewpager.setOffscreenPageLimit(mList.size());
 
 
+
+    }
+    /**设置GirdView参数，绑定数据*/
+    private void setGridView() {
+        int size = mList.size();
+        int length = 70;
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+        int gridviewWidth = (int) (size * (length + 4) * density);
+        int itemWidth = (int) (length * density);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+        mGridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        mGridView.setColumnWidth(itemWidth); // 设置列表项宽
+        mGridView.setHorizontalSpacing(-1); // 设置列表项水平间距
+        mGridView.setStretchMode(GridView.NO_STRETCH);
+        mGridView.setNumColumns(size); // 设置列数量=列表集合数
+        mAdapter = new ProductGridViewAdapter(this, mList);
+        mGridView.setAdapter(mAdapter);
     }
 
 
