@@ -291,7 +291,7 @@ public class CompDetail extends BaseActivity {
         };
 //        tabsView.setAdapter(tabAdapter);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,getHeight());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, getHeight());
         banner.setLayoutParams(params);
         banner.setImageLoader(new ImageLoader() {
             @Override
@@ -510,7 +510,7 @@ public class CompDetail extends BaseActivity {
                     OKhttptils.getPic(CompDetail.this, compAppraiseList.get(position).getPers_head_file_id(), circleImageView);
                 }
                 TextView phone = holder.getView(R.id.tv_phone);
-                phone.setText(compAppraiseList.get(position).getPers_phone());
+                phone.setText(StringUtil.isEmpty(compAppraiseList.get(position).getPers_phone()) ? "匿名用户" : compAppraiseList.get(position).getPers_phone().substring(0,3) + "****" + compAppraiseList.get(position).getPers_phone().substring(7));
                 TextView time = holder.getView(R.id.tv_appraiseTime);
                 time.setText(compAppraiseList.get(position).getLog_date());
                 TextView content = holder.getView(R.id.tv_appraise);
@@ -571,7 +571,7 @@ public class CompDetail extends BaseActivity {
                         comp_lat = infoBean.getAuth_comp_lat();
                         if ("2".equals(infoBean.getAuth_audit_state())) {
                             imageRz.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             imageRz.setVisibility(View.GONE);
                         }
                         switch (infoBean.getComp_eval_level()) {
@@ -592,13 +592,13 @@ public class CompDetail extends BaseActivity {
                         for (CompDetailBean.DataBean.ResultBean.StaffListBean staffListBean : resultBean.getStaffList()) {
                             staffList.add(staffListBean);
                         }
-                        if(null != staffList && staffList.isEmpty()){
+                        if (null != staffList && staffList.isEmpty()) {
                             staffsView.setVisibility(View.GONE);
                         } else {
                             staffsView.setVisibility(View.VISIBLE);
-                            if(staffList.size()<=1){
+                            if (staffList.size() <= 1) {
                                 staffsView.setmTabVisibleNums(1);
-                            }else{
+                            } else {
                                 staffsView.setmTabVisibleNums(1.5f);
                             }
                             staffsView.setAdapter(staffAdapter);
@@ -726,7 +726,7 @@ public class CompDetail extends BaseActivity {
         OKhttptils.post(this, Config.QUERYCOMPEVALUATE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.i("appraise===", response);
+                Log.i("test", "评价：" + response);
                 try {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("status");
@@ -752,7 +752,7 @@ public class CompDetail extends BaseActivity {
 
             @Override
             public void fail(String response) {
-                Log.i("appraise===", "fail="+response);
+                Log.i("appraise===", "fail=" + response);
             }
         });
     }
@@ -871,54 +871,63 @@ public class CompDetail extends BaseActivity {
     private Boolean isCollected = false;
 
     private void addCollect() {
-        if (isCollected)
+        if (isCollected) {
             ToastUtil.show(this, "您已收藏过");
-        Map<String, String> map = new HashMap<>();
-        map.put("coll_content_id", comp_id);
-        OKhttptils.post(this, Config.ACCRETIONCOLLCOMP, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                try {
-                    JSONObject object = new JSONObject(response);
-                    String status = object.getString("status");
-                    if ("1".equals(status)) {
-                        JSONObject data = object.getJSONObject("data");
-                        String result = data.getString("result");
-                        if ("1".equals(result)) {
-                            //收藏成功
-                            ToastUtil.show(CompDetail.this, "收藏成功");
-                            tvColl.setTextColor(Color.parseColor("#ff9696"));
-                            imageColl.setImageResource(R.drawable.qy_yelowstar1);
-                        }
+        } else {
+//            收藏成功
+            ToastUtil.show(CompDetail.this, "收藏成功");
+            tvColl.setTextColor(Color.parseColor("#ff9696"));
+            imageColl.setImageResource(R.drawable.qy_yelowstar1);
+            isCollected = true;
+            Map<String, String> map = new HashMap<>();
+            map.put("coll_content_id", comp_id);
+            OKhttptils.post(this, Config.ACCRETIONCOLLCOMP, map, new OKhttptils.HttpCallBack() {
+                @Override
+                public void success(String response) {
+                    try {
+                        JSONObject object = new JSONObject(response);
+//                        String status = object.getString("status");
+//                        if ("1".equals(status)) {
+//                            JSONObject data = object.getJSONObject("data");
+//                            String result = data.getString("result");
+//                            if ("1".equals(result)) {
+//                                //收藏成功
+//                                ToastUtil.show(CompDetail.this, "收藏成功");
+//                                tvColl.setTextColor(Color.parseColor("#ff9696"));
+//                                imageColl.setImageResource(R.drawable.qy_yelowstar1);
+//                            }
+//                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
                 }
 
-            }
+                @Override
+                public void fail(String response) {
 
-            @Override
-            public void fail(String response) {
+                }
+            });
+        }
 
-            }
-        });
+
     }
 
     /**
      * 支付使用方法
      */
-    public void pay(String pro_id){
+    public void pay(String pro_id) {
         //如果已登录，调用支付
-        if(null != Prefs.with(this).read("user_token")){
+        if (null != Prefs.with(this).read("user_token")) {
             String user_type = Prefs.with(this).read("user_type");
             Log.w("test", "type:" + user_type);
             //如果用户类型是个人用户，允许下单。否则不允许
-            if (!StringUtil.isEmpty(user_type) && user_type.equals("pers")){
+            if (!StringUtil.isEmpty(user_type) && user_type.equals("pers")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("pro_id", pro_id);
                 JumpUtil.newInstance().jumpRight(getApplicationContext(), OrdersSubmitActivity.class, bundle);
             } else {
-                ToastUtil.show(this,"对不起，企业用户无法下单!");
+                ToastUtil.show(this, "对不起，企业用户无法下单!");
             }
         } else {
             //如果没有登录，跳转到登录页面

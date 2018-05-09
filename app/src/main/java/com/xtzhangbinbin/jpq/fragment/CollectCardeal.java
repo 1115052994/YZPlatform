@@ -27,6 +27,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +55,7 @@ public class CollectCardeal extends Fragment {
     private int pageCount;//总页数
     private int pageIndex = 1;//第几页
     private HashMap<String, String> map = new HashMap<>();
+    private MyProgressDialog dialog;
 
     public CollectCardeal(Context context) {
         this.context = context;
@@ -64,6 +66,9 @@ public class CollectCardeal extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_collect_cardeal, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        dialog = MyProgressDialog.createDialog(context);
+        dialog.setMessage("正在加载数据");
+        dialog.show();
         PostCar(1, null);
         carListAdapter = new CarListAdapter(context, result);
         carDealListview.setAdapter(carListAdapter);
@@ -104,6 +109,7 @@ public class CollectCardeal extends Fragment {
             OKhttptils.post((Activity) context, Config.CHECKCAR, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    closeDialog();
                     Log.i("aaaaa", "查询二手车收藏: " + response);
                     Gson gson = GsonFactory.create();
                     QueryCarList querystar = gson.fromJson(response, QueryCarList.class);
@@ -133,6 +139,7 @@ public class CollectCardeal extends Fragment {
 
                 @Override
                 public void fail(String response) {
+                    closeDialog();
                     Toast.makeText(context, "查询失败", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -143,5 +150,11 @@ public class CollectCardeal extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void closeDialog(){
+        if(null != dialog && dialog.isShowing()){
+            dialog.dismiss();
+        }
     }
 }

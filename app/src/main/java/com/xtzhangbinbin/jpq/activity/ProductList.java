@@ -29,6 +29,7 @@ import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.view.CustomViewPager;
 import com.xtzhangbinbin.jpq.view.MyGridView;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,15 +51,18 @@ public class ProductList extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
         ButterKnife.bind(this);
+        dialog = MyProgressDialog.createDialog(this);
         getDate();
 
     }
     public void getDate(){
+        showDialog("正在加载产品项");
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(ProductList.this, Config.ALLSERVERITEMTYPE, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
                         Log.d("aaaaa", "onResponse获取数据1111: " + response);
+                        closeDialog();
                         Gson gson = GsonFactory.create();
                         ProductBean enterprise = gson.fromJson(response, ProductBean.class);
                         List<ProductBean.DataBean.ResultBean> result = enterprise.getData().getResult();
@@ -98,6 +102,7 @@ public class ProductList extends BaseActivity {
                     }
                     @Override
                     public void fail(String response) {
+                        closeDialog();
                         Log.d("aaaa", "fail: " + response);
                     }
                 });

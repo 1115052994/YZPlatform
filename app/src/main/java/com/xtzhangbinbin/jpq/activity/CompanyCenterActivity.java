@@ -56,7 +56,7 @@ public class CompanyCenterActivity extends BaseActivity {
         setContentView(R.layout.activity_company_center);
         ButterKnife.bind(this);
         dialog = MyProgressDialog.createDialog(this);
-        dialog.setMessage("正在加载权限信息");
+        dialog.setMessage("正在加载用户信息");
         initView();
 //        getData();
     }

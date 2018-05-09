@@ -154,6 +154,8 @@ public class CarDetailsActivity extends BaseActivity {
     private String price;
     private String order_time;
 
+    private boolean isColl = false;
+
     private int page = 0;
 
     private CarDetaile.DataBean.ResultBean.CarDetailBean carDetailBean;//各种信息
@@ -337,32 +339,40 @@ public class CarDetailsActivity extends BaseActivity {
                         mCollect.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Map<String, String> map = new HashMap<>();
-                                map.put("coll_content_id", car_id);
-                                OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_COLLECT, map, new OKhttptils.HttpCallBack() {
-                                    @Override
-                                    public void success(String response) {
-                                        Log.d(TAG, "success添加收藏: " + response);
-                                        collIcon.setImageResource(R.drawable.qy_yelowstar1);
-
-                                    }
-
-                                    @Override
-                                    public void fail(String response) {
-                                        Log.d(TAG, "fail添加收藏: " + response);
-                                        try {
-                                            JSONObject jsonObject1 = new JSONObject(response);
-                                            ToastUtil.show(currtActivity, jsonObject1.getString("message"));
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
+                                if(isColl){
+                                    ToastUtil.show(CarDetailsActivity.this, "您已经收藏过该车");
+                                } else {
+                                    collIcon.setImageResource(R.drawable.qy_yelowstar1);
+                                    ToastUtil.show(CarDetailsActivity.this, "收藏成功");
+                                    isColl = true;
+                                    Map<String, String> map = new HashMap<>();
+                                    map.put("coll_content_id", car_id);
+                                    OKhttptils.post(currtActivity, Config.CAR_DETAIL_ADD_COLLECT, map, new OKhttptils.HttpCallBack() {
+                                        @Override
+                                        public void success(String response) {
+                                            Log.d(TAG, "success添加收藏: " + response);
+//                                            collIcon.setImageResource(R.drawable.qy_yelowstar1);
                                         }
-                                    }
-                                });
+
+                                        @Override
+                                        public void fail(String response) {
+                                            Log.d(TAG, "fail添加收藏: " + response);
+                                            try {
+                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                ToastUtil.show(currtActivity, jsonObject1.getString("message"));
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+
                             }
                         });
                     } else {
                         //收藏过
                         collIcon.setImageResource(R.drawable.qy_yelowstar1);
+                        isColl = true;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
