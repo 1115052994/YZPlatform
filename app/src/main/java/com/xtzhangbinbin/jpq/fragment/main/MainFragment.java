@@ -1,6 +1,5 @@
 package com.xtzhangbinbin.jpq.fragment.main;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,16 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.AccessCar;
@@ -49,9 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +52,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by glp on 2018/4/18.
@@ -88,6 +79,7 @@ public class MainFragment extends Fragment{
     private double lat,lon;
     private String user_type;
     private String cityId ="";
+    private String dict_id="";
 
     @Nullable
     @Override
@@ -191,7 +183,7 @@ public class MainFragment extends Fragment{
                 JumpUtil.newInstance().jumpRight(getContext(), ETC.class);
                 break;
             case R.id.ly_wby:
-                String dict_id = "YZcompcfwlxwxbywxby";
+                dict_id = "YZcompcfwlxwxbywxby";
                 wxbyListener.pross(dict_id);
                 break;
             case R.id.ly_jyz:
@@ -251,10 +243,17 @@ public class MainFragment extends Fragment{
                 mainActivity.switchToLife();
                 break;
             case R.id.image_wxby:
+                //维修保养
+                dict_id = "YZcompcfwlxwxbywxby";
+                wxbyListener.pross(dict_id);
                 break;
             case R.id.image_xc:
+                dict_id = "YZcompcfwlxxcxc";
+                wxbyListener.pross(dict_id);
                 break;
             case R.id.image_qcmr:
+                dict_id = "YZcompcfwlxxcmr";
+                wxbyListener.pross(dict_id);
                 break;
             case R.id.image_pprm:
                 // 品牌热卖
