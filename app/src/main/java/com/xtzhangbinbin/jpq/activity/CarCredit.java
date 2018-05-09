@@ -20,6 +20,10 @@ import com.xtzhangbinbin.jpq.entity.CreditBean;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.Prefs;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +45,8 @@ public class CarCredit extends BaseActivity {
     private CarCreditAdapter carCreditAdapter;
     private int pageIndex=1;
     private int pageTotal;//总页数
+    private String auth_comp_city;
+    private String dict_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +79,13 @@ public class CarCredit extends BaseActivity {
 
             }
         });
-
-
     }
+
 
     //数据请求
     private void getData(final int pageIndex, final RefreshLayout refreshlayout) {
         Map<String, String> map = new HashMap<>();
+
         map.put("pageIndex", String.valueOf(pageIndex));
         OKhttptils.post(this, Config.QUERYALLTWO, map, new OKhttptils.HttpCallBack() {
             @Override

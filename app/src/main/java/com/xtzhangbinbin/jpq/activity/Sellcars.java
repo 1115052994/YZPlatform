@@ -75,7 +75,7 @@ public class Sellcars extends BaseActivity {
 
     public void PostSellcars() {
         if (NetUtil.isNetAvailable(this)) {
-            OKhttptils.post(this, Config.SELLCOUNT, null, new OKhttptils.HttpCallBack() {
+            OKhttptils.post(this, Config.SELLCOUNT, new HashMap<String, String>(), new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
                     Log.i("aaaaa", "查询卖车申请次数: " + response);
