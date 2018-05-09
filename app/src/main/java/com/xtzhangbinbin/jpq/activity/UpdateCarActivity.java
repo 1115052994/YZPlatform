@@ -1158,7 +1158,6 @@ public class UpdateCarActivity extends BaseActivity {
             ToastUtil.show(UpdateCarActivity.this, "请完善信息后保存");
         }
 
-//        Log.e(TAG, "看看哪些值不对: " + map.toString() );
     }
 
     @Override
