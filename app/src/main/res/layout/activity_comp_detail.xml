@@ -67,6 +67,9 @@
                             android:textSize="@dimen/text_size_16sp"
                             android:layout_marginLeft="@dimen/common5dp"
                             android:textColor="@color/text_33"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:layout_marginRight="@dimen/common50dp"
                             android:text=""/>
                        <!-- <CheckBox
                             android:layout_marginLeft="@dimen/common5dp"

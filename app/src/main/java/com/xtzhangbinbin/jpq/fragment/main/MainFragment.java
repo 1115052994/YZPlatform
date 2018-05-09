@@ -355,11 +355,11 @@ public class MainFragment extends Fragment{
                     JSONObject data = object.getJSONObject("data");
                     JSONObject result = data.getJSONObject("result");
                     cityId = result.getString("city_id");
-                    /**
-                     * 存储城市Id
-                     */
-                    Prefs.with(getActivity()).remove("cityId");
-                    Prefs.with(getActivity()).write("cityId",cityId);
+//                    /**
+//                     * 存储城市Id
+//                     */
+//                    Prefs.with(getActivity()).remove("cityId");
+//                    Prefs.with(getActivity()).write("cityId",cityId);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

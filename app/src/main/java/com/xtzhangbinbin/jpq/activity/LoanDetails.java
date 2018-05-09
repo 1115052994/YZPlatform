@@ -120,11 +120,11 @@ public class LoanDetails extends BaseActivity{
                     JSONObject result = data.getJSONObject("result");
                     auth_comp_city = result.getString("city_id");
                     getData(1,dict_id,auth_comp_city, null);
-                    /**
-                     * 存储城市Id
-                     */
-                    Prefs.with(LoanDetails.this).remove("cityId");
-                    Prefs.with(LoanDetails.this).write("cityId",auth_comp_city);
+//                    /**
+//                     * 存储城市Id
+//                     */
+//                    Prefs.with(LoanDetails.this).remove("cityId");
+//                    Prefs.with(LoanDetails.this).write("cityId",auth_comp_city);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -27,6 +27,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.offlinemap.City;
 import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.adapter.CommonRecyclerAdapter;
@@ -563,7 +564,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
     /* 定位回调函数 */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
-        //str.substring(0,str.length()-1) 去掉字符串最后一个字符
+        String city,lon,lat;
         if (amapLocation != null) {
             if (amapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
@@ -593,10 +594,9 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
 //                    ToastUtil.show(CityActivity.this, "已定位到当前城市");
                     isFirstLoc = false;
                 }
-                Prefs.with(this).remove("lat");
-                Prefs.with(this).remove("lon");
-                Prefs.with(this).write("lat",amapLocation.getLatitude()+"");
-                Prefs.with(this).write("lon",amapLocation.getLongitude()+"");
+                city = amapLocation.getCity().split("市")[0];
+                lon = String.valueOf(amapLocation.getLongitude());
+                lat = String.valueOf(amapLocation.getLatitude());
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
@@ -605,7 +605,20 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 Toast.makeText(getApplicationContext(), "定位失败", Toast.LENGTH_LONG).show();
                 /* 定位失败 获取默认城市 */
                 locPlace.setText("北京");
+                city = "北京";
+                lon = "116.38";
+                lat = "39.9";
             }
+            /* 将定位地址 存储在本地  */
+//            Prefs.with(this).remove("city");
+//            Prefs.with(this).remove("lat");
+//            Prefs.with(this).remove("lon");
+//            Prefs.with(this).write("city", city);
+//            Prefs.with(this).write("lat", lat);
+//            Prefs.with(this).write("lon", lon);
+//            // 查询城市Id
+//            Prefs.with(CityActivity.this).remove("cityId");
+//            getCityId(city);
         }
     }
 
@@ -643,9 +656,9 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         }else{
             if (backListener!=null) {
                 backListener.backData(selectedCity);
-                Prefs.with(this).remove("city");
-                Prefs.with(this).write("city", city);
-                Prefs.with(this).remove("cityId");
+//                Prefs.with(this).remove("city");
+//                Prefs.with(this).write("city", city);
+//                Prefs.with(this).remove("cityId");
             }
             JumpUtil.newInstance().finishRightTrans(CityActivity.this);
         }
@@ -661,4 +674,33 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
     public interface BackListener{
         void backData(String city);
     }
+
+//    //通过城市名获取城市Id
+//    public void getCityId(final String cityName) {
+//        Map<String, String> map = new HashMap<>();
+//        map.put("cityName", cityName);
+//        OKhttptils.post(this, Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
+//            @Override
+//            public void success(String response) {
+//                try {
+//                    JSONObject object = new JSONObject(response);
+//                    JSONObject data = object.getJSONObject("data");
+//                    JSONObject result = data.getJSONObject("result");
+//                    String cityId = result.getString("city_id");
+//                    /**
+//                     * 存储城市Id
+//                     */
+//                    Prefs.with(CityActivity.this).remove("cityId");
+//                    Prefs.with(CityActivity.this).write("cityId",cityId);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void fail(String response) {
+//
+//            }
+//        });
+//    }
 }

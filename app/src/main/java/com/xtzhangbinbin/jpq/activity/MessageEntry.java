@@ -194,11 +194,11 @@ public class MessageEntry extends BaseActivity{
                     JSONObject data = object.getJSONObject("data");
                     JSONObject result = data.getJSONObject("result");
                     auth_comp_city = result.getString("city_id");
-                    /**
-                     * 存储城市Id
-                     */
-                    Prefs.with(MessageEntry.this).remove("cityId");
-                    Prefs.with(MessageEntry.this).write("cityId",auth_comp_city);
+//                    /**
+//                     * 存储城市Id
+//                     */
+//                    Prefs.with(MessageEntry.this).remove("cityId");
+//                    Prefs.with(MessageEntry.this).write("cityId",auth_comp_city);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

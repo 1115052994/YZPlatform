@@ -897,8 +897,21 @@ public class BuyCar extends Fragment {
     }
 
     public void getData() {
-        //通过城市名获取城市Id
-        getCityId();
+        // 城市
+        String city = Prefs.with(getContext()).read("city");
+        if (city!=null&&!"".equals(city)){
+            cityName = city;
+            // 获取城市ID
+            String cityid = Prefs.with(getContext()).read("cityId");
+            if (cityid!=null&&!"".equals(cityid)) {
+                cityId = cityid;
+                if (getActivity() != null)
+                    getCarList();
+            }else{
+                //通过城市名获取城市Id
+                getCityId();
+            }
+        }
         // 获得car各种信息字典以及banner
         getCarParams();
     }
@@ -927,11 +940,11 @@ public class BuyCar extends Fragment {
                     JSONObject data = object.getJSONObject("data");
                     JSONObject result = data.getJSONObject("result");
                     cityId = result.getString("city_id");
-                    /**
-                     * 存储城市Id
-                     */
-                    Prefs.with(getActivity()).remove("cityId");
-                    Prefs.with(getActivity()).write("cityId",cityId);
+//                    /**
+//                     * 存储城市Id
+//                     */
+//                    Prefs.with(getActivity()).remove("cityId");
+//                    Prefs.with(getActivity()).write("cityId",cityId);
                     if (getActivity() != null)
                         getCarList();
                 } catch (JSONException e) {
@@ -1278,21 +1291,24 @@ public class BuyCar extends Fragment {
     }
 
 
-    class MyBroadcast extends BroadcastReceiver {
+    public class MyBroadcast extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             String city = intent.getStringExtra("city");
-            if (city != null && !"".equals(city)) {
-                cityName = city;
-                // 获取城市ID
-                String cityid = intent.getStringExtra("cityId");
-                if (cityid!=null&&!"".equals(cityid)) {
-                    cityId = cityid;
-                    if (getActivity() != null)
-                        getCarList();
-                }else{
-                    getCityId();
+            Log.i("onReceive===",city);
+            if (!city.equals(cityName)) {
+                if (city != null && !"".equals(city)) {
+                    cityName = city;
+                    // 获取城市ID
+                    String cityid = intent.getStringExtra("cityId");
+                    if (cityid != null && !"".equals(cityid)) {
+                        cityId = cityid;
+                        if (getActivity() != null)
+                            getCarList();
+                    } else {
+                        getCityId();
+                    }
                 }
             }
         }

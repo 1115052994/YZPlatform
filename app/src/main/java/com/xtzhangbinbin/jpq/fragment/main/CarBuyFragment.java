@@ -1,9 +1,7 @@
 package com.xtzhangbinbin.jpq.fragment.main;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,12 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.activity.CityActivity;
 import com.xtzhangbinbin.jpq.activity.SearchActivity;
@@ -29,17 +22,11 @@ import com.xtzhangbinbin.jpq.fragment.BuyCar;
 import com.xtzhangbinbin.jpq.fragment.Sellcars;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.Prefs;
-import com.xtzhangbinbin.jpq.utils.ToastUtil;
-import com.tbruyelle.rxpermissions2.RxPermissions;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by glp on 2018/4/18.
@@ -64,7 +51,7 @@ public class CarBuyFragment extends Fragment{
     private FragmentTransaction transaction;
 
     private View view;
-
+    private String cityName = "";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -122,13 +109,16 @@ public class CarBuyFragment extends Fragment{
         // 城市
         String city = Prefs.with(getContext()).read("city");
         String cityid = Prefs.with(getContext()).read("cityId");
-        if (city!=null&&!"".equals(city)){
-            mLocation.setText(city);
-            Intent intent = new Intent();
-            intent.setAction("city");
-            intent.putExtra("city", city);
-            intent.putExtra("cityId", cityid);
-            getContext().sendBroadcast(intent);
+        if (city!=null&&!"".equals(city)) {
+            if (!city.equals(cityName)) {
+                cityName = city;
+                mLocation.setText(city);
+                Intent intent = new Intent();
+                intent.setAction("city");
+                intent.putExtra("city", city);
+                intent.putExtra("cityId", cityid);
+                getContext().sendStickyBroadcast(intent);
+            }
         }
         return view;
     }

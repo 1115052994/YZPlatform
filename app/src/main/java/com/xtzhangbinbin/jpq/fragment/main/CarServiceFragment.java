@@ -250,8 +250,10 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
             String file_id = listBean.getAdve_file_id();
             images.add(file_id);
         }
-        banner.setImages(images);
-        banner.start();
+        if (banner!=null) {
+            banner.setImages(images);
+            banner.start();
+        }
     }
 
 
@@ -656,11 +658,11 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                     String result = object.getString("result");
                     JSONObject o = new JSONObject(result);
                     city_id = o.getString("city_id");
-                    /**
-                     * 存储城市Id
-                     */
-                    Prefs.with(getActivity()).remove("cityId");
-                    Prefs.with(getActivity()).write("cityId",city_id);
+//                    /**
+//                     * 存储城市Id
+//                     */
+//                    Prefs.with(getActivity()).remove("cityId");
+//                    Prefs.with(getActivity()).write("cityId",city_id);
                     Message message = new Message();
                     message.what = 004;
                     message.obj = city_id;
