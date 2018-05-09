@@ -62,7 +62,13 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
 
     @Override
     public void onBindViewHolder(EvaluationAdapter.ViewHolder holder, int position) {
-        Log.d("aaaaaa", "aaaaaaaaaa"+result.get(position).getPers_head_file_id());
+        Log.d("aaaaaa", "aaaaaaaaaa"+result.get(position).getLog_id());
+        if(result.size()==4){
+            for (int i = 0; i <result.size() ; i++) {
+                Log.d("aaaaaa", "onRefresh: "+result.get(i).getLog_3());
+            }
+            Log.d("aaaaaa", "success: "+result.size());
+        }
         OKhttptils.getPicByHttp(context,result.get(position).getPers_head_file_id(),holder.evaluation_image);
         holder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
         holder.evaluate_layout.removeAllViews();

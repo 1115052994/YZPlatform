@@ -97,6 +97,7 @@ public class EvaluationFragment extends Fragment {
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageIndex = 1;
                 result.clear();
+
                 PostCar(url,1,refreshlayout);
             }
         });
@@ -125,6 +126,12 @@ public class EvaluationFragment extends Fragment {
                     QueryEvaluate queryEvaluate = gson.fromJson(response, QueryEvaluate.class);
                     pageCount=queryEvaluate.getData().getPageCount();
                     result.addAll(queryEvaluate.getData().getResult());
+//                    if(result.size()==4){
+//                        for (int i = 0; i <result.size() ; i++) {
+//                            Log.d("aaaaaa", "onRefresh: "+result.get(i).getLog_3());
+//                        }
+//                        Log.d("aaaaaa", "success: "+result.size());
+//                    }
                     if(refreshlayout==null){
                         evaluationAdapter.notifyDataSetChanged();
                     }
