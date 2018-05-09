@@ -16,6 +16,7 @@ import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.entity.QueryEvaluate;
 import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.view.CircleImageView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -62,18 +63,11 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
 
     @Override
     public void onBindViewHolder(EvaluationAdapter.ViewHolder holder, int position) {
-        Log.d("aaaaaa", "aaaaaaaaaa"+result.get(position).getLog_id());
-        if(result.size()==4){
-            for (int i = 0; i <result.size() ; i++) {
-                Log.d("aaaaaa", "onRefresh: "+result.get(i).getLog_3());
-            }
-            Log.d("aaaaaa", "success: "+result.size());
-        }
+//        Log.d("aaaaaa", "aaaaaaaaaa"+result.get(position).getPers_head_file_id());
         OKhttptils.getPicByHttp(context,result.get(position).getPers_head_file_id(),holder.evaluation_image);
         holder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
         holder.evaluate_layout.removeAllViews();
         holder.evaluation_list_appraiseTime.setText(result.get(position).getLog_date());
-
         holder.evaluation_list_appraise.setText(result.get(position).getLog_4());
         arr.clear();
         String[] split = result.get(position).getLog_3().split(",");
@@ -83,7 +77,7 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
         if(arr.size()==split.length){
             getDictionaries(Config.GETVALUE,arr,holder.evaluate_layout);
         }
-        holder.evaluation_list_phone.setText(result.get(position).getPers_nickname());
+        holder.evaluation_list_phone.setText(StringUtil.isEmpty(result.get(position).getPers_nickname()) ? "匿名用户" : result.get(position).getPers_nickname());
         holder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
         holder.evaluation_list_star4.setImageResource(R.drawable.pj_hstar);
         holder.evaluation_list_star3.setImageResource(R.drawable.pj_hstar);

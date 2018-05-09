@@ -85,6 +85,7 @@ public class UpgradeUtil {
             OKhttptils.post((Activity)context, Config.UPTRADE_CHECK_VERSION, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    Log.w("test", "是否需要升级：" + response);
                     try {
                         JSONObject obj = new JSONObject(response);
                         if(obj != null && "yes".equals(obj.getJSONObject("data").getString("result"))){
@@ -112,6 +113,7 @@ public class UpgradeUtil {
             OKhttptils.post((Activity)context, Config.UPTRADE_GET_VERSIONINFO, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    Log.w("test", "获取升级信息：" + response);
                     Gson gson = new Gson();
                     VersionInfo info = gson.fromJson(response, VersionInfo.class);
                     //显示升级信息
@@ -152,6 +154,7 @@ public class UpgradeUtil {
 
 
     public void download(final Context context, String url) {
+        Log.w("test", url);
         if (NetUtil.isNetAvailable(context)) {
             OkHttpUtils.initClient(OKhttptils.client).get()
                     .url(url)      //Prefs.with(context).read("user_token")

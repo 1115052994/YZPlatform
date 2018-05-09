@@ -66,6 +66,10 @@ public class CarBeauty extends Fragment {
         this.prod_service_type_item = prod_service_type_item;
     }
 
+    public CarBeauty(){
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_car_beauty, container, false);
