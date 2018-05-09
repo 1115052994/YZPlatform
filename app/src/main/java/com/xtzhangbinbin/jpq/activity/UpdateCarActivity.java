@@ -236,6 +236,7 @@ public class UpdateCarActivity extends BaseActivity {
                     arrnei.clear();
                     arrFadong.clear();
                     arrDetail.clear();
+                    sfile_id.clear();
                     resultBean = (CarProductDetail.DataBean.ResultBean) msg.obj;
                     /* 24张原图id */
                     CarPhotos carPhoto = new CarPhotos();
@@ -431,6 +432,8 @@ public class UpdateCarActivity extends BaseActivity {
         arrnei.clear();
         arrFadong.clear();
         arrDetail.clear();
+        sfile_id.clear();
+        file_id.clear();
         getData();
         onCall();
         getLocation();
@@ -1090,6 +1093,7 @@ public class UpdateCarActivity extends BaseActivity {
         Log.d(TAG, "onViewClicked座位数: " + car_seating);
         Log.e(TAG, "onViewClicked车架号: " + car_vin);
 
+        boolean isT = false;
         Map<String, String> map = new HashMap<>();
         map.put("car_vin", car_vin);
         map.put("car_sign_date", car_time);
@@ -1108,9 +1112,18 @@ public class UpdateCarActivity extends BaseActivity {
         if (!car_vin.isEmpty() && !car_time.isEmpty() && !car_seating.isEmpty() && !car_price.isEmpty() && !car_name.isEmpty() &&
                 !car_model.isEmpty() && !car_mileage.isEmpty() && !car_letout.isEmpty() && !car_id.isEmpty() && !car_gearbox.isEmpty() && !car_fuel_type.isEmpty()
                 && !car_displacement.isEmpty() && !car_resum.isEmpty() && !car_brand.isEmpty() && !car_brand.isEmpty()) {
-            if (sfile_id.size() != 23) {
-                ToastUtil.show(UpdateCarActivity.this, "请完善信息后保存");
-            } else {
+            Log.d(TAG, "onViewClicked看看有几个: " + sfile_id.size());
+
+            for (int i = 0; i < sfile_id.size(); i++) {
+                if (sfile_id.get(i) == null) {
+                    isT = false;
+                    break;
+                } else {
+                    isT = true;
+                }
+            }
+            Log.d(TAG, "onViewClicked哒哒哒: " + isT);
+            if (isT) {
                 dialog = MyProgressDialog.createDialog(this);
                 dialog.setMessage("正在上传数据");
                 dialog.show();
@@ -1137,9 +1150,10 @@ public class UpdateCarActivity extends BaseActivity {
 
                     }
                 });
-
-
+            } else {
+                ToastUtil.show(UpdateCarActivity.this, "请完善信息后保存");
             }
+
         } else {
             ToastUtil.show(UpdateCarActivity.this, "请完善信息后保存");
         }
