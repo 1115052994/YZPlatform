@@ -180,7 +180,8 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     /* 填充数据 */
     private void setAdapter() {
         adapter = new CarServiceListAdapter(beanList, getContext());
-        if (adapter!=null)
+        //---------------jiang----防止空指针-------------
+        if (adapter!=null&&recyclerView!=null)
             recyclerView.setAdapter(adapter);
     }
 

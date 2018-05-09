@@ -108,7 +108,18 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 }
             }
         }
-
+        /* 默认地址  北京*/
+        lon = "116.38";
+        lat = "39.9";
+        Prefs.with(this).remove("city");
+        Prefs.with(this).remove("lat");
+        Prefs.with(this).remove("lon");
+        Prefs.with(this).write("city", "北京");
+        Prefs.with(this).write("lat", lat);
+        Prefs.with(this).write("lon", lon);
+        // 查询城市Id
+        getCityId("北京");
+        // 定位
         initLoc();
     }
 
