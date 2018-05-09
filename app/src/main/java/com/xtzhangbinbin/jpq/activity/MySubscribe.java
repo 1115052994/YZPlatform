@@ -398,6 +398,7 @@ public class MySubscribe extends BaseActivity {
 
             @Override
             public void fail(String response) {
+                dialog.dismiss();
                 Log.i("Subscribe","fail="+response);
             }
         });
