@@ -64,6 +64,7 @@ public class CarFinancialPersonal extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_car_financial_personal, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         //设置线性管理器
+        result.clear();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(false);//禁止滑动
         recyclerView.setFocusableInTouchMode(false);//让recycler取消焦点  一进来不不会自动跳转到RecyclerView
@@ -140,7 +141,7 @@ public class CarFinancialPersonal extends Fragment {
                 OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
-                        Log.d("aaaaa", "onResponse获取数据: " + response);
+                        Log.d("aaaaa", "onResponse获取数据:22222 " + response);
                         Gson gson = GsonFactory.create();
                         FinancialBean enterprise = gson.fromJson(response, FinancialBean.class);
                         result.addAll(enterprise.getData().getResult());

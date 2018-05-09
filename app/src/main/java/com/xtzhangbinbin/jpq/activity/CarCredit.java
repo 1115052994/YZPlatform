@@ -47,10 +47,12 @@ public class CarCredit extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_credit);
         ButterKnife.bind(this);
+
         //设置线性管理器
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         carCreditAdapter = new CarCreditAdapter(this, result);
         recyclerView.setAdapter(carCreditAdapter);
+        result.clear();
         getData(1,null);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

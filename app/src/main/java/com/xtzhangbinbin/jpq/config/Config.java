@@ -174,6 +174,9 @@ public class Config {
     //金融信息录入
     public static final String INSERTINFO = M + S + "insertInfo";
 
+    //得到个人征信协议
+    public static final String GETPERSONALCREDITAUTHORIZATION = M + S + "getPersonalCreditAuthorization";
+
     //车金融数据
     public static final String SELECTJRTOAPP = M + S + "selectJrToApp";
 

@@ -51,15 +51,18 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public void onBindViewHolder(EvaluationAdapter.ViewHolder holder, int position) {
-//        if(result.get(position).getPers_head_file_id()!=null) {
-//            holder.evaluation_image.setTag(result.get(position).getPers_head_file_id());
-//            if (result.get(position).getPers_head_file_id() == holder.evaluation_image.getTag()) {
-//
-//            }
-//        }
         OKhttptils.getPicByHttp(context,result.get(position).getPers_head_file_id(),holder.evaluation_image);
-//        OKhttptils.getPic(context, result.get(position).getPers_head_file_id(), holder.evaluation_image);
         holder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
         holder.evaluate_layout.removeAllViews();
         holder.evaluation_list_appraiseTime.setText(result.get(position).getLog_date
@@ -92,10 +95,6 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
                 holder.evaluation_list_star1.setImageResource(R.drawable.pj_pinkstar);
                 break;
         }
-
-
-
-
     }
     public void getDictionaries(String url, final ArrayList<String> arr, final TagFlowLayout evaluate_layout){
         pj.clear();

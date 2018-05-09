@@ -98,6 +98,7 @@ public class Sellcars extends Fragment {
     }
 
     public void PostSellcars() {
+        Log.d("aaaaa", "PostSellcars: ");
         if (NetUtil.isNetAvailable(getContext())) {
             OKhttptils.post(getActivity(), Config.SELLCOUNT, null, new OKhttptils.HttpCallBack() {
                 @Override

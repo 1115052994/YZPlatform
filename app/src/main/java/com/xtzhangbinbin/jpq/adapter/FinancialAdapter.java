@@ -29,7 +29,6 @@ public class FinancialAdapter extends  RecyclerView.Adapter<FinancialAdapter.Vie
     public FinancialAdapter(Context context, List<FinancialBean.DataBean.ResultBean> result) {
         this.context = context;
         this.result = result;
-        Log.d("aaaaa", "FinancialAdapter: "+result);
     }
 
     @Override

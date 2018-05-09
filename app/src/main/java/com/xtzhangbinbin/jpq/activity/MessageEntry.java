@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.tencent.mm.opensdk.utils.Log;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
@@ -41,6 +43,8 @@ public class MessageEntry extends BaseActivity{
     Button baocun;
     @BindView(R.id.checkbox)
     CheckBox checkbox;
+    @BindView(R.id.zx)
+    TextView zx;
     private String auth_comp_city;
 
 

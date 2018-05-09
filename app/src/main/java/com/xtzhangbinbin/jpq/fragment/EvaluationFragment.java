@@ -70,6 +70,7 @@ public class EvaluationFragment extends Fragment {
         //设置线性管理器
         evaluationListListview.setLayoutManager(new LinearLayoutManager(getContext()));
         evaluationAdapter = new EvaluationAdapter(context, result);
+        evaluationAdapter.setHasStableIds(true);
         evaluationListListview.setAdapter(evaluationAdapter);
         Log.d("aaaaa", "onCreateView: ");
         switch (index) {

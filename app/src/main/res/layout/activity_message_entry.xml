@@ -185,6 +185,7 @@
             android:textSize="@dimen/text_size_15sp"
             android:text="我已同意"/>
         <TextView
+            android:id="@+id/zx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_66"

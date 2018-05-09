@@ -142,6 +142,7 @@ public class LoanDetails extends BaseActivity{
         map.put("pageIndex", String.valueOf(pageIndex));
         map.put("dict_parent_id", dict_parent_id);
         map.put("dict_ext", dict_ext);
+        Log.d("aaaaaa", "dict_parent_id "+dict_parent_id);
 
         OKhttptils.post(this, Config.QUERYALLTHIRDAPP, map, new OKhttptils.HttpCallBack() {
             @Override
