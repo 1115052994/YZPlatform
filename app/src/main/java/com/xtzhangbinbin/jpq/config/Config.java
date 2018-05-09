@@ -7,7 +7,7 @@ package com.xtzhangbinbin.jpq.config;
 public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
-    //接口连接地址
+    //接口连接地址192.168.1.111
     public static final String BASE_URL = "https://eflow.56ez.com/";
 
     public static final String URL = "https://eflow.56ez.com/";

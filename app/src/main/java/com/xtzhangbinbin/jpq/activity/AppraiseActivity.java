@@ -66,7 +66,7 @@ public class AppraiseActivity extends BaseActivity {
     private AppraiseGVAdapter gvAapter;
     private List<String> appraiseList = new ArrayList<>();
     private List<String> appraiseListId = new ArrayList<>();
-    private String comp_id = "24";
+    private String comp_id = "";
     private String comp_name = "";
     private String type ="";//car/comp
 
@@ -76,7 +76,6 @@ public class AppraiseActivity extends BaseActivity {
         setContentView(R.layout.activity_appraise);
         ButterKnife.bind(this);
         initData();
-        getData();
         Intent intent = getIntent();
         if(intent!=null){
             Bundle bundle = intent.getExtras();
@@ -86,6 +85,7 @@ public class AppraiseActivity extends BaseActivity {
                 type = bundle.getString("type");
             }
         }
+        getData();
     }
 
     private void initData() {
@@ -122,6 +122,7 @@ public class AppraiseActivity extends BaseActivity {
 
     private void getData(){
         if (NetUtil.isNetAvailable(getApplicationContext())) {
+            Log.i("comp_id===",comp_id);
             OkHttpUtils.post()
                     .url(Config.COMMENTORCOMPNAME)
                     .addHeader("user_token", Prefs.with(this).read("user_token"))
@@ -142,7 +143,7 @@ public class AppraiseActivity extends BaseActivity {
                                     Gson gson = new Gson();
                                     AppraiseBean appraiseBean = gson.fromJson(response, AppraiseBean.class);
                                     List<AppraiseBean.DataBean.ResultBean.ServiceBean> resultBeanList = appraiseBean.getData().getResult().getService();
-                                    comp_name = appraiseBean.getData().getResult().getComp_name().getComp_name();
+                                    comp_name = appraiseBean.getData().getResult().getComp_name();
                                     compName.setText(comp_name);
                                     appraiseList.clear();
                                     appraiseListId.clear();

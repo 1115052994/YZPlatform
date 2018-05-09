@@ -5,7 +5,7 @@ import java.util.List;
 public class AppraiseBean {
 
     /**
-     * data : {"result":{"service":[{"dict_id":"YZpjpjqyflfwdw","dict_desc":"服务到位"},{"dict_id":"YZpjpjqyflaqzy","dict_desc":"安全专业"},{"dict_id":"YZpjpjqyflxlfcg","dict_desc":"效率非常高"},{"dict_id":"YZpjpjqyflfywz","dict_desc":"风雨无阻"},{"dict_id":"YZpjpjqyflshjs","dict_desc":"送货即时"},{"dict_id":"YZpjpjqyflwxybz","dict_desc":"维修有保障"}],"comp_name":{"comp_name":"山东派乐特网络科技有限公司"}}}
+     * data : {"result":{"service":[{"dict_id":"YZpjpjqyflfwdw","dict_desc":"服务到位"},{"dict_id":"YZpjpjqyflaqzy","dict_desc":"安全专业"},{"dict_id":"YZpjpjqyflxlfcg","dict_desc":"效率非常高"},{"dict_id":"YZpjpjqyflfywz","dict_desc":"风雨无阻"},{"dict_id":"YZpjpjqyflshjs","dict_desc":"送货即时"},{"dict_id":"YZpjpjqyflwxybz","dict_desc":"维修有保障"}],"comp_name":"德奥汽配"}}
      * message :
      * status : 1
      */
@@ -40,7 +40,7 @@ public class AppraiseBean {
 
     public static class DataBean {
         /**
-         * result : {"service":[{"dict_id":"YZpjpjqyflfwdw","dict_desc":"服务到位"},{"dict_id":"YZpjpjqyflaqzy","dict_desc":"安全专业"},{"dict_id":"YZpjpjqyflxlfcg","dict_desc":"效率非常高"},{"dict_id":"YZpjpjqyflfywz","dict_desc":"风雨无阻"},{"dict_id":"YZpjpjqyflshjs","dict_desc":"送货即时"},{"dict_id":"YZpjpjqyflwxybz","dict_desc":"维修有保障"}],"comp_name":{"comp_name":"山东派乐特网络科技有限公司"}}
+         * result : {"service":[{"dict_id":"YZpjpjqyflfwdw","dict_desc":"服务到位"},{"dict_id":"YZpjpjqyflaqzy","dict_desc":"安全专业"},{"dict_id":"YZpjpjqyflxlfcg","dict_desc":"效率非常高"},{"dict_id":"YZpjpjqyflfywz","dict_desc":"风雨无阻"},{"dict_id":"YZpjpjqyflshjs","dict_desc":"送货即时"},{"dict_id":"YZpjpjqyflwxybz","dict_desc":"维修有保障"}],"comp_name":"德奥汽配"}
          */
 
         private ResultBean result;
@@ -56,17 +56,17 @@ public class AppraiseBean {
         public static class ResultBean {
             /**
              * service : [{"dict_id":"YZpjpjqyflfwdw","dict_desc":"服务到位"},{"dict_id":"YZpjpjqyflaqzy","dict_desc":"安全专业"},{"dict_id":"YZpjpjqyflxlfcg","dict_desc":"效率非常高"},{"dict_id":"YZpjpjqyflfywz","dict_desc":"风雨无阻"},{"dict_id":"YZpjpjqyflshjs","dict_desc":"送货即时"},{"dict_id":"YZpjpjqyflwxybz","dict_desc":"维修有保障"}]
-             * comp_name : {"comp_name":"山东派乐特网络科技有限公司"}
+             * comp_name : 德奥汽配
              */
 
-            private CompNameBean comp_name;
+            private String comp_name;
             private List<ServiceBean> service;
 
-            public CompNameBean getComp_name() {
+            public String getComp_name() {
                 return comp_name;
             }
 
-            public void setComp_name(CompNameBean comp_name) {
+            public void setComp_name(String comp_name) {
                 this.comp_name = comp_name;
             }
 
@@ -76,22 +76,6 @@ public class AppraiseBean {
 
             public void setService(List<ServiceBean> service) {
                 this.service = service;
-            }
-
-            public static class CompNameBean {
-                /**
-                 * comp_name : 山东派乐特网络科技有限公司
-                 */
-
-                private String comp_name;
-
-                public String getComp_name() {
-                    return comp_name;
-                }
-
-                public void setComp_name(String comp_name) {
-                    this.comp_name = comp_name;
-                }
             }
 
             public static class ServiceBean {

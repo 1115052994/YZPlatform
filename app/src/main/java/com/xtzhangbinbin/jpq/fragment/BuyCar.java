@@ -45,6 +45,7 @@ import com.xtzhangbinbin.jpq.entity.CarParams;
 import com.xtzhangbinbin.jpq.utils.CommonUtils;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
+import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.CarTagLayout;
 import com.xtzhangbinbin.jpq.view.ExpandableGridView;
@@ -129,7 +130,7 @@ public class BuyCar extends Fragment {
     private CommonRecyclerAdapter recyclerAdapter;
 
     // 城市
-    private String cityName = "济南";
+    private String cityName = "";
     private String cityId = "";
 
     //高级筛选
@@ -926,7 +927,11 @@ public class BuyCar extends Fragment {
                     JSONObject data = object.getJSONObject("data");
                     JSONObject result = data.getJSONObject("result");
                     cityId = result.getString("city_id");
-//                    Log.i("city_Id",cityId);
+                    /**
+                     * 存储城市Id
+                     */
+                    Prefs.with(getActivity()).remove("cityId");
+                    Prefs.with(getActivity()).write("cityId",cityId);
                     if (getActivity() != null)
                         getCarList();
                 } catch (JSONException e) {
@@ -1038,7 +1043,7 @@ public class BuyCar extends Fragment {
         OKhttptils.post(getActivity(), Config.SEARCHCAR, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-//                Log.i("BuyCarresponse", response);
+                Log.i("BuyCarresponse", response);
                 try {
                     JSONObject object = new JSONObject(response);
                     if ("1".equals(object.getString("status"))) {
@@ -1258,7 +1263,7 @@ public class BuyCar extends Fragment {
                         // 订阅成功刷新订阅列表数据
                         JumpUtil.newInstance().jumpLeft(getActivity(), MySubscribe.class);
                     } else {
-                        ToastUtil.show(getActivity(), "请选择订阅条件");
+                        ToastUtil.show(getActivity(), "订阅失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1280,7 +1285,15 @@ public class BuyCar extends Fragment {
             String city = intent.getStringExtra("city");
             if (city != null && !"".equals(city)) {
                 cityName = city;
-                getCityId();
+                // 获取城市ID
+                String cityid = intent.getStringExtra("cityId");
+                if (cityid!=null&&!"".equals(cityid)) {
+                    cityId = cityid;
+                    if (getActivity() != null)
+                        getCarList();
+                }else{
+                    getCityId();
+                }
             }
         }
     }

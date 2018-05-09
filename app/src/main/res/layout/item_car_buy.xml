@@ -17,7 +17,7 @@
             android:layout_marginLeft="@dimen/common5dp"
             android:layout_marginBottom="@dimen/common5dp"
             android:scaleType="fitXY"
-            android:src="@drawable/b_img2"/>
+            />
         <ImageView
             android:id="@+id/image_rz"
             android:layout_width="wrap_content"

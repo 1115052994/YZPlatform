@@ -220,10 +220,10 @@
                     />
                 <ImageView
                     android:layout_width="@dimen/common200dp"
-                    android:layout_height="@dimen/common200dp"
+                    android:layout_height="@dimen/common150dp"
                     android:id="@+id/image_blank"
                     android:layout_centerHorizontal="true"
-                    android:paddingTop="@dimen/common70dp"
+                    android:paddingTop="@dimen/common110dp"
                     android:visibility="invisible"
                     android:src="@drawable/kongcar"/>
             </RelativeLayout>

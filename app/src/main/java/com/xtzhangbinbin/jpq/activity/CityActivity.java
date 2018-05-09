@@ -121,11 +121,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
             type = bundle.getString("type");
             //车服务、二手车等type
         }
-        // 定位城市
-        String city = Prefs.with(this).read("city");
-        if (city!=null&&!"".equals(city)){
-            locPlace.setText(city);
-        }
         initView();
         initData();
         getData();
@@ -589,8 +584,6 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                 amapLocation.getStreetNum();//街道门牌号信息
                 amapLocation.getCityCode();//城市编码
                 amapLocation.getAdCode();//地区编码
-                /* 将定位地址 存储在本地  */
-                Prefs.with(getApplicationContext()).write("city", amapLocation.getCity().substring(0, amapLocation.getCity().length() - 1));
                 // 如果不设置标志位，此时再拖动地图时，它会不断将地图移动到当前的位置
                 if (isFirstLoc) {
                     //获取定位信息
@@ -600,6 +593,10 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
 //                    ToastUtil.show(CityActivity.this, "已定位到当前城市");
                     isFirstLoc = false;
                 }
+                Prefs.with(this).remove("lat");
+                Prefs.with(this).remove("lon");
+                Prefs.with(this).write("lat",amapLocation.getLatitude()+"");
+                Prefs.with(this).write("lon",amapLocation.getLongitude()+"");
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
@@ -644,8 +641,12 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         if ("车服务".equals(type)) {
             JumpUtil.newInstance().finishRightTrans(CityActivity.this, bundle, 01);
         }else{
-            if (backListener!=null)
+            if (backListener!=null) {
                 backListener.backData(selectedCity);
+                Prefs.with(this).remove("city");
+                Prefs.with(this).write("city", city);
+                Prefs.with(this).remove("cityId");
+            }
             JumpUtil.newInstance().finishRightTrans(CityActivity.this);
         }
         Set<String> value = new HashSet<>();

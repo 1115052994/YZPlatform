@@ -354,7 +354,7 @@ public class MySubscribe extends BaseActivity {
                         // 订阅成功刷新订阅列表数据
                         getData();
                     }else{
-                        ToastUtil.show(MySubscribe.this,"请选择订阅条件");
+                        ToastUtil.show(MySubscribe.this,"订阅失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
