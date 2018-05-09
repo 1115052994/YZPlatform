@@ -11,12 +11,15 @@
 
     <include layout="@layout/header_layout"
         android:id="@+id/head_title"/>
-
+    <View
+        android:id="@+id/comp_wallet_pre_line1"
+        style="@style/gray_line" android:layout_below="@id/head_title"
+        />
     <RelativeLayout
         android:id="@+id/comp_wallet_pre_card_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/head_title"
+        android:layout_below="@id/comp_wallet_pre_line1"
         android:clickable="true"
         android:padding="@dimen/common15dp"
         >

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
@@ -51,7 +52,6 @@ public class AlipayUtil {
 
 	private Activity context;
 	private static AlipayUtil alipayUtil;
-	private MyProgressDialog dialog;
 	private AlipayReturn alipayReturn;
 
 
@@ -101,11 +101,6 @@ public class AlipayUtil {
 	 * 支付宝支付业务
 	 */
 	public void payV2(Map<String, String> map) {
-		if(null != dialog && !dialog.isShowing()){
-			dialog = MyProgressDialog.createDialog(context);
-			dialog.setMessage("正在调起支付，请稍候");
-			dialog.show();
-		}
 		if (TextUtils.isEmpty(APPID) || (TextUtils.isEmpty(RSA2_PRIVATE) && TextUtils.isEmpty(RSA_PRIVATE))) {
 			new AlertDialog.Builder(context).setTitle("警告").setMessage("需要配置APPID | RSA_PRIVATE")
 					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -122,8 +117,6 @@ public class AlipayUtil {
 		OKhttptils.post(context, Config.ORDERS_ALIPAY_SIGNINFO, map, new OKhttptils.HttpCallBack() {
 			@Override
 			public void success(String response) {
-				if(null != dialog && dialog.isShowing())
-					dialog.dismiss();
 				try {
 					JSONObject object = new JSONObject(response);
 					if(null != object){
@@ -149,32 +142,19 @@ public class AlipayUtil {
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
-				} finally{
-					close();
 				}
-
             }
 
 			@Override
 			public void fail(String response) {
-				if(null != dialog && dialog.isShowing())
-					dialog.dismiss();
 				try {
 					JSONObject jsonObject = new JSONObject(response);
 					ToastUtil.show(context, jsonObject.getString("message"));
 				} catch (JSONException e) {
 					e.printStackTrace();
-				} finally{
-					close();
 				}
 			}
 		});
-	}
-
-	public void close(){
-		if(null != dialog && dialog.isShowing()){
-			dialog.dismiss();
-		}
 	}
 
 	public interface AlipayReturn{

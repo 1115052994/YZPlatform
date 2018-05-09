@@ -579,7 +579,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         OKhttptils.post(getActivity(), Config.GET_CAR_SERVICE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.d(TAG, "test获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 CarServiceList serviceList = gson.fromJson(response, CarServiceList.class);
 //                List<CarServiceList.DataBean.ResultBean> beanList = serviceList.getData().getResult();
@@ -645,7 +644,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
     /* 获取省市id */
     private void getCityId(String s) {
-        Log.w("test" , "aaaaaaaaaaaaaaaaaaaa");
         Map<String, String> map = new HashMap<>();
         map.put("cityName", s);
         Log.e(TAG, "getCityId城市: " + s );

@@ -103,16 +103,18 @@ public class LoginActivity extends BaseActivity {
 //                        Log.i(TAG, "success: " + response);
                         try {
                             JSONObject object = new JSONObject(response);
-                            String data = object.getString("data");
-                            JSONObject obj = new JSONObject(data);
-                            String user_token = obj.getString("user_token");
-                            Prefs.with(getApplicationContext()).write("user_token", user_token);
-                            Prefs.with(getApplicationContext()).write("user_phone", phone);
-                            Message message = new Message();
-                            message.what = 001;
-                            handler.sendMessage(message);
-
-
+                            if("103".equals(object.getString("status"))){
+                                ToastUtil.show(LoginActivity.this, "该手机号不存在！");
+                            } else {
+                                String data = object.getString("data");
+                                JSONObject obj = new JSONObject(data);
+                                String user_token = obj.getString("user_token");
+                                Prefs.with(getApplicationContext()).write("user_token", user_token);
+                                Prefs.with(getApplicationContext()).write("user_phone", phone);
+                                Message message = new Message();
+                                message.what = 001;
+                                handler.sendMessage(message);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

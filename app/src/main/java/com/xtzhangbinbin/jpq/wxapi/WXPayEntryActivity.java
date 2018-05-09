@@ -4,6 +4,7 @@ package com.xtzhangbinbin.jpq.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.xtzhangbinbin.jpq.activity.OrdersPaySuccessActivity;
@@ -53,6 +54,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
         api = WXAPIFactory.createWXAPI(this, Config.WECHAT_APP_ID);
         api.handleIntent(getIntent(), this);
+        dialog = MyProgressDialog.createDialog(this);
     }
 
     @Override
@@ -70,28 +72,17 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp resp) {
-//		Log.d("test", "onPayFinish, errCode = " + resp.errCode + resp.transaction);
-        dialog = MyProgressDialog.createDialog(this);
-        dialog.setMessage("正在处理订单，请稍候");
-        dialog.show();
+//        Log.d("test", "onPayFinish, errCode = " + resp.errCode + resp.transaction);
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+            //如果erroCode为0，说明支付成功
             if (resp.errCode == 0) {
-//				Prefs.with(getApplicationContext()).write("wechat_order_id", orderNum);
-                new Thread() {
-                    @Override
-                    public void run() {
-                        //暂停2秒查询，以保证查询结果更新到服务器
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-                        queryOrderStatus();
-                    }
-                }.start();
+                Bundle bundle = new Bundle();
+                bundle.putString("payStyle", "微信支付");
+                bundle.putString("price",  Prefs.with(getApplicationContext()).read("wechat_order_price"));
+                JumpUtil.newInstance().jumpRight(getApplicationContext(), OrdersPaySuccessActivity.class, bundle);
+                WXPayEntryActivity.this.finish();
             } else {
                 ToastUtil.show(getApplicationContext(), "支付失败！请稍候再试");
-                dialog.dismiss();
                 WXPayEntryActivity.this.finish();
             }
         } else {
@@ -99,6 +90,37 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             WXPayEntryActivity.this.finish();
         }
     }
+
+//    @Override
+//    public void onResp(BaseResp resp) {
+//		Log.d("test", "onPayFinish, errCode = " + resp.errCode + resp.transaction);
+//        dialog.setMessage("正在处理订单，请稍候");
+//        dialog.show();
+//        if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+//            if (resp.errCode == 0) {
+////				Prefs.with(getApplicationContext()).write("wechat_order_id", orderNum);
+//                new Thread() {
+//                    @Override
+//                    public void run() {
+//                        //暂停2秒查询，以保证查询结果更新到服务器
+//						try {
+//							Thread.sleep(1000);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+//                        queryOrderStatus();
+//                    }
+//                }.start();
+//            } else {
+//                ToastUtil.show(getApplicationContext(), "支付失败！请稍候再试");
+//                dialog.dismiss();
+//                WXPayEntryActivity.this.finish();
+//            }
+//        } else {
+//            dialog.dismiss();
+//            WXPayEntryActivity.this.finish();
+//        }
+//    }
 
     /**
      * 查询订单状态

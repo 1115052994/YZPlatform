@@ -49,7 +49,6 @@ public class OrdersPersonalCancelFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-    private MyProgressDialog dialog;
     private Context context;
     private List<Orders.DataBean.ResultBean> result = new ArrayList<>();
     private OrdersPersonalAdapter ordersPersonalAdapter;
@@ -84,9 +83,6 @@ public class OrdersPersonalCancelFragment extends Fragment {
                 getOrders(Config.ORDERS_GET_LIST, ++pageIndex, refreshlayout);
             }
         });
-        dialog = MyProgressDialog.createDialog(context);
-        dialog.setMessage("正在加载数据，请稍候");
-        dialog.show();
         getOrders(Config.ORDERS_GET_LIST, 1, null);
         return inflate;
     }
@@ -121,18 +117,12 @@ public class OrdersPersonalCancelFragment extends Fragment {
                             ordersPersonalAdapter.notifyDataSetChanged();
                         }
                     }
-                    if(null != dialog && dialog.isShowing()){
-                        dialog.dismiss();
-                    }
 
                 }
 
                 @Override
                 public void fail(String response) {
                     Toast.makeText(context, "查询失败", Toast.LENGTH_SHORT).show();
-                    if(null != dialog && dialog.isShowing()){
-                        dialog.dismiss();
-                    }
                 }
             });
         }
@@ -143,8 +133,5 @@ public class OrdersPersonalCancelFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if(null != dialog && dialog.isShowing()){
-            dialog.dismiss();
-        }
     }
 }

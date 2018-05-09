@@ -9,11 +9,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -77,16 +80,6 @@ public class OrdersPersonalViewActivity extends BaseActivity{
     TextView yhPrice_tv;
     @BindView(R.id.tolPrice_tv)
     TextView tolPrice_tv;
-//    @BindView(R.id.phone)
-//    RelativeLayout phone;
-//    @BindView(R.id.evaluate)
-//    RelativeLayout evaluate;
-//    @BindView(R.id.corrdinLayout)
-//    CoordinatorLayout corrdinLayout;
-//    @BindView(R.id.image_coll)
-//    ImageView imageColl;
-//    @BindView(R.id.tv_coll)
-//    TextView tvColl;
     private ViewGroup viewGroup;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
@@ -99,7 +92,7 @@ public class OrdersPersonalViewActivity extends BaseActivity{
 
     private IndicatorAdapter<View> tabAdapter;//服务项目导航栏Adapter
 
-    private String order_id = "78d3bcf32a61447592c59bc634e4658f";//商家Id
+    private String order_id = "";//商家Id
     private String comp_phone;
     private Double comp_lon, comp_lat;
 
@@ -134,6 +127,8 @@ public class OrdersPersonalViewActivity extends BaseActivity{
     }
 
     private void initView() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,getHeight());
+        banner.setLayoutParams(params);
         banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
@@ -284,6 +279,20 @@ public class OrdersPersonalViewActivity extends BaseActivity{
                     }
                 });
 
+    }
+
+    /**
+     * 获取屏幕高度
+     *
+     * @return
+     */
+    public int getHeight() {
+        WindowManager manager = getWindowManager();
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        Log.w("test", "宽：" + metrics.widthPixels);
+        Log.w("test", "高：" + (metrics.widthPixels / 3 * 2));
+        return (int) (metrics.widthPixels / 3 * 2);
     }
 
 }

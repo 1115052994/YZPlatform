@@ -89,25 +89,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/common15dp"
-        android:paddingRight="@dimen/common15dp"
         android:layout_marginTop="@dimen/common10dp"
+        android:gravity="center_vertical"
         >
-        <TextView
-            android:layout_width="@dimen/common90dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="处理状态："
-            android:textColor="@color/text_99"
-            android:textSize="@dimen/text_size_15sp"
-            />
-        <TextView
-            android:id="@+id/item_comp_wallet_presentation_state"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/common15dp"
+            android:paddingRight="@dimen/common15dp"
+            >
+            <TextView
+                android:layout_width="@dimen/common90dp"
+                android:layout_height="wrap_content"
+                android:text="处理状态："
+                android:textColor="@color/text_99"
+                android:textSize="@dimen/text_size_15sp"
+                />
+            <TextView
+                android:id="@+id/item_comp_wallet_presentation_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red_29"
+                android:textSize="@dimen/text_size_15sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="审核中"
-            android:textColor="@color/red_29"
-            android:textSize="@dimen/text_size_15sp"
-            />
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/common15dp"
+            android:paddingRight="@dimen/common15dp"
+            >
+            <TextView
+                android:layout_width="@dimen/common90dp"
+                android:layout_height="wrap_content"
+                android:text="支付状态："
+                android:textColor="@color/text_99"
+                android:textSize="@dimen/text_size_15sp"
+                />
+            <TextView
+                android:id="@+id/item_comp_wallet_presentation_pay_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red_29"
+                android:textSize="@dimen/text_size_15sp"
+                />
+        </LinearLayout>
     </LinearLayout>
     <View style="@style/gray_line" android:layout_marginTop="@dimen/common10dp"/>
     <LinearLayout

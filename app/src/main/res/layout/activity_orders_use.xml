@@ -136,9 +136,10 @@
 
                 <ImageView
                     android:id="@+id/orders_use_qrcode"
-                    android:layout_width="@dimen/common150dp"
-                    android:layout_height="@dimen/common150dp"
-                    android:layout_marginTop="@dimen/common25dp"
+                    android:layout_width="@dimen/common185dp"
+                    android:layout_height="@dimen/common185dp"
+                    android:layout_marginTop="@dimen/common10dp"
+                    android:scaleType="fitXY"
                     android:background="@drawable/bg_theme_cricle5"
                     />
 

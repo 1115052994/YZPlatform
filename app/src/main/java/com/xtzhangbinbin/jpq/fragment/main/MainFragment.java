@@ -40,6 +40,7 @@ import com.xtzhangbinbin.jpq.config.Config;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
+import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.zxing.android.CaptureActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -168,7 +169,8 @@ public class MainFragment extends Fragment{
         MainActivity mainActivity = (MainActivity) getActivity();
         switch (view.getId()) {
             case R.id.image_scan:
-                if(null != Prefs.with(getContext()).read("user_token")){
+                Log.w("test", "扫描：" + Prefs.with(getContext()).read("user_token"));
+                if(!StringUtil.isEmpty(Prefs.with(getContext()).read("user_token"))){
                     JumpUtil.newInstance().jumpRight(getContext(), CaptureActivity.class);
                 } else {
                     JumpUtil.newInstance().jumpRight(getContext(), LoginActivity.class);

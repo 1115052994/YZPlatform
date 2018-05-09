@@ -54,7 +54,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
-
+@SuppressWarnings("all")
 public class CarCompDetail extends BaseActivity {
 
     @BindView(R.id.banner)

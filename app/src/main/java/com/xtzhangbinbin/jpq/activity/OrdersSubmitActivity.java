@@ -74,7 +74,6 @@ public class OrdersSubmitActivity extends BaseActivity {
     ShowProductDetaile product;
     //订单对象
     OrdersView orders;
-    private MyProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +88,7 @@ public class OrdersSubmitActivity extends BaseActivity {
     public void init() {
 
         dialog = MyProgressDialog.createDialog(this);
+        showDialog("正在获取订单信息");
 
         //注册微信API对象
         api = WXAPIFactory.createWXAPI(this, Config.WECHAT_APP_ID);
@@ -117,8 +117,9 @@ public class OrdersSubmitActivity extends BaseActivity {
          */
         if (!StringUtil.isEmpty(getIntent().getStringExtra("pro_id"))) {
             pro_id = getIntent().getStringExtra("pro_id");
+            initDataByProduct();
         }
-        initDataByProduct();
+
         /**
          * 从订单列表跳转过来的支付
          */
@@ -233,11 +234,11 @@ public class OrdersSubmitActivity extends BaseActivity {
          * 根据商品id获取对应商品信息
          */
         Map<String, String> map = new HashMap<>();
-        Log.w("test", pro_id);
         map.put("prod_id", pro_id);
         OKhttptils.post(this, Config.ORDERS_SHOW_PRODUCT_BYID, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                closeDialog();
                 Gson gson = GsonFactory.create();
                 product = gson.fromJson(response, ShowProductDetaile.class);
                 if (null != product) {
@@ -251,6 +252,7 @@ public class OrdersSubmitActivity extends BaseActivity {
 
             @Override
             public void fail(String response) {
+                closeDialog();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     ToastUtil.show(OrdersSubmitActivity.this, jsonObject.getString("message"));
@@ -273,6 +275,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         OKhttptils.post(this, Config.ORDERS_GET_BYCODE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                closeDialog();
                 Gson gson = GsonFactory.create();
                 orders = gson.fromJson(response, OrdersView.class);
                 product = gson.fromJson(response, ShowProductDetaile.class);
@@ -289,6 +292,7 @@ public class OrdersSubmitActivity extends BaseActivity {
 
             @Override
             public void fail(String response) {
+                closeDialog();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     ToastUtil.show(OrdersSubmitActivity.this, jsonObject.getString("message"));
@@ -372,9 +376,7 @@ public class OrdersSubmitActivity extends BaseActivity {
      * @param orderNum
      */
     public void wechatPay(final String orderNum){
-        dialog = MyProgressDialog.createDialog(this);
-        dialog.setMessage("正在调起支付，请稍候");
-        dialog.show();
+        showDialog("正在调起支付，请稍候");
         Map<String, String> map = new HashMap<>();
         map.put("order_id", orderNum);
         map.put("price", String.valueOf(product.getData().getResult().getProd_reduced_price()));
@@ -383,7 +385,7 @@ public class OrdersSubmitActivity extends BaseActivity {
         OKhttptils.post(this, Config.ORDERS_WECCHAT_CREATE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                dialog.dismiss();
+                closeDialog();
                 try{
                     JSONObject object = new JSONObject(response);
                     Log.w("test", response);
@@ -401,11 +403,10 @@ public class OrdersSubmitActivity extends BaseActivity {
                             req.sign			= result.getString("sign");
                             //保留订单编号
                             Prefs.with(getApplicationContext()).write("wechat_order_id", orderNum);
+                            Prefs.with(getApplicationContext()).write("wechat_order_price", String.valueOf(product.getData().getResult().getProd_reduced_price()));
 //                          Toast.makeText(OrdersSubmitActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
                             // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
                             api.sendReq(req);
-                            OrdersSubmitActivity.this.finish();
-//                           Log.w("test", api.sendReq(req) + "");
                         }
                     } else {
                         ToastUtil.show(OrdersSubmitActivity.this, "订单创建失败，请稍候重试！！");
@@ -419,7 +420,7 @@ public class OrdersSubmitActivity extends BaseActivity {
 
             @Override
             public void fail(String response) {
-                dialog.dismiss();
+                closeDialog();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     ToastUtil.show(OrdersSubmitActivity.this, "订单创建失败，请稍候重试！！");

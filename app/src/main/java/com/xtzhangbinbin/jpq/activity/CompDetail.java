@@ -11,10 +11,12 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -169,7 +171,6 @@ public class CompDetail extends BaseActivity {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 comp_id = bundle.getString("comp_id");
-                Log.w("test",comp_id);
                 map.put("comp_id", comp_id);
                 OKhttptils.post(CompDetail.this, Config.BROWSECOMP, map, new OKhttptils.HttpCallBack() {
                     @Override
@@ -228,6 +229,7 @@ public class CompDetail extends BaseActivity {
                 des.setText(staffList.get(position).getStaff_info());
                 CircleImageView imageView = view.findViewById(R.id.circleImage);
 //                getPic(CompDetail.this, staffList.get(position).getStaff_photo_file_id(), imageView);
+                Log.w("test", Config.GET_Pic + staffList.get(position).getStaff_photo_file_id() + "&type=showbase64thumbnail&name=" + staffList.get(position).getStaff_photo_file_id() + ".jpg");
                 OKhttptils.getPicByHttp(CompDetail.this, staffList.get(position).getStaff_photo_file_id(), imageView);
                 return view;
             }
@@ -289,6 +291,8 @@ public class CompDetail extends BaseActivity {
         };
 //        tabsView.setAdapter(tabAdapter);
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,getHeight());
+        banner.setLayoutParams(params);
         banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
@@ -920,5 +924,19 @@ public class CompDetail extends BaseActivity {
             //如果没有登录，跳转到登录页面
             JumpUtil.newInstance().jumpRight(getApplicationContext(), LoginActivity.class);
         }
+    }
+
+    /**
+     * 获取屏幕高度
+     *
+     * @return
+     */
+    public int getHeight() {
+        WindowManager manager = getWindowManager();
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        Log.w("test", "宽：" + metrics.widthPixels);
+        Log.w("test", "高：" + (metrics.widthPixels / 3 * 2));
+        return (int) (metrics.widthPixels / 3 * 2);
     }
 }

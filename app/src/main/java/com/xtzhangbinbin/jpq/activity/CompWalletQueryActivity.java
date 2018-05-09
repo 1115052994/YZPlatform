@@ -77,7 +77,7 @@ public class CompWalletQueryActivity extends BaseActivity {
         setContentView(R.layout.activity_comp_wallet_query);
         ButterKnife.bind(this);
         ActivityUtil.addActivity(this);
-
+        dialog = MyProgressDialog.createDialog(this);
         result = new ArrayList<>();
         init();
         initAdapter();
@@ -132,6 +132,7 @@ public class CompWalletQueryActivity extends BaseActivity {
     }
 
     public void initData(final int pageIndex, final RefreshLayout refreshlayout) {
+        showDialog("正在加载数据");
         Map<String, String> map = new HashMap<>();
         if(null != year_month){
             map.put("date", year_month);
@@ -173,6 +174,7 @@ public class CompWalletQueryActivity extends BaseActivity {
 
                 @Override
                 public void fail(String response) {
+                    closeDialog();
                     Log.w("test", response);
                     Toast.makeText(CompWalletQueryActivity.this, "查询失败", Toast.LENGTH_SHORT).show();
                 }
@@ -197,7 +199,7 @@ public class CompWalletQueryActivity extends BaseActivity {
                     item_comp_wallet_child_price.setText("+" + result.get(position).getWallet_log_money());
                 } else {
                     item_comp_wallet_child_icon.setImageResource(R.drawable.ic_comp_wallt_ti);
-                    item_comp_wallet_child_price.setText("-" + result.get(position).getWallet_log_money());
+                    item_comp_wallet_child_price.setText("" + result.get(position).getWallet_log_money());
                 }
                 //提现方式，如果是收入，则不显示
                 TextView item_comp_wallet_child_type = holder.getView(R.id.item_comp_wallet_child_type);
@@ -236,11 +238,5 @@ public class CompWalletQueryActivity extends BaseActivity {
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(cashQueryAdapter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        closeDialog();
     }
 }

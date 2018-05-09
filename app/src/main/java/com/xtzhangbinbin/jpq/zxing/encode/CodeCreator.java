@@ -5,6 +5,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 public class CodeCreator {
@@ -15,7 +16,7 @@ public class CodeCreator {
 	 * @return
 	 * @throws WriterException
 	 */
-	public static Bitmap createQRCode(String url) throws WriterException {
+	public static Bitmap createQRCode(String url, int border) throws WriterException {
 
 		if (url == null || url.equals("")) {
 			return null;
@@ -23,7 +24,7 @@ public class CodeCreator {
 
 		// 生成二维矩阵,编码时指定大小,不要生成了图片以后再进行缩放,这样会模糊导致识别失败
 		BitMatrix matrix = new MultiFormatWriter().encode(url,
-				BarcodeFormat.QR_CODE, 500, 500);
+				BarcodeFormat.QR_CODE, border, border);
 
 		int width = matrix.getWidth();
 		int height = matrix.getHeight();
@@ -45,5 +46,4 @@ public class CodeCreator {
 		bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
 		return bitmap;
 	}
-
 }

@@ -29,6 +29,7 @@ import com.xtzhangbinbin.jpq.utils.NetUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.StringUtil;
 import com.xtzhangbinbin.jpq.view.FullyLinearLayoutManager;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
 import org.json.JSONException;
@@ -107,6 +108,8 @@ public class CompWalletActivity extends BaseActivity {
     }
 
     public void init(){
+        dialog = MyProgressDialog.createDialog(this);
+        showDialog("正在加载钱包信息，请稍候！");
         result = new ArrayList<>();
         comp_wallet_query.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,6 +213,7 @@ public class CompWalletActivity extends BaseActivity {
             OKhttptils.post(this, Config.COMP_WALLET_OPTION_DETAIL, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    closeDialog();
                     Gson gson = GsonFactory.create();
                     CompWalletDetail wallet = gson.fromJson(response, CompWalletDetail.class);
                     List<CompWalletDetail.DataBean.ResultBean> result2 = wallet.getData().getResult();
@@ -233,6 +237,7 @@ public class CompWalletActivity extends BaseActivity {
 
                 @Override
                 public void fail(String response) {
+                    closeDialog();
                     Toast.makeText(CompWalletActivity.this, "查询失败", Toast.LENGTH_SHORT).show();
                 }
             });

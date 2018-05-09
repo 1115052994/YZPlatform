@@ -26,6 +26,7 @@ import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.zxing.camera.CameraManager;
 import com.xtzhangbinbin.jpq.zxing.view.ViewfinderView;
 import org.json.JSONException;
@@ -99,6 +100,7 @@ public final class CaptureActivity extends BaseActivity implements
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         initCamera();
         init();
+        dialog = MyProgressDialog.createDialog(this);
     }
 
     public void init() {
@@ -108,11 +110,13 @@ public final class CaptureActivity extends BaseActivity implements
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showDialog("正在提交处理");
                 Map<String, String> map = new HashMap<>();
                 map.put("order_token_code", token.getText().toString());
                 OKhttptils.post(CaptureActivity.this, Config.ORDERS_TOKEN_OPERATION, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
+                        closeDialog();
                         try {
                             Log.w("test", response);
                             JSONObject obj = new JSONObject(response);
@@ -130,6 +134,7 @@ public final class CaptureActivity extends BaseActivity implements
 
                     @Override
                     public void fail(String response) {
+                        closeDialog();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             ToastUtil.show(CaptureActivity.this,jsonObject.getString("message"));
@@ -238,6 +243,7 @@ public final class CaptureActivity extends BaseActivity implements
 
         //这里处理解码完成后的结果，此处将参数回传到Activity处理
         beepManager.playBeepSoundAndVibrate();
+        showDialog("识别完成，正在提交处理");
         try {
             final JSONObject jsonObject = new JSONObject(rawResult.toString());
 
@@ -254,6 +260,7 @@ public final class CaptureActivity extends BaseActivity implements
                 @Override
                 public void success(String response) {
                     Log.w("test", response);
+                    closeDialog();
                     try {
                         JSONObject obj = new JSONObject(response);
                         if(null != obj && "1".equals(obj.getString("status"))){
@@ -270,7 +277,7 @@ public final class CaptureActivity extends BaseActivity implements
 
                 @Override
                 public void fail(String response) {
-                    Log.w("test", response );
+                    closeDialog();
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         ToastUtil.show(CaptureActivity.this,jsonObject.getString("message"));

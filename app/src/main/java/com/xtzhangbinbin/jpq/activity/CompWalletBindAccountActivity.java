@@ -147,7 +147,7 @@ public class CompWalletBindAccountActivity extends BaseActivity {
         comp_wallet_bind_bank_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isBindWechat){
+                if(isBindBank){
                     final OrdinaryDialog dialog = OrdinaryDialog.newInstance(CompWalletBindAccountActivity.this).setMessage1("绑定银行帐号").setMessage2("您已经绑定了银行帐号，要更换新的帐号吗？").showDialog();
                     dialog.setYesOnclickListener(new OrdinaryDialog.onYesOnclickListener() {
                         @Override

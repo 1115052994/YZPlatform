@@ -10,6 +10,7 @@ import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.entity.ShowProductDetaile;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
+import com.xtzhangbinbin.jpq.utils.Prefs;
 
 import java.text.DecimalFormat;
 import butterknife.BindView;
@@ -45,6 +46,9 @@ public class OrdersPaySuccessActivity extends BaseActivity {
     public void initData(){
         price.setText("￥" + new DecimalFormat("#0.00").format(getIntent().getDoubleExtra("price", 0)));
         payStyle.setText("支付方式：" + (getIntent().getStringExtra("payStyle")));
+        //清空缓存中的数据
+        Prefs.with(getApplicationContext()).remove("wechat_order_price");
+        Prefs.with(getApplicationContext()).remove("wechat_order_id");
     }
 
     public void init(){

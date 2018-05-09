@@ -75,7 +75,7 @@ public class CompWalletPresentationListActivity extends BaseActivity {
         setContentView(R.layout.activity_comp_wallet_presentation_list);
         ButterKnife.bind(this);
         ActivityUtil.addActivity(this);
-
+        dialog = MyProgressDialog.createDialog(this);
         init();
         initAdapter();
         initData(1, null);
@@ -100,6 +100,7 @@ public class CompWalletPresentationListActivity extends BaseActivity {
     }
 
     public void initData(final int pageIndex, final RefreshLayout refreshlayout) {
+        showDialog("正在加载提现记录，请稍候！");
         Map<String, String> map = new HashMap<>();
         map.put("pageIndex", String.valueOf(pageIndex));
         map.put("pageSize", "");
@@ -107,6 +108,7 @@ public class CompWalletPresentationListActivity extends BaseActivity {
             OKhttptils.post(this, Config.COMP_WALLET_DEPOST_LOG, map, new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
+                    closeDialog();
                     Gson gson = new Gson();
                     CompWalletDepositLog log = gson.fromJson(response, CompWalletDepositLog.class);
                     List<CompWalletDepositLog.DataBean.ResultBean> result2 = log.getData().getResult();
@@ -133,6 +135,7 @@ public class CompWalletPresentationListActivity extends BaseActivity {
 
                 @Override
                 public void fail(String response) {
+                    closeDialog();
                     Log.w("test", response);
                     Toast.makeText(CompWalletPresentationListActivity.this, "查询失败", Toast.LENGTH_SHORT).show();
                 }
@@ -174,6 +177,8 @@ public class CompWalletPresentationListActivity extends BaseActivity {
                 } else {
                     item_comp_wallet_deposit_remark.setText(log.getWallet_apply_audit_msg());
                 }
+                TextView item_comp_wallet_presentation_pay_state = holder.getView(R.id.item_comp_wallet_presentation_pay_state);
+                item_comp_wallet_presentation_pay_state.setText("1".equals(log.getWallet_apply_pay_flag()) ? "已支付" : "未支付");
             }
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

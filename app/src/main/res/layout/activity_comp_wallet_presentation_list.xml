@@ -11,7 +11,9 @@
 
     <include layout="@layout/header_layout"
         android:id="@+id/head_title"/>
-
+    <View
+        style="@style/gray_line"
+        />
     <ImageView
         android:id="@+id/comp_wallet_default_image"
         android:layout_width="180dp"
@@ -22,7 +24,6 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
-        android:layout_below="@id/comp_wallet_query_head_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

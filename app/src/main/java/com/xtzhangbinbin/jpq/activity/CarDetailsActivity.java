@@ -69,6 +69,7 @@ import cn.qqtheme.framework.picker.DatePicker;
 import io.reactivex.functions.Consumer;
 
 /* 二手车 - 车辆详情 */
+@SuppressWarnings("all")
 public class CarDetailsActivity extends BaseActivity {
 
     private static final String TAG = "车辆详情";
@@ -481,7 +482,7 @@ public class CarDetailsActivity extends BaseActivity {
                 Log.i(TAG, "fail广告: " + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    ToastUtil.show(currtActivity, jsonObject.getString("message"));
+//                    ToastUtil.show(currtActivity, jsonObject.getString("message"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -637,6 +638,8 @@ public class CarDetailsActivity extends BaseActivity {
                         bundle.putString("car_name", carDetailBean.getCar_name());
                         bundle.putString("model_id",carDetailBean.getCar_model().substring(carDetailBean.getCar_model().lastIndexOf("_") + 1));
                         JumpUtil.newInstance().jumpRight(currtActivity,CarDetailsKeyActivity.class,bundle);
+                    } else {
+                        ToastUtil.show(this, "该车型暂无详参数据！");
                     }
                 } else {
                     JumpUtil.newInstance().jumpRight(this, LoginActivity.class);

@@ -130,6 +130,13 @@
         <item name="android:windowNoTitle">true</item> //设置没有状态栏
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold|italic</item>
+    </style>
+    <!-- 欢迎页-->
+    <style name="WelcomeStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>  //设置全屏
+        <item name="android:windowNoTitle">true</item> //设置没有状态栏
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold|italic</item>
         <item name="android:windowBackground">@drawable/welcome</item>
     </style>
     <!--微信背景透明-->

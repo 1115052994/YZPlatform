@@ -120,7 +120,9 @@ public class CollectFacilitator extends Fragment {
                     result.addAll(result2);
                     //没有信息图片显示
                     if (result.size() <= 0) {
-                        noCollectCarImage.setVisibility(View.VISIBLE);
+                        if(null != noCollectCarImage){
+                            noCollectCarImage.setVisibility(View.VISIBLE);
+                        }
                     }else {
                         if(refreshlayout!=null){
                             if (pageIndex > pageCount) {

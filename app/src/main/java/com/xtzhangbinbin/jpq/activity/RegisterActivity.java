@@ -166,25 +166,15 @@ public class RegisterActivity extends BaseActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if(null != jsonObject){
+                        Log.w("test", "注册时：" + user_type);
                         Prefs.with(getApplicationContext()).write("user_token", jsonObject.getJSONObject("data").getString("result"));
                         Prefs.with(getApplicationContext()).write("user_phone", registerPhone.getText().toString());
+                        Prefs.with(getApplicationContext()).write("user_type", user_type);
 //                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
                         Message message = new Message();
                         message.what = 001;
                         handler.sendMessage(message);
                     }
-//                    String data = jsonObject.getString("data");
-//                    JSONObject object = new JSONObject(data);
-//                    String flag = object.getString("flag");
-//                    String user_token = object.getString("user_token");
-//                    Prefs.with(getApplicationContext()).write("user_token", jsonObject.getString("data"));
-//                    Prefs.with(getApplicationContext()).write("user_phone", registerPhone.getText().toString());
-//                    if ("true".equals(flag)) {
-//                        login();
-//                        JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
-//                    } else {
-//                        ToastUtil.show(RegisterActivity.this, object.getString("message"));
-//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -321,7 +311,7 @@ public class RegisterActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 001:
-                    getUserInfo();
+//                    getUserInfo();
                     JumpUtil.newInstance().jumpRight(RegisterActivity.this, MainActivity.class);
                     break;
             }
@@ -354,7 +344,8 @@ public class RegisterActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(data);
                     String result = jsonObject.getString("result");
                     JSONObject obj = new JSONObject(result);
-                    user_type = obj.getString("user_type");
+//                    user_type = obj.getString("user_type");
+                    //加入用户注册时选择的用户类型
                     Prefs.with(getApplicationContext()).write("user_type",user_type);
 
                 } catch (JSONException e) {
@@ -366,14 +357,6 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void fail(String response) {
                 Log.d(TAG, "fail用户信息: " + response);
-//                try {
-//                    JSONObject object = new JSONObject(response);
-//                    user_type = "";
-//                    ToastUtil.show(LoginActivity.this, object.getString("message"));
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
             }
         });
 

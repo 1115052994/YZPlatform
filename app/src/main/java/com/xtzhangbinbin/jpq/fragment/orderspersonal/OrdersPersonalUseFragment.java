@@ -49,7 +49,6 @@ public class OrdersPersonalUseFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-    private MyProgressDialog dialog;
     private Context context;
     private List<Orders.DataBean.ResultBean> result = new ArrayList<>();
     private OrdersPersonalAdapter ordersPersonalAdapter;
@@ -84,11 +83,14 @@ public class OrdersPersonalUseFragment extends Fragment {
                 getOrders(Config.ORDERS_GET_LIST, ++pageIndex, refreshlayout);
             }
         });
-        dialog = MyProgressDialog.createDialog(context);
-        dialog.setMessage("正在加载数据，请稍候");
-        dialog.show();
-        getOrders(Config.ORDERS_GET_LIST, 1, null);
+//        getOrders(Config.ORDERS_GET_LIST, 1, null);
         return inflate;
+    }
+
+    public void onResume() {
+        super.onResume();
+        result.clear();
+        getOrders(Config.ORDERS_GET_LIST, 1, null);
     }
 
     public void getOrders(String url, final int pageIndex, final RefreshLayout refreshlayout) {
@@ -121,10 +123,6 @@ public class OrdersPersonalUseFragment extends Fragment {
                             ordersPersonalAdapter.notifyDataSetChanged();
                         }
                     }
-                    if(null != dialog && dialog.isShowing()){
-                        dialog.dismiss();
-                    }
-
                 }
 
                 @Override
@@ -135,13 +133,9 @@ public class OrdersPersonalUseFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if(null != dialog && dialog.isShowing()){
-            dialog.dismiss();
-        }
     }
 }

@@ -83,7 +83,7 @@ public class CarServiceListAdapter extends RecyclerView.Adapter<CarServiceListAd
         }else {
             holder.isR.setImageDrawable(context.getResources().getDrawable(R.drawable.cf_rz));
         }
-        holder.mDistance.setText(distance + "km");
+        holder.mDistance.setText(distance + "米");
         holder.mAddress.setText(comp_address);
         holder.mDetails.setOnClickListener(new View.OnClickListener() {
             @Override

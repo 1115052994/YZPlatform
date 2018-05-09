@@ -64,7 +64,6 @@ public class OrdersCompUseFragment extends Fragment {
     private List<OrdersCompInfo.DataBean.ResultBean> result = new ArrayList<>();
     private int pageIndex = 1;//第几页
     private int pageCount;//总页数
-    private MyProgressDialog dialog;
     public OrdersCompUseFragment(Context context) {
         this.context = context;
     }
@@ -90,9 +89,6 @@ public class OrdersCompUseFragment extends Fragment {
                 getOrders(Config.ORDERS_GET_COMP_LIST, ++pageIndex, refreshlayout);
             }
         });
-        dialog = MyProgressDialog.createDialog(context);
-        dialog.setMessage("正在加载数据，请稍候");
-        dialog.show();
         initAdapter();
         getOrders(Config.ORDERS_GET_COMP_LIST, 1, null);
         return inflate;
@@ -128,18 +124,10 @@ public class OrdersCompUseFragment extends Fragment {
                             ordersCompAdapter.notifyDataSetChanged();
                         }
                     }
-
-                    if(null != dialog && dialog.isShowing()){
-                        dialog.dismiss();
-                    }
-
                 }
 
                 @Override
                 public void fail(String response) {
-                    if(null != dialog && dialog.isShowing()){
-                        dialog.dismiss();
-                    }
                     defaultImage.setVisibility(View.VISIBLE);
                     Log.w("test", response);
                     Toast.makeText(context, "查询失败", Toast.LENGTH_SHORT).show();
@@ -190,8 +178,5 @@ public class OrdersCompUseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if(null != dialog && dialog.isShowing()){
-            dialog.dismiss();
-        }
     }
 }

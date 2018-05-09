@@ -87,8 +87,14 @@ public class OrdersPersonalAllFragment extends Fragment {
         dialog = MyProgressDialog.createDialog(context);
         dialog.setMessage("正在加载数据，请稍候");
         dialog.show();
-        getOrders(Config.ORDERS_GET_LIST, 1, null);
         return inflate;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        result.clear();
+        getOrders(Config.ORDERS_GET_LIST, 1, null);
     }
 
     public void getOrders(String url, final int pageIndex, final RefreshLayout refreshlayout) {

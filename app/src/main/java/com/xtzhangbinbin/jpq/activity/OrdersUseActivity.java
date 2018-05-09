@@ -2,6 +2,8 @@ package com.xtzhangbinbin.jpq.activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.gson.Gson;
@@ -13,6 +15,7 @@ import com.xtzhangbinbin.jpq.entity.OrderQRCode;
 import com.xtzhangbinbin.jpq.utils.ActivityUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.zxing.encode.CodeCreator;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,10 +50,12 @@ public class OrdersUseActivity extends BaseActivity {
         setContentView(R.layout.activity_orders_use);
         ButterKnife.bind(this);
         ActivityUtil.addActivity(this);
+        dialog = MyProgressDialog.createDialog(this);
         initData();
     }
 
     public void initData(){
+        showDialog("正在加载订单");
         if(null != this.getIntent().getStringExtra("order_id")){
             order_id = this.getIntent().getStringExtra("order_id");
         }
@@ -73,7 +78,7 @@ public class OrdersUseActivity extends BaseActivity {
 
                     //size给固定的值，避免使用iamgeview.getWidth,导致二维码模糊
                     try {
-                        Bitmap bitmap = CodeCreator.createQRCode(orderQRCode.getData().getResult().getOrder_qrcode());
+                        Bitmap bitmap = CodeCreator.createQRCode(orderQRCode.getData().getResult().getOrder_qrcode(), getWidth() / 2);
                         orders_use_qrcode.setImageBitmap(bitmap);
                     } catch (WriterException e) {
                         e.printStackTrace();
@@ -81,11 +86,12 @@ public class OrdersUseActivity extends BaseActivity {
                 } catch(JSONException e){
                     e.printStackTrace();
                 }
-
+                closeDialog();
             }
 
             @Override
             public void fail(String response) {
+                closeDialog();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     ToastUtil.show(OrdersUseActivity.this, "当前订单已失效！！");
@@ -102,4 +108,10 @@ public class OrdersUseActivity extends BaseActivity {
         setTitle("订单详情");
     }
 
+    public int getWidth() {
+        WindowManager manager = getWindowManager();
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        return metrics.widthPixels;
+    }
 }
