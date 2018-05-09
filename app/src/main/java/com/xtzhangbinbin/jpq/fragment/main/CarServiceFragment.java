@@ -180,7 +180,8 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     /* 填充数据 */
     private void setAdapter() {
         adapter = new CarServiceListAdapter(beanList, getContext());
-        recyclerView.setAdapter(adapter);
+        if (adapter!=null)
+            recyclerView.setAdapter(adapter);
     }
 
 
@@ -582,9 +583,6 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 beanList = serviceList.getData().getResult();
                 pageTotal = serviceList.getData().getPageCount();
                 setAdapter();
-
-
-
             }
 
             @Override
