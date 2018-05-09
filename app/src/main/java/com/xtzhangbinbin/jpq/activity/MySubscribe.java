@@ -23,6 +23,7 @@ import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.CarTagLayout;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -49,6 +50,7 @@ public class MySubscribe extends BaseActivity {
     private CommonRecyclerAdapter recyclerAdapter;
     private int size = 0;
 
+    private MyProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -286,6 +288,9 @@ public class MySubscribe extends BaseActivity {
 
     private void getData(){
         // 查询订阅
+        dialog = MyProgressDialog.createDialog(MySubscribe.this);
+        dialog.setMessage("正在加载中,请稍候");
+        dialog.show();
         querySubscribe();
     }
 
@@ -385,6 +390,7 @@ public class MySubscribe extends BaseActivity {
                         recyclerList.add(bean);
                     }
                     recyclerAdapter.notifyDataSetChanged();
+                    dialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

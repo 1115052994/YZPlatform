@@ -314,7 +314,6 @@ public class BaseActivity extends AppCompatActivity{
     private PopupWindow popupWindow;
     private ImageView img;
     private ImageView img1;
-//    private MyProgressDialog dialog;
     private int swidth,sheight;
     private int sw,sh;
 

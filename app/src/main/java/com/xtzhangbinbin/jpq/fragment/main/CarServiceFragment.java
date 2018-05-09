@@ -187,7 +187,9 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     /* 填充菜单 */
     private void initMenu() {
          /* 首页分类 */
-        inflater = LayoutInflater.from(getContext());
+        if (getContext()!=null) {
+            inflater = LayoutInflater.from(getContext());
+        }
         //总的页数=总数/每页数量，并取整
         pageCount = (int) Math.ceil(itemListBeans.size() * 1.0 / pageSize);
         mPagerList = new ArrayList<View>();
