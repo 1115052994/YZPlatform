@@ -58,6 +58,8 @@ public class ModelsChoose extends BaseActivity {
     private String name;
     private String car_brand;//选中的车品牌
     private String car_brand_id;//选中的车品牌id
+    private String car_series;//选中的车系
+    private String car_series_id;//选中的车系id
 
     //通过品牌搜车系
     private List<CarChexiBean.DataBean.ResultBean.TrainListBean> searchChexiList = new ArrayList<>();
@@ -184,6 +186,7 @@ public class ModelsChoose extends BaseActivity {
         for (CarChexiBean.DataBean.ResultBean.TrainListBean bean : searchChexiList) {
             List<CarChexiBean.DataBean.ResultBean.TrainListBean.CarTrianerMapListBean> carTrianerMapListBean = bean.getCarTrianerMapList();
             for (CarChexiBean.DataBean.ResultBean.TrainListBean.CarTrianerMapListBean car : carTrianerMapListBean) {
+
                 Map<String, String> map = new HashMap<>();
                 map.put("tv_carbrand", car.getBrandName());
                 map.put("image_carbrand", car.getBrandImg());
@@ -257,6 +260,8 @@ public class ModelsChoose extends BaseActivity {
                     TextView tv_carbrand = holder.getView(R.id.tv_carbrand);
                     TextView tv_num = holder.getView(R.id.tv_num);
                     ImageView imageView = holder.getView(R.id.image_carbrand);
+//                    car_series = map.get("tv_carbrand");
+//                    car_series_id = map.get("id_carbrand");
                     tv_carbrand.setText(map.get("tv_carbrand"));
                     tv_num.setText(map.get("tv_num"));
                     String url = Config.BASE_URL + Config.Y + map.get("image_carbrand");
@@ -270,10 +275,10 @@ public class ModelsChoose extends BaseActivity {
             @Override
             public void onClick(int position) {
                 if (position != 0) {
-//                    car_brand;
-//                    car_brand_id;
                     Log.e("哒哒哒", "onClick: " + "车品牌"+car_brand + "车品牌id"+car_brand_id );
                     Log.d("aaaaa", "onClick: " + carList.get(position).get("tv_carbrand") + "------" + carList.get(position).get("id_carbrand"));
+                    /* 车系 */
+                    car_series = carList.get(position).get("tv_carbrand");
                     selected(carList.get(position).get("tv_carbrand"), carList.get(position).get("id_carbrand"),CarChoose.class,car_brand,car_brand_id);
                     window.dismiss();
                 }
@@ -381,6 +386,7 @@ public class ModelsChoose extends BaseActivity {
         bundle.putString("id_carbrand", id_carbrand);
         bundle.putString("car_brand",car_brand);
         bundle.putString("car_brand_id",car_brand_id);
+        bundle.putString("car_series",car_series);
         Log.d("aaaaa", "selected: "+tv_carbrand+"-----------"+id_carbrand);
         if(!name.isEmpty()){
             intent.putExtra("name",name);

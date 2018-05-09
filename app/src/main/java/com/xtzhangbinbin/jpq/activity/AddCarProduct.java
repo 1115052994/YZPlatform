@@ -294,7 +294,8 @@ public class AddCarProduct extends BaseActivity {
         if (!b.isEmpty()) {
             //车型名+车型id + 品牌名+品牌id
             String[] split = b.split(",");
-            car_name = split[2] + split[0];
+            car_name = split[2] + " " + split[4] + " " + split[0];
+            Log.d("qwe", "qwe: " + car_name);
 
             mCarType.setText(split[0]);
 
@@ -391,7 +392,6 @@ public class AddCarProduct extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == 0) { // 如果返回数据
-
             Bitmap data1 = (Bitmap) data.getExtras().get("data");
             String base64 = PhotoUtils.bitmapToBase64(data1);
 
@@ -423,8 +423,6 @@ public class AddCarProduct extends BaseActivity {
             }
 
         }
-
-
     }
 
     public void initView() {

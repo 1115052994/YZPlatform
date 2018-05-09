@@ -46,6 +46,7 @@ public class CarChoose extends BaseActivity {
 
     private String car_brand;
     private String car_brand_id;
+    private String car_series;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class CarChoose extends BaseActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
 
+        car_series = bundle.getString("car_series");
         car_brand = bundle.getString("car_brand");
         car_brand_id = bundle.getString("car_brand_id");
 
@@ -109,7 +111,7 @@ public class CarChoose extends BaseActivity {
                     }else {
                         intent =new Intent(CarChoose.this,UpdateCarActivity.class);
                     }
-                    EventBus.getDefault().post(recyclerList.get(position).get("tv_carbrand")+"," + recyclerList.get(position).get("id_carbrand") + "," + car_brand + "," + car_brand_id );
+                    EventBus.getDefault().post(recyclerList.get(position).get("tv_carbrand")+"," + recyclerList.get(position).get("id_carbrand") + "," + car_brand + "," + car_brand_id +"," + car_series);
                     startActivity(intent);
                     finish();
                 }

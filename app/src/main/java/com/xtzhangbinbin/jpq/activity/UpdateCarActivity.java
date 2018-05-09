@@ -231,6 +231,11 @@ public class UpdateCarActivity extends BaseActivity {
                     getDetail();
                     break;
                 case 002:
+                    photoList.clear();
+                    arrwai.clear();
+                    arrnei.clear();
+                    arrFadong.clear();
+                    arrDetail.clear();
                     resultBean = (CarProductDetail.DataBean.ResultBean) msg.obj;
                     /* 24张原图id */
                     CarPhotos carPhoto = new CarPhotos();
@@ -312,7 +317,6 @@ public class UpdateCarActivity extends BaseActivity {
                     sfile_id.add(resultBean.getCar_22_icon_file_id());
                     sfile_id.add(resultBean.getCar_23_icon_file_id());
                     sfile_id.add(resultBean.getCar_24_icon_file_id());
-
 
 
                     HashMap<String, String> map1 = new HashMap<>();
@@ -422,11 +426,6 @@ public class UpdateCarActivity extends BaseActivity {
         dialog = MyProgressDialog.createDialog(this);
         dialog.setMessage("正在加载车辆数据，请稍候！");
         dialog.show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         photoList.clear();
         arrwai.clear();
         arrnei.clear();
@@ -435,6 +434,43 @@ public class UpdateCarActivity extends BaseActivity {
         getData();
         onCall();
         getLocation();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        photoList.clear();
+//        arrwai.clear();
+//        arrnei.clear();
+//        arrFadong.clear();
+//        arrDetail.clear();
+//        getData();
+//        onCall();
+//        getLocation();
+        getPictures();
+    }
+
+    /* 拍照后显示拍照图片 */
+    private void getPictures() {
+        Map<String, String> map = new HashMap<>();
+        map.put("car_id", car_id);
+        OKhttptils.post(UpdateCarActivity.this, Config.SHOW_CAR_PRODUCT, map, new OKhttptils.HttpCallBack() {
+            @Override
+            public void success(String response) {
+                Gson gson = GsonFactory.create();
+                CarProductDetail productDetail = gson.fromJson(response, CarProductDetail.class);
+                CarProductDetail.DataBean.ResultBean resultBean = productDetail.getData().getResult();
+                Message message = new Message();
+                message.what = 002;
+                message.obj = resultBean;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void fail(String response) {
+
+            }
+        });
     }
 
     /* 获取数据 */
@@ -729,7 +765,7 @@ public class UpdateCarActivity extends BaseActivity {
         if (!b.isEmpty()) {
             //车型名+车型id + 品牌名+品牌id
             String[] split = b.split(",");
-            car_name = split[2] + split[0];
+            car_name = split[2] + " " + split[4] + " " + split[0];
 
             mCarType.setText(split[0]);
 
@@ -766,7 +802,7 @@ public class UpdateCarActivity extends BaseActivity {
                 picker.setUseWeight(true);
                 picker.setTopPadding(ConvertUtils.toPx(UpdateCarActivity.this, 10));
                 picker.setRangeStart(1950, 01, 01);
-                picker.setSelectedItem(2010, 1,1);
+                picker.setSelectedItem(2010, 1, 1);
                 picker.setRangeEnd(DateUtil.getYEAR(), DateUtil.getMONTH(), DateUtil.getDAY());
                 picker.setResetWhileWheel(false);
                 picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
@@ -1054,125 +1090,60 @@ public class UpdateCarActivity extends BaseActivity {
         Log.d(TAG, "onViewClicked座位数: " + car_seating);
         Log.e(TAG, "onViewClicked车架号: " + car_vin);
 
-        Map<String,String> map = new HashMap<>();
-        map.put("car_vin",car_vin);
-        map.put("car_sign_date",car_time);
-        map.put("car_seating",car_seating);
-        map.put("car_price",car_price);
-        map.put("car_name",car_name);
-        map.put("car_model",car_model);
-        map.put("car_mileage",car_mileage);
-        map.put("car_letout",car_letout);
-        map.put("car_id",car_id);
-        map.put("car_gearbox",car_gearbox);
-        map.put("car_fuel_type",car_fuel_type);
-        map.put("car_emissions",car_displacement);
-        map.put("car_desc",car_resum);
-        map.put("car_brand",car_brand);
-//        map.put("car_1_file_id",photoList.get(0).getCar_1_file_id());
-//        map.put("car_2_file_id",photoList.get(0).getCar_2_file_id());
-//        map.put("car_3_file_id",photoList.get(0).getCar_3_file_id());
-//        map.put("car_4_file_id",photoList.get(0).getCar_4_file_id());
-//        map.put("car_5_file_id",photoList.get(0).getCar_5_file_id());
-//        map.put("car_6_file_id",photoList.get(0).getCar_6_file_id());
-//        map.put("car_7_file_id",photoList.get(0).getCar_7_file_id());
-//        map.put("car_8_file_id",photoList.get(0).getCar_8_file_id());
-//        map.put("car_9_file_id",photoList.get(0).getCar_9_file_id());
-//        map.put("car_10_file_id",photoList.get(0).getCar_10_file_id());
-//        map.put("car_11_file_id",photoList.get(0).getCar_11_file_id());
-//        map.put("car_12_file_id",photoList.get(0).getCar_12_file_id());
-//        map.put("car_13_file_id",photoList.get(0).getCar_13_file_id());
-//        map.put("car_14_file_id",photoList.get(0).getCar_14_file_id());
-//        map.put("car_15_file_id",photoList.get(0).getCar_15_file_id());
-//        map.put("car_16_file_id",photoList.get(0).getCar_16_file_id());
-//        map.put("car_17_file_id",photoList.get(0).getCar_17_file_id());
-//        map.put("car_18_file_id",photoList.get(0).getCar_18_file_id());
-//        map.put("car_19_file_id",photoList.get(0).getCar_19_file_id());
-//        map.put("car_20_file_id",photoList.get(0).getCar_20_file_id());
-//        map.put("car_21_file_id",photoList.get(0).getCar_21_file_id());
-//        map.put("car_22_file_id",photoList.get(0).getCar_22_file_id());
-//        map.put("car_23_file_id",photoList.get(0).getCar_23_file_id());
-//        map.put("car_24_file_id",photoList.get(0).getCar_24_file_id());
-//        map.put("car_1_desc",photoList.get(0).getCar_1_desc());
-//        map.put("car_2_desc",photoList.get(0).getCar_2_desc());
-//        map.put("car_3_desc",photoList.get(0).getCar_3_desc());
-//        map.put("car_4_desc",photoList.get(0).getCar_4_desc());
-//        map.put("car_5_desc",photoList.get(0).getCar_5_desc());
-//        map.put("car_6_desc",photoList.get(0).getCar_6_desc());
-//        map.put("car_7_desc",photoList.get(0).getCar_7_desc());
-//        map.put("car_8_desc",photoList.get(0).getCar_8_desc());
-//        map.put("car_9_desc",photoList.get(0).getCar_9_desc());
-//        map.put("car_10_desc",photoList.get(0).getCar_10_desc());
-//        map.put("car_11_desc",photoList.get(0).getCar_11_desc());
-//        map.put("car_12_desc",photoList.get(0).getCar_12_desc());
-//        map.put("car_13_desc",photoList.get(0).getCar_13_desc());
-//        map.put("car_14_desc",photoList.get(0).getCar_14_desc());
-//        map.put("car_15_desc",photoList.get(0).getCar_15_desc());
-//        map.put("car_16_desc",photoList.get(0).getCar_16_desc());
-//        map.put("car_17_desc",photoList.get(0).getCar_17_desc());
-//        map.put("car_18_desc",photoList.get(0).getCar_18_desc());
-//        map.put("car_19_desc",photoList.get(0).getCar_19_desc());
-//        map.put("car_20_desc",photoList.get(0).getCar_20_desc());
-//        map.put("car_21_desc",photoList.get(0).getCar_21_desc());
-//        map.put("car_22_desc",photoList.get(0).getCar_22_desc());
-//        map.put("car_23_desc",photoList.get(0).getCar_23_desc());
-//        map.put("car_24_desc",photoList.get(0).getCar_24_desc());
-//        map.put("car_1_icon_file_id",sfile_id.get(0));
-//        map.put("car_2_icon_file_id",sfile_id.get(1));
-//        map.put("car_3_icon_file_id",sfile_id.get(2));
-//        map.put("car_4_icon_file_id",sfile_id.get(3));
-//        map.put("car_5_icon_file_id",sfile_id.get(4));
-//        map.put("car_6_icon_file_id",sfile_id.get(5));
-//        map.put("car_7_icon_file_id",sfile_id.get(6));
-//        map.put("car_8_icon_file_id",sfile_id.get(7));
-//        map.put("car_9_icon_file_id",sfile_id.get(8));
-//        map.put("car_10_icon_file_id",sfile_id.get(9));
-//        map.put("car_11_icon_file_id",sfile_id.get(10));
-//        map.put("car_12_icon_file_id",sfile_id.get(11));
-//        map.put("car_13_icon_file_id",sfile_id.get(12));
-//        map.put("car_14_icon_file_id",sfile_id.get(13));
-//        map.put("car_15_icon_file_id",sfile_id.get(14));
-//        map.put("car_16_icon_file_id",sfile_id.get(15));
-//        map.put("car_17_icon_file_id",sfile_id.get(16));
-//        map.put("car_18_icon_file_id",sfile_id.get(17));
-//        map.put("car_19_icon_file_id",sfile_id.get(18));
-//        map.put("car_20_icon_file_id",sfile_id.get(19));
-//        map.put("car_21_icon_file_id",sfile_id.get(20));
-//        map.put("car_22_icon_file_id",sfile_id.get(21));
-//        map.put("car_23_icon_file_id",sfile_id.get(22));
-//        map.put("car_24_icon_file_id",sfile_id.get(23));
+        Map<String, String> map = new HashMap<>();
+        map.put("car_vin", car_vin);
+        map.put("car_sign_date", car_time);
+        map.put("car_seating", car_seating);
+        map.put("car_price", car_price);
+        map.put("car_name", car_name);
+        map.put("car_model", car_model);
+        map.put("car_mileage", car_mileage);
+        map.put("car_letout", car_letout);
+        map.put("car_id", car_id);
+        map.put("car_gearbox", car_gearbox);
+        map.put("car_fuel_type", car_fuel_type);
+        map.put("car_emissions", car_displacement);
+        map.put("car_desc", car_resum);
+        map.put("car_brand", car_brand);
+        if (!car_vin.isEmpty() && !car_time.isEmpty() && !car_seating.isEmpty() && !car_price.isEmpty() && !car_name.isEmpty() &&
+                !car_model.isEmpty() && !car_mileage.isEmpty() && !car_letout.isEmpty() && !car_id.isEmpty() && !car_gearbox.isEmpty() && !car_fuel_type.isEmpty()
+                && !car_displacement.isEmpty() && !car_resum.isEmpty() && !car_brand.isEmpty() && !car_brand.isEmpty()) {
+            if (sfile_id.size() != 23) {
+                ToastUtil.show(UpdateCarActivity.this, "请完善信息后保存");
+            } else {
+                dialog = MyProgressDialog.createDialog(this);
+                dialog.setMessage("正在上传数据");
+                dialog.show();
 
-//        for (String key : map.keySet()) {
-//            if (map.get(key) == null){
-//                ToastUtil.show(UpdateCarActivity.this,"请完善后提交");
-//                break;
-//            }else {
-//                ToastUtil.show(UpdateCarActivity.this,"啦啦啦啦");
-//            }
-//        }
+                OKhttptils.post(UpdateCarActivity.this, Config.UPDATE_CAR_PRODUCT, map, new OKhttptils.HttpCallBack() {
+                    @Override
+                    public void success(String response) {
+                        Log.d(TAG, "success修改: " + response);
+                        dialog.dismiss();
+                        JumpUtil.newInstance().finishRightTrans(UpdateCarActivity.this);
+                    }
 
-        OKhttptils.post(UpdateCarActivity.this, Config.UPDATE_CAR_PRODUCT, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                Log.d(TAG, "success修改: " + response);
-                JumpUtil.newInstance().finishRightTrans(UpdateCarActivity.this);
+                    @Override
+                    public void fail(String response) {
+                        Log.d(TAG, "fail修改: " + response);
+                        try {
+                            dialog.dismiss();
+                            JSONObject jsonObject = new JSONObject(response);
+                            ToastUtil.show(UpdateCarActivity.this, jsonObject.getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-            }
 
-            @Override
-            public void fail(String response) {
-                Log.d(TAG, "fail修改: " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    ToastUtil.show(UpdateCarActivity.this,jsonObject.getString("message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                    }
+                });
 
 
             }
-        });
+        } else {
+            ToastUtil.show(UpdateCarActivity.this, "请完善信息后保存");
+        }
+
 //        Log.e(TAG, "看看哪些值不对: " + map.toString() );
     }
 
