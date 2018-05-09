@@ -35,6 +35,7 @@ public class CarFinancial extends AppCompatActivity {
         ButterKnife.bind(this);
         fragments.add(new CarFinancialPersonal());
 //        fragments.add(new CarFinancialPersonal());
+
         arrayList.add("个人");
 //        arrayList.add("企业");
         viewPager.setAdapter(new CarFinancialAdapter(getSupportFragmentManager(),fragments, arrayList));
