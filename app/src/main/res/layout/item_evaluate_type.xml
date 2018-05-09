@@ -9,10 +9,10 @@
     android:textColor="@color/text_ff96"
     android:background="@drawable/text_type"
     android:textSize="@dimen/text_size_13sp"
-    android:paddingTop="@dimen/common1dp"
+    android:paddingTop="@dimen/common3dp"
     android:layout_marginTop="@dimen/common5dp"
     android:layout_marginLeft="@dimen/common5dp"
-    android:paddingLeft="@dimen/common14dp"
+    android:paddingLeft="@dimen/common10dp"
     android:paddingBottom="@dimen/common3dp"
-    android:paddingRight="@dimen/common14dp">
+    android:paddingRight="@dimen/common10dp">
 </TextView>
