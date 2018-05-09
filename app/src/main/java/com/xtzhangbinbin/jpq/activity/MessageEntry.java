@@ -69,7 +69,7 @@ public class MessageEntry extends BaseActivity{
             }
         }
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         final String ZX_dict_id = intent.getStringExtra("dict_id");
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +123,14 @@ public class MessageEntry extends BaseActivity{
                         }
                     });
                 }
+            }
+        });
+        zx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(MessageEntry.this, ServiceActivity.class);
+                intent1.putExtra("Url",Config.GETPERSONALCREDITAUTHORIZATION);
+                startActivity(intent1);
             }
         });
 

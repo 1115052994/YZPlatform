@@ -23,6 +23,9 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
@@ -50,7 +53,7 @@ public class ServiceActivity extends BaseActivity {
 
     private void getData(String url) {
         Log.d(TAG, "getData: "+url);
-        OKhttptils.post(ServiceActivity.this,url, null, new OKhttptils.HttpCallBack() {
+        OKhttptils.post(ServiceActivity.this,url, new HashMap<String,String>(), new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
                 Log.d(TAG, "onResponse获取数据: " + response);

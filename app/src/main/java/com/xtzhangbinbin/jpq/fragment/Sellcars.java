@@ -100,7 +100,7 @@ public class Sellcars extends Fragment {
     public void PostSellcars() {
         Log.d("aaaaa", "PostSellcars: ");
         if (NetUtil.isNetAvailable(getContext())) {
-            OKhttptils.post(getActivity(), Config.SELLCOUNT, null, new OKhttptils.HttpCallBack() {
+            OKhttptils.post(getActivity(), Config.SELLCOUNT, new HashMap<String, String>(), new OKhttptils.HttpCallBack() {
                 @Override
                 public void success(String response) {
                     Log.i("aaaaa", "查询卖车申请次数: " + response);
