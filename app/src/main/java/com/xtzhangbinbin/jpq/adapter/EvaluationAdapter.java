@@ -72,8 +72,8 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
         OKhttptils.getPicByHttp(context,result.get(position).getPers_head_file_id(),holder.evaluation_image);
         holder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
         holder.evaluate_layout.removeAllViews();
-        holder.evaluation_list_appraiseTime.setText(result.get(position).getLog_date
-                ());
+        holder.evaluation_list_appraiseTime.setText(result.get(position).getLog_date());
+
         holder.evaluation_list_appraise.setText(result.get(position).getLog_4());
         arr.clear();
         String[] split = result.get(position).getLog_3().split(",");
