@@ -45,16 +45,4 @@
         android:id="@+id/mSave"
         style="@style/theme_button"
         android:text="保存" />
-
-    <TextView
-        android:id="@+id/mAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common7dp"
-        android:gravity="center_horizontal"
-        android:padding="@dimen/common10dp"
-        android:text="点击查看所有图片"
-        android:textColor="@color/text_ff96"
-        android:textSize="@dimen/text_size_15sp" />
-
 </LinearLayout>

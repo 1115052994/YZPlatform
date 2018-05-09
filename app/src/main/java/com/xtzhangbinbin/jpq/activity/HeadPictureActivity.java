@@ -30,7 +30,11 @@ public class HeadPictureActivity extends BaseActivity {
         ButterKnife.bind(this);
         head_file_id = getIntent().getExtras().getString("head_file_id");
         Log.d(TAG, "onCreate门头照: " + head_file_id);
-        OKhttptils.getPic(this,head_file_id,pic);
+        if (head_file_id == null){
+
+        }else {
+            OKhttptils.getPic(this, head_file_id, pic);
+        }
     }
 
 

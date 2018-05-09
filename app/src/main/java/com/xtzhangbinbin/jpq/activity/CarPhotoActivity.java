@@ -239,19 +239,16 @@ public class CarPhotoActivity extends BaseActivity {
                     OKhttptils.getPic(this, photo_ids.get(i), iv);
                 }
             }
-
             mSave.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-
+                public void onClick(final View view) {
+                    dialog = MyProgressDialog.createDialog(CarPhotoActivity.this);
+                    dialog.setMessage("正在上传数据");
                     String file_id = Prefs.with(getApplicationContext()).read(car_name);
                     String sfile_id = Prefs.with(getApplicationContext()).read(car_name + "压缩");
                     String content = mContent.getText().toString().trim();
-
-                    if (file_id.isEmpty() || sfile_id.isEmpty()) {
-                        ToastUtil.show(CarPhotoActivity.this, "图片上传中，请稍后保存");
-
-                    } else if (!file_id.isEmpty() && !sfile_id.isEmpty() && !content.isEmpty()) {
+                    if (!file_id.isEmpty() && !sfile_id.isEmpty() && !content.isEmpty()) {
+                        dialog.show();
                         /* 上传 */
                         Log.d(TAG, "onClick车id: " + car_id);
                         Log.e(TAG, "onClick: " + string_id.get(position));
@@ -267,8 +264,9 @@ public class CarPhotoActivity extends BaseActivity {
                         OKhttptils.post(CarPhotoActivity.this, Config.ACCRETIONPICTURECAR, map, new OKhttptils.HttpCallBack() {
                             @Override
                             public void success(String response) {
+                                dialog.dismiss();
                                 Log.e(TAG, "success上传图片: " + response);
-                                ToastUtil.show(CarPhotoActivity.this, "保存成功");
+                                viewpager.setCurrentItem(++position);
                                 if (position == 23) {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("car_id", car_id);
@@ -280,6 +278,8 @@ public class CarPhotoActivity extends BaseActivity {
 
                             @Override
                             public void fail(String response) {
+                                dialog.dismiss();
+                                ToastUtil.noNAR(CarPhotoActivity.this);
 
                             }
                         });
@@ -623,7 +623,17 @@ public class CarPhotoActivity extends BaseActivity {
 
                         @Override
                         public void fail(String response) {
-
+                            if (response == null){
+                                dialog.dismiss();
+                            }else {
+                                dialog.dismiss();
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    ToastUtil.show(CarPhotoActivity.this,jsonObject.getString("messsage"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     });
                     break;
@@ -633,8 +643,6 @@ public class CarPhotoActivity extends BaseActivity {
 
 
     /* 上传图片base64并获取图片id */
-
-
     public void upDataBase64(final Context context, final Bitmap bitmap, final String sType) {
         Map<String, String> map = new HashMap<>();
         map.put("file_content", PhotoUtils.bitmapToBase64(bitmap));

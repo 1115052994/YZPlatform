@@ -2,7 +2,6 @@ package com.xtzhangbinbin.jpq.fragment.main;
 
 import android.Manifest;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -58,7 +57,6 @@ import com.xtzhangbinbin.jpq.entity.CarServiceList;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
-import com.xtzhangbinbin.jpq.utils.PhotoUtils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.youth.banner.Banner;
@@ -646,6 +644,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         Log.w("test" , "aaaaaaaaaaaaaaaaaaaa");
         Map<String, String> map = new HashMap<>();
         map.put("cityName", s);
+        Log.e(TAG, "getCityId城市: " + s );
         OKhttptils.post(getActivity(), Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {

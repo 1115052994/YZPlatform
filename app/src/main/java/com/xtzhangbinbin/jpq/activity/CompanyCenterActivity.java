@@ -12,11 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xtzhangbinbin.jpq.R;
 import com.xtzhangbinbin.jpq.base.BaseActivity;
 import com.xtzhangbinbin.jpq.config.Config;
-import com.xtzhangbinbin.jpq.entity.BespeakComp;
 import com.xtzhangbinbin.jpq.entity.Enterprise;
 import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.DataCleanManager;
@@ -58,13 +58,19 @@ public class CompanyCenterActivity extends BaseActivity {
         dialog = MyProgressDialog.createDialog(this);
         dialog.setMessage("正在加载权限信息");
         initView();
-        getData();
+//        getData();
     }
 
     /* 设置 */
     private void initView() {
         mIcon.setRoundRadius(5);
         mIcon.setType(ZQImageViewRoundOval.TYPE_ROUND);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
     }
 
     /* 获取数据 */
@@ -80,6 +86,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 Enterprise.DataBean dataBean = enterprise.getData();
                 if (null == dataBean.getResult()) {
                     mState.setText("未审核");
+                    Picasso.get().load(R.drawable.no_pic).into(mIcon);
                 } else {
                     resultBean = enterprise.getData().getResult();
                     //审核状态
@@ -118,8 +125,8 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mProduct:
                 //审核通过才能使用此功能
-                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())){
-                //产品管理
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
+                    //产品管理
                     JumpUtil.newInstance().jumpRight(this, ProductList.class);
                 } else {
                     ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
@@ -127,19 +134,19 @@ public class CompanyCenterActivity extends BaseActivity {
                 break;
             case R.id.mOrders:
                 //审核通过才能使用此功能
-                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())){
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
                     //订单管理
                     JumpUtil.newInstance().jumpRight(this, OrdersCompListActivity.class);
-                }else {
+                } else {
                     ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
                 }
                 break;
             case R.id.mWallet:
                 //审核通过才能使用此功能
-                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())){
+                if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
                     //钱包
                     JumpUtil.newInstance().jumpRight(this, CompWalletActivity.class);
-                }else {
+                } else {
                     ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
                 }
                 break;
@@ -148,7 +155,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
                     //预约信息
                     JumpUtil.newInstance().jumpRight(this, BespeakCompActivity.class);
-                }else {
+                } else {
                     ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
                 }
                 break;
@@ -157,7 +164,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
                     //评价管理
                     JumpUtil.newInstance().jumpRight(this, EvaluationList.class);
-                }else {
+                } else {
                     ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
                 }
                 break;
@@ -166,7 +173,7 @@ public class CompanyCenterActivity extends BaseActivity {
                 if (null != resultBean && "2".equals(resultBean.getAuth_audit_state())) {
                     //明星员工
                     JumpUtil.newInstance().jumpRight(this, Starperformers.class);
-                }else {
+                } else {
                     ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
                 }
                 break;

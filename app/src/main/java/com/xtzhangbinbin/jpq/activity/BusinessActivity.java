@@ -30,7 +30,11 @@ public class BusinessActivity extends BaseActivity {
         ButterKnife.bind(this);
         file_id = getIntent().getExtras().getString("file_id");
         Log.d(TAG, "onCreate营业执照: " + file_id);
-        OKhttptils.getPic(this,file_id,pic);
+        if (file_id == null){
+
+        }else {
+            OKhttptils.getPic(this,file_id,pic);
+        }
     }
 
     @Override
