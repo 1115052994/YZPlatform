@@ -130,10 +130,15 @@
         <item name="android:windowNoTitle">true</item> //设置没有状态栏
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold|italic</item>
+        <item name="android:windowBackground">@drawable/welcome</item>
     </style>
     <!--微信背景透明-->
     <style name="translucent">
         　<item name="android:windowBackground">@android:color/transparent</item>
         　<item name="android:windowIsTranslucent">true</item>
+    </style>
+    <!-- 启动页 -->
+    <style name="StartTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/welcome</item>
     </style>
 </resources>

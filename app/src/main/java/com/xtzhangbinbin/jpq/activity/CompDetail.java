@@ -169,7 +169,7 @@ public class CompDetail extends BaseActivity {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 comp_id = bundle.getString("comp_id");
-                Log.i("conp_id",comp_id);
+                Log.w("test",comp_id);
                 map.put("comp_id", comp_id);
                 OKhttptils.post(CompDetail.this, Config.BROWSECOMP, map, new OKhttptils.HttpCallBack() {
                     @Override
@@ -543,6 +543,7 @@ public class CompDetail extends BaseActivity {
             @Override
             public void success(String response) {
                 try {
+                    Log.w("test 商家详情", response);
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("status").equals("1")) {
                         Gson gson = new Gson();

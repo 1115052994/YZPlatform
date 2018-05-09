@@ -30,6 +30,7 @@ import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
 import java.text.DecimalFormat;
@@ -157,6 +158,8 @@ public class ShowProductDetailActivity extends BaseActivity {
         if(getIntent().getStringExtra("prod_id") != null){
             prod_id = getIntent().getStringExtra("prod_id");
         }
+        Log.w("test", prod_id + "aaaaaaaaaaaa");
+        dialog = MyProgressDialog.createDialog(this);
         getData();
     }
 
@@ -190,11 +193,13 @@ public class ShowProductDetailActivity extends BaseActivity {
 
     /* 获取服务类型 */
     private void getSercive() {
+        showDialog("获取服务类型");
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(ShowProductDetailActivity.this, Config.GET_COMP_SERVICE_TYPE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
                 Log.i(TAG, "test: " + response);
+                closeDialog();
                 /**
                  * {"data":{"result":[{"dic_id":"YZcompcfwlxwxby","dic_value":"维修保养"},{"dic_id":"YZcompcfwlxxc","dic_value":"洗车"},{"dic_id":"YZcompcfwlxjx","dic_value":"驾校"},{"dic_id":"YZcompcfwlxfwjg","dic_value":"服务机构"},{"dic_id":"YZcompcfwlxjcz","dic_value":"监测站"},{"dic_id":"YZcompcfwlxqcgz","dic_value":"汽车改装"}]},"message":"","status":"1"}
                  * */
@@ -210,6 +215,7 @@ public class ShowProductDetailActivity extends BaseActivity {
 
             @Override
             public void fail(String response) {
+                closeDialog();
                 ToastUtil.noNAR(ShowProductDetailActivity.this);
             }
         });
@@ -218,12 +224,14 @@ public class ShowProductDetailActivity extends BaseActivity {
 
     /* 获取数据 */
     private void getData() {
+        showDialog("获取产品数据");
         Map<String, String> map = new HashMap<>();
         Log.w("test", prod_id);
         map.put("prod_id", prod_id);
         OKhttptils.post(ShowProductDetailActivity.this, Config.SHOW_PRODUCT, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                closeDialog();
                 Log.i(TAG, "success: " + response);
                 Gson gson = GsonFactory.create();
                 ShowProductDetaile productDetaile = gson.fromJson(response, ShowProductDetaile.class);
@@ -247,6 +255,7 @@ public class ShowProductDetailActivity extends BaseActivity {
 
             @Override
             public void fail(String response) {
+                closeDialog();
                 Log.e(TAG, "fail: " + response);
             }
         });
@@ -273,14 +282,16 @@ public class ShowProductDetailActivity extends BaseActivity {
 
     /* 修改数据 */
     private void uploading() {
+
         String stype = service_id;
         String sname = mName.getText().toString().trim();
         String sYouhui = setNumberText(mYouhui);
         String s = itemListBeans.toString().replaceAll("=", ":");
-        Log.e(TAG, "uploading看看是森么: " + s);
+//        Log.e(TAG, "uploading看看是森么: " + s);
 
         if (!stype.isEmpty() && !sname.isEmpty() && !sYouhui.isEmpty() && itemListBeans.size() != 0) {
             if (Double.valueOf(sYouhui) <= Double.valueOf(sTotal)) {
+                showDialog("正在提交产品数据");
                 Map<String, String> map = new HashMap<>();
                 map.put("prod_service_type_item", stype);
                 map.put("prod_service_name", sname);
@@ -291,16 +302,18 @@ public class ShowProductDetailActivity extends BaseActivity {
                 OKhttptils.post(ShowProductDetailActivity.this, Config.UPDATE_PRODUCT, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
+                        closeDialog();
                         Log.i(TAG, "success提交: " + response);
                         /**
                          * {"data":{},"message":"","status":"1"}
                          */
-                        ToastUtil.show(ShowProductDetailActivity.this, "提交成功");
-
+                        ToastUtil.show(ShowProductDetailActivity.this, "提交成功，产品处于下架状态");
+                        ShowProductDetailActivity.this.finish();
                     }
 
                     @Override
                     public void fail(String response) {
+                        closeDialog();
                         ToastUtil.noNAR(ShowProductDetailActivity.this);
                     }
                 });

@@ -6,5 +6,6 @@
     android:background="@drawable/selector_service_menu_bg"
     android:drawablePadding="@dimen/common18dp"
     android:gravity="center"
+    android:textSize="16sp"
     android:layout_marginBottom="@dimen/common1dp"
-    android:textColor="@color/selector_service_menu_text"/>
+    android:textColor="@color/theme_coloer"/>

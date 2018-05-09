@@ -89,10 +89,10 @@ public class QueryCarList {
              */
 
             private String car_name;
-            private int car_price;
+            private String car_price;
             private String coll_id;
-            private int car_mileage;
-            private int car_id;
+            private String car_mileage;
+            private String car_id;
             private String car_1_file_id;
             private String car_phone;
 
@@ -104,11 +104,11 @@ public class QueryCarList {
                 this.car_name = car_name;
             }
 
-            public int getCar_price() {
+            public String getCar_price() {
                 return car_price;
             }
 
-            public void setCar_price(int car_price) {
+            public void setCar_price(String car_price) {
                 this.car_price = car_price;
             }
 
@@ -120,19 +120,19 @@ public class QueryCarList {
                 this.coll_id = coll_id;
             }
 
-            public int getCar_mileage() {
+            public String getCar_mileage() {
                 return car_mileage;
             }
 
-            public void setCar_mileage(int car_mileage) {
+            public void setCar_mileage(String car_mileage) {
                 this.car_mileage = car_mileage;
             }
 
-            public int getCar_id() {
+            public String getCar_id() {
                 return car_id;
             }
 
-            public void setCar_id(int car_id) {
+            public void setCar_id(String car_id) {
                 this.car_id = car_id;
             }
 

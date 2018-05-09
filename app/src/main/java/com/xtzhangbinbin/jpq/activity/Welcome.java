@@ -38,7 +38,18 @@ public class Welcome extends AppCompatActivity {
         ButterKnife.bind(this);
         //启动一个延迟线程
         //new Thread(this).start();
-        getData();
+//        getData();
+        close();
+    }
+
+    public void close(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startAPP();
+                Welcome.this.finish();
+            }
+        }, 2000);
     }
 
     private void getData() {
@@ -60,7 +71,7 @@ public class Welcome extends AppCompatActivity {
                                 startAPP();
                                 Welcome.this.finish();
                             }
-                        }, 3000);
+                        }, 2000);
 
                     }
                 } catch (JSONException e) {

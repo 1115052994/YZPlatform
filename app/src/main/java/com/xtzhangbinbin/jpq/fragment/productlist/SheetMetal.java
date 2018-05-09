@@ -83,7 +83,7 @@ public class SheetMetal extends Fragment {
                 carBeautyAdapter.notifyDataSetChanged();
             }
         });
-        getData(1, null);
+//        getData(1, null);
         radio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +122,14 @@ public class SheetMetal extends Fragment {
     }
     private void initview() {
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(result != null){
+            result.clear();
+        }
+        getData(1, null);
     }
     //得到数据
     private void getData(final int pageIndex, final RefreshLayout refreshlayout) {

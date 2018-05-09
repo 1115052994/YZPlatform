@@ -322,12 +322,12 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
                 OKhttptils.post(getActivity(), Config.GET_CAR_SERVICE, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
-                        Log.e(TAG, "onResponse上拉加载更多: " + response);
+                        Log.e(TAG, "test上拉加载更多: " + response);
                         Gson gson = GsonFactory.create();
                         CarServiceList list = gson.fromJson(response, CarServiceList.class);
                                         /* 最大页数 */
-                        Log.d(TAG, "onResponse总数: " + pageTotal);
-                        Log.i(TAG, "onResponse加载的页数: " + pageIndex);
+                        Log.d(TAG, "test总数: " + pageTotal);
+                        Log.i(TAG, "test加载的页数: " + pageIndex);
                         if (pageIndex > pageTotal) {
                             refreshlayout.finishLoadmore(2000);
                         } else {
@@ -359,7 +359,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         OKhttptils.post(getActivity(), Config.GET_SERVICE_IMG, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.d(TAG, "onResponse: " + response);
+                Log.d(TAG, "test: " + response);
                 Gson gson = GsonFactory.create();
                 CarServiceImage serviceImage = gson.fromJson(response, CarServiceImage.class);
                 List<CarServiceImage.DataBean.ResultBean.BannerListBean> bannerList = serviceImage.getData().getResult().getBannerList();
@@ -576,7 +576,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         OKhttptils.post(getActivity(), Config.GET_CAR_SERVICE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.d(TAG, "onResponse获取数据: " + response);
+                Log.d(TAG, "test获取数据: " + response);
                 Gson gson = GsonFactory.create();
                 CarServiceList serviceList = gson.fromJson(response, CarServiceList.class);
 //                List<CarServiceList.DataBean.ResultBean> beanList = serviceList.getData().getResult();
@@ -614,7 +614,7 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
         OKhttptils.post(getActivity(), Config.GET_CAR_SERVICE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
-                Log.e(TAG, "onResponse上拉加载更多: " + response);
+                Log.e(TAG, "test上拉加载更多: " + response);
                 Gson gson = GsonFactory.create();
                 CarServiceList list = gson.fromJson(response, CarServiceList.class);
                                 /* 最大页数 */
@@ -642,11 +642,13 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
 
     /* 获取省市id */
     private void getCityId(String s) {
+        Log.w("test" , "aaaaaaaaaaaaaaaaaaaa");
         Map<String, String> map = new HashMap<>();
         map.put("cityName", s);
         OKhttptils.post(getActivity(), Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                Log.w("test",response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String data = jsonObject.getString("data");

@@ -65,6 +65,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/image_rz"
                             android:textSize="@dimen/text_size_16sp"
+                            android:layout_marginLeft="@dimen/common5dp"
                             android:textColor="@color/text_33"
                             android:text=""/>
                        <!-- <CheckBox
@@ -142,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="@dimen/common38dp"
+                        android:layout_marginLeft="@dimen/common42dp"
                         android:layout_gravity="start">
                         <CheckBox
                             android:id="@+id/star1"
@@ -210,7 +211,7 @@
                             android:id="@+id/loc_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/common38dp"
+                            android:layout_marginLeft="@dimen/common42dp"
                             android:layout_marginRight="@dimen/common50dp"
                             android:lines="2"
                             android:layout_centerVertical="true"

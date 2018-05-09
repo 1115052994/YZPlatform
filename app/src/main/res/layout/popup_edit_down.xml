@@ -25,7 +25,7 @@
                 android:layout_marginLeft="@dimen/common84dp"
                 android:text="名称" />
 
-            <TextView
+            <EditText
                 android:id="@+id/mName"
                 style="@style/black33_edit_16sp"
                 android:layout_width="@dimen/common0dp"

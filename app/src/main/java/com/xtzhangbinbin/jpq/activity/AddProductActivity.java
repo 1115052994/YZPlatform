@@ -31,6 +31,7 @@ import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
 import java.text.DecimalFormat;
@@ -44,6 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /* 产品添加 */
+@SuppressWarnings("all")
 public class AddProductActivity extends BaseActivity {
     private static final String TAG = "产品添加";
     @BindView(R.id.mType)
@@ -147,6 +149,7 @@ public class AddProductActivity extends BaseActivity {
         setContentView(R.layout.activity_add_product);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog = MyProgressDialog.createDialog(this);
     }
 
 
@@ -180,6 +183,7 @@ public class AddProductActivity extends BaseActivity {
 
         if (!stype.isEmpty() && !sname.isEmpty() && !sYouhui.isEmpty() && addServiceTypeLists.size() != 0) {
             if (Double.valueOf(sYouhui) <= Double.valueOf(sTotal)) {
+                showDialog("正在提交产品数据");
                 Map<String, String> map = new HashMap<>();
                 map.put("prod_service_type_item", stype);
                 map.put("prod_service_name", sname);
@@ -188,16 +192,18 @@ public class AddProductActivity extends BaseActivity {
                 OKhttptils.post(AddProductActivity.this, Config.ADD_PRODUCT, map, new OKhttptils.HttpCallBack() {
                     @Override
                     public void success(String response) {
+                        closeDialog();
                         Log.i(TAG, "success提交: " + response);
                         /**
                          * {"data":{},"message":"","status":"1"}
                          */
                         ToastUtil.show(AddProductActivity.this, "提交成功");
-
+                        AddProductActivity.this.finish();
                     }
 
                     @Override
                     public void fail(String response) {
+                        closeDialog();
                         ToastUtil.noNAR(AddProductActivity.this);
                     }
                 });
@@ -212,10 +218,12 @@ public class AddProductActivity extends BaseActivity {
 
     /* 获取服务类型 */
     private void getSercive() {
+        showDialog("获取服务类型");
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(AddProductActivity.this, Config.GET_COMP_SERVICE_TYPE, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                closeDialog();
                 Log.i(TAG, "onResponse: " + response);
                 /**
                  * {"data":{"result":[{"dic_id":"YZcompcfwlxwxby","dic_value":"维修保养"},{"dic_id":"YZcompcfwlxxc","dic_value":"洗车"},{"dic_id":"YZcompcfwlxjx","dic_value":"驾校"},{"dic_id":"YZcompcfwlxfwjg","dic_value":"服务机构"},{"dic_id":"YZcompcfwlxjcz","dic_value":"监测站"},{"dic_id":"YZcompcfwlxqcgz","dic_value":"汽车改装"}]},"message":"","status":"1"}
@@ -231,6 +239,7 @@ public class AddProductActivity extends BaseActivity {
 
             @Override
             public void fail(String response) {
+                closeDialog();
                 ToastUtil.noNAR(AddProductActivity.this);
             }
         });
@@ -305,7 +314,7 @@ public class AddProductActivity extends BaseActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.popup_edit_down, null);
         RelativeLayout layout = view.findViewById(R.id.rl_icon_popup);
         ImageView mChange = view.findViewById(R.id.mChange);
-        final TextView mName = view.findViewById(R.id.mName);
+        final EditText mName = view.findViewById(R.id.mName);
         final EditText mPrice = view.findViewById(R.id.mPrice);
 
         TextView mOk = view.findViewById(R.id.mOk);
@@ -461,7 +470,7 @@ public class AddProductActivity extends BaseActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.popup_edit_down, null);
         RelativeLayout layout = view.findViewById(R.id.rl_icon_popup);
         ImageView mChange = view.findViewById(R.id.mChange);
-        final TextView mName = view.findViewById(R.id.mName);
+        final EditText mName = view.findViewById(R.id.mName);
         final EditText mPrice = view.findViewById(R.id.mPrice);
 
         TextView mOk = view.findViewById(R.id.mOk);
@@ -475,7 +484,7 @@ public class AddProductActivity extends BaseActivity {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.show(AddProductActivity.this, "点什么点");
+//                ToastUtil.show(AddProductActivity.this, "点什么点");
                 popupWindow.dismiss();
             }
         });

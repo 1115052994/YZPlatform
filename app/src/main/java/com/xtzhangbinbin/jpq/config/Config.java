@@ -9,14 +9,17 @@ public class Config {
     public final static String APP_NAME = "yzplatform";
     //接口连接地址192.168.1.111
     public static final String BASE_URL = "https://eflow.56ez.com/";
+//    public static final String BASE_URL = "http://192.168.1.84/";
 
     public static final String URL = "https://eflow.56ez.com/";
+//    public static final String URL = "http://192.168.1.84/";
     //微信APPID
     public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
     public static final String M = "https://eflow.56ez.com/";
+//    public static final String M = "http://192.168.1.84/";
 
     //用于拼接图片地址url
     public static final String Y = "myres?id=";

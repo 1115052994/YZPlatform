@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.xtzhangbinbin.jpq.fragment.CollectCardeal"
-    android:background="@color/bg_color">
+    android:background="@color/white">
     <ImageView
         android:id="@+id/no_collect_car_image"
         android:layout_width="@dimen/common180dp"
@@ -25,6 +25,8 @@
             android:id="@+id/service_provider_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:listSelector="@color/transparent"
+            android:cacheColorHint="@color/transparent"
             >
         </ListView>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter

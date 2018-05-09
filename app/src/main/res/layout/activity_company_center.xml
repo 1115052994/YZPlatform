@@ -221,6 +221,26 @@
                     android:textSize="@dimen/text_size_16sp" />
             </LinearLayout>
 
+            <LinearLayout
+                style="@style/ll_normal_horizontal"
+                android:layout_height="@dimen/common50dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/mCollect"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/a_6"
+                    android:drawablePadding="@dimen/common18dp"
+                    android:drawableRight="@drawable/right_go"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common15dp"
+                    android:paddingRight="@dimen/common15dp"
+                    android:text="我的收藏"
+                    android:textColor="@color/black_33"
+                    android:textSize="@dimen/text_size_16sp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 style="@style/ll_normal_horizontal"

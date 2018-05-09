@@ -24,6 +24,7 @@ import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 import com.xtzhangbinbin.jpq.view.ZQImageViewRoundOval;
 
@@ -54,6 +55,8 @@ public class CompanyCenterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_center);
         ButterKnife.bind(this);
+        dialog = MyProgressDialog.createDialog(this);
+        dialog.setMessage("正在加载权限信息");
         initView();
         getData();
     }
@@ -66,10 +69,12 @@ public class CompanyCenterActivity extends BaseActivity {
 
     /* 获取数据 */
     private void getData() {
+        dialog.show();
         Map<String, String> map = new HashMap<>();
         OKhttptils.post(this, Config.GETCOMP_INFO, map, new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                closeDialog();
                 Gson gson = GsonFactory.create();
                 Enterprise enterprise = gson.fromJson(response, Enterprise.class);
                 Enterprise.DataBean dataBean = enterprise.getData();
@@ -92,16 +97,17 @@ public class CompanyCenterActivity extends BaseActivity {
                     Prefs.with(getApplicationContext()).write("门头照", mentou);
                     OKhttptils.getPic(CompanyCenterActivity.this, mentou, mIcon);
                 }
+
             }
 
             @Override
             public void fail(String response) {
-
+                closeDialog();
             }
         });
     }
 
-    @OnClick({R.id.mBack, R.id.mAuto, R.id.mProduct, R.id.mOrders, R.id.mWallet, R.id.mBook, R.id.mAppraise, R.id.mClean, R.id.mKefu, R.id.mBtn, R.id.mNewPhone, R.id.mSuperEmp})
+    @OnClick({R.id.mBack, R.id.mAuto, R.id.mProduct, R.id.mOrders, R.id.mWallet, R.id.mBook, R.id.mAppraise, R.id.mClean, R.id.mKefu, R.id.mBtn, R.id.mNewPhone, R.id.mSuperEmp, R.id.mCollect})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mBack:
@@ -164,6 +170,10 @@ public class CompanyCenterActivity extends BaseActivity {
                     ToastUtil.show(this, "您的认证信息还未审核通过，无法使用此功能！");
                 }
                 break;
+            case R.id.mCollect:
+                //我的收藏
+                JumpUtil.newInstance().jumpRight(this,MyFavorite.class);
+                break;
             case R.id.mClean:
                 //清除缓存
                 final OrdinaryDialog ordinaryDialog = OrdinaryDialog.newInstance(this).setMessage1("清除缓存").setMessage2("清除后图片等多媒体消息需要重新下载查看，确定清除？").showDialog();
@@ -178,12 +188,6 @@ public class CompanyCenterActivity extends BaseActivity {
                     public void onYesClick() {
                         DataCleanManager.clearAllCache(CompanyCenterActivity.this);
                         ordinaryDialog.dismiss();
-//                        try {
-//                            String s = DataCleanManager.getTotalCacheSize(CompanyCenterActivity.this);
-//                            clean.setText("有" + s + "缓存可以清除");
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
                     }
                 });
                 break;

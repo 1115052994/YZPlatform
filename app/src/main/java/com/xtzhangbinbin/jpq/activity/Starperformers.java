@@ -24,6 +24,7 @@ import com.xtzhangbinbin.jpq.gson.factory.GsonFactory;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
+import com.xtzhangbinbin.jpq.view.MyProgressDialog;
 import com.xtzhangbinbin.jpq.view.OrdinaryDialog;
 
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class Starperformers extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starperformers);
         ButterKnife.bind(this);
+        dialog = MyProgressDialog.createDialog(this);
+        dialog.setMessage("正在加载明星员工数据");
         starList = findViewById(R.id.star_list);
         layout = findViewById(R.id.layout);
         getData(null);
@@ -140,10 +143,14 @@ public class Starperformers extends BaseActivity {
 
     //得到数据并且更新数据
     private void getData(final RefreshLayout refreshlayout) {
+        if(dialog != null){
+            dialog.show();
+        }
         result.clear();
         OKhttptils.post(Starperformers.this, Config.SELECTSTAR, new HashMap<String, String>(), new OKhttptils.HttpCallBack() {
             @Override
             public void success(String response) {
+                closeDialog();
                 Gson gson = GsonFactory.create();
                 Querystar querystar = gson.fromJson(response, Querystar.class);
                 if (querystar.getData().getResult() == null) {
@@ -170,6 +177,7 @@ public class Starperformers extends BaseActivity {
 
             @Override
             public void fail(String response) {
+                closeDialog();
                 Toast.makeText(Starperformers.this, "获取失败", Toast.LENGTH_SHORT).show();
             }
         });

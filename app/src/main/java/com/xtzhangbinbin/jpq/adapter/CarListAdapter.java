@@ -108,12 +108,10 @@ public class CarListAdapter extends BaseAdapter {
                                     OKhttptils.post((Activity) context, Config.REMOVECOLL, map, new OKhttptils.HttpCallBack() {
                                         @Override
                                         public void success(String response) {
-                                            Log.i("aaaa", "删除: " + response);
                                             if(callcollect!=null){
                                                 callcollect.getCallcollect(view,0,position);
                                             }
-
-
+                                            notifyDataSetChanged();
                                         }
                                         @Override
                                         public void fail(String response) {

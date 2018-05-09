@@ -612,9 +612,23 @@ public class BaseActivity extends AppCompatActivity{
         return bitmap;
     }
 
+    /**
+     * 关闭dialog弹出窗
+     */
     protected void closeDialog(){
         if(null != dialog && dialog.isShowing()){
             dialog.dismiss();
+        }
+    }
+
+    /**
+     * 显示dialog弹出
+     * @param message
+     */
+    protected void showDialog(String message){
+        if(null != dialog && !dialog.isShowing()){
+            dialog.setMessage(message);
+            dialog.show();
         }
     }
 }

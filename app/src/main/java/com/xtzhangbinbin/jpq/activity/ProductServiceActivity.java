@@ -47,6 +47,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /* 产品添加-服务项 */
+@SuppressWarnings("all")
 public class ProductServiceActivity extends BaseActivity {
 
     private static final String TAG = "添加服务项";

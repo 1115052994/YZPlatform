@@ -35,7 +35,7 @@ import okhttp3.Response;
 
 public class OKhttptils {
 
-    private static OkHttpClient client;
+    public static OkHttpClient client;
     static{
         client = new OkHttpClient().newBuilder().hostnameVerifier(new HostnameVerifier() {
             @Override
