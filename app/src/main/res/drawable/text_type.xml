@@ -3,7 +3,7 @@
     <!-- 这个是设置控件的圆角-->
     <corners android:radius="@dimen/common15dp"/>
     <!--这是给控件描边-->
-    <stroke android:width="@dimen/common0.5dp"
+    <stroke android:width="0.2dp"
         android:color="@color/text_ff96"
         ></stroke>
     <padding

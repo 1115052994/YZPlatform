@@ -94,9 +94,11 @@ public class Starperformers extends BaseActivity {
                     intent.putExtra("info", result.get(i).getStaff_info());
                     Log.d("Call", "Call: " + id);
                     startActivityForResult(intent, 3);
+                }else if(i == -1 && id != null && file_id != null){
+                    result.remove(position);
+                    starAdapter.notifyDataSetChanged();
                 }
-                result.remove(position);
-                starAdapter.notifyDataSetChanged();
+
 
 
             }
