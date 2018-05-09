@@ -240,6 +240,33 @@ public class UpdateCarActivity extends BaseActivity {
                     resultBean = (CarProductDetail.DataBean.ResultBean) msg.obj;
                     /* 24张原图id */
                     CarPhotos carPhoto = new CarPhotos();
+                    carPhoto.setCar_1_icon_file_id(resultBean.getCar_1_icon_file_id());
+                    carPhoto.setCar_2_icon_file_id(resultBean.getCar_2_icon_file_id());
+                    carPhoto.setCar_3_icon_file_id(resultBean.getCar_3_icon_file_id());
+                    carPhoto.setCar_4_icon_file_id(resultBean.getCar_4_icon_file_id());
+                    carPhoto.setCar_5_icon_file_id(resultBean.getCar_5_icon_file_id());
+                    carPhoto.setCar_6_icon_file_id(resultBean.getCar_6_icon_file_id());
+                    carPhoto.setCar_7_icon_file_id(resultBean.getCar_7_icon_file_id());
+                    carPhoto.setCar_8_icon_file_id(resultBean.getCar_8_icon_file_id());
+                    carPhoto.setCar_9_icon_file_id(resultBean.getCar_9_icon_file_id());
+                    carPhoto.setCar_10_icon_file_id(resultBean.getCar_10_icon_file_id());
+                    carPhoto.setCar_11_icon_file_id(resultBean.getCar_11_icon_file_id());
+                    carPhoto.setCar_12_icon_file_id(resultBean.getCar_12_icon_file_id());
+                    carPhoto.setCar_13_icon_file_id(resultBean.getCar_13_icon_file_id());
+                    carPhoto.setCar_14_icon_file_id(resultBean.getCar_14_icon_file_id());
+                    carPhoto.setCar_15_icon_file_id(resultBean.getCar_15_icon_file_id());
+                    carPhoto.setCar_16_icon_file_id(resultBean.getCar_16_icon_file_id());
+                    carPhoto.setCar_17_icon_file_id(resultBean.getCar_17_icon_file_id());
+                    carPhoto.setCar_18_icon_file_id(resultBean.getCar_18_icon_file_id());
+                    carPhoto.setCar_19_icon_file_id(resultBean.getCar_19_icon_file_id());
+                    carPhoto.setCar_20_icon_file_id(resultBean.getCar_20_icon_file_id());
+                    carPhoto.setCar_21_icon_file_id(resultBean.getCar_21_icon_file_id());
+                    carPhoto.setCar_22_icon_file_id(resultBean.getCar_22_icon_file_id());
+                    carPhoto.setCar_23_icon_file_id(resultBean.getCar_23_icon_file_id());
+                    carPhoto.setCar_24_icon_file_id(resultBean.getCar_24_icon_file_id());
+
+
+
                     carPhoto.setCar_1_file_id(resultBean.getCar_1_file_id());
                     carPhoto.setCar_2_file_id(resultBean.getCar_2_file_id());
                     carPhoto.setCar_3_file_id(resultBean.getCar_3_file_id());

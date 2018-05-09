@@ -93,6 +93,9 @@ public class CarPhotoActivity extends BaseActivity {
     private String path = "";
     private String car_id = "";
     private String car_name = "";
+    private String file_id;
+    private String sfile_id;
+    private List<String> sfile_ids = new ArrayList<>();
 
 
     private PopupWindow popupWindow;
@@ -117,6 +120,31 @@ public class CarPhotoActivity extends BaseActivity {
             car_id = carPhotos.get(0).getCar_id();
             position = bundle.getInt("position", 0);
             for (int i = 0; i < carPhotos.size(); i++) {
+                sfile_ids.add(carPhotos.get(i).getCar_1_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_2_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_3_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_4_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_5_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_6_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_7_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_8_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_9_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_10_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_11_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_12_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_13_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_14_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_15_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_16_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_17_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_18_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_19_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_20_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_21_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_22_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_23_icon_file_id());
+                sfile_ids.add(carPhotos.get(i).getCar_24_icon_file_id());
+
                 photo_ids.add(carPhotos.get(i).getCar_1_file_id());
                 photo_ids.add(carPhotos.get(i).getCar_2_file_id());
                 photo_ids.add(carPhotos.get(i).getCar_3_file_id());
@@ -235,6 +263,8 @@ public class CarPhotoActivity extends BaseActivity {
                 if (photo_ids.get(i) == null) {
 
                 } else {
+                    file_id = photo_ids.get(i);
+                    sfile_id = sfile_ids.get(i);
                     mContent.setText(photo_names.get(i));
                     OKhttptils.getPic(this, photo_ids.get(i), iv);
                 }
@@ -244,9 +274,10 @@ public class CarPhotoActivity extends BaseActivity {
                 public void onClick(final View view) {
                     dialog = MyProgressDialog.createDialog(CarPhotoActivity.this);
                     dialog.setMessage("正在上传数据");
-                    String file_id = Prefs.with(getApplicationContext()).read(car_name);
-                    String sfile_id = Prefs.with(getApplicationContext()).read(car_name + "压缩");
+//                    String file_id = Prefs.with(getApplicationContext()).read(car_name);
+//                    String sfile_id = Prefs.with(getApplicationContext()).read(car_name + "压缩");
                     String content = mContent.getText().toString().trim();
+                    Log.d(TAG, "onClick: " + file_id + "=====" + sfile_id + content);
                     if (!file_id.isEmpty() && !sfile_id.isEmpty() && !content.isEmpty()) {
                         dialog.show();
                         /* 上传 */

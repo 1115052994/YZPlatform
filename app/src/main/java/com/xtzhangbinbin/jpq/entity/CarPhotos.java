@@ -18,6 +18,223 @@ public class CarPhotos implements Serializable {
         this.car_id = car_id;
     }
 
+    private String car_1_icon_file_id = "";
+    private String car_2_icon_file_id = "";
+    private String car_3_icon_file_id = "";
+    private String car_4_icon_file_id = "";
+    private String car_5_icon_file_id = "";
+    private String car_6_icon_file_id = "";
+    private String car_7_icon_file_id = "";
+    private String car_8_icon_file_id = "";
+    private String car_9_icon_file_id = "";
+    private String car_10_icon_file_id = "";
+    private String car_11_icon_file_id = "";
+    private String car_12_icon_file_id = "";
+    private String car_13_icon_file_id = "";
+    private String car_14_icon_file_id = "";
+    private String car_15_icon_file_id = "";
+    private String car_16_icon_file_id = "";
+    private String car_17_icon_file_id = "";
+    private String car_18_icon_file_id = "";
+    private String car_19_icon_file_id = "";
+    private String car_20_icon_file_id = "";
+    private String car_21_icon_file_id = "";
+    private String car_22_icon_file_id = "";
+    private String car_23_icon_file_id = "";
+    private String car_24_icon_file_id = "";
+
+    public String getCar_1_icon_file_id() {
+        return car_1_icon_file_id;
+    }
+
+    public void setCar_1_icon_file_id(String car_1_icon_file_id) {
+        this.car_1_icon_file_id = car_1_icon_file_id;
+    }
+
+    public String getCar_2_icon_file_id() {
+        return car_2_icon_file_id;
+    }
+
+    public void setCar_2_icon_file_id(String car_2_icon_file_id) {
+        this.car_2_icon_file_id = car_2_icon_file_id;
+    }
+
+    public String getCar_3_icon_file_id() {
+        return car_3_icon_file_id;
+    }
+
+    public void setCar_3_icon_file_id(String car_3_icon_file_id) {
+        this.car_3_icon_file_id = car_3_icon_file_id;
+    }
+
+    public String getCar_4_icon_file_id() {
+        return car_4_icon_file_id;
+    }
+
+    public void setCar_4_icon_file_id(String car_4_icon_file_id) {
+        this.car_4_icon_file_id = car_4_icon_file_id;
+    }
+
+    public String getCar_5_icon_file_id() {
+        return car_5_icon_file_id;
+    }
+
+    public void setCar_5_icon_file_id(String car_5_icon_file_id) {
+        this.car_5_icon_file_id = car_5_icon_file_id;
+    }
+
+    public String getCar_6_icon_file_id() {
+        return car_6_icon_file_id;
+    }
+
+    public void setCar_6_icon_file_id(String car_6_icon_file_id) {
+        this.car_6_icon_file_id = car_6_icon_file_id;
+    }
+
+    public String getCar_7_icon_file_id() {
+        return car_7_icon_file_id;
+    }
+
+    public void setCar_7_icon_file_id(String car_7_icon_file_id) {
+        this.car_7_icon_file_id = car_7_icon_file_id;
+    }
+
+    public String getCar_8_icon_file_id() {
+        return car_8_icon_file_id;
+    }
+
+    public void setCar_8_icon_file_id(String car_8_icon_file_id) {
+        this.car_8_icon_file_id = car_8_icon_file_id;
+    }
+
+    public String getCar_9_icon_file_id() {
+        return car_9_icon_file_id;
+    }
+
+    public void setCar_9_icon_file_id(String car_9_icon_file_id) {
+        this.car_9_icon_file_id = car_9_icon_file_id;
+    }
+
+    public String getCar_10_icon_file_id() {
+        return car_10_icon_file_id;
+    }
+
+    public void setCar_10_icon_file_id(String car_10_icon_file_id) {
+        this.car_10_icon_file_id = car_10_icon_file_id;
+    }
+
+    public String getCar_11_icon_file_id() {
+        return car_11_icon_file_id;
+    }
+
+    public void setCar_11_icon_file_id(String car_11_icon_file_id) {
+        this.car_11_icon_file_id = car_11_icon_file_id;
+    }
+
+    public String getCar_12_icon_file_id() {
+        return car_12_icon_file_id;
+    }
+
+    public void setCar_12_icon_file_id(String car_12_icon_file_id) {
+        this.car_12_icon_file_id = car_12_icon_file_id;
+    }
+
+    public String getCar_13_icon_file_id() {
+        return car_13_icon_file_id;
+    }
+
+    public void setCar_13_icon_file_id(String car_13_icon_file_id) {
+        this.car_13_icon_file_id = car_13_icon_file_id;
+    }
+
+    public String getCar_14_icon_file_id() {
+        return car_14_icon_file_id;
+    }
+
+    public void setCar_14_icon_file_id(String car_14_icon_file_id) {
+        this.car_14_icon_file_id = car_14_icon_file_id;
+    }
+
+    public String getCar_15_icon_file_id() {
+        return car_15_icon_file_id;
+    }
+
+    public void setCar_15_icon_file_id(String car_15_icon_file_id) {
+        this.car_15_icon_file_id = car_15_icon_file_id;
+    }
+
+    public String getCar_16_icon_file_id() {
+        return car_16_icon_file_id;
+    }
+
+    public void setCar_16_icon_file_id(String car_16_icon_file_id) {
+        this.car_16_icon_file_id = car_16_icon_file_id;
+    }
+
+    public String getCar_17_icon_file_id() {
+        return car_17_icon_file_id;
+    }
+
+    public void setCar_17_icon_file_id(String car_17_icon_file_id) {
+        this.car_17_icon_file_id = car_17_icon_file_id;
+    }
+
+    public String getCar_18_icon_file_id() {
+        return car_18_icon_file_id;
+    }
+
+    public void setCar_18_icon_file_id(String car_18_icon_file_id) {
+        this.car_18_icon_file_id = car_18_icon_file_id;
+    }
+
+    public String getCar_19_icon_file_id() {
+        return car_19_icon_file_id;
+    }
+
+    public void setCar_19_icon_file_id(String car_19_icon_file_id) {
+        this.car_19_icon_file_id = car_19_icon_file_id;
+    }
+
+    public String getCar_20_icon_file_id() {
+        return car_20_icon_file_id;
+    }
+
+    public void setCar_20_icon_file_id(String car_20_icon_file_id) {
+        this.car_20_icon_file_id = car_20_icon_file_id;
+    }
+
+    public String getCar_21_icon_file_id() {
+        return car_21_icon_file_id;
+    }
+
+    public void setCar_21_icon_file_id(String car_21_icon_file_id) {
+        this.car_21_icon_file_id = car_21_icon_file_id;
+    }
+
+    public String getCar_22_icon_file_id() {
+        return car_22_icon_file_id;
+    }
+
+    public void setCar_22_icon_file_id(String car_22_icon_file_id) {
+        this.car_22_icon_file_id = car_22_icon_file_id;
+    }
+
+    public String getCar_23_icon_file_id() {
+        return car_23_icon_file_id;
+    }
+
+    public void setCar_23_icon_file_id(String car_23_icon_file_id) {
+        this.car_23_icon_file_id = car_23_icon_file_id;
+    }
+
+    public String getCar_24_icon_file_id() {
+        return car_24_icon_file_id;
+    }
+
+    public void setCar_24_icon_file_id(String car_24_icon_file_id) {
+        this.car_24_icon_file_id = car_24_icon_file_id;
+    }
+
     private String car_1_file_id = "";
     private String car_2_file_id = "";
     private String car_3_file_id = "";
