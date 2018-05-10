@@ -88,7 +88,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
 
     private List<String> list = new ArrayList<>();
 
-    private String type;
+//    private String type;
 
     private List<String> hotcity = new ArrayList<>();
     private List<String> hisCity = new ArrayList<>();
@@ -117,11 +117,15 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         Window win = getWindow();
         WindowManager.LayoutParams params = win.getAttributes();
         win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            type = bundle.getString("type");
-            //车服务、二手车等type
-        }
+//        Bundle bundle = getIntent().getExtras();
+//        if (bundle != null) {
+//            type = bundle.getString("type");
+//            // -------------jiang------------
+//            Intent intent = getIntent();
+//            Bundle bundle1 = new Bundle();
+//            bundle1.putString("type", "");
+//            intent.putExtras(bundle1);
+//        }
         initView();
         initData();
         getData();
@@ -651,9 +655,9 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         selectedCity = city;
         Bundle bundle = new Bundle();
         bundle.putString("selected_city", selectedCity);
-        if ("车服务".equals(type)) {
-            JumpUtil.newInstance().finishRightTrans(CityActivity.this, bundle, 01);
-        }else{
+//        if ("车服务".equals(type)) {
+//            JumpUtil.newInstance().finishRightTrans(CityActivity.this, bundle, 01);
+//        }else{
             if (backListener!=null) {
                 backListener.backData(selectedCity);
 //                Prefs.with(this).remove("city");
@@ -661,7 +665,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
 //                Prefs.with(this).remove("cityId");
             }
             JumpUtil.newInstance().finishRightTrans(CityActivity.this);
-        }
+//        }
         Set<String> value = new HashSet<>();
         value.add(city);
         Prefs.with(getApplicationContext()).putStringSet("historyCitys", value);
@@ -675,32 +679,4 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
         void backData(String city);
     }
 
-//    //通过城市名获取城市Id
-//    public void getCityId(final String cityName) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("cityName", cityName);
-//        OKhttptils.post(this, Config.GET_CITY_ID, map, new OKhttptils.HttpCallBack() {
-//            @Override
-//            public void success(String response) {
-//                try {
-//                    JSONObject object = new JSONObject(response);
-//                    JSONObject data = object.getJSONObject("data");
-//                    JSONObject result = data.getJSONObject("result");
-//                    String cityId = result.getString("city_id");
-//                    /**
-//                     * 存储城市Id
-//                     */
-//                    Prefs.with(CityActivity.this).remove("cityId");
-//                    Prefs.with(CityActivity.this).write("cityId",cityId);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void fail(String response) {
-//
-//            }
-//        });
-//    }
 }

@@ -45,7 +45,6 @@ import com.xtzhangbinbin.jpq.entity.CarParams;
 import com.xtzhangbinbin.jpq.utils.CommonUtils;
 import com.xtzhangbinbin.jpq.utils.JumpUtil;
 import com.xtzhangbinbin.jpq.utils.OKhttptils;
-import com.xtzhangbinbin.jpq.utils.Prefs;
 import com.xtzhangbinbin.jpq.utils.ToastUtil;
 import com.xtzhangbinbin.jpq.view.CarTagLayout;
 import com.xtzhangbinbin.jpq.view.ExpandableGridView;

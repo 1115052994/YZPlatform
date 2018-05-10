@@ -1,6 +1,7 @@
 package com.xtzhangbinbin.jpq.fragment.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -178,9 +179,10 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     /* 填充菜单 */
     private void initMenu() {
          /* 首页分类 */
-        if (getContext()!=null) {
-            inflater = LayoutInflater.from(getContext());
+        if (getContext()==null) {
+            return;
         }
+        inflater = LayoutInflater.from(getContext());
         //总的页数=总数/每页数量，并取整
         pageCount = (int) Math.ceil(itemListBeans.size() * 1.0 / pageSize);
         mPagerList = new ArrayList<View>();
@@ -681,9 +683,14 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mLocation:
-                Bundle bundle = new Bundle();
-                bundle.putString("type", "车服务");
-                JumpUtil.newInstance().jumpRight(getContext(), CityActivity.class, 01, bundle);
+                JumpUtil.newInstance().jumpRight(getContext(), CityActivity.class);
+                CityActivity.setOnBackListener(new CityActivity.BackListener() {
+                    @Override
+                    public void backData(String city) {
+                        mLocation.setText(city);
+                        getCityId(city);
+                    }
+                });
                 break;
             case R.id.mSearch:
                 JumpUtil.newInstance().jumpRight(getContext(), SearchActivity.class,"comp");
@@ -695,12 +702,5 @@ public class CarServiceFragment extends Fragment implements View.OnClickListener
     public void onResume() {
         super.onResume();
         images.clear();
-        Bundle bundle = getArguments();
-        String city = bundle.getString("selected_city");
-        if (null != city) {
-            mLocation.setText(city);
-            getCityId(city);
-        }
-        Log.i(TAG, "onResume: " + bundle.getString("selected_city"));
     }
 }

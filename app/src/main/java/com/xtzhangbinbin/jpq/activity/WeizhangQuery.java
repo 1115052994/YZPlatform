@@ -75,7 +75,7 @@ public class WeizhangQuery extends BaseActivity {
 
     }
 
-    @OnClick({R.id.city, R.id.ly_cph, R.id.tv_fdjh_image, R.id.tv_cjh_image, R.id.ly_wzcx})
+    @OnClick({R.id.city, R.id.tv_cph_image, R.id.tv_fdjh_image, R.id.tv_cjh_image, R.id.ly_wzcx})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.city:
@@ -90,8 +90,16 @@ public class WeizhangQuery extends BaseActivity {
                     }
                 });
                 break;
-            /*case R.id.ly_cph:
-                break;*/
+            case R.id.tv_cph_image:
+                if (ContextCompat.checkSelfPermission(WeizhangQuery.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    //申请权限
+                    ActivityCompat.requestPermissions(WeizhangQuery.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                } else {
+                    //有权限，直接拍照
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);// 启动系统相机
+                    startActivityForResult(intent, 1);
+                }
+                break;
             case R.id.tv_fdjh_image:
                 if (ContextCompat.checkSelfPermission(WeizhangQuery.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     //申请权限
@@ -156,6 +164,7 @@ public class WeizhangQuery extends BaseActivity {
                                 Log.i("result===",result.toString());
                                 String engine = result.getString("engine_num");
                                 String vin = result.getString("vin");
+                                //tvEditcph.setText(result.getString(""));
                                 tvEditcjh.setText(vin);
                                 tvEditfdjh.setText(engine);
                             }

@@ -88,39 +88,39 @@ public class Welcome extends AppCompatActivity implements AMapLocationListener {
 //        }, 2000);
 //    }
 
-    private void getData() {
-        Map<String, String> map = new HashMap<>();
-        OKhttptils.post(this, Config.SELECTBOOTPAGE, map, new OKhttptils.HttpCallBack() {
-            @Override
-            public void success(String response) {
-                try {
-                    JSONObject object = new JSONObject(response);
-                    String status = object.getString("status");
-                    if ("1".equals(status)) {
-                        JSONObject data = object.getJSONObject("data");
-                        String fieldId = data.getString("result");
-                        OKhttptils.getPic(Welcome.this, fieldId, imageBg);
-                        // 开始启动
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                startAPP();
-                                Welcome.this.finish();
-                            }
-                        }, 2000);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void fail(String response) {
-
-            }
-        });
-    }
+//    private void getData() {
+//        Map<String, String> map = new HashMap<>();
+//        OKhttptils.post(this, Config.SELECTBOOTPAGE, map, new OKhttptils.HttpCallBack() {
+//            @Override
+//            public void success(String response) {
+//                try {
+//                    JSONObject object = new JSONObject(response);
+//                    String status = object.getString("status");
+//                    if ("1".equals(status)) {
+//                        JSONObject data = object.getJSONObject("data");
+//                        String fieldId = data.getString("result");
+//                        OKhttptils.getPic(Welcome.this, fieldId, imageBg);
+//                        // 开始启动
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                startAPP();
+//                                Welcome.this.finish();
+//                            }
+//                        }, 2000);
+//
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void fail(String response) {
+//
+//            }
+//        });
+//    }
 
     private void startAPP() {
 

@@ -50,7 +50,6 @@ public class CarBuyFragment extends Fragment{
     private FragmentTransaction transaction;
 
     private View view;
-    private String cityName = "";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -109,15 +108,12 @@ public class CarBuyFragment extends Fragment{
         String city = Prefs.with(getContext()).read("city");
         String cityid = Prefs.with(getContext()).read("cityId");
         if (city!=null&&!"".equals(city)) {
-            if (!city.equals(cityName)) {
-                cityName = city;
                 mLocation.setText(city);
                 Intent intent = new Intent();
                 intent.setAction("city");
                 intent.putExtra("city", city);
                 intent.putExtra("cityId", cityid);
                 getContext().sendStickyBroadcast(intent);
-            }
         }
         return view;
     }

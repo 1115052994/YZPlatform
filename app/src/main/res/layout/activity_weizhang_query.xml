@@ -88,6 +88,17 @@
             android:textColor="@color/text_33"
             android:background="@null"
             />
+        <TextView
+            android:id="@+id/tv_cph_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="(行驶证)拍照>"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/common15dp"
+            android:textSize="@dimen/text_size_15sp"
+            android:textColor="@color/text_c8"
+            />
         <View
             android:layout_alignParentBottom="true"
             style="@style/gray_line"/>

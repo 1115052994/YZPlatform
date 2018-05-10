@@ -215,25 +215,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null){
-            Bundle bundle = data.getExtras();
-            switch (requestCode){
-                case 01:
-                    selected_city = bundle.getString("selected_city");
-                    fragment = fragmentList.get(2);
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString("selected_city",selected_city);
-                    fragment.setArguments(bundle1);
-                    transaction.replace(R.id.view_pager, fragment);
-                    Log.i(TAG, "onActivityResult: " + selected_city );
-                    break;
-            }
-        }
-    }
-
     /**
      * 应用升级
      */
