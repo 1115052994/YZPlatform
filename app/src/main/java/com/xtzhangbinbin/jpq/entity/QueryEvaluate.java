@@ -8,6 +8,14 @@ import java.util.List;
 
 public class QueryEvaluate {
 
+    @Override
+    public String toString() {
+        return "QueryEvaluate{" +
+                "data=" + data +
+                ", message='" + message + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 
     /**
      * data : {"result":[{"log_id":"501","log_2":"2.2","log_1":"似乎都爱死","log_date":"2018-04-20 17:16:50","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"送达到撒","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"502","log_2":"4","log_1":"山东派乐特网络科技有限公司","log_date":"2018-04-20 18:03:45","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"好","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"503","log_2":"3","log_1":"山东派乐特网络科技有限公司","log_date":"2018-04-20 18:11:26","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"好","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"504","log_2":"4","log_1":"1","log_date":"2018-04-20 18:51:27","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"1","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"505","log_2":"5","log_1":"阿斯顿发","log_date":"2018-04-20 18:52:10","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"asdfasdfasd","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"509","log_2":"1","log_1":"1","log_date":"2018-04-21 15:52:35","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"1","log_3":"1","pers_nickname":"二二二"},{"log_id":"510","log_2":"5","log_1":"1","log_date":"2018-04-21 15:53:18","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"1","log_3":"1","pers_nickname":"二二二"}],"pageCount":1,"pageTotal":7}
@@ -44,6 +52,15 @@ public class QueryEvaluate {
     }
 
     public static class DataBean {
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "pageCount=" + pageCount +
+                    ", pageTotal=" + pageTotal +
+                    ", result=" + result +
+                    '}';
+        }
+
         /**
          * result : [{"log_id":"501","log_2":"2.2","log_1":"似乎都爱死","log_date":"2018-04-20 17:16:50","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"送达到撒","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"502","log_2":"4","log_1":"山东派乐特网络科技有限公司","log_date":"2018-04-20 18:03:45","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"好","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"503","log_2":"3","log_1":"山东派乐特网络科技有限公司","log_date":"2018-04-20 18:11:26","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"好","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"504","log_2":"4","log_1":"1","log_date":"2018-04-20 18:51:27","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"1","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"505","log_2":"5","log_1":"阿斯顿发","log_date":"2018-04-20 18:52:10","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"asdfasdfasd","log_3":"YZpjpjqyflaqzy,YZpjpjqyflshjs","pers_nickname":"二二二"},{"log_id":"509","log_2":"1","log_1":"1","log_date":"2018-04-21 15:52:35","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"1","log_3":"1","pers_nickname":"二二二"},{"log_id":"510","log_2":"5","log_1":"1","log_date":"2018-04-21 15:53:18","pers_head_file_id":"b07d339d016448c4be5096f1ec7ae0a2","log_4":"1","log_3":"1","pers_nickname":"二二二"}]
          * pageCount : 1
@@ -79,6 +96,20 @@ public class QueryEvaluate {
         }
 
         public static class ResultBean {
+            @Override
+            public String toString() {
+                return "ResultBean{" +
+                        "log_id='" + log_id + '\'' +
+                        ", log_2='" + log_2 + '\'' +
+                        ", log_1='" + log_1 + '\'' +
+                        ", log_date='" + log_date + '\'' +
+                        ", pers_head_file_id='" + pers_head_file_id + '\'' +
+                        ", log_4='" + log_4 + '\'' +
+                        ", log_3='" + log_3 + '\'' +
+                        ", pers_nickname='" + pers_nickname + '\'' +
+                        '}';
+            }
+
             /**
              * log_id : 501
              * log_2 : 2.2

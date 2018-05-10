@@ -38,8 +38,8 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
     private Context context;
     private List<QueryEvaluate.DataBean.ResultBean> result;
     private Map<String, String> map = new HashMap<>();
-    private ArrayList<String> arr= new ArrayList<>();
-    private ArrayList<String> pj=new ArrayList<>();
+    private int finalI;
+    private LayoutInflater mInflater;
 
     public EvaluationAdapter(Context context, List<QueryEvaluate.DataBean.ResultBean> result) {
         this.context = context;
@@ -62,20 +62,53 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(EvaluationAdapter.ViewHolder holder, int position) {
-//        Log.d("aaaaaa", "aaaaaaaaaa"+result.get(position).getPers_head_file_id());
+    public void onBindViewHolder(final EvaluationAdapter.ViewHolder holder, int position) {
         OKhttptils.getPicByHttp(context,result.get(position).getPers_head_file_id(),holder.evaluation_image);
         holder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
-        holder.evaluate_layout.removeAllViews();
         holder.evaluation_list_appraiseTime.setText(result.get(position).getLog_date());
         holder.evaluation_list_appraise.setText(result.get(position).getLog_4());
-        arr.clear();
         String[] split = result.get(position).getLog_3().split(",");
+        final ArrayList<String> pj=new ArrayList<>();
         for (int i = 0; i <split.length ; i++) {
-            arr.add(split[i]);
-        }
-        if(arr.size()==split.length){
-            getDictionaries(Config.GETVALUE,arr,holder.evaluate_layout);
+            map.clear();
+            map.put("dict_id",split[i]);
+                finalI = i;
+                OKhttptils.post((Activity) context, Config.GETVALUE, map, new OKhttptils.HttpCallBack() {
+                    @Override
+                    public void success(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            String str = data.get("result").toString();
+                            pj.add(str);
+                            mInflater = LayoutInflater.from(context);
+                            if((pj.size()-1)== finalI){
+                                Log.d("aaaaaa", "success: "+pj.size());
+                                for (int j = 0; j <pj.size() ; j++) {
+
+                                    holder.evaluate_layout.setAdapter(new TagAdapter<String>(pj)
+                                    {
+                                        @Override
+                                        public View getView(FlowLayout parent, int position, String s)
+                                        {
+                                            TextView tv = (TextView) mInflater.inflate(R.layout.item_evaluate_type, holder.evaluate_layout, false);
+                                            tv.setText(s);
+                                            return tv;
+                                        }
+                                    });
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void fail(String response) {
+                        Toast.makeText(context, "查询失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
         }
         holder.evaluation_list_phone.setText(StringUtil.isEmpty(result.get(position).getPers_nickname()) ? "匿名用户" : result.get(position).getPers_nickname());
         holder.evaluation_list_star5.setImageResource(R.drawable.pj_hstar);
@@ -96,57 +129,6 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
                 holder.evaluation_list_star1.setImageResource(R.drawable.pj_pinkstar);
                 break;
         }
-    }
-    public void getDictionaries(String url, final ArrayList<String> arr, final TagFlowLayout evaluate_layout){
-        pj.clear();
-        Log.d("bbbbbb", "getDictionaries: "+arr.size());
-        for (int i = 0; i <arr.size() ; i++) {
-            map.clear();
-            map.put("dict_id",arr.get(i));
-            if (NetUtil.isNetAvailable(context)) {
-                OKhttptils.post((Activity) context, url, map, new OKhttptils.HttpCallBack() {
-                    @Override
-                    public void success(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONObject data = jsonObject.getJSONObject("data");
-                            String str = data.get("result").toString();
-                            Log.d("bbbbbb", "success: -----------------------"+str);
-
-                            pj.add(str);
-                            Log.d("bbbbbb", "success: "+pj.size());
-                            if(pj.size()==arr.size()){
-                                for (int i = 0; i <pj.size() ; i++) {
-                                    evaluate_layout.setAdapter(new TagAdapter<String>(pj)
-                                    {
-                                        final LayoutInflater mInflater = LayoutInflater.from(context);
-                                        @Override
-                                        public View getView(FlowLayout parent, int position, String s)
-                                        {
-                                            TextView tv = (TextView) mInflater.inflate(R.layout.item_evaluate_type, evaluate_layout, false);
-                                            tv.setText(s);
-                                            return tv;
-                                        }
-                                    });
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                    @Override
-                    public void fail(String response) {
-                        Toast.makeText(context, "查询失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }
-
-
-
-
     }
 
 

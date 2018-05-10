@@ -26,12 +26,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <ImageView
-                android:src="@drawable/cjrbanner"
+            <com.jude.rollviewpager.RollPagerView
+                android:id="@+id/pagerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-            />
+                android:layout_height="@dimen/common150dp"
+                app:rollviewpager_play_delay="3000"/>
             <com.androidkun.xtablayout.XTabLayout
                 android:id="@+id/tab"
                 android:layout_width="match_parent"

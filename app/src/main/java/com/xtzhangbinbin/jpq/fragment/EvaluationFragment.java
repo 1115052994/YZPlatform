@@ -126,12 +126,6 @@ public class EvaluationFragment extends Fragment {
                     QueryEvaluate queryEvaluate = gson.fromJson(response, QueryEvaluate.class);
                     pageCount=queryEvaluate.getData().getPageCount();
                     result.addAll(queryEvaluate.getData().getResult());
-//                    if(result.size()==4){
-//                        for (int i = 0; i <result.size() ; i++) {
-//                            Log.d("aaaaaa", "onRefresh: "+result.get(i).getLog_3());
-//                        }
-//                        Log.d("aaaaaa", "success: "+result.size());
-//                    }
                     if(refreshlayout==null){
                         evaluationAdapter.notifyDataSetChanged();
                     }
@@ -142,16 +136,13 @@ public class EvaluationFragment extends Fragment {
                     }else {
                         if(refreshlayout!=null){
                             if (pageIndex > pageCount) {
-                                Log.d("aaaaa", "过界了小心点: "+pageIndex+"pageCount"+pageCount);
                                 refreshlayout.finishLoadmore(1000);
                             } else {
-                                Log.d("aaaaa", "没过界: "+pageIndex);
                                 evaluationAdapter.notifyDataSetChanged();
                                 refreshlayout.finishRefresh(1000);
                                 refreshlayout.finishLoadmore(1000);
                             }
                         }else {
-                            Log.d("aaaaa", "刷新: ");
                             evaluationAdapter.notifyDataSetChanged();
                         }
                     }
