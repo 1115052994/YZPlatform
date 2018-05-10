@@ -68,6 +68,7 @@ public class EvaluationAdapter extends RecyclerView.Adapter<EvaluationAdapter.Vi
         holder.evaluation_list_appraiseTime.setText(result.get(position).getLog_date());
         holder.evaluation_list_appraise.setText(result.get(position).getLog_4());
         String[] split = result.get(position).getLog_3().split(",");
+
         final ArrayList<String> pj=new ArrayList<>();
         for (int i = 0; i <split.length ; i++) {
             map.clear();
