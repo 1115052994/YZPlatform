@@ -121,8 +121,8 @@
     <dimen name="common275dp">275dp</dimen>
     <dimen name="common300dp">300dp</dimen>
     <dimen name="common320dp">320dp</dimen>
-    <dimen name="common329dp">329</dimen>
-    <dimen name="common329.5dp">329.5</dimen>
+    <dimen name="common329dp">329dp</dimen>
+    <dimen name="common329.5dp">329.5dp</dimen>
     <dimen name="common330dp">330dp</dimen>
     <dimen name="common330.5dp">330.5dp</dimen>
     <dimen name="common331dp">331dp</dimen>

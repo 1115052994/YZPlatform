@@ -184,8 +184,7 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
             }
         });
         /* recycler绑定adapter*/
-        rvAdapter = new CommonRecyclerAdapter(this, list,
-                new MultiTypeSupport<String>() {
+        rvAdapter = new CommonRecyclerAdapter(this, list, new MultiTypeSupport<String>() {
 
                     @Override
                     public int getLayoutId(String item, int position) {
@@ -312,8 +311,9 @@ public class CityActivity extends BaseActivity implements AMapLocationListener {
                         List<String> H = resultBean.getH();
                         list.add("H");
                         list.addAll(H);
-                        //List<String> I = resultBean.getI();
-                        //list.add("I");
+//                        List<String> I = resultBean.getI();
+//                        list.add("I");
+
                         List<String> J = resultBean.getJ();
                         list.add("J");
                         list.addAll(J);

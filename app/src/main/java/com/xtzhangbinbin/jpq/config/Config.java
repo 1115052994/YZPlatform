@@ -8,17 +8,17 @@ public class Config {
     //全局应用名称
     public final static String APP_NAME = "yzplatform";
     //接口连接地址192.168.1.111
-    public static final String BASE_URL = "https://eflow.56ez.com/";
+    public static final String BASE_URL = "https://app.yizhongqiche.com.cn/";
 //    public static final String BASE_URL = "http://192.168.1.84/";
 
-    public static final String URL = "https://eflow.56ez.com/";
+    public static final String URL = "https://app.yizhongqiche.com.cn/";
 //    public static final String URL = "http://192.168.1.84/";
     //微信APPID
     public static final String WECHAT_APP_ID = "wx5486a0497a18e7d4";
 
     public static final String S = "mymvc?mvc_id=";
 
-    public static final String M = "https://eflow.56ez.com/";
+    public static final String M = "https://app.yizhongqiche.com.cn/";
 //    public static final String M = "http://192.168.1.84/";
 
     //用于拼接图片地址url
@@ -163,6 +163,9 @@ public class Config {
 
     //添加二手车图片
     public static final String ACCRETIONPICTURECAR = M + S + "accretionPictureCar";
+
+    //添加二手车图片
+    public static final String SELECTJRTOP = M + S + "selectJrTop";
 
 
     //获取登录企业的服务细项类型（添加服务产品用）

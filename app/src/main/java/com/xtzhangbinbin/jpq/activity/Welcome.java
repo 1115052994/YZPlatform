@@ -61,6 +61,7 @@ public class Welcome extends AppCompatActivity implements AMapLocationListener {
 //        getData();
         /* 默认地址  北京*/
         String city = Prefs.with(this).read("city");
+        Log.d("aaaaaa", "onCreate: "+city);
         if (city==null||"".equals(city)) {
             // 定位
             initLoc();
@@ -129,10 +130,9 @@ public class Welcome extends AppCompatActivity implements AMapLocationListener {
         /**
          *如果用户不是第一次使用则直接调转到显示界面,否则调转到引导界面
          */
+        Log.d("aaaaaa", "startAPP: "+count);
         if (count == 0) {
-            Intent intent1 = new Intent();
-            intent1.setClass(Welcome.this, Guide.class);
-            startActivity(intent1);
+            startActivity(new Intent(Welcome.this, Guide.class));
         } else {
             Intent intent2 = new Intent();
             intent2.setClass(Welcome.this, MainActivity.class);
